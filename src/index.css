@@ -1,13 +1,41 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+@layer components {
+    .header-navigation-btn {
+        @apply w-7 h-7 flex items-center justify-center hover:border-cyan-300 active:border-cyan-500 transition duration-200 
+    }
+
+    .header-navigation-icon {
+        @apply w-3/4 h-3/4 text-cyan-400 group-hover:text-cyan-300 group-active:text-cyan-500 transition duration-200
+    }
+
+    .auth-title {
+        @apply font-semibold text-2xl
+    }
+
+    .auth-subtitle {
+        @apply font-semibold text-lg
+    }
+
+    .form {
+        @apply w-5/6 md:w-1/2 max-w-md
+    }
+
+    .form-group {
+        @apply flex flex-col justify-center items-start mt-5
+    }
+
+    .form-label {
+        @apply font-medium text-base
+    }
+    
+    .form-input {
+        @apply mt-2 w-full bg-slate-100 py-1 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 transition duration-200
+    }
+
+    .form-btn {
+        @apply w-full py-2 mt-7 bg-cyan-400 text-slate-800 font-semibold rounded-lg hover:text-cyan-400 hover:bg-slate-800 transition duration-200
+    }
+} 
