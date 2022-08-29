@@ -4,10 +4,11 @@ module.exports = {
     theme: {
         extend: {
             aspectRatio: {
+                '29/37': '29/37',
                 '40/15': '40/15',
             },
             animation: {
-                shake: 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
+                shake: 'shake 0.82s cubic-bezier(.36,.07,.19,.97) infinite',
             },
             keyframes: {
                 shake: {

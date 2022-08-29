@@ -38,6 +38,14 @@
     .form-btn {
         @apply w-full py-2 mt-7 bg-cyan-400 text-slate-800 font-semibold rounded-lg hover:text-cyan-400 hover:bg-slate-800 transition duration-200;
     }
+
+    .product-card-price {
+        @apply text-cyan-400 text-base font-semibold 
+    }
+
+    .product-card-compare-price {
+        @apply text-amber-300 text-sm line-through font-medium
+    }
 }
 
 

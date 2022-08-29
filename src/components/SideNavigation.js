@@ -47,6 +47,7 @@ function SideNavigation({ title, isDrawer }) {
                             className={`p-3 flex justify-between items-center w-full group ${
                                 index === navObjArray.length - 1 ? '' : ' border-b border-slate-900/10'
                             }`}
+                            key={`navigation_${index}_${Date.now()}`}
                         >
                             <div className="flex items-center justify-start gap-3">
                                 <FontAwesomeIcon

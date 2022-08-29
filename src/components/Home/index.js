@@ -1,12 +1,11 @@
-import Header from '../Header'
-import Footer from '../Footer'
 import Hero from '../Hero'
+import ProductRecommendation from '../Products/ProductRecommendation'
 
 const Home = () => {
     return (
         <main className="z-0">
             <Hero />
-            {/* <Footer /> */}
+            <ProductRecommendation />
         </main>
     )
 }

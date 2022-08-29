@@ -28,9 +28,5 @@ export default function AuthContextProvider({ children }) {
         fetchIsLoggedIn()
     }, [])
 
-    return (
-        <AuthContext.Provider value={isLoggedIn}>
-            {children}
-        </AuthContext.Provider>
-    )
+    return <AuthContext.Provider value={isLoggedIn}>{children}</AuthContext.Provider>
 }

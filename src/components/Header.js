@@ -18,19 +18,12 @@ const Header = () => {
         <header className="sticky top-0 left-0 w-full z-10">
             <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16">
                 <div className="flex items-center gap-6 grow">
-                    <img
-                        className="w-36 aspect-40/15"
-                        src={nyanLogo}
-                        alt="Nyan Logo"
-                    />
+                    <img className="w-36 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />
                     <SearchForm />
                 </div>
                 <div className="flex items-center justify-between gap-3">
                     <button className="header-navigation-btn group md:hidden">
-                        <FontAwesomeIcon
-                            className="header-navigation-icon"
-                            icon={faMagnifyingGlass}
-                        />
+                        <FontAwesomeIcon className="header-navigation-icon" icon={faMagnifyingGlass} />
                     </button>
                     <Link
                         to={`/myOrders`}
@@ -42,16 +35,10 @@ const Header = () => {
                         />
                     </Link>
                     <button className="header-navigation-btn group">
-                        <FontAwesomeIcon
-                            className="header-navigation-icon"
-                            icon={faShoppingCart}
-                        />
+                        <FontAwesomeIcon className="header-navigation-icon" icon={faShoppingCart} />
                     </button>
                     <button className="header-navigation-btn group">
-                        <FontAwesomeIcon
-                            className="header-navigation-icon"
-                            icon={faHeart}
-                        />
+                        <FontAwesomeIcon className="header-navigation-icon" icon={faHeart} />
                     </button>
                     <button className="w-7 h-7 flex items-center justify-center relative group">
                         <img

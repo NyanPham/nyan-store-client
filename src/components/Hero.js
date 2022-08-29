@@ -28,6 +28,7 @@ const slides = [
         },
         button: {
             text: 'Learn More',
+            link: '/',
             styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -53,6 +54,7 @@ const slides = [
         },
         button: {
             text: 'Learn More',
+            link: '/',
             styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
