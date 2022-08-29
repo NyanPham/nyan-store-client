@@ -8,8 +8,32 @@ import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 
 function ProductRecommendation() {
     const collections = useSelector((state) => state.collections)
-    const randomCollectionId = collections[Math.floor(Math.random() * collections.length)]?._id
-    const products = useFetchProducts({})
+    const categories = useSelector((state) => state.categories)
+    const products = useFetchProducts(collections, 'New Arrival')
+    const [slidesPerView, setSlidesPerView] = useState(() => {
+        if (products.length) {
+            return products.length <= 4 ? products.length + 1 : 5
+        } else {
+            return 3
+        }
+    })
+
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 767) {
+                return setSlidesPerView(2)
+            }
+            if (window.innerWidth < 1024) {
+                return setSlidesPerView(3)
+            }
+
+            if (products) {
+                return setSlidesPerView(products.length <= 4 ? products.length + 1 : 5)
+            } else {
+                return setSlidesPerView(3)
+            }
+        })
+    }, [products])
 
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>
@@ -29,9 +53,15 @@ function ProductRecommendation() {
         )
     })
 
+    // const slidesPerView = productCards.length <= 4 ? productCards.length + 1 : 5
+
     return (
-        <div className="bg-slate-200 py-12 px-12">
-            <ProductShowcase productCards={[recommendationCard, ...productCards]} isSlider={true} slidesPerView={5} />
+        <div className="bg-slate-200 p-5 lg:py-12 lg:px-12">
+            <ProductShowcase
+                productCards={[recommendationCard, ...productCards]}
+                isSlider={true}
+                slidesPerView={slidesPerView}
+            />
         </div>
     )
 }

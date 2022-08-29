@@ -36,7 +36,7 @@ function SideNavigation({ title, isDrawer }) {
         <div
             className={`${
                 isDrawer ? 'bg-white h-full' : 'hidden lg:block'
-            }  w-64 border border-slate-200 rounded-lg py-2 px-4 shrink-0`}
+            }  w-64 border border-slate-200 rounded-lg py-2 px-4 shrink-0 self-start`}
         >
             <h2 className="font-semibold text-2xl text-cyan-400">{title}</h2>
             <div className="flex flex-col justify-center items-start gap-1 mt-3">

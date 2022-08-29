@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 
 export default function ProductCard(props) {
-    const { SKU, id, images, name, slug, variants, vendor, createdAt, minPrice } = props
+    const { SKU, id, images, name, slug, variants, vendor, createdAt, minPrice, inAuction } = props
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const firstVariant = variants[0]
 
     return (
-        <div className="flex flex-col items-center justify-between aspect-29/37 bg-white p-4 relative group">
+        <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
             <Link to={`/products/${slug}`} className="product-image w-full h-fit">
                 <span className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto"></span>
                 {/* <img className="" src={images[0]} alt={name} /> */}
@@ -31,7 +31,7 @@ export default function ProductCard(props) {
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
                 <ProductCardAction productId={id} />
             </div>
-            {isNew && (
+            {isNew && !inAuction && (
                 <div className="absolute bottom-2 right-2 bg-yellow-400 py-0.5 px-2 text-xs text-white rounded-lg">
                     New
                 </div>

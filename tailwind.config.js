@@ -3,6 +3,9 @@ module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
+            rotate: {
+                30: '30deg',
+            },
             aspectRatio: {
                 '29/37': '29/37',
                 '40/15': '40/15',
