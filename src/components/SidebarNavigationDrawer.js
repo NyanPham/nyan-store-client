@@ -14,7 +14,7 @@ function SidebarNavigationDrawer() {
     return (
         <>
             <button
-                className="fixed left-0 top-1/2 px-3 py-2 bg-white rounded-lg border border-slate-500 md:-translate-x-1/2 md:hover:-translate-x-0 transform transition duration-300 lg:hidden"
+                className="fixed left-0 top-1/2 px-3 py-2 z-20 bg-white rounded-lg border border-slate-500 md:-translate-x-1/2 md:hover:-translate-x-0 transform transition duration-300 lg:hidden"
                 onClick={() => {
                     setOpenSidebar(true)
                 }}

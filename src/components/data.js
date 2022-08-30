@@ -14,6 +14,9 @@ import beauty2 from '../imgs/beauty2.jpg'
 import men1 from '../imgs/men1.jpg'
 import men2 from '../imgs/men2.jpg'
 import men3 from '../imgs/men3.jpg'
+import canon1 from '../imgs/canon1.jpg'
+import canon2 from '../imgs/canon2.jpg'
+import canon3 from '../imgs/canon3.jpg'
 
 export const COLOR_MAP = {
     green: 'bg-green-500',
@@ -415,6 +418,48 @@ export const menSlides = [
             text: 'Buy Now',
             link: '/',
             styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+        },
+    },
+]
+
+export const photographySlides = [
+    {
+        image: canon1,
+        imageStyles: 'mx-auto h-full w-full object-cover object-center',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'DSRL Nikon 5RX',
+            styles: 'text-5xl text-white font-semibold w-96',
+        },
+        price: {
+            text: '$178',
+            styles: 'text-2xl font-bold text-cyan-400 inline-block w-full',
+        },
+    },
+    {
+        image: canon2,
+        imageStyles: 'mx-auto h-full w-full object-cover object-center',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'DSRL Nikon III',
+            styles: 'text-5xl text-white font-semibold w-96',
+        },
+        price: {
+            text: '$178',
+            styles: 'text-2xl font-bold text-cyan-400 inline-block w-full',
+        },
+    },
+    {
+        image: canon3,
+        imageStyles: 'mx-auto h-full w-full object-cover object-center',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'Nikon 7D',
+            styles: 'text-5xl text-white font-semibold w-96',
+        },
+        price: {
+            text: '$178',
+            styles: 'text-2xl font-bold text-cyan-400 inline-block w-full',
         },
     },
 ]

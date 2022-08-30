@@ -31,8 +31,9 @@ export default function ProductCard(props) {
                         )}
                     </div>
                 )}
-                {typeof currentBid === 'number' ||
-                    (typeof currentBid === 'string' && <span className="product-card-price">${currentBid}</span>)}
+                {(typeof currentBid === 'number' || typeof currentBid === 'string') && (
+                    <span className="product-card-price">${currentBid}</span>
+                )}
             </div>
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
                 <ProductCardAction productId={id} />

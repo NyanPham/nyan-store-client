@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import VariantsPicker from '../Products/VariantsPicker'
 import { useDispatch, useSelector } from 'react-redux'
-import { auctionProduct } from '../../redux/actions/biddingActions'
+import { auctionProduct, resetMessagesAndError } from '../../redux/actions/biddingActions'
 
 function AuctionForm({ product, setOpenModal, currentBid }) {
     const { message, error } = useSelector((state) => state.biddingProducts)
@@ -17,6 +17,14 @@ function AuctionForm({ product, setOpenModal, currentBid }) {
             })
         )
     }
+
+    useEffect(() => {
+        if (message && !error) {
+            setTimeout(() => {
+                dispatch(resetMessagesAndError())
+            }, 3000)
+        }
+    }, [message, dispatch])
 
     return (
         <>

@@ -7,10 +7,11 @@ import 'swiper/css/pagination'
 import { Link } from 'react-router-dom'
 import SlideCountdown from './SlideCountdown'
 
-export default function Slider({ slides, slidesPerView, setCurrentSlide = () => {} }) {
+export default function Slider({ slides, slidesPerView, direction = 'horizontal', setCurrentSlide = () => {} }) {
     return (
         <Swiper
-            spaceBetween={15}
+            direction={direction}
+            spaceBetween={2}
             slidesPerView={1}
             modules={[Navigation, Pagination]}
             navigation
@@ -28,7 +29,11 @@ export default function Slider({ slides, slidesPerView, setCurrentSlide = () => 
             {slides.map((slide, index) => {
                 return (
                     <SwiperSlide key={`slider_${index}`}>
-                        <div className="relative select-none max-h-screen h-full max-w-full">
+                        <div
+                            className={`relative select-none max-h-screen h-full max-w-full ${
+                                direction === 'vertical' && 'flex-shrink-0 w-full self-start max-h-96'
+                            }`}
+                        >
                             <img className={slide.imageStyles} src={slide.image} alt={slide.title} />
                             <div className={`absolute ${slide.contentStyles}`}>
                                 {slide.title && <h3 className={slide.title.styles}>{slide.title.text}</h3>}

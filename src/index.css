@@ -87,4 +87,26 @@
 
 .swiper {
     max-width: 100%;
+    max-height: 100vh;
+}
+
+.swiper-vertical .swiper-button-next,
+.swiper-vertical .swiper-button-prev {
+    left: 50%;
+    transform: rotate(90deg);
+    transform-origin: left center;
+}
+
+.swiper-vertical .swiper-button-prev {
+    top: 10px;
+}
+
+.swiper-vertical .swiper-button-next {
+    top: 10px;
+    top: auto;
+    bottom: 10px;
+}
+
+.swiper-horizontal .swiper-slide{
+    height: auto;
 }
