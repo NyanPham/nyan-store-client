@@ -17,6 +17,9 @@ import men3 from '../imgs/men3.jpg'
 import canon1 from '../imgs/canon1.jpg'
 import canon2 from '../imgs/canon2.jpg'
 import canon3 from '../imgs/canon3.jpg'
+import handsome from '../imgs/handsome.jpg'
+import shoes from '../imgs/shoes.jpg'
+import look from '../imgs/look.jpg'
 
 export const COLOR_MAP = {
     green: 'bg-green-500',
@@ -49,7 +52,7 @@ export const OPTION_TYPES_MAP = {
 
 export const heroSlides = [
     {
-        image: slideImage1,
+        image: handsome,
         imageStyles: 'mx-auto',
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
@@ -75,7 +78,33 @@ export const heroSlides = [
         },
     },
     {
-        image: slideImage1,
+        image: shoes,
+        imageStyles: 'mx-auto',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'Express Yourself Instyle',
+            styles: 'text-5xl text-slate-200 font-semibold w-96',
+        },
+        subtitle: {
+            text: 'Hoodie',
+            styles: 'text-xl text-slate-200 font-medium uppercase mt-3',
+        },
+        text1: {
+            text: 'Best',
+            styles: 'text-lg text-slate-200 font-medium block mt-1',
+        },
+        text2: {
+            text: 'Deal',
+            styles: 'text-lg text-cyan-400 font-medium uppercase block leading-4',
+        },
+        button: {
+            text: 'Learn More',
+            link: '/',
+            styles: 'bg-cyan-400 uppercase font-medium tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+        },
+    },
+    {
+        image: look,
         imageStyles: 'mx-auto',
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
@@ -122,7 +151,7 @@ export const slidesWPreview = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'block bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'block bg-cyan-400 uppercase font-semibold tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -148,7 +177,7 @@ export const slidesWPreview = [
         button: {
             text: 'Learn More',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -170,7 +199,7 @@ export const slidesWPreview = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'block bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'block bg-cyan-400 uppercase font-semibold tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
 ]
@@ -179,7 +208,7 @@ export const auctionSlides = [
     {
         image: jewelry1,
         imageStyles: 'mx-auto object-cover object-center h-full w-full',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Pearl Pendant',
             styles: 'text-4xl text-slate-700 font-semibold w-72',
@@ -208,13 +237,48 @@ export const auctionSlides = [
         button: {
             text: 'Bid Now',
             link: '/',
-            styles: 'block bg-cyan-400 uppercase font-medium text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'block bg-cyan-400 uppercase font-medium tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
         image: jewelry2,
         imageStyles: 'mx-auto object-cover object-center h-full w-full',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
+        title: {
+            text: 'Necklace Saphire',
+            styles: 'text-4xl text-slate-700 font-semibold w-72',
+        },
+
+        expiresTime: {
+            label: {
+                text: 'Time left:',
+                styles: 'text-sm text-slate-700 font-semibold',
+            },
+            timeLeft: {
+                date: new Date('2022-08-31'),
+                styles: 'text-lg text-amber-400 font-semibold',
+            },
+        },
+        currentBid: {
+            label: {
+                text: 'Current Bid:',
+                styles: 'text-sm text-slate-700 font-semibold',
+            },
+            value: {
+                text: '$3550',
+                styles: 'text-4xl text-slate-700 font-semibold',
+            },
+        },
+        button: {
+            text: 'Bid Now',
+            link: '/',
+            styles: 'block bg-cyan-400 uppercase font-medium tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+        },
+    },
+    {
+        image: jewelry3,
+        imageStyles: 'mx-auto object-cover object-center h-full w-full',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Necklace Saphire',
             styles: 'text-4xl text-slate-700 font-semibold w-72',
@@ -252,7 +316,7 @@ export const sportSlides = [
     {
         image: sneaker1,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: 'Nike Running \n Just do it',
             styles: 'text-5xl text-slate-700 font-semibold w-96 text-right',
@@ -270,7 +334,7 @@ export const sportSlides = [
     {
         image: smartWatch,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: 'Nike Running \n Just do it',
             styles: 'text-5xl text-slate-700 font-semibold w-96 text-right',
@@ -291,7 +355,7 @@ export const furnitureSlides = [
     {
         image: furniture1,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Living Room \n The Single Sofa',
             styles: 'text-5xl text-slate-900 font-semibold w-96',
@@ -309,7 +373,7 @@ export const furnitureSlides = [
     {
         image: furniture2,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: 'Living Room \n The Single Sofa',
             styles: 'text-5xl text-slate-100 font-semibold w-96 text-right',
@@ -330,7 +394,7 @@ export const womenSlides = [
     {
         image: beauty1,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: '2019 Summer\nWomen Collection',
             styles: 'text-5xl text-white font-semibold w-96',
@@ -348,7 +412,7 @@ export const womenSlides = [
     {
         image: beauty2,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: '2019 Summer\nWomen Collection',
             styles: 'text-5xl text-slate-100 font-semibold w-96 text-right',
@@ -369,7 +433,7 @@ export const menSlides = [
     {
         image: men1,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Jeans Men \nCollection',
             styles: 'text-5xl text-white font-semibold w-96',
@@ -387,7 +451,7 @@ export const menSlides = [
     {
         image: men2,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Jeans Men \nCollection',
             styles: 'text-5xl text-white font-semibold w-96',
@@ -405,7 +469,7 @@ export const menSlides = [
     {
         image: men3,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Jeans Men \nCollection',
             styles: 'text-5xl text-white font-semibold w-96',
@@ -426,7 +490,7 @@ export const photographySlides = [
     {
         image: canon1,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'DSRL Nikon 5RX',
             styles: 'text-5xl text-white font-semibold w-96',
@@ -439,7 +503,7 @@ export const photographySlides = [
     {
         image: canon2,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'DSRL Nikon III',
             styles: 'text-5xl text-white font-semibold w-96',
@@ -452,7 +516,7 @@ export const photographySlides = [
     {
         image: canon3,
         imageStyles: 'mx-auto h-full w-full object-cover object-center',
-        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'Nikon 7D',
             styles: 'text-5xl text-white font-semibold w-96',

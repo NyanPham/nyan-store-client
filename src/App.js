@@ -11,6 +11,7 @@ import Login from './components/Authentication/Login'
 import { useAuthContext } from './context/authContext'
 import { emptyWishlist, getWishlist } from './redux/actions/wishlistActions'
 import { getBiddingProduct } from './redux/actions/biddingActions'
+import Footer from './components/Footer'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
@@ -38,6 +39,7 @@ function App() {
                             <>
                                 <Header />
                                 <Home />
+                                <Footer />
                             </>
                         }
                     />

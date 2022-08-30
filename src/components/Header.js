@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import nyanLogo from '../imgs/nyan-logo.png'
 // import Container from './Container'
 import SearchForm from './SearchForm'
@@ -14,8 +14,44 @@ import { Link } from 'react-router-dom'
 import defaultAvatar from '../imgs/default.jpg'
 
 const Header = () => {
+    const [scrollDir, setScrollDir] = useState('down')
+
+    useEffect(() => {
+        const threshold = 50
+        let lastScrollY = window.scrollY
+        let ticking = false
+
+        const updateScrollDir = () => {
+            const scrollY = window.scrollY
+
+            if (Math.abs(scrollY - lastScrollY) < threshold) {
+                ticking = false
+                return
+            }
+
+            setScrollDir(scrollY > lastScrollY ? 'down' : 'up')
+            lastScrollY = scrollY > 0 ? scrollY : 0
+            ticking = false
+        }
+
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateScrollDir)
+                ticking = true
+            }
+        }
+
+        window.addEventListener('scroll', onScroll)
+
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [scrollDir])
+
     return (
-        <header className="sticky top-0 left-0 w-full z-40 bg-white">
+        <header
+            className={`sticky top-0 left-0 w-full z-40 bg-white transform transition duration-200 ${
+                scrollDir === 'down' ? '-translate-y-full' : 'translate-y-0'
+            }`}
+        >
             <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16">
                 <div className="flex items-center gap-6 grow">
                     <img className="w-32 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />

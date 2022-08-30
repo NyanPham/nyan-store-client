@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
     .header-navigation-btn {
         @apply w-7 h-7 flex items-center justify-center hover:border-cyan-300 active:border-cyan-500 transition duration-200;
@@ -107,6 +108,12 @@
     bottom: 10px;
 }
 
-.swiper-horizontal .swiper-slide{
+.swiper-horizontal .swiper-slide {
     height: auto;
+}
+
+.swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet, 
+.swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin-left: auto;
+    margin-right: auto;
 }

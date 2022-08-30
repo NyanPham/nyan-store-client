@@ -15,25 +15,29 @@ const Home = () => {
             <SliderWithPreview />
             <ProductAuction />
             <AuctionSlider />
-            <GetSliderWithProducts
-                tags={['Footwear', 'sport']}
-                category="Footwear"
-                sideNavBackground="bg-slate-500"
-                navTitle="Sport"
-                itemBorderColor="border-slate-200/50"
-                nameColor="text-slate-200"
-                borderColor="border-slate-500"
-                slides={sportSlides}
-            />
-            <GetSliderWithProducts
-                tags={['Footwear', 'sport']}
-                category="Hats"
-                sideNavBackground="bg-slate-200"
-                borderColor="border-slate-200"
-                navTitle="Furniture"
-                slides={furnitureSlides}
-            />
-            <div className="bg-gray-700 py-10">
+            <section className="py-10">
+                <GetSliderWithProducts
+                    tags={['Footwear', 'sport']}
+                    category="Footwear"
+                    sideNavBackground="bg-slate-500"
+                    navTitle="Sport"
+                    itemBorderColor="border-slate-200/50"
+                    nameColor="text-slate-200"
+                    borderColor="border-slate-500"
+                    slides={sportSlides}
+                />
+            </section>
+            <section className="py-10">
+                <GetSliderWithProducts
+                    tags={['Footwear', 'sport']}
+                    category="Hats"
+                    sideNavBackground="bg-slate-200"
+                    borderColor="border-slate-200"
+                    navTitle="Furniture"
+                    slides={furnitureSlides}
+                />
+            </section>
+            <section className="bg-gray-700 py-10">
                 <GetSliderWithVertical
                     tags={['Footwear', 'sport']}
                     category="Hats"
@@ -44,23 +48,27 @@ const Home = () => {
                     itemBorderColor="border-slate-700/50"
                     slides={photographySlides}
                 />
-            </div>
-            <GetSliderWithProducts
-                tags={['women', 'fashion', 'beauty']}
-                category="Women"
-                sideNavBackground="bg-slate-200"
-                borderColor="border-slate-200"
-                navTitle="Women"
-                slides={womenSlides}
-            />
-            <GetSliderWithProducts
-                tags={['women', 'fashion', 'beauty']}
-                category="Men"
-                sideNavBackground="bg-white"
-                borderColor="border-white"
-                navTitle="Men"
-                slides={menSlides}
-            />
+            </section>
+            <section className="py-10">
+                <GetSliderWithProducts
+                    tags={['women', 'fashion', 'beauty']}
+                    category="Women"
+                    sideNavBackground="bg-slate-200"
+                    borderColor="border-slate-200"
+                    navTitle="Women"
+                    slides={womenSlides}
+                />
+            </section>
+            <section className="bg-gray-100 py-10">
+                <GetSliderWithProducts
+                    tags={['women', 'fashion', 'beauty']}
+                    category="Men"
+                    sideNavBackground="bg-white"
+                    borderColor="border-white"
+                    navTitle="Men"
+                    slides={menSlides}
+                />
+            </section>
         </main>
     )
 }

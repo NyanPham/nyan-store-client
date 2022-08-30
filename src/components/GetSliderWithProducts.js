@@ -16,18 +16,16 @@ function GetSliderWithProducts({
     const products = useFetchProductsFromCategory(category)
 
     return (
-        <div className="py-10">
-            <SliderWithProduct
-                slides={slides}
-                products={products}
-                navTitle={navTitle}
-                sideNavBackground={sideNavBackground}
-                nameColor={nameColor}
-                borderColor={borderColor}
-                itemBorderColor={itemBorderColor}
-                caretColor={caretColor}
-            />
-        </div>
+        <SliderWithProduct
+            slides={slides}
+            products={products}
+            navTitle={navTitle}
+            sideNavBackground={sideNavBackground}
+            nameColor={nameColor}
+            borderColor={borderColor}
+            itemBorderColor={itemBorderColor}
+            caretColor={caretColor}
+        />
     )
 }
 
