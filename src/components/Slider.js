@@ -4,14 +4,13 @@ import { Navigation, Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+// import 'swiper/css/effect-creative'
 import { Link } from 'react-router-dom'
 import SlideCountdown from './SlideCountdown'
 
 export default function Slider({ slides, slidesPerView, direction = 'horizontal', setCurrentSlide = () => {} }) {
     return (
         <Swiper
-            autoplay={true}
-            delay={2000}
             direction={direction}
             spaceBetween={2}
             slidesPerView={1}

@@ -1,7 +1,7 @@
 import headPhoneImage from '../imgs/headphone.jpg'
 import laptopImage from '../imgs/laptop.jpg'
 import phoneImage from '../imgs/phone.jpg'
-import slideImage1 from '../imgs/man-street-style.png'
+// import slideImage1 from '../imgs/man-street-style.png'
 import jewelry1 from '../imgs/jw1.jpg'
 import jewelry2 from '../imgs/jw2.jpg'
 import jewelry3 from '../imgs/jw3.jpg'
