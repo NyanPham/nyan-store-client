@@ -117,3 +117,25 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+/* .filter-grid {
+    display: grid;
+    grid-template-areas: 
+        "sidebar topbar"
+        "sidebar view"
+    ;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+}
+
+.filter-sidebar {
+    grid-area: sidebar;
+}
+
+.filter-topbar {
+    grid-area: topbar;
+}
+
+.filter-view {
+    grid-area: view;
+} */

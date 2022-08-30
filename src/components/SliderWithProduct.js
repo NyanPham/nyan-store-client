@@ -21,7 +21,7 @@ function SliderWithProduct({
         <div>
             <Container>
                 <div className="flex items-center justify-center flex-col gap-8 lg:gap-0 lg:flex-row lg:items-stretch max-w-full shadow-lg">
-                    <div className={` ${sideNavBackground} self-stretch`}>
+                    <div className={` ${sideNavBackground} self-stretch flex-shrink-0 w-64 hidden lg:block`}>
                         <SideNavigation
                             title={navTitle}
                             isDrawer={false}

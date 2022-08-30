@@ -48,7 +48,7 @@ const Header = () => {
 
     return (
         <header
-            className={`sticky top-0 left-0 w-full z-40 bg-white transform transition duration-500 ${
+            className={`sticky top-0 left-0 w-full z-20 bg-white transform transition duration-500 ${
                 scrollDir === 'down' ? '-translate-y-full' : 'translate-y-0'
             }`}
         >

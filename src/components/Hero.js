@@ -8,7 +8,9 @@ function Hero() {
     return (
         <Container>
             <div className="flex items-start gap-5">
-                <SideNavigation title="Categories" />
+                <div className="w-64 flex flex-shrink-0 hidden lg:block">
+                    <SideNavigation title="Categories" />
+                </div>
                 <Slider slides={heroSlides} slidesPerView={1} />
             </div>
         </Container>

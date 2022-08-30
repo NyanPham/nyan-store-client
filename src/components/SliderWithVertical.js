@@ -16,7 +16,7 @@ function SliderWithVertical({
         <div>
             <Container>
                 <div className="flex justify-center flex-col lg:flex-row items-stretch max-w-full shadow-lg">
-                    <div className={` ${sideNavBackground} self-stretch`}>
+                    <div className={` ${sideNavBackground} self-stretch flex-shrink-0 w-64 hidden lg:block`}>
                         <SideNavigation
                             title={navTitle}
                             isDrawer={false}
