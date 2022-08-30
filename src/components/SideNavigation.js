@@ -31,21 +31,29 @@ const navObjArray = [
     },
 ]
 
-function SideNavigation({ title, isDrawer }) {
+function SideNavigation({
+    title,
+    isDrawer,
+    nameColor = 'text-slate-700',
+    borderColor = 'border-slate-200',
+    itemBorderColor = 'border-slate-900/10',
+    caretColor = 'text-slate-400',
+    themeColor = 'text-cyan-400',
+}) {
     return (
         <div
             className={`${
                 isDrawer ? 'bg-white h-full' : 'hidden lg:block'
-            }  w-64 border border-slate-200 rounded-lg py-2 px-4 shrink-0 self-start`}
+            }  w-64 border ${borderColor} rounded-lg py-2 px-4 shrink-0 self-start`}
         >
-            <h2 className="font-semibold text-2xl text-cyan-400">{title}</h2>
+            <h2 className={`font-semibold text-2xl mt-2 ${themeColor}`}>{title}</h2>
             <div className="flex flex-col justify-center items-start gap-1 mt-3">
                 {navObjArray.map((obj, index) => {
                     return (
                         <Link
                             to={`/categories/${obj.navName}`}
                             className={`p-3 flex justify-between items-center w-full group ${
-                                index === navObjArray.length - 1 ? '' : ' border-b border-slate-900/10'
+                                index === navObjArray.length - 1 ? '' : `border-b ${itemBorderColor}`
                             }`}
                             key={`navigation_${index}_${Date.now()}`}
                         >
@@ -54,10 +62,10 @@ function SideNavigation({ title, isDrawer }) {
                                     className="w-4 h-4 inline-block text-cyan-400 group-hover:animate-shake"
                                     icon={obj.icon}
                                 />
-                                <h4 className="text-slate-700 font-medium text-base">{obj.navName}</h4>
+                                <h4 className={`${nameColor} text-slate-700 font-medium text-base`}>{obj.navName}</h4>
                             </div>
                             <FontAwesomeIcon
-                                className="text-xs text-slate-400 group-hover:translate-x-0.5 transform transition duration-200"
+                                className={`text-xs ${caretColor} group-hover:translate-x-0.5 transform transition duration-200`}
                                 icon={faAngleRight}
                             />
                         </Link>

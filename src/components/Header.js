@@ -15,7 +15,7 @@ import defaultAvatar from '../imgs/default.jpg'
 
 const Header = () => {
     return (
-        <header className="sticky top-0 left-0 w-full z-10">
+        <header className="sticky top-0 left-0 w-full z-40 bg-white">
             <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16">
                 <div className="flex items-center gap-6 grow">
                     <img className="w-36 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />

@@ -13,8 +13,6 @@ export function fetchCategories() {
                 url: '/api/v1/categories',
             })
 
-            console.log(res)
-
             if (res.data.status === 'success') {
                 dispatch({
                     type: ACTIONS.FETCH_CATEGORIES,

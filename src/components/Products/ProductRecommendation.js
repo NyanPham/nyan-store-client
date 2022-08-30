@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SwiperSlide } from 'swiper/react'
 import { useSelector } from 'react-redux/es/exports'
-import useFetchProducts from '../../hooks/useFetchProducts'
+import { useFetchProductsFromCollection } from '../../hooks/useFetchProducts'
 import ProductCard from './ProductCard'
 import ProductShowcase from './ProductShowcase'
 import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
@@ -9,12 +9,12 @@ import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 function ProductRecommendation() {
     const collections = useSelector((state) => state.collections)
     const categories = useSelector((state) => state.categories)
-    const products = useFetchProducts(collections, 'New Arrival')
+    const products = useFetchProductsFromCollection(collections, 'New Arrival')
     const [slidesPerView, setSlidesPerView] = useState(() => {
         if (products.length) {
             return products.length <= 4 ? products.length + 1 : 5
         } else {
-            return 3
+            return 5
         }
     })
 
@@ -52,8 +52,6 @@ function ProductRecommendation() {
             </SwiperSlide>
         )
     })
-
-    // const slidesPerView = productCards.length <= 4 ? productCards.length + 1 : 5
 
     return (
         <div className="bg-slate-200 p-5 lg:py-12 lg:px-12">

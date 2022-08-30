@@ -7,6 +7,14 @@ export const useAuthContext = () => useContext(AuthContext)
 export default function AuthContextProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+    const authLogin = () => {
+        setIsLoggedIn(true)
+    }
+
+    const authLogout = () => {
+        setIsLoggedIn(false)
+    }
+
     useEffect(() => {
         async function fetchIsLoggedIn() {
             try {
@@ -28,5 +36,5 @@ export default function AuthContextProvider({ children }) {
         fetchIsLoggedIn()
     }, [])
 
-    return <AuthContext.Provider value={isLoggedIn}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{ isLoggedIn, authLogin, authLogout }}>{children}</AuthContext.Provider>
 }

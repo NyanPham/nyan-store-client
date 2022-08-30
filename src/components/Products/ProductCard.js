@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 
 export default function ProductCard(props) {
-    console.log(props)
-    const { SKU, id, images, name, slug, variants, vendor, createdAt, minPrice, inAuction, currentBid } = props
+    const { id, images, name, slug, variants, vendor, createdAt, inAuction = false, currentBid = false } = props
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const firstVariant = variants[0]
+
+    console.log(currentBid)
 
     return (
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
@@ -18,7 +19,7 @@ export default function ProductCard(props) {
             </Link>
             <div className="product-card-info mt-3">
                 <h3 className="text-center text-ellipsis text-gray-900 text-base font-semibold">{name}</h3>
-                {currentBid == null && (
+                {currentBid === false && (
                     <div className="flex justify-center items-center gap-2">
                         {firstVariant.oldPrice ? (
                             <>
@@ -30,7 +31,8 @@ export default function ProductCard(props) {
                         )}
                     </div>
                 )}
-                {currentBid != null && <span className="product-card-price">${currentBid}</span>}
+                {typeof currentBid === 'number' ||
+                    (typeof currentBid === 'string' && <span className="product-card-price">${currentBid}</span>)}
             </div>
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
                 <ProductCardAction productId={id} />

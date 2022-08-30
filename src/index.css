@@ -50,6 +50,14 @@
     .overlay {
         @apply fixed left-0 top-0 w-screen h-screen z-30 bg-gray-900/70
     }
+
+    .alert-error {
+        @apply w-full px-4 py-2 bg-red-300 text-red-600 border border-red-500 block rounded-sm mt-3
+    }
+
+    .alert-success {
+        @apply w-full px-4 py-2 bg-green-300 text-green-600 border border-green-500 block rounded-sm mt-3
+    }
 }
 
 :root {
@@ -75,4 +83,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.swiper {
+    max-width: 100%;
 }

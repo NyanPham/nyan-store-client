@@ -4,19 +4,20 @@ import { faHeart, faCartPlus, faEye } from '@fortawesome/free-solid-svg-icons'
 import { useAuthContext } from '../../context/authContext'
 import { useDispatch, useSelector } from 'react-redux'
 import { addWishlist, removeWishlist } from '../../redux/actions/wishlistActions'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function ProductCardAction({ productId }) {
-    const isLoggedIn = useAuthContext()
+    const { isLoggedIn } = useAuthContext()
     const wishlist = useSelector((state) => state.wishlist)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const alreadyAdded = wishlist.some((item) => {
         return item.item === productId
     })
 
     function handleWishlistClick(e) {
-        if (!isLoggedIn) return window.location.assign('/log-in')
+        if (!isLoggedIn) return navigate('/log-in')
         if (!alreadyAdded) {
             return dispatch(addWishlist(productId))
         }

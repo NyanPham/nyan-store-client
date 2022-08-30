@@ -34,7 +34,7 @@ export const getBiddingProduct = () => {
                 })
             }
         } catch (err) {
-            console.log(err.response.data.message)
+            console.error(err.response.data.message)
         }
     }
 }

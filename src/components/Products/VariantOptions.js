@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { COLOR_MAP, OPTION_TYPES_MAP } from '../data'
+import { COLOR_MAP } from '../data'
 
 function VariantOptions({ options, styles, textHidden, optionType, handleOptionChange, optionOrderNum }) {
     const [selectedOption, setSelectOption] = useState(() => options[0])
@@ -15,9 +15,9 @@ function VariantOptions({ options, styles, textHidden, optionType, handleOptionC
     return (
         <>
             {options[0] && (
-                <div className="form-group">
+                <div className="w-full flex flex-col mt-3">
                     <h3 className="form-label">{optionType}</h3>
-                    <div className="flex">
+                    <div className="flex mt-1 gap-2 w-full">
                         {options.map((option, index) => (
                             <Option
                                 key={`option_${option}_${index}`}
@@ -47,9 +47,9 @@ function Option({ option, configures, handleClick, isSelected, optionOrderNum })
                 <>
                     <label
                         htmlFor={`${optionOrderNum}_${option}`}
-                        className={`relative cursor-pointer ${styles} ${color && color} ${
-                            isSelected && 'border-2 border-gray-900'
-                        }`}
+                        className={`relative cursor-pointer transform transition duration-200 ${styles} ${
+                            color && color
+                        } ${isSelected && (color ? `ring-1 ring-offset-1 ring-gray-900` : 'border-2 border-gray-900')}`}
                         data-value={option}
                         onClick={handleClick}
                     >
@@ -62,21 +62,3 @@ function Option({ option, configures, handleClick, isSelected, optionOrderNum })
     )
 }
 export default VariantOptions
-
-// createOption(option, {
-//     key: `option_1_${index}`,
-//     styles: 'w-7 h-7 flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300',
-//     textHidden: false,
-// })
-
-// createOption(option, {
-//     key: `option_2_${index}`,
-//     styles: 'w-7 h-7 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300',
-//     textHidden: true,
-// })
-
-// createOption(option, {
-//     key: `option_3_${index}`,
-//     styles: 'w-7 h-7 flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300',
-//     textHidden: false,
-// })

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import useDebounce from './useDebounce'
 
-export default function useFetchProducts(collections, collectionName) {
+export function useFetchProductsFromCollection(collections, collectionName) {
     const [products, setProducts] = useState([])
 
     useDebounce(
@@ -21,7 +21,6 @@ export default function useFetchProducts(collections, collectionName) {
                     if (res.data.status === 'success') {
                         setProducts(res.data.data.docs)
                     }
-                    console.log(res.data.data.docs)
                 } catch (err) {
                     console.error(err)
                 }
@@ -31,6 +30,47 @@ export default function useFetchProducts(collections, collectionName) {
         },
         500,
         [collectionName]
+    )
+
+    return products
+}
+
+export function useFetchProductsFromCategory(cateogryName) {
+    const [products, setProducts] = useState([])
+
+    useDebounce(
+        async () => {
+            const fetchProducts = async (cateogryName) => {
+                let categoryIds
+                try {
+                    const res = await axios({
+                        method: 'GET',
+                        url: `api/v1/categories?name=${cateogryName}`,
+                    })
+                    if (res.data.status === 'success') {
+                        categoryIds = res.data.data.docs.map((category) => category._id)
+                    }
+
+                    const responses = await Promise.all(
+                        categoryIds.map(async (categoryId) => {
+                            return await axios({
+                                method: 'GET',
+                                url: `api/v1/categories/${categoryId}/products`,
+                            })
+                        })
+                    )
+
+                    const products = [...responses.flatMap((res) => res.data.data.docs)]
+                    setProducts(products)
+                } catch (err) {
+                    console.error(err.response.data.message)
+                }
+            }
+
+            fetchProducts(cateogryName)
+        },
+        500,
+        [cateogryName]
     )
 
     return products

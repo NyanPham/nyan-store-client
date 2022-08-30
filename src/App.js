@@ -13,9 +13,8 @@ import { emptyWishlist, getWishlist } from './redux/actions/wishlistActions'
 import { getBiddingProduct } from './redux/actions/biddingActions'
 
 function App() {
-    const isLoggedIn = useAuthContext()
+    const { isLoggedIn } = useAuthContext()
     const dispatch = useDispatch()
-    const wishlist = useSelector((state) => state.wishlist)
 
     dispatch(fetchCollections())
     dispatch(fetchCategories())

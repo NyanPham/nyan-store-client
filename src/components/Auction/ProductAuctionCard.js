@@ -5,12 +5,14 @@ import Countdown from '../Countdown'
 import ProductCard from '../Products/ProductCard'
 import AuctionForm from './AuctionForm'
 import { useSelector, useDispatch } from 'react-redux'
+import { useAuthContext } from '../../context/authContext'
 
 function ProductAuctionCard({ product }) {
+    const { isLoggedIn } = useAuthContext()
     const [openAuctionModal, setOpenAuctionModal] = useState(false)
     const [autionData, setAutionData] = useState([])
+    const [userBidsOnProduct, setUserBidsOnProduct] = useState([])
     const { message, error } = useSelector((state) => state.biddingProducts)
-    const dispatch = useDispatch()
 
     const fetchAutionData = async (productId) => {
         try {
@@ -20,6 +22,20 @@ function ProductAuctionCard({ product }) {
             })
             if (res.data.status === 'success') {
                 setAutionData(res.data.data.docs)
+            }
+        } catch (err) {
+            console.error(err.response.data.message)
+        }
+    }
+
+    const fetchUserBiddingOnProduct = async (productId) => {
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: `/api/v1/users/myBidding?product=${productId}`,
+            })
+            if (res.data.status === 'success') {
+                setUserBidsOnProduct(res.data.data.docs)
             }
         } catch (err) {
             console.error(err.response.data.message)
@@ -46,12 +62,16 @@ function ProductAuctionCard({ product }) {
             return maxBid
         }, 0)
 
-    console.log(currentBid)
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchUserBiddingOnProduct(product._id)
+        }
+    }, [currentBid, product._id, isLoggedIn])
 
     return (
         <>
             <div>
-                <ProductCard {...product} inAuction={true} currentBid={currentBid} />
+                <ProductCard {...product} inAuction={true} currentBid={isLoggedIn ? currentBid : 'Log in to bid'} />
                 <Countdown dueDate={product.auctionExpiresIn} />
                 <button
                     className="w-full py-1 mt-4 bg-cyan-400 text-white text-lg font-semibold rounded-2xl hover:bg-gray-900 hover:text-cyan-400 transition transform duration-200"
@@ -63,7 +83,7 @@ function ProductAuctionCard({ product }) {
             {openAuctionModal &&
                 createPortal(
                     <>
-                        <AuctionForm product={product} setOpenModal={setOpenAuctionModal} />
+                        <AuctionForm product={product} setOpenModal={setOpenAuctionModal} currentBid={currentBid} />
                     </>,
                     document.getElementById('popup-container')
                 )}

@@ -2,10 +2,12 @@ import React, { useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/login-background.jpg'
 import { useAuthContext } from '../../context/authContext'
+import { useNavigate } from 'react-router-dom'
 
 // Need to move the image background render to the className later
 function Login() {
-    const isLoggedIn = useAuthContext()
+    const { authLogin } = useAuthContext()
+    const navigate = useNavigate()
 
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -29,7 +31,8 @@ function Login() {
             })
             if (res.data.status === 'success') {
                 alert('You have logged in successfully!')
-                window.location.assign('/')
+                authLogin()
+                navigate('/', { replace: true })
             }
         } catch (err) {
             alert(err.response.data.message)

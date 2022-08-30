@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { COLOR_MAP } from '../data'
 import VariantOptions from './VariantOptions'
 
-function VariantsPicker({ variants, buttonText, formSubmitHandler }) {
-    const [name, setName] = useState(() => variants[0].name)
-    const [price, setPrice] = useState(() => variants[0].price)
-    const [comparePrice, setComparePrice] = useState(() => variants[0].oldPrice)
+function VariantsPicker(props) {
+    const { variants, buttonText, formSubmitHandler, currentBid } = props
+
     const [selectedVariant, setSelectedVariant] = useState(variants[0])
     const [isUnavailable, setIsUnavailable] = useState(false)
     const [isSoldOut, setIsSoldOut] = useState(variants[0].inventory === 0)
+
+    const priceRef = useRef()
 
     const firstOptions = filterDuplicateOption(variants, 'option1')
     const secondOptions = filterDuplicateOption(variants, 'option2')
@@ -38,17 +39,19 @@ function VariantsPicker({ variants, buttonText, formSubmitHandler }) {
     function handleSubmit(e) {
         e.preventDefault()
 
-        formSubmitHandler(selectedVariant._id)
+        formSubmitHandler({ variantId: selectedVariant._id, bidPrice: priceRef.current.value })
     }
 
     return (
         <div className="">
-            <h3>{name}</h3>
-            <div className="flex gap-2">
-                <span>{comparePrice}</span>
-                <span>{price}</span>
+            <h3 className="text-xl text-slate-700 font-semibold capitalize">{selectedVariant.name}</h3>
+            <div className="flex gap-2 justify-start items-center mt-2">
+                {selectedVariant.oldPrice && (
+                    <span className="product-card-compare-price text-base">${selectedVariant.oldPrice}</span>
+                )}
+                <span className="product-card-price text-2xl">${selectedVariant.price}</span>
             </div>
-            <form className="form space-y-4 mt-7" onSubmit={handleSubmit}>
+            <form className="form mt-1 w-full" onSubmit={handleSubmit}>
                 {secondOptions && (
                     <VariantOptions
                         options={secondOptions}
@@ -65,7 +68,7 @@ function VariantsPicker({ variants, buttonText, formSubmitHandler }) {
                     <VariantOptions
                         options={firstOptions}
                         styles={
-                            'w-7 h-7 flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300'
+                            'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm border border-slate-300'
                         }
                         textHidden={false}
                         handleOptionChange={handleOptionChange}
@@ -77,7 +80,7 @@ function VariantsPicker({ variants, buttonText, formSubmitHandler }) {
                     <VariantOptions
                         options={thirdOptions}
                         styles={
-                            'w-7 h-7 flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300'
+                            'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm border border-slate-300'
                         }
                         textHidden={false}
                         handleOptionChange={handleOptionChange}
@@ -85,9 +88,27 @@ function VariantsPicker({ variants, buttonText, formSubmitHandler }) {
                         optionType="Material"
                     />
                 )}
+                {currentBid != null && (
+                    <div className="form-group">
+                        <label htmlFor="auction-price" className="form-label">
+                            Your Bid
+                        </label>
+                        <input
+                            className="form-input"
+                            type="number"
+                            name="auction-price"
+                            id="auction-price"
+                            min={currentBid + 1}
+                            step={1}
+                            defaultValue={currentBid + 1}
+                            ref={priceRef}
+                        />
+                    </div>
+                )}
                 <button
-                    className="w-full mt-7 py-1 text-lg font-semibold text-white bg-cyan-400 rounded-lg disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-500"
+                    className="w-full mt-5 py-1 text-lg font-semibold text-white bg-cyan-400 rounded-lg disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-500"
                     disabled={isUnavailable || isSoldOut}
+                    type="submit"
                 >
                     {actionButtonText}
                 </button>
