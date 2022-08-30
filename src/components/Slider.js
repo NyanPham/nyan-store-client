@@ -10,6 +10,8 @@ import SlideCountdown from './SlideCountdown'
 export default function Slider({ slides, slidesPerView, direction = 'horizontal', setCurrentSlide = () => {} }) {
     return (
         <Swiper
+            autoplay={true}
+            delay={2000}
             direction={direction}
             spaceBetween={2}
             slidesPerView={1}

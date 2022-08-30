@@ -14,31 +14,29 @@ function SliderWithPreview() {
     }
 
     return (
-        <div className="py-12">
-            <Container>
-                <div className="flex items-stretch gap-4 lg:gap-8">
-                    <SideNavigation title="Best Deal Promo Category" isDrawer={false} />
-                    <Slider slides={slidesWPreview} slidesPerView={1} setCurrentSlide={setCurrentSlide} />
-                    <div className="hidden w-1/4 flex-shrink-0 justify-self-stretch -ml-2 xl:-ml-5 relative lg:flex">
-                        <div className="h-full w-full"></div>
-                        {slidesWPreview.map((slide, index) => (
-                            <div
-                                className={`h-full w-full absolute top-0 left-0 opacity-0 transform transition duration-300 ${
-                                    nextSlide === index && 'opacity-100'
-                                }`}
-                                key={`slide_preview_image_${index}`}
-                            >
-                                <img
-                                    className="h-full w-full object-cover object-center"
-                                    src={slide.image}
-                                    alt={slide.title}
-                                />
-                            </div>
-                        ))}
-                    </div>
+        <Container>
+            <div className="flex items-stretch gap-4 lg:gap-8">
+                <SideNavigation title="Best Deal Promo Category" isDrawer={false} />
+                <Slider slides={slidesWPreview} slidesPerView={1} setCurrentSlide={setCurrentSlide} />
+                <div className="hidden w-1/4 flex-shrink-0 justify-self-stretch -ml-2 xl:-ml-5 relative lg:flex">
+                    <div className="h-full w-full"></div>
+                    {slidesWPreview.map((slide, index) => (
+                        <div
+                            className={`h-full w-full absolute top-0 left-0 opacity-0 transform transition duration-300 ${
+                                nextSlide === index && 'opacity-100'
+                            }`}
+                            key={`slide_preview_image_${index}`}
+                        >
+                            <img
+                                className="h-full w-full object-cover object-center"
+                                src={slide.image}
+                                alt={slide.title}
+                            />
+                        </div>
+                    ))}
                 </div>
-            </Container>
-        </div>
+            </div>
+        </Container>
     )
 }
 

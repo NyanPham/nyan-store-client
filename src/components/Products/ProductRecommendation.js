@@ -54,13 +54,11 @@ function ProductRecommendation() {
     })
 
     return (
-        <div className="bg-slate-200 p-5 lg:py-12 lg:px-12">
-            <ProductShowcase
-                productCards={[recommendationCard, ...productCards]}
-                isSlider={true}
-                slidesPerView={slidesPerView}
-            />
-        </div>
+        <ProductShowcase
+            productCards={[recommendationCard, ...productCards]}
+            isSlider={true}
+            slidesPerView={slidesPerView}
+        />
     )
 }
 

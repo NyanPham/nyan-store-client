@@ -10,11 +10,21 @@ import GetSliderWithVertical from '../GetSliderWithVertical'
 const Home = () => {
     return (
         <main className="z-0">
-            <Hero />
-            <ProductRecommendation />
-            <SliderWithPreview />
-            <ProductAuction />
-            <AuctionSlider />
+            <section className="md:mt-7">
+                <Hero />
+            </section>
+            <section className="bg-slate-200 p-5 lg:py-12 lg:px-12">
+                <ProductRecommendation />
+            </section>
+            <section className="py-12">
+                <SliderWithPreview />
+            </section>
+            <section className="bg-slate-200 py-7">
+                <ProductAuction />
+            </section>
+            <section className="pb-7 pt-3 bg-slate-200">
+                <AuctionSlider />
+            </section>
             <section className="py-10">
                 <GetSliderWithProducts
                     tags={['Footwear', 'sport']}

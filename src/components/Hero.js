@@ -6,14 +6,12 @@ import { heroSlides } from './data'
 
 function Hero() {
     return (
-        <div className="mt-7">
-            <Container>
-                <div className="flex items-start gap-5">
-                    <SideNavigation title="Categories" />
-                    <Slider slides={heroSlides} slidesPerView={1} />
-                </div>
-            </Container>
-        </div>
+        <Container>
+            <div className="flex items-start gap-5">
+                <SideNavigation title="Categories" />
+                <Slider slides={heroSlides} slidesPerView={1} />
+            </div>
+        </Container>
     )
 }
 

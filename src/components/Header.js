@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import defaultAvatar from '../imgs/default.jpg'
 
 const Header = () => {
-    const [scrollDir, setScrollDir] = useState('down')
+    const [scrollDir, setScrollDir] = useState('up')
 
     useEffect(() => {
         const threshold = 50
@@ -48,7 +48,7 @@ const Header = () => {
 
     return (
         <header
-            className={`sticky top-0 left-0 w-full z-40 bg-white transform transition duration-200 ${
+            className={`sticky top-0 left-0 w-full z-40 bg-white transform transition duration-500 ${
                 scrollDir === 'down' ? '-translate-y-full' : 'translate-y-0'
             }`}
         >

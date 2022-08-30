@@ -74,7 +74,7 @@ export const heroSlides = [
         button: {
             text: 'Learn More',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -126,7 +126,7 @@ export const heroSlides = [
         button: {
             text: 'Learn More',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
 ]
@@ -328,7 +328,7 @@ export const sportSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold text-white tracking-wide text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -346,7 +346,7 @@ export const sportSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold text-white tracking-wide text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
 ]
@@ -367,7 +367,7 @@ export const furnitureSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -385,7 +385,7 @@ export const furnitureSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
 ]
@@ -406,7 +406,7 @@ export const womenSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -424,7 +424,7 @@ export const womenSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
 ]
@@ -445,7 +445,7 @@ export const menSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -463,7 +463,7 @@ export const menSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
     {
@@ -481,7 +481,7 @@ export const menSlides = [
         button: {
             text: 'Buy Now',
             link: '/',
-            styles: 'bg-cyan-400 uppercase font-normal text-white text-lg py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
 ]
