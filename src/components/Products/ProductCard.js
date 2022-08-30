@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 
 export default function ProductCard(props) {
-    const { SKU, id, images, name, slug, variants, vendor, createdAt, minPrice, inAuction } = props
+    console.log(props)
+    const { SKU, id, images, name, slug, variants, vendor, createdAt, minPrice, inAuction, currentBid } = props
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const firstVariant = variants[0]
@@ -17,16 +18,19 @@ export default function ProductCard(props) {
             </Link>
             <div className="product-card-info mt-3">
                 <h3 className="text-center text-ellipsis text-gray-900 text-base font-semibold">{name}</h3>
-                <div className="flex justify-center items-center gap-2">
-                    {firstVariant.oldPrice ? (
-                        <>
-                            <span className="product-card-compare-price">${firstVariant.oldPrice}</span>
+                {currentBid == null && (
+                    <div className="flex justify-center items-center gap-2">
+                        {firstVariant.oldPrice ? (
+                            <>
+                                <span className="product-card-compare-price">${firstVariant.oldPrice}</span>
+                                <span className="product-card-price">${firstVariant.price}</span>
+                            </>
+                        ) : (
                             <span className="product-card-price">${firstVariant.price}</span>
-                        </>
-                    ) : (
-                        <span className="product-card-price">${firstVariant.price}</span>
-                    )}
-                </div>
+                        )}
+                    </div>
+                )}
+                {currentBid != null && <span className="product-card-price">${currentBid}</span>}
             </div>
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
                 <ProductCardAction productId={id} />

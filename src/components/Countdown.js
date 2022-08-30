@@ -56,7 +56,7 @@ function CountDownCard({ time, type, index }) {
     return (
         <>
             <div className="flex flex-col">
-                <div className="w-9 h-10 flex items-center justify-center bg-slate-400 rounded-md text-gray-900 font-semibold">
+                <div className="w-7 h-8 lg:w-9 lg:h-10 flex items-center justify-center bg-slate-400 rounded-md text-gray-900 font-semibold">
                     {time < 10 ? `0${time}` : time}
                 </div>
                 <span className="text-center text-sm font-medium text-gray-900">{text}</span>

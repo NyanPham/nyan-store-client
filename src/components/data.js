@@ -3,6 +3,35 @@ import laptopImage from '../imgs/laptop.jpg'
 import phoneImage from '../imgs/phone.jpg'
 import slideImage1 from '../imgs/man-street-style.png'
 
+export const COLOR_MAP = {
+    green: 'bg-green-500',
+    red: 'bg-red-500',
+    black: 'bg-gray-900',
+    white: 'bg-white',
+    blue: 'bg-blue-500',
+    purple: 'bg-purple-500',
+}
+
+export const OPTION_TYPES_MAP = {
+    color: [
+        'green',
+        'red',
+        'black',
+        'white',
+        'purple',
+        'blue',
+        'cyan',
+        'yellow',
+        'gray',
+        'slate',
+        'pink',
+        'orange',
+        'sky',
+    ],
+    size: ['XXS', 'XS', 'SM', 'M', 'L', 'XXL', 'XXXl'],
+    material: ['rubber', 'fabric', 'fiber'],
+}
+
 export const heroSlides = [
     {
         image: slideImage1,

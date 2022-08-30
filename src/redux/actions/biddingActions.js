@@ -2,6 +2,17 @@ import axios from 'axios'
 
 const ACTIONS = {
     GET_BIDDING_PRODUCTS: 'get-bidding-products',
+    AUCTION_PRODUCT: 'auction-a-product',
+    AUCTION_START: 'start-to-auction',
+    AUCTION_FAILED: 'fail-to-auction',
+    AUCTION_SUCCESS: 'succeed-to-auction',
+    AUCTION_MESSAGE_ERRO_RESET: 'reset-auction-message-error',
+}
+
+export const resetMessagesAndError = () => {
+    return {
+        type: ACTIONS.AUCTION_MESSAGE_ERRO_RESET,
+    }
 }
 
 export const getBiddingProduct = () => {
@@ -24,6 +35,33 @@ export const getBiddingProduct = () => {
             }
         } catch (err) {
             console.log(err.response.data.message)
+        }
+    }
+}
+
+export const auctionProduct = (data) => {
+    return async (dispatch) => {
+        dispatch({
+            type: ACTIONS.AUCTION_START,
+        })
+        try {
+            const res = await axios({
+                method: 'POST',
+                url: '/api/v1/bidding',
+                data,
+            })
+            if (res.data.status === 'success') {
+                dispatch({
+                    type: ACTIONS.AUCTION_SUCCESS,
+                })
+            }
+        } catch (err) {
+            dispatch({
+                type: ACTIONS.AUCTION_FAILED,
+                payload: {
+                    error: err.response.data.message,
+                },
+            })
         }
     }
 }

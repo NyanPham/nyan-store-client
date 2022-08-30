@@ -40,17 +40,20 @@
     }
 
     .product-card-price {
-        @apply text-cyan-400 text-base font-semibold 
+        @apply text-cyan-400 text-base font-semibold;
     }
 
     .product-card-compare-price {
-        @apply text-amber-300 text-sm line-through font-medium
+        @apply text-amber-300 text-sm line-through font-medium;
+    }
+
+    .overlay {
+        @apply fixed left-0 top-0 w-screen h-screen z-30 bg-gray-900/70
     }
 }
 
-
 :root {
-    --swiper-theme-color: #22D3EE;
+    --swiper-theme-color: #22d3ee;
     --swiper-navigation-size: 30px;
     --swiper-pagination-bullet-size: 8px;
     --swiper-pagination-bullet-inactive-color: var(--swiper-theme-color);
@@ -67,7 +70,8 @@
     --swiper-pagination-bullet-size: 12px;
 }
 
-.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
     display: flex;
     justify-content: center;
     align-items: center;
