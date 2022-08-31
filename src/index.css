@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
     .header-navigation-btn {
         @apply w-7 h-7 flex items-center justify-center hover:border-cyan-300 active:border-cyan-500 transition duration-200;
@@ -49,15 +48,15 @@
     }
 
     .overlay {
-        @apply fixed left-0 top-0 w-screen h-screen z-30 bg-gray-900/70
+        @apply fixed left-0 top-0 w-screen h-screen z-30 bg-gray-900/70;
     }
 
     .alert-error {
-        @apply w-full px-4 py-2 bg-red-300 text-red-600 border border-red-500 block rounded-sm mt-3
+        @apply w-full px-4 py-2 bg-red-300 text-red-600 border border-red-500 block rounded-sm mt-3;
     }
 
     .alert-success {
-        @apply w-full px-4 py-2 bg-green-300 text-green-600 border border-green-500 block rounded-sm mt-3
+        @apply w-full px-4 py-2 bg-green-300 text-green-600 border border-green-500 block rounded-sm mt-3;
     }
 }
 
@@ -112,8 +111,8 @@
     height: auto;
 }
 
-.swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet, 
-.swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
+.swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
     margin-left: auto;
     margin-right: auto;
 }
@@ -139,3 +138,47 @@
 .filter-view {
     grid-area: view;
 } */
+
+.price-slider-container input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #22d3ee;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 0 1px #1d6b77;
+    cursor: pointer;
+}
+
+.price-slider-container input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #22d3ee;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 0 1px #1d6b77;
+    cursor: pointer;  
+}
+
+.price-slider-container input[type=range]::-webkit-slider-thumb:hover {
+    background: #54d8ec;
+}
+
+.price-slider-container input[type=range]::-webkit-slider-thumb:active {
+  box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+  -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+}
+ 
+.price-slider-container input[type="range"] {
+    -webkit-appearance: none; 
+    appearance: none;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    pointer-events: none;
+} 

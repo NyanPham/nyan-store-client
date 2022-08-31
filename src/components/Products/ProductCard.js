@@ -8,8 +8,6 @@ export default function ProductCard(props) {
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const firstVariant = variants[0]
 
-    console.log(currentBid)
-
     return (
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
             <Link to={`/products/${slug}`} className="product-image w-full h-fit">

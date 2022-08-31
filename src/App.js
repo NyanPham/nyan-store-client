@@ -54,6 +54,26 @@ function App() {
                             </>
                         }
                     />
+                    <Route
+                        path="/categories"
+                        element={
+                            <>
+                                <Header />
+                                <Search />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/categories/:categoryName"
+                        element={
+                            <>
+                                <Header />
+                                <Search />
+                                <Footer />
+                            </>
+                        }
+                    />
                     <Route path="/sign-up" element={<Signup />} />
                     <Route path="/log-in" element={<Login />} />
                 </Routes>

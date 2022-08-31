@@ -1,16 +1,20 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import useDebounce from '../../hooks/useDebounce'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import querializeParams from '../../utils/querializeParams'
 import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
+import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
-export default function FilterSidebar() {
+export default function FilterSidebar({ setData, sortBy, categoryId }) {
     const [facetOptions, setFacetOptions] = useState([])
-    const [filterQuery, setFilterQuery] = useState({})
-    const [searchedProducts, setSearchedProducts] = useState([])
-    const skip = 0
-    const limit = 15
+    const [filterQuery, setFilterQuery] = useState({
+        skip: 0,
+        limit: 15,
+        sortBy,
+        categoryId,
+    })
 
     const allAvailableOptions = {}
     Object.entries(facetOptions).forEach(([key, value]) => {
@@ -29,34 +33,46 @@ export default function FilterSidebar() {
         })
     }
 
-    useDeepCompareEffect(() => {
-        if (filterQuery != null) {
-            const obj = {}
-
-            const searchProducts = async (filterQuery) => {
-                try {
-                    const res = await axios({
-                        method: 'POST',
-                        url: `/api/v1/products/filter`,
-                        data: {
-                            filterQuery,
-                            all: {
-                                ...allAvailableOptions,
-                            },
-                            skip,
-                            limit,
-                        },
-                    })
-
-                    console.log(res.data.data.products)
-                } catch (err) {
-                    console.error(err.response.data.message)
-                }
+    const collectPriceRange = useCallback(({ toValue, fromValue }) => {
+        setFilterQuery((prevFilterQuery) => {
+            return {
+                ...prevFilterQuery,
+                maxPrice: toValue,
+                minPrice: fromValue,
             }
+        })
+    }, [])
 
-            searchProducts(filterQuery)
+    const searchProducts = async (filterQuery, allAvailableOptions) => {
+        try {
+            const res = await axios({
+                method: 'POST',
+                url: `/api/v1/products/filter`,
+                data: {
+                    filterQuery,
+                    all: {
+                        ...allAvailableOptions,
+                    },
+                },
+            })
+
+            if (res.data.status === 'success') {
+                setData(res.data)
+            }
+        } catch (err) {
+            console.error(err)
         }
-    }, [filterQuery])
+    }
+
+    useDebounce(
+        () => {
+            if (filterQuery != null) {
+                searchProducts(filterQuery, allAvailableOptions)
+            }
+        },
+        250,
+        [filterQuery]
+    )
 
     useEffect(() => {
         const fetchFilterFacets = async () => {
@@ -77,19 +93,42 @@ export default function FilterSidebar() {
         fetchFilterFacets()
     }, [])
 
+    useEffect(() => {
+        setFilterQuery((prevFilterQuery) => {
+            return {
+                ...prevFilterQuery,
+                sortBy,
+                categoryId,
+            }
+        })
+    }, [sortBy, categoryId])
+
+    const reducePrice = (type, options) => {
+        return Object.entries(options).reduce((maxPrice, obj) => {
+            if (obj[1][0][type] != null) return obj[1][0][type]
+            return maxPrice
+        }, 0)
+    }
+
+    const maxPrice = reducePrice('maxPrice', facetOptions)
+    const minPrice = reducePrice('minPrice', facetOptions)
+
     return (
-        <div className="filter-sidebar w-full row-span-2 border border-gray-300">
+        <div className="filter-sidebar pb-7 w-full row-span-6 border border-gray-300">
             <SideNavigation title="Categories" borderColor="border-0" />
-            {Object.entries(facetOptions).map(([optionType, options], index) => {
-                return (
-                    <FilterFacetGroup
-                        key={`${optionType}_${index}`}
-                        optionType={optionType}
-                        options={options}
-                        collectOptionsState={collectOptionsState}
-                    />
-                )
-            })}
+            {Object.entries(facetOptions)
+                .filter(([key, _]) => key !== 'minPrice' && key !== 'maxPrice')
+                .map(([optionType, options], index) => {
+                    return (
+                        <FilterFacetGroup
+                            key={`${optionType}_${index}`}
+                            optionType={optionType}
+                            options={options}
+                            collectOptionsState={collectOptionsState}
+                        />
+                    )
+                })}
+            <FilterPriceRangeSliders maxPrice={maxPrice} minPrice={minPrice} collectPriceRange={collectPriceRange} />
         </div>
     )
 }
