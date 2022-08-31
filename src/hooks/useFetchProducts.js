@@ -28,7 +28,7 @@ export function useFetchProductsFromCollection(collections, collectionName) {
 
             fetchProducts(collectionName)
         },
-        500,
+        100,
         [collectionName]
     )
 

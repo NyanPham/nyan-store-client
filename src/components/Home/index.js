@@ -6,6 +6,7 @@ import ProductRecommendation from '../Products/ProductRecommendation'
 import SliderWithPreview from '../SliderWithPreview'
 import { sportSlides, furnitureSlides, womenSlides, menSlides, photographySlides } from '../data'
 import GetSliderWithVertical from '../GetSliderWithVertical'
+import SidebarNavigationDrawer from '../SidebarNavigationDrawer'
 
 const Home = () => {
     return (
@@ -79,6 +80,7 @@ const Home = () => {
                     slides={menSlides}
                 />
             </section>
+            <SidebarNavigationDrawer />
         </main>
     )
 }

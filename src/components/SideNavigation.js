@@ -43,7 +43,7 @@ function SideNavigation({
     return (
         <div
             className={`${
-                isDrawer ? 'bg-white h-full' : 'hidden lg:block'
+                isDrawer ? 'bg-white h-full' : 'block'
             }  w-full max-w-xs min-w-full border ${borderColor} rounded-lg py-2 px-4 shrink-0 self-start`}
         >
             <h2 className={`font-semibold text-2xl mt-2 ${themeColor}`}>{title}</h2>

@@ -70,7 +70,7 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
     }, [activeView, onViewBy])
 
     return (
-        <div className="filter-topbar py-6 px-10 h-max bg-white flex items-center justify-between border-r border-t border-b border-gray-300">
+        <div className="filter-topbar py-3 px-4 h-max bg-white flex flex-col gap-3 items-center justify-between border-r border-t border-b border-gray-300 md:flex-row ld:py-6 lg:px-10">
             <div className="flex items-center gap-2">
                 <FontAwesomeIcon className="w-7 h-7 text-cyan-400" icon={faSquarePollVertical} />
                 <span className="text-2xl text-slate-700 font-semibold leading-none">
@@ -95,7 +95,7 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
                                 openSort
                                     ? 'translate-y-3 pointer-events-auto opacity-100'
                                     : 'translate-y-0 pointer-events-none opacity-0'
-                            } bg-white transition transform duration-200 absolute right-0 top-full py-4 px-7 grid justify-center items-center grid-cols-3 grid-rows-5 gap-y-4 gap-x-6 text-left w-max shadow-lg border border-gray-300/30`}
+                            } bg-white transition transform duration-200 absolute right-0 left-0 md:right-0 md:top-full py-4 px-7 grid justify-center items-center grid-cols-3 grid-rows-5 gap-y-4 gap-x-6 text-left w-max shadow-lg border border-gray-300/30`}
                         >
                             <h4 className="col-span-2 text-slate-700 text-md font-semibold">The latest</h4>
                             <FontAwesomeIcon
@@ -156,7 +156,7 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
                             icon={faTableCellsLarge}
                         />
                     </button>
-                    <button data-type="dense" onClick={hanldeViewClick}>
+                    <button className="hidden xl:block" data-type="dense" onClick={hanldeViewClick}>
                         <FontAwesomeIcon
                             className={`w-6 h-6 transition duration-300 ${
                                 activeView === 'dense' ? 'text-cyan-400' : 'text-slate-500'

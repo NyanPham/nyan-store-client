@@ -57,7 +57,7 @@ export const heroSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Express Yourself Instyle',
-            styles: 'text-5xl text-slate-700 font-semibold w-96',
+            styles: 'text-3xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96',
         },
         subtitle: {
             text: 'Hoodie',
@@ -83,7 +83,7 @@ export const heroSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Express Yourself Instyle',
-            styles: 'text-5xl text-slate-200 font-semibold w-96',
+            styles: 'text-3xl lg:text-5xl text-slate-200 font-semibold w-2/3 lg:w-96',
         },
         subtitle: {
             text: 'Hoodie',
@@ -109,7 +109,7 @@ export const heroSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Express Yourself Instyle',
-            styles: 'text-5xl text-slate-700 font-semibold w-96',
+            styles: 'text-3xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96',
         },
         subtitle: {
             text: 'Hoodie',
@@ -138,7 +138,7 @@ export const slidesWPreview = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Beats Auto Dr.Dre',
-            styles: 'text-4xl text-slate-700 font-semibold w-72',
+            styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
         comparePrice: {
             text: '$398',
@@ -160,7 +160,7 @@ export const slidesWPreview = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Express Yourself Instyle',
-            styles: 'text-4xl text-slate-300 font-semibold w-72',
+            styles: 'text-3xl lg:text-4xl text-slate-300 font-semibold w-72',
         },
         subtitle: {
             text: 'Hoodie',
@@ -186,7 +186,7 @@ export const slidesWPreview = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Beats Auto Dr.Dre',
-            styles: 'text-4xl text-slate-200 font-semibold w-72',
+            styles: 'text-3xl lg:text-4xl text-slate-200 font-semibold w-72',
         },
         comparePrice: {
             text: '$398',
@@ -211,7 +211,7 @@ export const auctionSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Pearl Pendant',
-            styles: 'text-4xl text-slate-700 font-semibold w-72',
+            styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
 
         expiresTime: {
@@ -231,7 +231,7 @@ export const auctionSlides = [
             },
             value: {
                 text: '$3600',
-                styles: 'text-4xl text-slate-700 font-semibold',
+                styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
             },
         },
         button: {
@@ -246,7 +246,7 @@ export const auctionSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Necklace Saphire',
-            styles: 'text-4xl text-slate-700 font-semibold w-72',
+            styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
 
         expiresTime: {
@@ -266,7 +266,7 @@ export const auctionSlides = [
             },
             value: {
                 text: '$3550',
-                styles: 'text-4xl text-slate-700 font-semibold',
+                styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
             },
         },
         button: {
@@ -281,7 +281,7 @@ export const auctionSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Necklace Saphire',
-            styles: 'text-4xl text-slate-700 font-semibold w-72',
+            styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
 
         expiresTime: {
@@ -301,7 +301,7 @@ export const auctionSlides = [
             },
             value: {
                 text: '$3550',
-                styles: 'text-4xl text-slate-700 font-semibold',
+                styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
             },
         },
         button: {
@@ -319,7 +319,7 @@ export const sportSlides = [
         contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: 'Nike Running \n Just do it',
-            styles: 'text-5xl text-slate-700 font-semibold w-96 text-right',
+            styles: 'text-4xl lg:text-5xl text-slate-700 font-semibold w-2/3 ml-auto lg:w-96 text-right',
         },
         price: {
             text: '$178',
@@ -337,7 +337,7 @@ export const sportSlides = [
         contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: 'Nike Running \n Just do it',
-            styles: 'text-5xl text-slate-700 font-semibold w-96 text-right',
+            styles: 'text-4xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96 ml-auto text-right',
         },
         price: {
             text: '$178',
@@ -358,7 +358,7 @@ export const furnitureSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Living Room \n The Single Sofa',
-            styles: 'text-5xl text-slate-900 font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-slate-900 font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -376,7 +376,7 @@ export const furnitureSlides = [
         contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: 'Living Room \n The Single Sofa',
-            styles: 'text-5xl text-slate-100 font-semibold w-96 text-right',
+            styles: 'text-4xl lg:text-5xl text-slate-100 font-semibold w-2/3 lg:w-96 lg-auto text-right',
         },
         price: {
             text: '$178',
@@ -397,7 +397,7 @@ export const womenSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: '2019 Summer\nWomen Collection',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -415,7 +415,7 @@ export const womenSlides = [
         contentStyles: 'top-5 right-5 md:top-10 md:right-12',
         title: {
             text: '2019 Summer\nWomen Collection',
-            styles: 'text-5xl text-slate-100 font-semibold w-96 text-right',
+            styles: 'text-4xl lg:text-5xl text-slate-100 font-semibold w-2/3 lg:w-96 ml-auto text-right',
         },
         price: {
             text: '$178',
@@ -436,7 +436,7 @@ export const menSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Jeans Men \nCollection',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -454,7 +454,7 @@ export const menSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Jeans Men \nCollection',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -472,7 +472,7 @@ export const menSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-12',
         title: {
             text: 'Jeans Men \nCollection',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -493,7 +493,7 @@ export const photographySlides = [
         contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'DSRL Nikon 5RX',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -506,7 +506,7 @@ export const photographySlides = [
         contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'DSRL Nikon III',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',
@@ -519,7 +519,7 @@ export const photographySlides = [
         contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'Nikon 7D',
-            styles: 'text-5xl text-white font-semibold w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         price: {
             text: '$178',

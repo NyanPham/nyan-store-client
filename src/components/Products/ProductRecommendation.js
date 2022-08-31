@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { SwiperSlide } from 'swiper/react'
 import { useSelector } from 'react-redux/es/exports'
 import { useFetchProductsFromCollection } from '../../hooks/useFetchProducts'
@@ -9,30 +9,6 @@ import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 function ProductRecommendation() {
     const collections = useSelector((state) => state.collections)
     const products = useFetchProductsFromCollection(collections, 'New Arrival')
-    const [slidesPerView, setSlidesPerView] = useState(() => {
-        if (products.length) {
-            return products.length <= 4 ? products.length + 1 : 5
-        } else {
-            return 5
-        }
-    })
-
-    useEffect(() => {
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < 767) {
-                return setSlidesPerView(2)
-            }
-            if (window.innerWidth < 1024) {
-                return setSlidesPerView(3)
-            }
-
-            if (products) {
-                return setSlidesPerView(products.length <= 4 ? products.length + 1 : 5)
-            } else {
-                return setSlidesPerView(3)
-            }
-        })
-    }, [products])
 
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>
@@ -52,13 +28,7 @@ function ProductRecommendation() {
         )
     })
 
-    return (
-        <ProductShowcase
-            productCards={[recommendationCard, ...productCards]}
-            isSlider={true}
-            slidesPerView={slidesPerView}
-        />
-    )
+    return <ProductShowcase productCards={[recommendationCard, ...productCards]} isSlider={true} />
 }
 
 export default ProductRecommendation

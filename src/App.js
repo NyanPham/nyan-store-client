@@ -77,7 +77,6 @@ function App() {
                     <Route path="/sign-up" element={<Signup />} />
                     <Route path="/log-in" element={<Login />} />
                 </Routes>
-                <SidebarNavigationDrawer />
             </div>
             <div id="popup-container"></div>
         </>

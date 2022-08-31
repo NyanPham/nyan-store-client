@@ -1,10 +1,11 @@
 import React from 'react'
+import ProductHorizontalCard from '../Products/ProductHorizontalCard'
 import ProductCard from './../Products/ProductCard'
 
 const getViewGrid = (viewTerm) => {
     switch (viewTerm) {
         case 'loose':
-            return 'grid-cols-3 gap-5 p-5'
+            return 'grid-cols-2 lg:grid-cols-3 gap-5 p-5'
         case 'dense':
             return 'grid-cols-5 gap-2 p-2'
         case 'list':
@@ -20,8 +21,19 @@ export default function FilterView({ products, viewBy }) {
     return (
         <div className={`filter-view w-full grid ${viewGrid} bg-slate-200`}>
             {products &&
+                viewBy !== 'list' &&
                 products.map((product, index) => (
                     <ProductCard key={`search_product_${index}`} {...product} inAuction={false} currentBid={false} />
+                ))}
+            {products &&
+                viewBy === 'list' &&
+                products.map((product, index) => (
+                    <ProductHorizontalCard
+                        key={`search_product_${index}`}
+                        {...product}
+                        inAuction={false}
+                        currentBid={false}
+                    />
                 ))}
         </div>
     )

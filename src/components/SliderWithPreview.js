@@ -16,7 +16,7 @@ function SliderWithPreview() {
     return (
         <Container>
             <div className="flex items-stretch gap-4 lg:gap-8">
-                <div className="w-64 flex flex-shrink-0 hidden lg:block">
+                <div className="w-64 flex-shrink-0 hidden lg:flex">
                     <SideNavigation title="Best Deal Promo Category" isDrawer={false} />
                 </div>
                 <Slider slides={slidesWPreview} slidesPerView={1} setCurrentSlide={setCurrentSlide} />

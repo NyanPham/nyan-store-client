@@ -53,10 +53,10 @@ const Header = () => {
             }`}
         >
             <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16">
-                <div className="flex items-center gap-6 grow">
+                <Link to="/" className="flex items-center gap-6 grow">
                     <img className="w-32 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />
                     <SearchForm />
-                </div>
+                </Link>
                 <div className="flex items-center justify-between gap-3">
                     <button className="header-navigation-btn group md:hidden">
                         <FontAwesomeIcon className="header-navigation-icon" icon={faMagnifyingGlass} />

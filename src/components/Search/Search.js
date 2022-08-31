@@ -8,7 +8,7 @@ export default function Search() {
     return (
         <main>
             <Slider slides={heroSlides} slidesPerView={1} />
-            <section className="w-full py-10">
+            <section className="w-full lg:py-10">
                 <Container>
                     <FilterContainer />
                 </Container>

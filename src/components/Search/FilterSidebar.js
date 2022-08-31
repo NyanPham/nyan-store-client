@@ -1,8 +1,6 @@
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import useDebounce from '../../hooks/useDebounce'
-import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
-import querializeParams from '../../utils/querializeParams'
 import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
