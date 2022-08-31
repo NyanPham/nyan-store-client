@@ -10,7 +10,7 @@ export default function ProductCard(props) {
 
     return (
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
-            <Link to={`/products/${slug}`} className="product-image w-full h-fit">
+            <Link to={`/products/${slug}`} state={props} className="product-image w-full h-fit">
                 <span className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto"></span>
                 {/* <img className="" src={images[0]} alt={name} /> */}
                 {/* <img className="" src={images[1]} alt={name} /> */}

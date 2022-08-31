@@ -46,7 +46,7 @@ function Login() {
     }
 
     return (
-        <div class="h-screen w-screen flex flex-col items-center justify-center" style={backgroundStyle}>
+        <div className="h-screen w-screen flex flex-col items-center justify-center" style={backgroundStyle}>
             <h1 className="auth-title text-white">Log Into Your Acction</h1>
             <h3 className="auth-subtitle text-white mt-1">Enter the info below to log in</h3>
             <form className="form bg-white shadow-md rounded-md p-7 mt-7" onSubmit={handleFormSubmit}>

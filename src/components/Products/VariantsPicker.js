@@ -1,13 +1,33 @@
 import React, { useRef, useState } from 'react'
 import { COLOR_MAP } from '../data'
 import VariantOptions from './VariantOptions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
+import useWishlist from '../../hooks/useWishlist'
+import { useAuthContext } from '../../context/authContext'
+import { Link } from 'react-router-dom'
+import QuantityController from './QuantityController'
 
 function VariantsPicker(props) {
-    const { variants, buttonText, formSubmitHandler, currentBid } = props
+    const {
+        productId,
+        variants,
+        buttonText,
+        formSubmitHandler,
+        currentBid,
+        nameStyles = 'text-xl',
+        priceStyles = '',
+        review = {},
+        quantityControl = false,
+        wishlist = false,
+    } = props
 
     const [selectedVariant, setSelectedVariant] = useState(variants[0])
     const [isUnavailable, setIsUnavailable] = useState(false)
+    const [quantity, setQuantity] = useState(1)
     const [isSoldOut, setIsSoldOut] = useState(variants[0].inventory === 0)
+    const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
+    const { isLoggedIn } = useAuthContext()
 
     const priceRef = useRef()
 
@@ -38,19 +58,47 @@ function VariantsPicker(props) {
 
     function handleSubmit(e) {
         e.preventDefault()
+        const dataToSubmit = { variantId: selectedVariant._id }
+        if (currentBid !== false) dataToSubmit['bidPrice'] = priceRef.current.value
+        if (quantityControl) dataToSubmit['quantity'] = quantity
 
-        formSubmitHandler({ variantId: selectedVariant._id, bidPrice: priceRef.current.value })
+        formSubmitHandler(dataToSubmit)
     }
 
     return (
         <div className="">
-            <h3 className="text-xl text-slate-700 font-semibold capitalize">{selectedVariant.name}</h3>
-            <div className="flex gap-2 justify-start items-center mt-2">
+            <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>
+            <div className={`flex gap-2 justify-start items-center mt-2 ${priceStyles}`}>
                 {selectedVariant.oldPrice && (
                     <span className="product-card-compare-price text-base">${selectedVariant.oldPrice}</span>
                 )}
                 <span className="product-card-price text-2xl">${selectedVariant.price}</span>
             </div>
+            {review?.show && (
+                <div className="mt-2 lg:mt-4 w-full flex justify-between">
+                    <div>
+                        {review.ratingsAverage &&
+                            [1, 2, 3, 4, 5].map((value, index) => (
+                                <FontAwesomeIcon
+                                    className={`${
+                                        value <= Math.floor(review.ratingsAverage) ? 'text-yellow-400' : 'text-gray-400'
+                                    }`}
+                                    icon={faStar}
+                                    key={`star_${index}`}
+                                />
+                            ))}
+                    </div>
+                    <div className="flex justify-center items-center gap-2">
+                        <button className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300">
+                            {review.ratingsQuantity > 0 ? `Read ${review.ratingsQuantity} reviews` : 'No reviews yet'}
+                        </button>
+                        <span className="text-cyan-500 font-semibold">|</span>
+                        <button className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300">
+                            Write your review
+                        </button>
+                    </div>
+                </div>
+            )}
             <form className="form mt-1 w-full" onSubmit={handleSubmit}>
                 {secondOptions && (
                     <VariantOptions
@@ -88,7 +136,7 @@ function VariantsPicker(props) {
                         optionType="Material"
                     />
                 )}
-                {currentBid != null && (
+                {currentBid != null && currentBid !== false && (
                     <div className="form-group">
                         <label htmlFor="auction-price" className="form-label">
                             Your Bid
@@ -105,13 +153,41 @@ function VariantsPicker(props) {
                         />
                     </div>
                 )}
-                <button
-                    className="w-full mt-5 py-1 text-lg font-semibold text-white bg-cyan-400 rounded-lg disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-500"
-                    disabled={isUnavailable || isSoldOut}
-                    type="submit"
-                >
-                    {actionButtonText}
-                </button>
+                {quantityControl && (
+                    <QuantityController
+                        inventory={selectedVariant.inventory}
+                        isSoldOut={isSoldOut}
+                        isUnavailable={isUnavailable}
+                        onQuantityChange={setQuantity}
+                    />
+                )}
+                <div className="w-full flex items-center mt-5 gap-2">
+                    <button
+                        className="w-full py-1 text-lg font-semibold text-white bg-cyan-400 rounded-lg disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-500"
+                        disabled={isUnavailable || isSoldOut}
+                        type="submit"
+                    >
+                        {actionButtonText}
+                    </button>
+                    {wishlist && (
+                        <>
+                            {isLoggedIn ? (
+                                <button type="button" className="" onClick={handleWishlistClick}>
+                                    <FontAwesomeIcon
+                                        className={`transition transform duration-200 text-4xl ${
+                                            alreadyAdded ? 'text-red-500' : 'text-gray-300'
+                                        }`}
+                                        icon={faHeart}
+                                    />
+                                </button>
+                            ) : (
+                                <Link to="/log-in" className="">
+                                    <FontAwesomeIcon className="text-4xl text-gray-300" icon={faHeart} />
+                                </Link>
+                            )}
+                        </>
+                    )}
+                </div>
             </form>
         </div>
     )

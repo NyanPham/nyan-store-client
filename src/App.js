@@ -13,6 +13,7 @@ import { emptyWishlist, getWishlist } from './redux/actions/wishlistActions'
 import { getBiddingProduct } from './redux/actions/biddingActions'
 import Footer from './components/Footer'
 import Search from './components/Search/Search'
+import ProductPage from './components/Pages/ProductPage'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
@@ -70,6 +71,16 @@ function App() {
                             <>
                                 <Header />
                                 <Search />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/products/:slug"
+                        element={
+                            <>
+                                <Header />
+                                <ProductPage />
                                 <Footer />
                             </>
                         }

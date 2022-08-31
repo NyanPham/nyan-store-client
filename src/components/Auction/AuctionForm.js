@@ -35,6 +35,7 @@ function AuctionForm({ product, setOpenModal, currentBid }) {
                 </button>
 
                 <VariantsPicker
+                    productId={product._id}
                     variants={product.variants}
                     buttonText={'Bid Now'}
                     formSubmitHandler={formSubmitHandler}
