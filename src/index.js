@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import AuthContextProvider from './context/authContext'
+import SideContextProvider from './context/sideCartContext'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
@@ -17,7 +18,9 @@ root.render(
         <BrowserRouter>
             <Provider store={store}>
                 <AuthContextProvider>
-                    <App />
+                    <SideContextProvider>
+                        <App />
+                    </SideContextProvider>
                 </AuthContextProvider>
             </Provider>
         </BrowserRouter>

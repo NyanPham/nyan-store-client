@@ -32,7 +32,7 @@ function Login() {
             if (res.data.status === 'success') {
                 alert('You have logged in successfully!')
                 authLogin()
-                navigate('/', { replace: true })
+                navigate(-1, { replace: true })
             }
         } catch (err) {
             alert(err.response.data.message)

@@ -1,18 +1,31 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import useAddedToCart from '../../hooks/useAddedToCart'
+import getMatchedButton from '../../utils/getMatchedButton'
 
-export default function QuantityController({ inventory, isSoldout, isUnavailable, onQuantityChange }) {
-    const [quantity, setQuantity] = useState(1)
+export default function QuantityController({
+    productId,
+    inventory,
+    isSoldout,
+    isUnavailable,
+    currentQuantity = 1,
+    onQuantityChange,
+    spacing = '',
+    showLabel = true,
+    quantityBtnSize = 'w-7 h-7',
+    quantityInputSize = 'h-7',
+}) {
+    const [quantity, setQuantity] = useState(currentQuantity)
+    const { loading, message, error, cart } = useSelector((state) => state.cart)
 
     const handleNumberInput = (e) => {
         setQuantity(e.target.value)
     }
 
     const handleControlClick = (e) => {
-        let button
-        if (e.target.matches('[data-control]')) button = e.target.matches('[data-control]')
-        if (e.target.closest('[data-control]') != null) button = e.target.closest('[data-control]')
+        const button = getMatchedButton(e, '[data-control]')
 
         if (!button) return
 
@@ -31,24 +44,33 @@ export default function QuantityController({ inventory, isSoldout, isUnavailable
 
     useEffect(() => {
         onQuantityChange(quantity)
-    }, [quantity])
+    }, [quantity, onQuantityChange])
+
+    useEffect(() => {
+        if (quantity > inventory) {
+            setQuantity(inventory)
+        }
+    }, [inventory, quantity])
 
     return (
-        <div className="form-group quantity-controller">
-            <label className="form-label" htmlFor="quantity">
+        <div
+            className={`form-group ${spacing} quantity-controller flex flex-row flex-wrap justify-start items-center gap-5`}
+        >
+            <label className={`form-label ${showLabel ? '' : 'hidden'}`} htmlFor="quantity">
                 Quantity
             </label>
-            <div>
+            <div className="flex items-center gap-1">
                 <button
+                    className={`${quantityBtnSize} border border-gray-500/30 rounded-sm text-sm text-gray-700 transition duration-200 disabled:text-gray-300 disabled:border-gray-200`}
                     type="button"
                     onClick={handleControlClick}
                     data-control="minus"
-                    disabled={isSoldout || isUnavailable}
+                    disabled={isSoldout || isUnavailable || loading}
                 >
                     <FontAwesomeIcon icon={faMinus} />
                 </button>
                 <input
-                    className="text-center"
+                    className={`${quantityInputSize} text-center border border-gray-500/30 rounded-sm text-sm text-gray-700 transition duration-200 disabled:text-gray-300 disabled:border-gray-200`}
                     type="number"
                     name="quantity"
                     id="quantity"
@@ -56,13 +78,14 @@ export default function QuantityController({ inventory, isSoldout, isUnavailable
                     max={inventory}
                     min="1"
                     onInput={handleNumberInput}
-                    disabled={isSoldout || isUnavailable}
+                    disabled={isSoldout || isUnavailable || loading}
                 />
                 <button
+                    className={`${quantityBtnSize} border border-gray-500/30 rounded-sm text-sm text-gray-700 transition duration-200 disabled:text-gray-300 disabled:border-gray-200`}
                     type="button"
                     onClick={handleControlClick}
                     data-control="plus"
-                    disabled={isSoldout || isUnavailable}
+                    disabled={isSoldout || isUnavailable || loading}
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>

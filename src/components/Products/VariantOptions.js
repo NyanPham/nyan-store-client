@@ -1,8 +1,18 @@
 import React, { useState } from 'react'
 import { COLOR_MAP } from '../data'
 
-function VariantOptions({ options, styles, textHidden, optionType, handleOptionChange, optionOrderNum }) {
-    const [selectedOption, setSelectOption] = useState(() => options[0])
+function VariantOptions({
+    options,
+    currentOption,
+    styles,
+    textHidden,
+    optionType,
+    handleOptionChange,
+    optionOrderNum,
+}) {
+    const [selectedOption, setSelectOption] = useState(() => {
+        return currentOption != null ? currentOption : options[0]
+    })
 
     function handleOptionClick(e) {
         setSelectOption(e.target.dataset.value)

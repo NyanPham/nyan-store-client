@@ -8,6 +8,8 @@ const ACTIONS = {
     REMOVE_FROM_CART: 'remove-from-cart',
     UPDATE_CART: 'update-cart',
     FETCH_CART: 'fetch-cart',
+    EMPTY_CART: 'empty-cart',
+    RESET_MESSAGE_ERROR: 'reset-message-error',
 }
 
 export const addToCart = (data) => async (dispatch) => {
@@ -20,6 +22,41 @@ export const addToCart = (data) => async (dispatch) => {
             method: 'PATCH',
             url: '/api/v1/users/addToMyCart',
             data,
+        })
+
+        if (res.data.status === 'success') {
+            console.log(res.data.data.cart)
+            dispatch({
+                type: ACTIONS.FETCH_CART,
+                payload: {
+                    cart: res.data.data.cart,
+                },
+            })
+            dispatch({
+                type: ACTIONS.CART_ACT_SUCCESS,
+                payload: { message: 'success' },
+            })
+        }
+    } catch (err) {
+        console.error(err)
+        dispatch({
+            type: ACTIONS.CART_ACT_FAIL,
+            payload: {
+                error: err.response.data.message,
+            },
+        })
+    }
+}
+
+export const getCart = () => async (dispatch) => {
+    dispatch({
+        type: ACTIONS.START_CART_ACT,
+    })
+
+    try {
+        const res = await axios({
+            method: 'GET',
+            url: '/api/v1/users/getMyCart',
         })
 
         if (res.data.status === 'success') {
@@ -45,4 +82,79 @@ export const addToCart = (data) => async (dispatch) => {
     }
 }
 
+export const updateCart = (data) => async (dispatch) => {
+    dispatch({
+        type: ACTIONS.START_CART_ACT,
+    })
+
+    try {
+        const res = await axios({
+            method: 'PATCH',
+            url: '/api/v1/users/updateMyCart',
+            data,
+        })
+
+        if (res.data.status === 'success') {
+            console.log(res.data.data.cart)
+            dispatch({
+                type: ACTIONS.FETCH_CART,
+                payload: {
+                    cart: res.data.data.cart,
+                },
+            })
+            dispatch({
+                type: ACTIONS.CART_ACT_SUCCESS,
+                payload: {
+                    message: 'Cart update successfully',
+                },
+            })
+        }
+    } catch (err) {
+        console.error(err)
+        dispatch({
+            type: ACTIONS.CART_ACT_FAIL,
+            payload: {
+                error: err.response.data.message,
+            },
+        })
+    }
+}
+
+export const removeCart = (data) => async (dispatch) => {
+    dispatch({
+        type: ACTIONS.START_CART_ACT,
+    })
+
+    try {
+        const res = await axios({
+            method: 'PATCH',
+            url: '/api/v1/users/removeMyCart',
+            data,
+        })
+
+        if (res.data.status === 'success') {
+            dispatch(getCart())
+        }
+    } catch (err) {
+        console.error(err)
+        dispatch({
+            type: ACTIONS.CART_ACT_FAIL,
+            payload: {
+                error: err.response.data.message,
+            },
+        })
+    }
+}
+
+export const resetMessageError = () => {
+    return {
+        type: ACTIONS.RESET_MESSAGE_ERROR,
+    }
+}
+
+export const emptyCart = () => {
+    return {
+        type: ACTIONS.EMPTY_CART,
+    }
+}
 export default ACTIONS

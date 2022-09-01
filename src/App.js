@@ -14,11 +14,14 @@ import { getBiddingProduct } from './redux/actions/biddingActions'
 import Footer from './components/Footer'
 import Search from './components/Search/Search'
 import ProductPage from './components/Pages/ProductPage'
+import { emptyCart, getCart } from './redux/actions/cartActions'
+import SideCart from './components/Cart/SideCart'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
     const dispatch = useDispatch()
 
+    console.log(isLoggedIn)
     dispatch(fetchCollections())
     dispatch(fetchCategories())
     dispatch(getBiddingProduct())
@@ -26,14 +29,16 @@ function App() {
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(getWishlist())
+            dispatch(getCart())
         } else {
-            dispatch(emptyWishlist)
+            dispatch(emptyWishlist())
+            dispatch(emptyCart())
         }
     }, [isLoggedIn, dispatch])
 
     return (
         <>
-            <div className="App">
+            <div className="App ">
                 <Routes>
                     <Route
                         path="/"
@@ -89,7 +94,8 @@ function App() {
                     <Route path="/log-in" element={<Login />} />
                 </Routes>
             </div>
-            <div id="popup-container"></div>
+            <SideCart />
+            <div id="modal-container"></div>
         </>
     )
 }

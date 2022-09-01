@@ -12,9 +12,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../imgs/default.jpg'
+import { useSideCartContext } from '../context/sideCartContext'
 
 const Header = () => {
     const [scrollDir, setScrollDir] = useState('up')
+    const { setOpenSideCart } = useSideCartContext()
 
     useEffect(() => {
         const threshold = 50
@@ -70,7 +72,7 @@ const Header = () => {
                             icon={faArrowRightArrowLeft}
                         />
                     </Link>
-                    <button className="header-navigation-btn group">
+                    <button className="header-navigation-btn group" onClick={() => setOpenSideCart(true)}>
                         <FontAwesomeIcon className="header-navigation-icon" icon={faShoppingCart} />
                     </button>
                     <button className="header-navigation-btn group">

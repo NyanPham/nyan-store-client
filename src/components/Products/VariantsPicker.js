@@ -7,11 +7,14 @@ import useWishlist from '../../hooks/useWishlist'
 import { useAuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
 import QuantityController from './QuantityController'
+import { useSelector } from 'react-redux'
+import useAddedToCart from '../../hooks/useAddedToCart'
 
 function VariantsPicker(props) {
     const {
         productId,
         variants,
+        currentVariantId,
         buttonText,
         formSubmitHandler,
         currentBid,
@@ -20,14 +23,22 @@ function VariantsPicker(props) {
         review = {},
         quantityControl = false,
         wishlist = false,
+        isEditing = false,
     } = props
 
-    const [selectedVariant, setSelectedVariant] = useState(variants[0])
+    const [selectedVariant, setSelectedVariant] = useState(() => {
+        return currentVariantId != null
+            ? variants.find((variant) => variant._id.toString() === currentVariantId)
+            : variants[0]
+    })
+
     const [isUnavailable, setIsUnavailable] = useState(false)
     const [quantity, setQuantity] = useState(1)
     const [isSoldOut, setIsSoldOut] = useState(variants[0].inventory === 0)
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
     const { isLoggedIn } = useAuthContext()
+    const { loading, message, error, cart } = useSelector((state) => state.cart)
+    const addedToCart = useAddedToCart(cart, productId)
 
     const priceRef = useRef()
 
@@ -53,8 +64,13 @@ function VariantsPicker(props) {
             setIsSoldOut(availableVariant.inventory === 0)
         }
     }
-
-    const actionButtonText = isUnavailable ? 'Unavailable' : isSoldOut ? 'Soldout' : buttonText
+    let actionButtonText = buttonText
+    if (addedToCart) actionButtonText = 'Added To Cart'
+    if (isEditing) actionButtonText = 'Edit now'
+    if (isUnavailable) actionButtonText = 'Unavailable'
+    if (isSoldOut) actionButtonText = 'Soldout'
+    if (loading) actionButtonText = 'Loading...'
+    if (isEditing && currentVariantId === selectedVariant._id.toString()) actionButtonText = 'Updated'
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -103,6 +119,7 @@ function VariantsPicker(props) {
                 {secondOptions && (
                     <VariantOptions
                         options={secondOptions}
+                        currentOption={selectedVariant.option2}
                         styles={
                             'w-7 h-7 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300'
                         }
@@ -115,6 +132,7 @@ function VariantsPicker(props) {
                 {firstOptions && (
                     <VariantOptions
                         options={firstOptions}
+                        currentOption={selectedVariant.option1}
                         styles={
                             'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm border border-slate-300'
                         }
@@ -127,6 +145,7 @@ function VariantsPicker(props) {
                 {thirdOptions && (
                     <VariantOptions
                         options={thirdOptions}
+                        currentOption={selectedVariant.option3}
                         styles={
                             'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm border border-slate-300'
                         }
@@ -159,12 +178,20 @@ function VariantsPicker(props) {
                         isSoldOut={isSoldOut}
                         isUnavailable={isUnavailable}
                         onQuantityChange={setQuantity}
+                        spacing="mt-7"
+                        productId={productId}
                     />
                 )}
                 <div className="w-full flex items-center mt-5 gap-2">
                     <button
                         className="w-full py-1 text-lg font-semibold text-white bg-cyan-400 rounded-lg disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-500"
-                        disabled={isUnavailable || isSoldOut}
+                        disabled={
+                            isUnavailable ||
+                            isSoldOut ||
+                            loading ||
+                            (addedToCart && !isEditing) ||
+                            currentVariantId === selectedVariant._id
+                        }
                         type="submit"
                     >
                         {actionButtonText}

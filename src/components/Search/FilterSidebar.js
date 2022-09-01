@@ -5,12 +5,12 @@ import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
-export default function FilterSidebar({ setData, sortBy, categoryId }) {
+export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
     const [facetOptions, setFacetOptions] = useState([])
     const [filterQuery, setFilterQuery] = useState({
         skip: 0,
         limit: 15,
-        sortBy,
+        sortByTerm,
         categoryId,
     })
 
@@ -95,11 +95,11 @@ export default function FilterSidebar({ setData, sortBy, categoryId }) {
         setFilterQuery((prevFilterQuery) => {
             return {
                 ...prevFilterQuery,
-                sortBy,
+                sortByTerm,
                 categoryId,
             }
         })
-    }, [sortBy, categoryId])
+    }, [sortByTerm, categoryId])
 
     const reducePrice = (type, options) => {
         return Object.entries(options).reduce((maxPrice, obj) => {

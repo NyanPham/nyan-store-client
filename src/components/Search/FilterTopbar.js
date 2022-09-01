@@ -12,6 +12,7 @@ import {
     faArrowDownAZ,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import getMatchedButton from '../../utils/getMatchedButton'
 
 export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName }) {
     const [activeView, setActiveView] = useState('loose')
@@ -19,13 +20,7 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
     const [openSort, setOpenSort] = useState(false)
 
     const hanldeViewClick = (e) => {
-        let button
-        if (e.target.tagName.toLowerCase() === 'button') {
-            button = e.target
-        }
-        if (e.target.closest('button[data-type]') != null) {
-            button = e.target.closest('button[data-type]')
-        }
+        const button = getMatchedButton(e, 'button[data-type]')
 
         if (!button) return
 

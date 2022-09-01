@@ -85,7 +85,7 @@ function ProductAuctionCard({ product }) {
                     <>
                         <AuctionForm product={product} setOpenModal={setOpenAuctionModal} currentBid={currentBid} />
                     </>,
-                    document.getElementById('popup-container')
+                    document.getElementById('modal-container')
                 )}
         </>
     )

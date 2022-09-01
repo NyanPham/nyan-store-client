@@ -17,6 +17,7 @@ export default function FilterContainer() {
     const { categoryName } = useParams()
     const categories = useSelector((state) => state.categories)
     const categoryId = categories.find((category) => category.name === categoryName)?._id
+    const emptyCategoryId = categories.find((category) => category.name.toLowerCase() === 'empty')?._id
 
     return (
         <div className="filter-grid flex flex-row">
@@ -33,7 +34,11 @@ export default function FilterContainer() {
                     openSidebar ? 'translate-x-0' : '-translate-x-full'
                 } bg-white md:translate-x-0 md:static md:h-max md:z-10`}
             >
-                <FilterSidebar setData={setData} sortBy={sortBy} categoryId={categoryId} />
+                <FilterSidebar
+                    setData={setData}
+                    sortByTerm={sortBy}
+                    categoryId={categoryId ? categoryId : emptyCategoryId}
+                />
             </div>
             <div className="flex flex-col flex-grow bg-slate-200">
                 <FilterTopbar
@@ -42,7 +47,7 @@ export default function FilterContainer() {
                     onViewBy={setViewBy}
                     categoryName={categoryName}
                 />
-                <FilterView products={data.data?.products} viewBy={viewBy} />
+                <FilterView products={data.data?.docs} viewBy={viewBy} />
             </div>
             <span
                 onClick={() => setOpenSidebar(false)}

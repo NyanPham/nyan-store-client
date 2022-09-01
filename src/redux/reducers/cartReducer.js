@@ -20,7 +20,7 @@ export default function cartReducer(state = intitialState, { type, payload }) {
             return {
                 ...state,
                 loading: false,
-                message: 'success',
+                message: payload?.message || 'success',
             }
         case ACTIONS.CART_ACT_FAIL:
             return {
@@ -31,11 +31,23 @@ export default function cartReducer(state = intitialState, { type, payload }) {
         case ACTIONS.FETCH_CART:
             return {
                 ...state,
+                loading: false,
                 cart: payload.cart,
+            }
+        case ACTIONS.EMPTY_CART:
+            return {
+                ...state,
+                cart: [],
             }
         case ACTIONS.ADD_TO_CART:
             return {
                 ...state,
+            }
+        case ACTIONS.RESET_MESSAGE_ERROR:
+            return {
+                ...state,
+                message: '',
+                error: '',
             }
         case ACTIONS.REMOVE_FROM_CART:
             return {

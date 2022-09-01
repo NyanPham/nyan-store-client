@@ -1,6 +1,6 @@
 import axios from 'axios'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
@@ -10,7 +10,8 @@ import VariantsPicker from '../Products/VariantsPicker'
 import Container from '../Container'
 import { useAuthContext } from '../../context/authContext'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../redux/actions/cartActions'
+import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
+import { useSideCartContext } from '../../context/sideCartContext'
 
 function ProductPage() {
     const { isLoggedIn } = useAuthContext()
@@ -19,11 +20,11 @@ function ProductPage() {
     const [product, setProduct] = useState(() => {
         return location.state
     })
-    const { loading, message, error, cart } = useSelector((state) => state.cart)
-
-    console.log(cart, loading)
-
+    const { loading, message } = useSelector((state) => state.cart)
+    const { setOpenSideCart } = useSideCartContext()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     useDeepCompareEffect(() => {
         if (product != null) return
         const catchProduct = async (slug) => {
@@ -43,8 +44,17 @@ function ProductPage() {
         catchProduct(slug)
     }, [product])
 
+    useEffect(() => {
+        if (!message || message !== 'success') return
+        setOpenSideCart(true)
+        dispatch(resetMessageError())
+    }, [message, setOpenSideCart, dispatch])
+
     const formSubmitHandler = async (data) => {
-        if (!isLoggedIn) return alert('Please login to add product to cart')
+        if (!isLoggedIn) {
+            alert('Please login to add product to cart')
+            return setTimeout(navigate('/log-in'), 2500)
+        }
         const dataToSubmit = {
             product: product._id,
             variant: data.variantId,
