@@ -6,7 +6,7 @@ import ProductCard from './ProductCard'
 import ProductShowcase from './ProductShowcase'
 import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 
-function ProductRecommendation() {
+function ProductRecommendation({ showRecommendCard = true }) {
     const collections = useSelector((state) => state.collections)
     const products = useFetchProductsFromCollection(collections, 'New Arrival')
 
@@ -28,7 +28,12 @@ function ProductRecommendation() {
         )
     })
 
-    return <ProductShowcase productCards={[recommendationCard, ...productCards]} isSlider={true} />
+    return (
+        <ProductShowcase
+            productCards={showRecommendCard ? [recommendationCard, ...productCards] : productCards}
+            isSlider={true}
+        />
+    )
 }
 
 export default ProductRecommendation

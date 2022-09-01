@@ -25,7 +25,6 @@ export const addToCart = (data) => async (dispatch) => {
         })
 
         if (res.data.status === 'success') {
-            console.log(res.data.data.cart)
             dispatch({
                 type: ACTIONS.FETCH_CART,
                 payload: {
@@ -60,7 +59,6 @@ export const getCart = () => async (dispatch) => {
         })
 
         if (res.data.status === 'success') {
-            console.log(res.data.data.cart)
             dispatch({
                 type: ACTIONS.FETCH_CART,
                 payload: {
@@ -95,7 +93,6 @@ export const updateCart = (data) => async (dispatch) => {
         })
 
         if (res.data.status === 'success') {
-            console.log(res.data.data.cart)
             dispatch({
                 type: ACTIONS.FETCH_CART,
                 payload: {

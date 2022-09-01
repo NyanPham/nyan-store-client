@@ -32,7 +32,7 @@
     }
 
     .form-input {
-        @apply mt-2 w-full bg-slate-100 py-1 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 transition duration-200;
+        @apply mt-2 w-full bg-slate-100 py-2 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 transition duration-200;
     }
 
     .form-btn {
@@ -143,7 +143,7 @@
     grid-area: view;
 } */
 
-.price-slider-container input[type=range]::-webkit-slider-thumb {
+.price-slider-container input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
     pointer-events: all;
     width: 1.25rem;
@@ -155,7 +155,7 @@
     cursor: pointer;
 }
 
-.price-slider-container input[type=range]::-moz-range-thumb {
+.price-slider-container input[type='range']::-moz-range-thumb {
     -webkit-appearance: none;
     pointer-events: all;
     width: 1.25rem;
@@ -164,20 +164,20 @@
     border-radius: 50%;
     border: none;
     box-shadow: 0 0 0 1px #1d6b77;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
-.price-slider-container input[type=range]::-webkit-slider-thumb:hover {
+.price-slider-container input[type='range']::-webkit-slider-thumb:hover {
     background: #54d8ec;
 }
 
-.price-slider-container input[type=range]::-webkit-slider-thumb:active {
-  box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-  -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+.price-slider-container input[type='range']::-webkit-slider-thumb:active {
+    box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+    -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
 }
- 
-.price-slider-container input[type="range"] {
-    -webkit-appearance: none; 
+
+.price-slider-container input[type='range'] {
+    -webkit-appearance: none;
     appearance: none;
     height: 2px;
     width: 100%;
@@ -185,18 +185,18 @@
     border: none;
     background-color: transparent;
     pointer-events: none;
-} 
+}
 
 .product-images .swiper-slide {
     flex-shrink: 1;
 }
 
-.quantity-controller input[type="number"]::-webkit-outer-spin-button,
-.quantity-controller input[type="number"]::-webkit-inner-spin-button  {
+.quantity-controller input[type='number']::-webkit-outer-spin-button,
+.quantity-controller input[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.quantity-controller input[type=number] {
+.quantity-controller input[type='number'] {
     -moz-appearance: textfield;
-  }
+}

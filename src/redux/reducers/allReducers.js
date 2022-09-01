@@ -3,6 +3,7 @@ import biddingReducer from './biddingReducer'
 import cartReducer from './cartReducer'
 import categoriesReducer from './categoriesReducer'
 import collectionsReducer from './collectionsReducer'
+import orderNoteReducer from './orderNoteReducer'
 import wishlistReducer from './wishlistReducer'
 
 const allReducers = combineReducers({
@@ -11,6 +12,7 @@ const allReducers = combineReducers({
     categories: categoriesReducer,
     biddingProducts: biddingReducer,
     cart: cartReducer,
+    orderNote: orderNoteReducer,
 })
 
 export default allReducers

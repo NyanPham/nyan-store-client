@@ -51,15 +51,18 @@ function VariantOptions({
 function Option({ option, configures, handleClick, isSelected, optionOrderNum }) {
     const { styles, textHidden } = configures
     const color = COLOR_MAP[option?.toLowerCase()]
+
     return (
         <>
             {option && (
                 <>
                     <label
                         htmlFor={`${optionOrderNum}_${option}`}
-                        className={`relative cursor-pointer transform transition duration-200 ${styles} ${
-                            color && color
-                        } ${isSelected && (color ? `ring-1 ring-offset-1 ring-gray-900` : 'border-2 border-gray-900')}`}
+                        className={`${
+                            color ? color : ''
+                        } relative cursor-pointer transform transition duration-200 ${styles} ${
+                            isSelected && (color ? `ring-2 ring-offset-1 ring-gray-900` : 'border-2 border-gray-900')
+                        }`}
                         data-value={option}
                         onClick={handleClick}
                     >

@@ -21,7 +21,6 @@ function App() {
     const { isLoggedIn } = useAuthContext()
     const dispatch = useDispatch()
 
-    console.log(isLoggedIn)
     dispatch(fetchCollections())
     dispatch(fetchCategories())
     dispatch(getBiddingProduct())

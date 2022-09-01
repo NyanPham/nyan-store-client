@@ -16,7 +16,7 @@ const Footer = () => {
     }
     return (
         <footer>
-            <div className="grid grid-cols-1 py-2 mx-1 gap-1 border-b border-gray-800/10 md:py-4 md:grid-cols-2 md:gap-4 md:mx-8 lg:gap-8 lg:py-8 lg:mx-16 lg:grid-cols-4 ">
+            <div className="grid grid-cols-1 pb-4 pt-6 mx-1 gap-1 border-b border-gray-800/10 md:py-4 md:grid-cols-2 md:gap-4 md:mx-8 lg:gap-8 lg:py-8 lg:mx-16 lg:grid-cols-4 ">
                 <div className="text-center">
                     <img className="w-32 aspect-40/15 mx-auto" src={nyanLogo} alt="Nyan Store" />
                     <p className="text-base text-gray-400 font-normal text-center mt-3">

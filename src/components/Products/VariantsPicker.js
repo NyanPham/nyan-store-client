@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react'
-import { COLOR_MAP } from '../data'
+import React, { useEffect, useRef, useState } from 'react'
 import VariantOptions from './VariantOptions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +8,7 @@ import { Link } from 'react-router-dom'
 import QuantityController from './QuantityController'
 import { useSelector } from 'react-redux'
 import useAddedToCart from '../../hooks/useAddedToCart'
+import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 
 function VariantsPicker(props) {
     const {
@@ -24,6 +24,7 @@ function VariantsPicker(props) {
         quantityControl = false,
         wishlist = false,
         isEditing = false,
+        onVariantChange = () => {},
     } = props
 
     const [selectedVariant, setSelectedVariant] = useState(() => {
@@ -81,6 +82,12 @@ function VariantsPicker(props) {
         formSubmitHandler(dataToSubmit)
     }
 
+    useDeepCompareEffect(() => {
+        if (typeof onVariantChange !== 'function') return
+
+        onVariantChange(selectedVariant)
+    }, [selectedVariant])
+
     return (
         <div className="">
             <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>
@@ -91,7 +98,7 @@ function VariantsPicker(props) {
                 <span className="product-card-price text-2xl">${selectedVariant.price}</span>
             </div>
             {review?.show && (
-                <div className="mt-2 lg:mt-4 w-full flex justify-between">
+                <div className="mt-2 lg:mt-4 w-full flex flex-col justify-between xl:flex-row">
                     <div>
                         {review.ratingsAverage &&
                             [1, 2, 3, 4, 5].map((value, index) => (
@@ -104,7 +111,7 @@ function VariantsPicker(props) {
                                 />
                             ))}
                     </div>
-                    <div className="flex justify-center items-center gap-2">
+                    <div className="flex justify-start items-center gap-2 xl:justify-center">
                         <button className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300">
                             {review.ratingsQuantity > 0 ? `Read ${review.ratingsQuantity} reviews` : 'No reviews yet'}
                         </button>
@@ -121,7 +128,7 @@ function VariantsPicker(props) {
                         options={secondOptions}
                         currentOption={selectedVariant.option2}
                         styles={
-                            'w-7 h-7 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold bg-slate-100 border border-slate-300'
+                            'w-7 h-7 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold  border border-slate-300'
                         }
                         textHidden={true}
                         handleOptionChange={handleOptionChange}
@@ -134,7 +141,7 @@ function VariantsPicker(props) {
                         options={firstOptions}
                         currentOption={selectedVariant.option1}
                         styles={
-                            'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm border border-slate-300'
+                            'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm'
                         }
                         textHidden={false}
                         handleOptionChange={handleOptionChange}
@@ -147,7 +154,7 @@ function VariantsPicker(props) {
                         options={thirdOptions}
                         currentOption={selectedVariant.option3}
                         styles={
-                            'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm border border-slate-300'
+                            'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm'
                         }
                         textHidden={false}
                         handleOptionChange={handleOptionChange}
