@@ -13,7 +13,6 @@ export default function FilterContainer() {
     const [viewBy, setViewBy] = useState('loose')
 
     const [openSidebar, setOpenSidebar] = useState(false)
-
     const { categoryName } = useParams()
     const categories = useSelector((state) => state.categories)
     const categoryId = categories.find((category) => category.name === categoryName)?._id

@@ -46,7 +46,12 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
 
     return (
         <>
-            <button className="text-slate-700 text-md" onClick={handleEditClick} type="button" data-edit-btn>
+            <button
+                className="text-slate-700 text-md transition hover:text-green-400"
+                onClick={handleEditClick}
+                type="button"
+                data-edit-btn
+            >
                 <FontAwesomeIcon icon={faPenToSquare} />
             </button>
             {openEditor &&

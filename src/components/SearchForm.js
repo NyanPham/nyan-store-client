@@ -5,10 +5,14 @@ import { useState } from 'react'
 import useDebounce from '../hooks/useDebounce'
 import { search } from '../redux/actions/searchActions'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function SearchForm() {
+    const { pathname } = useLocation()
     const [searchTerm, setSearchTerm] = useState('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useDebounce(
         () => {
@@ -17,6 +21,12 @@ function SearchForm() {
         150,
         [searchTerm, dispatch]
     )
+
+    useEffect(() => {
+        if (searchTerm != null && !pathname.startsWith('/search')) return navigate('/search')
+
+        if (searchTerm == null) navigate(-1)
+    }, [searchTerm])
 
     return (
         <form className="hidden md:flex flex-row justify-between relative w-full max-w-lg">

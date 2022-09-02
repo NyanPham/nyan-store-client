@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import useDebounce from '../../hooks/useDebounce'
 import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
@@ -14,9 +15,10 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
         sortByTerm,
         categoryId,
         searchTerm: '',
+        emptyCategory: true,
     })
     const search = useSelector((state) => state.search)
-
+    const { pathname } = useLocation()
     const allAvailableOptions = {}
     Object.entries(facetOptions).forEach(([key, value]) => {
         allAvailableOptions[`all${key.charAt(0).toUpperCase() + key.slice(1)}`] = Object.values(value).map(
@@ -101,9 +103,10 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
                 sortByTerm,
                 categoryId,
                 searchTerm: search,
+                emptyCategory: pathname.startsWith('/search'),
             }
         })
-    }, [sortByTerm, categoryId, search])
+    }, [sortByTerm, categoryId, search, pathname])
 
     const reducePrice = (type, options) => {
         return Object.entries(options).reduce((maxPrice, obj) => {

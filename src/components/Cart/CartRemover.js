@@ -38,7 +38,12 @@ export default function CartRemover({ productId, variantId }) {
 
     return (
         <>
-            <button className="text-slate-700 text-md" onClick={handleRemoveClick} type="button" data-remove-btn>
+            <button
+                className="text-slate-700 text-md transition duration-200 hover:text-red-400"
+                onClick={handleRemoveClick}
+                type="button"
+                data-remove-btn
+            >
                 <FontAwesomeIcon icon={faTrash} />
             </button>
             {openConfirm &&

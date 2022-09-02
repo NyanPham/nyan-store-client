@@ -76,7 +76,7 @@ export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPri
                         </label>
                         <span className="text-lg text-slate-700 font-semibold">$</span>
                         <input
-                            className="inline-block w-12 text-lg text-slate-700 font-semibold"
+                            className="inline-block w-14 text-lg text-slate-700 font-semibold"
                             type="number"
                             id="from-price"
                             value={fromValue}
@@ -92,7 +92,7 @@ export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPri
                         </label>
                         <span className="text-lg text-slate-700 font-semibold">$</span>
                         <input
-                            className="inline-block w-12 text-lg text-slate-700 font-semibold"
+                            className="inline-block w-14 text-right text-lg text-slate-700 font-semibold"
                             type="number"
                             id="to-price"
                             value={toValue}

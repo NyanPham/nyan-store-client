@@ -13,11 +13,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import getMatchedButton from '../../utils/getMatchedButton'
+import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName }) {
     const [activeView, setActiveView] = useState('loose')
     const [sortBy, setSortBy] = useState('oldest')
     const [openSort, setOpenSort] = useState(false)
+    const { pathname } = useLocation()
+    const search = useSelector((state) => state.search)
 
     const hanldeViewClick = (e) => {
         const button = getMatchedButton(e, 'button[data-type]')
@@ -72,7 +76,8 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
                     {results?.toLocaleString('en-US')}
                 </span>
                 <span className="text-base text-slate-700 font-medium">
-                    items found {categoryName && `in ${categoryName}`}
+                    items found {categoryName && !pathname.startsWith('/search') && `in ${categoryName}`}
+                    {pathname.startsWith('/search') && `for ${search}`}
                 </span>
             </div>
             <div className="flex gap-3">
