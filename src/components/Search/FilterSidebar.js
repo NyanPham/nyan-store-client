@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import useDebounce from '../../hooks/useDebounce'
 import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
@@ -13,6 +14,9 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
         sortByTerm,
         categoryId,
     })
+
+    const search = useSelector((state) => state.search)
+    console.log(search)
 
     const allAvailableOptions = {}
     Object.entries(facetOptions).forEach(([key, value]) => {

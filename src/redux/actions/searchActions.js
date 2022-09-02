@@ -3,7 +3,7 @@ const ACTIONS = {
     SEARCH_TERMS: 'search-terms',
 }
 
-export const search = (searchTerm) => {
+export const getSearchTerm = (searchTerm) => {
     return {
         type: ACTIONS.SEARCH_TERMS,
         payload: {

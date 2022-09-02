@@ -4,6 +4,7 @@ import cartReducer from './cartReducer'
 import categoriesReducer from './categoriesReducer'
 import collectionsReducer from './collectionsReducer'
 import orderNoteReducer from './orderNoteReducer'
+import searchReducder from './searchReducer'
 import wishlistReducer from './wishlistReducer'
 
 const allReducers = combineReducers({
@@ -13,6 +14,7 @@ const allReducers = combineReducers({
     biddingProducts: biddingReducer,
     cart: cartReducer,
     orderNote: orderNoteReducer,
+    search: searchReducder,
 })
 
 export default allReducers

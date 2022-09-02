@@ -18,6 +18,8 @@ export default function FilterContainer() {
     const categories = useSelector((state) => state.categories)
     const categoryId = categories.find((category) => category.name === categoryName)?._id
     const emptyCategoryId = categories.find((category) => category.name.toLowerCase() === 'empty')?._id
+    const search = useSelector((state) => state.search)
+    console.log(categories)
 
     return (
         <div className="filter-grid flex flex-row">
