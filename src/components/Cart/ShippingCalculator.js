@@ -25,7 +25,7 @@ export default function ShippingCalculator() {
     useEffect(() => {
         if (!country) return
 
-        setState(countryStates[0].code)
+        setState(countryStates[0]?.code)
     }, [country, countryStates])
 
     //  border border-gray-900/20 rounded-xl

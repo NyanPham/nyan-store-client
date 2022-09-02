@@ -14,6 +14,8 @@ export default function CartPage() {
         e.preventDefault()
     }
 
+    console.log(cart)
+
     return (
         <>
             <h2 className="text-center mt-12 text-slate-700 font-semibold text-2xl">Your Cart</h2>

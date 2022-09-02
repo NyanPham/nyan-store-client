@@ -14,7 +14,7 @@ export default function SideCart() {
     const { pathname } = useLocation()
     const { cart, loading, message, error } = useSelector((state) => state.cart)
     const { openSideCart, setOpenSideCart } = useSideCartContext()
-    const subtotal = cart.reduce((total, item) => item.variant.price * item.quantity, 0)
+    const subtotal = cart.reduce((_, item) => item?.variant?.price * item?.quantity, 0) || 0
 
     const closeModal = () => {
         setOpenSideCart(false)
