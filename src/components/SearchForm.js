@@ -3,17 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import useDebounce from '../hooks/useDebounce'
 import { getSearchTerm } from '../redux/actions/searchActions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { debounce } from 'lodash'
 
 function SearchForm() {
     const [searchTerm, setSearchTerm] = useState('')
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getSearchTerm(searchTerm))
-    }, [searchTerm, dispatch])
 
     return (
         <form className="hidden md:flex flex-row justify-between relative w-full max-w-lg">

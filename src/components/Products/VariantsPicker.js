@@ -10,6 +10,12 @@ import { useSelector } from 'react-redux'
 import useAddedToCart from '../../hooks/useAddedToCart'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 
+const getTargetVariantFromProduct = (currentVariantId, variants) => {
+    return currentVariantId != null
+        ? variants.find((variant) => variant._id.toString() === currentVariantId)
+        : variants[0]
+}
+
 function VariantsPicker(props) {
     const {
         productId,
@@ -27,11 +33,8 @@ function VariantsPicker(props) {
         onVariantChange = () => {},
     } = props
 
-    const [selectedVariant, setSelectedVariant] = useState(() => {
-        return currentVariantId != null
-            ? variants.find((variant) => variant._id.toString() === currentVariantId)
-            : variants[0]
-    })
+    const [selectedVariant, setSelectedVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
+    const [desiredVariant, setDesiredVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
 
     const [isUnavailable, setIsUnavailable] = useState(false)
     const [quantity, setQuantity] = useState(1)
@@ -48,14 +51,15 @@ function VariantsPicker(props) {
     const thirdOptions = filterDuplicateOption(variants, 'option3')
 
     function handleOptionChange(data) {
-        const desiredVariant = { ...selectedVariant }
-        desiredVariant[data.orderNum] = data.option
+        const newDesiredVariant = { ...desiredVariant, [data.orderNum]: data.option }
+
+        setDesiredVariant(newDesiredVariant)
 
         const availableVariant = variants.find(
             (variant) =>
-                compareStringValue(variant.option1, desiredVariant.option1) &&
-                compareStringValue(variant.option2, desiredVariant.option2) &&
-                compareStringValue(variant.option3, desiredVariant.option3)
+                compareStringValue(variant.option1, newDesiredVariant.option1) &&
+                compareStringValue(variant.option2, newDesiredVariant.option2) &&
+                compareStringValue(variant.option3, newDesiredVariant.option3)
         )
         if (!availableVariant) {
             setIsUnavailable(true)
@@ -87,6 +91,11 @@ function VariantsPicker(props) {
 
         onVariantChange(selectedVariant)
     }, [selectedVariant])
+
+    useDeepCompareEffect(() => {
+        setSelectedVariant(getTargetVariantFromProduct(currentVariantId, variants))
+        setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
+    }, [variants, currentVariantId])
 
     return (
         <div className="">
@@ -126,7 +135,7 @@ function VariantsPicker(props) {
                 {secondOptions && (
                     <VariantOptions
                         options={secondOptions}
-                        currentOption={selectedVariant.option2}
+                        currentOption={desiredVariant.option2}
                         styles={
                             'w-7 h-7 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold  border border-slate-300'
                         }
@@ -139,7 +148,7 @@ function VariantsPicker(props) {
                 {firstOptions && (
                     <VariantOptions
                         options={firstOptions}
-                        currentOption={selectedVariant.option1}
+                        currentOption={desiredVariant.option1}
                         styles={
                             'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm'
                         }
@@ -152,7 +161,7 @@ function VariantsPicker(props) {
                 {thirdOptions && (
                     <VariantOptions
                         options={thirdOptions}
-                        currentOption={selectedVariant.option3}
+                        currentOption={desiredVariant.option3}
                         styles={
                             'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm'
                         }
