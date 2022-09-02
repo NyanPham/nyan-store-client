@@ -16,11 +16,9 @@ export default function SideOrderNote() {
         dispatch(updateOrderNote(orderNoteRef.current.value))
     }
 
-    useEffect(() => {
-        dispatch(getOrderNote())
-    }, [])
-
-    console.log(orderNote)
+    // useEffect(() => {
+    //     dispatch(getOrderNote())
+    // }, [])
 
     return (
         <>
@@ -32,18 +30,18 @@ export default function SideOrderNote() {
                 <span className="text-sm font-normal">Note</span>
             </button>
             <form
-                className={`form px-5 z-30 bg-white absolute top-0 left-0 w-full h-full transition transform duration-300 shadow-top ${
+                className={`form py-7 px-5 z-30 bg-white absolute bottom-0 left-0 w-full max-h-full h-full transition transform duration-300 shadow-top ${
                     openOrderNote ? 'translate-y-0 pointer-events-auto' : 'translate-y-full pointer-events-none'
                 }`}
                 onSubmit={handleNoteSubmit}
             >
                 <div className="form-group mt-2">
-                    <label className="form-label" htmlFor="order-note">
+                    <label className="form-label" htmlFor="side-order-note">
                         Order Note:
                     </label>
                     <input
                         type="textarea"
-                        id="order-note"
+                        id="side-order-note"
                         className="form-input w-full h-16"
                         placeholder="Is there anything you want to tell us?"
                         ref={orderNoteRef}

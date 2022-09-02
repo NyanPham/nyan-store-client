@@ -16,6 +16,7 @@ import Search from './components/Search/Search'
 import ProductPage from './components/Pages/ProductPage'
 import { emptyCart, getCart } from './redux/actions/cartActions'
 import SideCart from './components/Cart/SideCart'
+import CartPage from './components/Pages/CartPage'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
@@ -85,6 +86,16 @@ function App() {
                             <>
                                 <Header />
                                 <ProductPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/cart"
+                        element={
+                            <>
+                                <Header />
+                                <CartPage />
                                 <Footer />
                             </>
                         }

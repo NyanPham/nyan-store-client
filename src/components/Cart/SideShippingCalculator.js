@@ -16,12 +16,14 @@ export default function SideShippingCalculator() {
     }
 
     const handleShippingChange = (e) => {
-        if (e.target.name === 'country') {
+        if (e.target.name === 'side-country') {
             setCountry(e.target.value)
-        } else if (e.target.name === 'state') {
+        } else if (e.target.name === 'side-state') {
             setState(e.target.value)
         }
     }
+
+    const handleZipInput = (e) => {}
 
     useEffect(() => {
         if (!country) return
@@ -39,42 +41,48 @@ export default function SideShippingCalculator() {
                 <span className="text-sm font-normal">Shipping</span>
             </button>
             <form
-                className={`form px-5 z-30 bg-white absolute bottom-0 left-0 w-full h-full transition transform duration-300 shadow-top ${
+                className={`form py-7 px-5 z-30 bg-white absolute bottom-0 left-0 w-full h-full transition transform duration-300 shadow-top ${
                     openShippingCalculator
-                        ? '-translate-y-10 pointer-events-auto'
+                        ? 'translate-y-0 pointer-events-auto'
                         : 'translate-y-full pointer-events-none'
                 }`}
                 onSubmit={handleCalcSubmit}
             >
                 <div className="form-group mt-2">
-                    <label className="form-label" htmlFor="country">
+                    <label className="form-label" htmlFor="side-country">
                         Country:
                     </label>
-                    <select id="country" className="form-input" name="country" onInput={handleShippingChange}>
+                    <select id="side-country" className="form-input" name="side-country" onInput={handleShippingChange}>
                         {countries &&
                             Object.entries(countries).map(([key, value]) => (
-                                <option key={key} name="country" value={key}>
+                                <option key={key} name="side-country" value={key}>
                                     {value}
                                 </option>
                             ))}
                     </select>
                 </div>
                 <div className="form-group mt-2">
-                    <label className="form-label" htmlFor="state">
+                    <label className="form-label" htmlFor="side-state">
                         State/Province:
                     </label>
-                    <select id="state" className="form-input" name="state" onInput={handleShippingChange}>
+                    <select id="side-state" className="form-input" name="side-state" onInput={handleShippingChange}>
                         {countryStates &&
                             countryStates.map((state) => (
-                                <option key={state.code} name="state" value={state.code}>
+                                <option key={state.code} name="side-state" value={state.code}>
                                     {state.name}
                                 </option>
                             ))}
                     </select>
                 </div>
+                <div className="form-group mt-2">
+                    <label className="form-label" htmlFor="sidezip">
+                        Zip Code:
+                    </label>
+                    <input type="text" id="side-zip" className="form-input" name="side-zip" onInput={handleZipInput} />
+                </div>
                 <button
                     type="submit"
-                    className="mt-3 text-white font-semibold tracking-wide bg-cyan-400 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-cyan-500"
+                    className="mt-7 text-white font-semibold tracking-wide bg-cyan-400 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-cyan-500"
                 >
                     Apply Coupon
                 </button>

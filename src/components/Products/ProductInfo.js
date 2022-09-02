@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
-import VariantsPicker from '../Products/VariantsPicker'
+import VariantsPicker from './VariantsPicker'
 import Container from '../Container'
 import { useAuthContext } from '../../context/authContext'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
 import { useSideCartContext } from '../../context/sideCartContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
-import ProductDetail from '../Products/ProductDetail'
+import ProductDetail from './ProductDetail'
 
 const getImagesFromVariants = (variants) => {
     return variants.flatMap((variant) => {

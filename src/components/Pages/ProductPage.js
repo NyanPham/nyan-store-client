@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductRecommendation from '../Products/ProductRecommendation'
-import ProductInfo from './ProductInfo'
+import ProductInfo from '../Products/ProductInfo'
 
 export default function ProductPage() {
     return (

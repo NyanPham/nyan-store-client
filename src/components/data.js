@@ -21,6 +21,10 @@ import handsome from '../imgs/handsome.jpg'
 import shoes from '../imgs/shoes.jpg'
 import look from '../imgs/look.jpg'
 
+export const cart_configures = {
+    freeShippingThreshold: 850,
+}
+
 export const COLOR_MAP = {
     green: 'bg-green-500',
     red: 'bg-red-500',

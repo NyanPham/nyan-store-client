@@ -20,18 +20,18 @@ export default function SideCoupon() {
                 <span className="text-sm font-normal">Coupon</span>
             </button>
             <form
-                className={`form px-5 z-30 bg-white absolute top-0 left-0 w-full h-full transition transform duration-300 shadow-top ${
+                className={`form py-7 px-5 z-30 bg-white absolute bottom-0 left-0 w-full h-full transition transform duration-300 shadow-top ${
                     openCoupon ? 'translate-y-0 pointer-events-auto' : 'translate-y-full pointer-events-none'
                 }`}
                 onSubmit={handleCouponSubmit}
             >
                 <div className="form-group mt-2">
-                    <label className="form-label" htmlFor="coupon-code">
+                    <label className="form-label" htmlFor="side-coupon-code">
                         Coupon Code:
                     </label>
                     <input
                         type="text"
-                        id="coupon-code"
+                        id="side-coupon-code"
                         className="form-input w-full"
                         placeholder="Have a coupon? Add for discount now!"
                         ref={couponRef}

@@ -46,8 +46,8 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
                 </div>
             </div>
             <div
-                className={`columns-2 max-w-full h-max flex-nowrap mt-4 transition-all transform duration-300 origin-top ${
-                    openFacet ? 'scale-y-100 h-max' : 'scale-y-0 h-0'
+                className={`columns-2 max-w-full flex-nowrap mt-4 transition-all transform duration-300 ease-in origin-top ${
+                    openFacet ? 'scale-y-100 max-h-96 overflow-auto' : 'scale-y-0 max-h-0 overflow-clip'
                 }`}
             >
                 {options

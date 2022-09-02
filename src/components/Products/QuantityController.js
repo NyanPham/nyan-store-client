@@ -21,6 +21,8 @@ export default function QuantityController({
     const { loading, message, error, cart } = useSelector((state) => state.cart)
 
     const handleNumberInput = (e) => {
+        if (e.target.value > inventory || e.target.value < 1) return alert(`You can only add ${inventory} to your cart`)
+
         setQuantity(e.target.value)
     }
 

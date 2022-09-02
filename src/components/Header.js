@@ -9,14 +9,18 @@ import {
     faHeart,
     faMagnifyingGlass,
     faCaretDown,
+    faCaretUp,
 } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import defaultAvatar from '../imgs/default.jpg'
 import { useSideCartContext } from '../context/sideCartContext'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
     const [scrollDir, setScrollDir] = useState('up')
     const { setOpenSideCart } = useSideCartContext()
+    const { pathname } = useLocation()
+    const { cart } = useSelector((state) => state.cart)
 
     useEffect(() => {
         const threshold = 50
@@ -72,8 +76,26 @@ const Header = () => {
                             icon={faArrowRightArrowLeft}
                         />
                     </Link>
-                    <button className="header-navigation-btn group" onClick={() => setOpenSideCart(true)}>
+                    <button
+                        className="header-navigation-btn group relative"
+                        onClick={() => setOpenSideCart(true)}
+                        disabled={pathname.startsWith('/cart')}
+                    >
                         <FontAwesomeIcon className="header-navigation-icon" icon={faShoppingCart} />
+                        {pathname.startsWith('/cart') && (
+                            <div className="absolute top-full px-3 py-1 text-sm bg-slate-200 w-max shadow-lg rounded-xl pointer-events-none transition transform duration-300 opacity-0 -translate-y-3 group-hover:opacity-100 group-hover:translate-y-0">
+                                <FontAwesomeIcon
+                                    className="absolute bottom-full left-1/2 text-slate-200 translate-y-1/2 -translate-x-1/2"
+                                    icon={faCaretUp}
+                                />
+                                You're at the cart
+                            </div>
+                        )}
+                        {cart.length > 0 && (
+                            <div className="w-4 h-4 rounded-full bg-slate-200 absolute -top-0.5 -right-0.5 leading-none text-sm font-semibold flex items-center justify-center">
+                                {cart.length < 10 ? cart.length : '9+'}
+                            </div>
+                        )}
                     </button>
                     <button className="header-navigation-btn group">
                         <FontAwesomeIcon className="header-navigation-icon" icon={faHeart} />
