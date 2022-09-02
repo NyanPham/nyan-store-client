@@ -13,14 +13,12 @@ export function fetchCategories() {
                 url: '/api/v1/categories',
             })
 
-            if (res.data.status === 'success') {
-                dispatch({
-                    type: ACTIONS.FETCH_CATEGORIES,
-                    payload: {
-                        categories: res.data.data.docs,
-                    },
-                })
-            }
+            dispatch({
+                type: ACTIONS.FETCH_CATEGORIES,
+                payload: {
+                    categories: res.data.data.docs,
+                },
+            })
         } catch (err) {
             dispatch({
                 type: ACTIONS.FETCH_COLLECTIONS_FAIL,
