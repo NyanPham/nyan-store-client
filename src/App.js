@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Signup from './components/Authentication/Signup'
 import Header from './components/Header'
 import Home from './components/Home'
-import SidebarNavigationDrawer from './components/SidebarNavigationDrawer'
 import { useDispatch, useSelector } from 'react-redux/es/exports'
 import { fetchCollections } from './redux/actions/collectionsActions'
 import { fetchCategories } from './redux/actions/categoriesActions'
@@ -21,9 +20,15 @@ import MyAccount from './components/Authentication/MyAccount'
 import Logout from './components/Authentication/Logout'
 import ForgotPassword from './components/Authentication/ForgotPassword'
 import ResetPassword from './components/Authentication/ResetPassword'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import Alert from './components/Alert/Alert'
+import ReactDOM from 'react-dom'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
+    const { loading, message, error } = useSelector((state) => state.cart)
+    const [showAlert, setShowAlert] = useState(false)
     const dispatch = useDispatch()
 
     dispatch(fetchCollections())
@@ -39,6 +44,14 @@ function App() {
             dispatch(emptyCart())
         }
     }, [isLoggedIn, dispatch])
+
+    useEffect(() => {
+        if (error) {
+            setShowAlert(true)
+        }
+    }, [error, message])
+
+    console.log(error)
 
     return (
         <>
@@ -101,8 +114,26 @@ function App() {
                     <Route path="/forgotPassword" element={<ForgotPassword />} />
                     <Route path="/resetPassword/:resetToken" element={<ResetPassword />} />
                 </Routes>
+                <SideCart />
+
+                {loading && (
+                    <div className="z-30 fixed top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center">
+                        <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
+                    </div>
+                )}
+                {showAlert &&
+                    ReactDOM.createPortal(
+                        <>
+                            <Alert
+                                type={message ? 'success' : 'error'}
+                                message={message ? message : error ? error : ''}
+                                delayToClose={3000}
+                                closeCallback={() => setShowAlert(false)}
+                            />
+                        </>,
+                        document.getElementById('modal-container')
+                    )}
             </div>
-            <SideCart />
             <div id="modal-container"></div>
         </>
     )

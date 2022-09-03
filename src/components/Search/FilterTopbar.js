@@ -76,8 +76,11 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
                     {results?.toLocaleString('en-US')}
                 </span>
                 <span className="text-base text-slate-700 font-medium">
-                    items found {categoryName && !pathname.startsWith('/search') && `in ${categoryName}`}
-                    {pathname.startsWith('/search') && `for ${search}`}
+                    items found
+                    <span className="capitalize">
+                        {categoryName && ` in ${categoryName}`}
+                        {search && ` for ${search}`}
+                    </span>
                 </span>
             </div>
             <div className="flex gap-3">

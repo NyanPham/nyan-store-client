@@ -1,12 +1,41 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useAsyncValidateState from '../../hooks/useAsyncValidateState'
 import ProductCardAction from './ProductCardAction'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
+import { useSideCartContext } from '../../context/sideCartContext'
+import { useEffect } from 'react'
+import { useRef } from 'react'
 
 export default function ProductCard(props) {
     const { id, images, name, slug, variants, vendor, createdAt, inAuction = false, currentBid = false } = props
+    const { setOpenSideCart } = useSideCartContext()
+    const { loading, error, message } = useSelector((state) => state.cart)
+    const dispatch = useDispatch()
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const firstVariant = variants[0]
+
+    const handleAddToCart = () => {
+        const data = {
+            variant: firstVariant._id,
+            product: id,
+            quantity: 1,
+        }
+
+        dispatch(addToCart(data))
+    }
+
+    useEffect(() => {
+        if (loading || error || message !== 'success') return
+        if (!loading && message === 'success') {
+            setOpenSideCart(true)
+            dispatch(resetMessageError())
+        }
+    }, [loading, error, message, setOpenSideCart])
 
     return (
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
@@ -34,7 +63,7 @@ export default function ProductCard(props) {
                 )}
             </div>
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
-                <ProductCardAction productId={id} />
+                <ProductCardAction productId={id} handleAddToCart={handleAddToCart} />
             </div>
             {isNew && !inAuction && (
                 <div className="absolute bottom-2 right-2 bg-yellow-400 py-0.5 px-2 text-xs text-white rounded-lg">

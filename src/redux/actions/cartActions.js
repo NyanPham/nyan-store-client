@@ -26,18 +26,11 @@ export const addToCart = (data) => async (dispatch) => {
 
         if (res.data.status === 'success') {
             dispatch({
-                type: ACTIONS.FETCH_CART,
-                payload: {
-                    cart: res.data.data.cart,
-                },
-            })
-            dispatch({
                 type: ACTIONS.CART_ACT_SUCCESS,
-                payload: { message: 'success' },
+                payload: { message: 'success', cart: res.data.data.cart },
             })
         }
     } catch (err) {
-        console.error(err)
         dispatch({
             type: ACTIONS.CART_ACT_FAIL,
             payload: {
@@ -65,9 +58,6 @@ export const getCart = () => async (dispatch) => {
                     cart: res.data.data.cart,
                 },
             })
-            dispatch({
-                type: ACTIONS.CART_ACT_SUCCESS,
-            })
         }
     } catch (err) {
         console.error(err)
@@ -94,15 +84,10 @@ export const updateCart = (data) => async (dispatch) => {
 
         if (res.data.status === 'success') {
             dispatch({
-                type: ACTIONS.FETCH_CART,
-                payload: {
-                    cart: res.data.data.cart,
-                },
-            })
-            dispatch({
                 type: ACTIONS.CART_ACT_SUCCESS,
                 payload: {
                     message: 'Cart update successfully',
+                    cart: res.data.data.cart,
                 },
             })
         }

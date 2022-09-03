@@ -17,10 +17,12 @@ export default function cartReducer(state = intitialState, { type, payload }) {
                 message: '',
             }
         case ACTIONS.CART_ACT_SUCCESS:
+            console.log(payload.cart)
             return {
                 ...state,
                 loading: false,
                 message: payload?.message || 'success',
+                cart: payload.cart,
             }
         case ACTIONS.CART_ACT_FAIL:
             return {

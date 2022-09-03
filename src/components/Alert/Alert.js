@@ -15,7 +15,7 @@ export default function Alert({ type, message, delayToClose = 10000, closeCallba
     }
 
     return (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-900/80" onClick={handleOverlayClick}>
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-900/80 z-40" onClick={handleOverlayClick}>
             <div
                 className="bg-white max-w-md flex flex-col rounded-lg absolute top-10 left-1/2 -translate-x-1/2"
                 ref={modalRef}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import useDebounce from '../../hooks/useDebounce'
 import { updateCart } from '../../redux/actions/cartActions'
@@ -10,6 +10,7 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
     const [quantity, setQuantity] = useState(currentQuantity)
     const [variant, setVariant] = useState(currentVariant)
     const dispatch = useDispatch()
+    const firstRenderRef = useRef(true)
 
     const handleQuantityChange = (quantity) => {
         setQuantity(quantity)
@@ -19,8 +20,14 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
         setVariant(variant)
     }
 
+    useEffect(() => {
+        firstRenderRef.current = false
+    }, [])
+
     useDebounce(
         () => {
+            if (firstRenderRef.current) return
+
             const data = {
                 quantity,
                 currentVariant: currentVariant._id,

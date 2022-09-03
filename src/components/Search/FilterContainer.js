@@ -6,11 +6,18 @@ import FilterView from './FilterView'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import Alert from '../Alert/Alert'
+import ReactDOM from 'react-dom'
 
 export default function FilterContainer() {
     const [data, setData] = useState({})
     const [sortBy, setSortBy] = useState('oldest')
     const [viewBy, setViewBy] = useState('loose')
+    const [isLoading, setIsLoading] = useState(false)
+    const [message, setMessage] = useState('')
+    const [error, setError] = useState('')
+    const [showAlert, setShowAlert] = useState(false)
 
     const [openSidebar, setOpenSidebar] = useState(false)
     const { categoryName } = useParams()
@@ -38,6 +45,10 @@ export default function FilterContainer() {
                     sortByTerm={sortBy}
                     categoryId={categoryId ? categoryId : emptyCategoryId}
                     categoryName={categoryName}
+                    setIsLoading={setIsLoading}
+                    setMessage={setMessage}
+                    setError={setError}
+                    setShowAlert={setShowAlert}
                 />
             </div>
             <div className="flex flex-col flex-grow bg-slate-200">
@@ -55,6 +66,23 @@ export default function FilterContainer() {
                     openSidebar ? 'pointer-events-auto bg-slate-900/70' : 'pointer-events-none'
                 }`}
             />
+            {isLoading && (
+                <div className="z-30 fixed top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center">
+                    <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
+                </div>
+            )}
+            {showAlert &&
+                ReactDOM.createPortal(
+                    <>
+                        <Alert
+                            type={message ? 'success' : 'error'}
+                            message={message ? message : error ? error : ''}
+                            delayToClose={3000}
+                            closeCallback={() => setShowAlert(false)}
+                        />
+                    </>,
+                    document.getElementById('modal-container')
+                )}
         </div>
     )
 }

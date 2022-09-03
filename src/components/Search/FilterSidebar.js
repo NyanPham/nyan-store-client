@@ -8,7 +8,9 @@ import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
-export default function FilterSidebar({ setData, sortByTerm, categoryId, categoryName }) {
+export default function FilterSidebar(props) {
+    const { setData, sortByTerm, categoryId, categoryName, setIsLoading, setMessage, setError, setShowAlert } = props
+
     const [facetOptions, setFacetOptions] = useState([])
     const [maxPrice, setMaxPrice] = useState(0)
     const [minPrice, setMinPrice] = useState(0)
@@ -52,6 +54,10 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId, categor
     }, [])
 
     const searchProducts = async (filterQuery, allAvailableOptions) => {
+        setIsLoading(true)
+        setMessage('')
+        setError('')
+
         try {
             const res = await axios({
                 method: 'POST',
@@ -63,13 +69,15 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId, categor
                     },
                 },
             })
-            console.log(res)
 
             if (res.data.status === 'success') {
                 setData(res.data)
             }
         } catch (err) {
-            console.error(err)
+            setError(err.response.data.message)
+            setShowAlert(true)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -79,7 +87,7 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId, categor
                 searchProducts(filterQuery, allAvailableOptions)
             }
         },
-        250,
+        500,
         [filterQuery]
     )
 
