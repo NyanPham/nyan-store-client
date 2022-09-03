@@ -5,14 +5,22 @@ const AuthContext = createContext()
 export const useAuthContext = () => useContext(AuthContext)
 
 export default function AuthContextProvider({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [user, setUser] = useState({
+        isLoggedIn: false,
+        currentUser: {},
+    })
 
-    const authLogin = () => {
-        setIsLoggedIn(true)
+    const authLogin = (currentUser) => {
+        setUser({
+            isLoggedIn: true,
+            currentUser: currentUser,
+        })
     }
 
     const authLogout = () => {
-        setIsLoggedIn(false)
+        setUser({
+            isLoggedIn: false,
+        })
     }
 
     useEffect(() => {
@@ -23,18 +31,22 @@ export default function AuthContextProvider({ children }) {
                     url: '/api/v1/users/isLoggedIn',
                 })
 
-                if (res.data.status === 'success' && res.data.isLoggedIn) {
-                    return setIsLoggedIn(true)
+                if (res.data.status === 'success' && res.data.isLoggedIn && res.data.currentUser != null) {
+                    return authLogin(res.data.currentUser)
                 }
-
-                setIsLoggedIn(false)
             } catch (err) {
-                setIsLoggedIn(false)
+                authLogout()
             }
         }
 
         fetchIsLoggedIn()
     }, [])
 
-    return <AuthContext.Provider value={{ isLoggedIn, authLogin, authLogout }}>{children}</AuthContext.Provider>
+    return (
+        <AuthContext.Provider
+            value={{ isLoggedIn: user.isLoggedIn, currentUser: user.currentUser, authLogin, authLogout }}
+        >
+            {children}
+        </AuthContext.Provider>
+    )
 }

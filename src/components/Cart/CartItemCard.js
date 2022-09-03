@@ -82,9 +82,9 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
             </div>
 
             <div className="flex items-center gap-2 justify-end md:justify-self-center">
-                {variant.oldPrice ? (
+                {variant.comparePrice ? (
                     <>
-                        <span className="product-card-compare-price">${variant.oldPrice}</span>
+                        <span className="product-card-compare-price">${variant.comparePrice}</span>
                         <span className="product-card-price">${variant.price}</span>
                     </>
                 ) : (

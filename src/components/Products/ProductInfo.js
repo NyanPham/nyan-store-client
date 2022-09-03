@@ -35,6 +35,7 @@ function ProductInfo() {
     const [product, setProduct] = useState(() => {
         return location.state
     })
+
     const { loading, message } = useSelector((state) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [mainImage, setMainImage] = useState(product?.images[0])
@@ -83,7 +84,7 @@ function ProductInfo() {
     const formSubmitHandler = async (data) => {
         if (!isLoggedIn) {
             alert('Please login to add product to cart')
-            return setTimeout(navigate('/log-in'), 2500)
+            return setTimeout(navigate('/login'), 2500)
         }
         const dataToSubmit = {
             product: product._id,

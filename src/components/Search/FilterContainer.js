@@ -37,6 +37,7 @@ export default function FilterContainer() {
                     setData={setData}
                     sortByTerm={sortBy}
                     categoryId={categoryId ? categoryId : emptyCategoryId}
+                    categoryName={categoryName}
                 />
             </div>
             <div className="flex flex-col flex-grow bg-slate-200">

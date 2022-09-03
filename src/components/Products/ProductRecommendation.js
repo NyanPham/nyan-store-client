@@ -19,7 +19,6 @@ function ProductRecommendation({ showRecommendCard = true }) {
             </div>
         </SwiperSlide>
     )
-
     const productCards = products.map((product, index) => {
         return (
             <SwiperSlide key={`recommendation_${index}`}>

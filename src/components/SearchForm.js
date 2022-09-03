@@ -23,7 +23,7 @@ function SearchForm() {
     )
 
     useEffect(() => {
-        if (searchTerm != null && !pathname.startsWith('/search')) return navigate('/search')
+        if (searchTerm != null && !pathname.startsWith('/categories')) return navigate('/categories/all')
 
         if (searchTerm == null) navigate(-1)
     }, [searchTerm])

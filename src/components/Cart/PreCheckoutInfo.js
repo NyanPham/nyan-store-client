@@ -41,7 +41,7 @@ const getInstruction = (fraction) => {
 export default function PreCheckoutInfo() {
     const { freeShippingThreshold } = cart_configures
     const { cart } = useSelector((state) => state.cart)
-    const subtotal = cart.reduce((total, item) => item?.variant?.price * item?.quantity, 0)
+    const subtotal = cart.reduce((total, item) => total + item?.variant?.price * item?.quantity, 0)
 
     const { instruction, percent } = getInstruction(subtotal / freeShippingThreshold)
 

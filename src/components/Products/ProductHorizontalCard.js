@@ -33,9 +33,11 @@ function ProductHorizontalCard(props) {
                 </h4>
                 {currentBid === false && (
                     <div className="flex justify-start items-center gap-2">
-                        {firstVariant.oldPrice ? (
+                        {firstVariant.comparePrice ? (
                             <>
-                                <span className="product-card-compare-price text-left">${firstVariant.oldPrice}</span>
+                                <span className="product-card-compare-price text-left">
+                                    ${firstVariant.comparePrice}
+                                </span>
                                 <span className="product-card-price text-left">${firstVariant.price}</span>
                             </>
                         ) : (

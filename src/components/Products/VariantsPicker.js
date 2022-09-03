@@ -101,8 +101,8 @@ function VariantsPicker(props) {
         <div className="">
             <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>
             <div className={`flex gap-2 justify-start items-center mt-2 ${priceStyles}`}>
-                {selectedVariant.oldPrice && (
-                    <span className="product-card-compare-price text-base">${selectedVariant.oldPrice}</span>
+                {selectedVariant.comparePrice && (
+                    <span className="product-card-compare-price text-base">${selectedVariant.comparePrice}</span>
                 )}
                 <span className="product-card-price text-2xl">${selectedVariant.price}</span>
             </div>
@@ -224,7 +224,7 @@ function VariantsPicker(props) {
                                     />
                                 </button>
                             ) : (
-                                <Link to="/log-in" className="">
+                                <Link to="/login" className="">
                                     <FontAwesomeIcon className="text-4xl text-gray-300" icon={faHeart} />
                                 </Link>
                             )}

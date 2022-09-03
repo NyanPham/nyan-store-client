@@ -17,6 +17,10 @@ import ProductPage from './components/Pages/ProductPage'
 import { emptyCart, getCart } from './redux/actions/cartActions'
 import SideCart from './components/Cart/SideCart'
 import CartPage from './components/Pages/CartPage'
+import MyAccount from './components/Authentication/MyAccount'
+import Logout from './components/Authentication/Logout'
+import ForgotPassword from './components/Authentication/ForgotPassword'
+import ResetPassword from './components/Authentication/ResetPassword'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
@@ -50,8 +54,8 @@ function App() {
                             </>
                         }
                     />
-                    <Route
-                        path="/search"
+                    {/* <Route
+                        path="/search/:categoryName"
                         element={
                             <>
                                 <Header />
@@ -59,17 +63,7 @@ function App() {
                                 <Footer />
                             </>
                         }
-                    />
-                    <Route
-                        path="/categories"
-                        element={
-                            <>
-                                <Header />
-                                <Search />
-                                <Footer />
-                            </>
-                        }
-                    />
+                    /> */}
                     <Route
                         path="/categories/:categoryName"
                         element={
@@ -100,8 +94,12 @@ function App() {
                             </>
                         }
                     />
-                    <Route path="/sign-up" element={<Signup />} />
-                    <Route path="/log-in" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/myAccount" element={<MyAccount />} />
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path="/forgotPassword" element={<ForgotPassword />} />
+                    <Route path="/resetPassword/:resetToken" element={<ResetPassword />} />
                 </Routes>
             </div>
             <SideCart />

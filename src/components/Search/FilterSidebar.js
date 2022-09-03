@@ -3,12 +3,16 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import useDebounce from '../../hooks/useDebounce'
+import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
-export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
+export default function FilterSidebar({ setData, sortByTerm, categoryId, categoryName }) {
     const [facetOptions, setFacetOptions] = useState([])
+    const [maxPrice, setMaxPrice] = useState(0)
+    const [minPrice, setMinPrice] = useState(0)
+
     const [filterQuery, setFilterQuery] = useState({
         skip: 0,
         limit: 15,
@@ -16,6 +20,7 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
         categoryId,
         searchTerm: '',
         emptyCategory: true,
+        categoryName,
     })
     const search = useSelector((state) => state.search)
     const { pathname } = useLocation()
@@ -58,6 +63,7 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
                     },
                 },
             })
+            console.log(res)
 
             if (res.data.status === 'success') {
                 setData(res.data)
@@ -84,9 +90,17 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
                     method: 'GET',
                     url: '/api/v1/products/filterFacets',
                 })
+                // console.log({ ...res.data.data.facets[0][0], ...res.data.data.facets[1][0] })
 
                 if (res.data.status === 'success') {
-                    setFacetOptions(res.data.data.facets[0][0])
+                    setFacetOptions(() =>
+                        res.data.data.facets.reduce((facets, array) => {
+                            return {
+                                ...facets,
+                                ...array[0],
+                            }
+                        }, {})
+                    )
                 }
             } catch (err) {
                 alert(err.response.data.message)
@@ -108,15 +122,14 @@ export default function FilterSidebar({ setData, sortByTerm, categoryId }) {
         })
     }, [sortByTerm, categoryId, search, pathname])
 
-    const reducePrice = (type, options) => {
-        return Object.entries(options).reduce((maxPrice, obj) => {
-            if (obj[1][0][type] != null) return obj[1][0][type]
-            return maxPrice
-        }, 0)
-    }
-
-    const maxPrice = reducePrice('maxPrice', facetOptions)
-    const minPrice = reducePrice('minPrice', facetOptions)
+    useDeepCompareEffect(() => {
+        if (facetOptions?.maxPrice?.length > 0) {
+            setMaxPrice(facetOptions.maxPrice[0].value)
+        }
+        if (facetOptions?.minPrice?.length > 0) {
+            setMinPrice(facetOptions.minPrice[0].value)
+        }
+    }, [facetOptions])
 
     return (
         <div className="filter-sidebar pb-7 w-full row-span-6 border border-gray-300">

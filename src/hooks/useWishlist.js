@@ -14,7 +14,7 @@ export default function useWishlist(productId) {
     })
 
     function handleWishlistClick(e) {
-        if (!isLoggedIn) return navigate('/log-in')
+        if (!isLoggedIn) return navigate('/login')
         if (!alreadyAdded) {
             return dispatch(addWishlist(productId))
         }

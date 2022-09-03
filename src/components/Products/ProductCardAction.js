@@ -38,7 +38,7 @@ function ProductCardAction({ productId }) {
             ) : (
                 <>
                     <Link
-                        to={'/log-in'}
+                        to={'/login'}
                         className={`w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 ${
                             alreadyAdded
                                 ? ''
@@ -53,13 +53,13 @@ function ProductCardAction({ productId }) {
                         />
                     </Link>
                     <Link
-                        to={'/log-in'}
+                        to={'/login'}
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                     >
                         <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faEye} />
                     </Link>
                     <Link
-                        to={'/log-in'}
+                        to={'/login'}
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                     >
                         <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faCartPlus} />

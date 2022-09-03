@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import nyanLogo from '../imgs/nyan-logo.png'
 // import Container from './Container'
 import SearchForm from './SearchForm'
@@ -15,12 +15,21 @@ import { Link, useLocation } from 'react-router-dom'
 import defaultAvatar from '../imgs/default.jpg'
 import { useSideCartContext } from '../context/sideCartContext'
 import { useSelector } from 'react-redux'
+import { useAuthContext } from '../context/authContext'
 
 const Header = () => {
+    const { isLoggedIn, currentUser } = useAuthContext()
     const [scrollDir, setScrollDir] = useState('up')
+    const [openAuth, setOpenAuth] = useState(false)
     const { setOpenSideCart } = useSideCartContext()
     const { pathname } = useLocation()
     const { cart } = useSelector((state) => state.cart)
+    const authRef = useRef()
+
+    const closeAuth = (e) => {
+        if (authRef.current.contains(e.target)) return
+        setOpenAuth(false)
+    }
 
     useEffect(() => {
         const threshold = 50
@@ -51,6 +60,12 @@ const Header = () => {
 
         return () => window.removeEventListener('scroll', onScroll)
     }, [scrollDir])
+
+    useEffect(() => {
+        window.addEventListener('click', closeAuth)
+
+        return () => window.removeEventListener('click', closeAuth)
+    }, [])
 
     return (
         <header
@@ -102,16 +117,69 @@ const Header = () => {
                     <button className="header-navigation-btn group">
                         <FontAwesomeIcon className="header-navigation-icon" icon={faHeart} />
                     </button>
-                    <button className="w-7 h-7 flex items-center justify-center relative group">
+                    <button
+                        className="w-7 h-7 flex items-center justify-center relative group"
+                        onClick={() => {
+                            setOpenAuth((prevOpenAuth) => !prevOpenAuth)
+                        }}
+                        ref={authRef}
+                    >
                         <img
                             className="w-full h-full object-cover rounded-full overflow-hidden"
-                            src={defaultAvatar}
+                            src={`/img/users/${currentUser?.photo || 'default.jpg'}`}
                             alt="Avatar"
                         />
                         <FontAwesomeIcon
                             className="hidden absolute left-full top-0 text-slate-300 group-hover:translate-y-1 transform transition duration-200 lg:inline-block"
                             icon={faCaretDown}
                         />
+                        {isLoggedIn ? (
+                            <>
+                                <div
+                                    className={`absolute top-full right-0 w-max h-max bg-slate-100 shadow-lg transform transition duration-200 ${
+                                        openAuth
+                                            ? 'translate-y-0 opacity-100 pointer-events-auto'
+                                            : '-translate-y-2 opacity-0 pointer-events-none'
+                                    }`}
+                                >
+                                    <Link
+                                        to="/myAccount"
+                                        className="block py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700"
+                                    >
+                                        My Account
+                                    </Link>
+                                    <Link
+                                        to="/logout"
+                                        className="block py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700"
+                                    >
+                                        Logout
+                                    </Link>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div
+                                    className={`absolute top-full right-0 w-max h-max bg-slate-100 shadow-lg transform transition duration-200 ${
+                                        openAuth
+                                            ? 'translate-y-0 opacity-100 pointer-events-auto'
+                                            : '-translate-y-2 opacity-0 pointer-events-none'
+                                    }`}
+                                >
+                                    <Link
+                                        to="/login"
+                                        className="block py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700"
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        to="/signup"
+                                        className="block py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700"
+                                    >
+                                        Signup
+                                    </Link>
+                                </div>
+                            </>
+                        )}
                     </button>
                 </div>
             </div>

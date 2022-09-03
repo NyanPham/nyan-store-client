@@ -19,9 +19,9 @@ export default function ProductCard(props) {
                 <h3 className="text-center text-ellipsis text-gray-900 text-base font-semibold">{name}</h3>
                 {currentBid === false && (
                     <div className="flex justify-center items-center gap-2">
-                        {firstVariant.oldPrice ? (
+                        {firstVariant.comparePrice ? (
                             <>
-                                <span className="product-card-compare-price">${firstVariant.oldPrice}</span>
+                                <span className="product-card-compare-price">${firstVariant.comparePrice}</span>
                                 <span className="product-card-price">${firstVariant.price}</span>
                             </>
                         ) : (

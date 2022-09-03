@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import axios from 'axios'
-import loginBackground from '../../imgs/login-background.jpg'
+import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
 

@@ -18,6 +18,8 @@ export function useFetchProductsFromCollection(collections, collectionName) {
                         method: 'GET',
                         url,
                     })
+
+                    console.log(res)
                     if (res.data.status === 'success') {
                         setProducts(res.data.data.docs)
                     }

@@ -9,14 +9,10 @@ import { Link } from 'react-router-dom'
 
 export default function CartPage() {
     const { cart, loading, message, error } = useSelector((state) => state.cart)
-    const search = useSelector((state) => state.search)
-    console.log(search)
 
     const handleCheckout = (e) => {
         e.preventDefault()
     }
-
-    console.log(cart)
 
     return (
         <>

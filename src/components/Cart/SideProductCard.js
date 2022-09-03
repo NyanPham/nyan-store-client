@@ -58,9 +58,9 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
                     )}
                 </div>
                 <div className="flex justify-start items-center gap-2">
-                    {variant.oldPrice ? (
+                    {variant.comparePrice ? (
                         <>
-                            <span className="product-card-compare-price">${variant.oldPrice}</span>
+                            <span className="product-card-compare-price">${variant.comparePrice}</span>
                             <span className="product-card-price">${variant.price}</span>
                         </>
                     ) : (
