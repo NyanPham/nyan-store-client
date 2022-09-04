@@ -15,6 +15,8 @@ function ProductAuctionCard({ product }) {
     const [userBidsOnProduct, setUserBidsOnProduct] = useState([])
     const { message } = useSelector((state) => state.biddingProducts)
 
+    console.log(userBidsOnProduct)
+
     const fetchAutionData = async (productId) => {
         try {
             const res = await axios({
