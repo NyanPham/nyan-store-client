@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Alert from '../Alert/Alert'
 
 const DELAY_TIME = 3000
