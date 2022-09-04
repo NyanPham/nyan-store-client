@@ -22,12 +22,6 @@ function SearchForm() {
         [searchTerm, dispatch]
     )
 
-    useEffect(() => {
-        if (searchTerm != null && !pathname.startsWith('/categories')) return navigate('/categories/all')
-
-        if (searchTerm == null) navigate(-1)
-    }, [searchTerm])
-
     return (
         <form className="hidden md:flex flex-row justify-between relative w-full max-w-lg">
             <label htmlFor="search" className="hidden">

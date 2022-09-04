@@ -2,9 +2,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { faBriefcase, faHatCowboy, faGlasses, faClock, faShirt, faSocks } from '@fortawesome/free-solid-svg-icons'
+import {
+    faBriefcase,
+    faHatCowboy,
+    faGlasses,
+    faClock,
+    faShirt,
+    faSocks,
+    faEnvelope,
+} from '@fortawesome/free-solid-svg-icons'
 
 const navObjArray = [
+    {
+        navName: 'All',
+        icon: faEnvelope,
+    },
     {
         navName: 'Bags',
         icon: faBriefcase,

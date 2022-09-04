@@ -10,6 +10,8 @@ function ProductRecommendation({ showRecommendCard = true }) {
     const collections = useSelector((state) => state.collections)
     const products = useFetchProductsFromCollection(collections, 'New Arrival')
 
+    console.log(products)
+
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>
             <div className="flex flex-col items-center justify-center w-full h-full bg-cyan-500 gap-4 px-7">

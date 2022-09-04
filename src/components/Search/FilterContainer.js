@@ -24,6 +24,8 @@ export default function FilterContainer() {
     const categories = useSelector((state) => state.categories)
     const categoryId = categories.find((category) => category.name === categoryName)?._id
     const emptyCategoryId = categories.find((category) => category.name.toLowerCase() === 'empty')?._id
+    console.log(categories, categoryId, categoryName)
+    console.log(categoryId)
 
     return (
         <div className="filter-grid flex flex-row">
@@ -43,7 +45,7 @@ export default function FilterContainer() {
                 <FilterSidebar
                     setData={setData}
                     sortByTerm={sortBy}
-                    categoryId={categoryId ? categoryId : emptyCategoryId}
+                    categoryId={categoryId ? categoryId : null}
                     categoryName={categoryName}
                     setIsLoading={setIsLoading}
                     setMessage={setMessage}

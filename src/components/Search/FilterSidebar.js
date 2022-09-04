@@ -87,7 +87,7 @@ export default function FilterSidebar(props) {
                 searchProducts(filterQuery, allAvailableOptions)
             }
         },
-        500,
+        0,
         [filterQuery]
     )
 
@@ -126,9 +126,10 @@ export default function FilterSidebar(props) {
                 categoryId,
                 searchTerm: search,
                 emptyCategory: pathname.startsWith('/search'),
+                categoryName: categoryName,
             }
         })
-    }, [sortByTerm, categoryId, search, pathname])
+    }, [sortByTerm, categoryId, search, pathname, categoryName])
 
     useDeepCompareEffect(() => {
         if (facetOptions?.maxPrice?.length > 0) {
