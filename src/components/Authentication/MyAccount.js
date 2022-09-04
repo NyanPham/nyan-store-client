@@ -33,9 +33,7 @@ export default function MyAccount() {
     const handleUserUpdate = async (e) => {
         e.preventDefault()
         const url =
-            e.target.dataset.userUpdate === 'password'
-                ? `${process.env.ROOT_URL}/api/v1/users/updatePassword`
-                : `${process.env.ROOT_URL}/api/v1/users/updateMe`
+            e.target.dataset.userUpdate === 'password' ? `/api/v1/users/updatePassword` : `/api/v1/users/updateMe`
 
         const inputElemNames = [...e.target.querySelectorAll('input[name]')].map((input) => {
             return {

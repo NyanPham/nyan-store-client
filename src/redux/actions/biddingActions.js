@@ -20,7 +20,7 @@ export const getBiddingProduct = () => {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/products`,
+                url: `/api/v1/products`,
                 params: {
                     isAuctioned: true,
                 },
@@ -47,7 +47,7 @@ export const auctionProduct = (data) => {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `${process.env.ROOT_URL}/api/v1/bidding`,
+                url: `/api/v1/bidding`,
                 data,
             })
             if (res.data.status === 'success') {

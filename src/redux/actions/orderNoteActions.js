@@ -11,7 +11,7 @@ export function getOrderNote() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/users/myNote`,
+                url: `/api/v1/users/myNote`,
             })
 
             if (res.data.status === 'success') {
@@ -37,7 +37,7 @@ export const updateOrderNote = (orderNote) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `${process.env.ROOT_URL}/api/v1/users/myNote`,
+            url: `/api/v1/users/myNote`,
             data: {
                 orderNote,
             },

@@ -56,7 +56,7 @@ function ProductInfo() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/products/slug/${slug}`,
+                url: `/api/v1/products/slug/${slug}`,
             })
             if (res.data.status === 'success') {
                 setProduct(res.data.data.doc)

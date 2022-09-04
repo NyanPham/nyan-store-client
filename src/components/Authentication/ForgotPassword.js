@@ -34,7 +34,7 @@ export default function ForgotPassword() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `${process.env.ROOT_URL}/api/v1/users/forgotPassword`,
+                url: `/api/v1/users/forgotPassword`,
                 data: {
                     email,
                 },

@@ -13,7 +13,7 @@ export default function Logout() {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `${process.env.ROOT_URL}/api/v1/users/logOut`,
+                    url: `/api/v1/users/logOut`,
                 })
 
                 if (res.data.status === 'success') {

@@ -24,7 +24,7 @@ export default function CheckoutButton({ styles }) {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `${process.env.ROOT_URL}/api/v1/orders/checkout-session`,
+                url: `/api/v1/orders/checkout-session`,
                 data: {
                     items: cart,
                 },

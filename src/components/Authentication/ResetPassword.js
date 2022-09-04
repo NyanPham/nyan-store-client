@@ -41,7 +41,7 @@ export default function ResetPassword() {
         try {
             const res = await axios({
                 method: 'PATCH',
-                url: `${process.env.ROOT_URL}/api/v1/users/resetPassword/${resetToken}`,
+                url: `/api/v1/users/resetPassword/${resetToken}`,
                 data: {
                     password,
                     passwordConfirm,

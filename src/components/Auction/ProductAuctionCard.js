@@ -21,7 +21,7 @@ function ProductAuctionCard({ product }) {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/products/${productId}/bidding`,
+                url: `/api/v1/products/${productId}/bidding`,
             })
             if (res.data.status === 'success') {
                 setAutionData(res.data.data.docs)
@@ -35,7 +35,7 @@ function ProductAuctionCard({ product }) {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/users/myBidding?product=${productId}`,
+                url: `/api/v1/users/myBidding?product=${productId}`,
             })
             if (res.data.status === 'success') {
                 setUserBidsOnProduct(res.data.data.docs)

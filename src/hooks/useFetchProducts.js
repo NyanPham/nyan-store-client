@@ -10,8 +10,8 @@ export function useFetchProductsFromCollection(collections, collectionName) {
         const fetchProducts = async (collectionName) => {
             const collectionId = collections.find((category) => category.name === collectionName)?._id
 
-            let url = `${process.env.ROOT_URL}/api/v1/products`
-            if (collectionId) url = `${process.env.ROOT_URL}/api/v1/collections/${collectionId}/products`
+            let url = `/api/v1/products`
+            if (collectionId) url = `/api/v1/collections/${collectionId}/products`
 
             try {
                 const res = await axios({

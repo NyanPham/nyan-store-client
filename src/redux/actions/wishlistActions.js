@@ -13,7 +13,7 @@ export const addWishlist = (productId) => {
         try {
             const res = await axios({
                 method: 'PATCH',
-                url: `${process.env.ROOT_URL}/api/v1/users/myWishlist`,
+                url: `/api/v1/users/myWishlist`,
                 data: {
                     product: productId,
                 },
@@ -42,7 +42,7 @@ export const removeWishlist = (wishlist, productId) => {
         try {
             await axios({
                 method: 'DELETE',
-                url: `${process.env.ROOT_URL}/api/v1/users/myWishlist`,
+                url: `/api/v1/users/myWishlist`,
                 data: {
                     wishlist,
                     product: productId,
@@ -67,7 +67,7 @@ export const getWishlist = () => {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/users/myWishlist`,
+                url: `/api/v1/users/myWishlist`,
             })
 
             if (res.data.status === 'success') {

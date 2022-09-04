@@ -10,7 +10,7 @@ export function fetchCollections() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/collections`,
+                url: `/api/v1/collections`,
             })
 
             if (res.data.status === 'success') {

@@ -10,7 +10,7 @@ export function fetchCategories() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${process.env.ROOT_URL}/api/v1/categories`,
+                url: `/api/v1/categories`,
             })
 
             dispatch({
