@@ -5,7 +5,7 @@ import { useAuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
 import useWishlist from '../../hooks/useWishlist'
 
-function ProductCardAction({ productId, handleAddToCart }) {
+function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
     const { isLoggedIn } = useAuthContext()
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
 
@@ -28,12 +28,15 @@ function ProductCardAction({ productId, handleAddToCart }) {
                             icon={faHeart}
                         />
                     </button>
-                    <button className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto">
+                    <button
+                        className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
+                        onClick={() => setOpenQuickView(true)}
+                    >
                         <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faEye} />
                     </button>
                     <button
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
-                        onClick={handleAddToCart}
+                        onClick={() => handleAddToCart(null)}
                     >
                         <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faCartPlus} />
                     </button>

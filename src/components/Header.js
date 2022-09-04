@@ -114,9 +114,9 @@ const Header = () => {
                             </div>
                         )}
                     </button>
-                    <button className="header-navigation-btn group">
+                    <Link to="/wishlist" className="header-navigation-btn group">
                         <FontAwesomeIcon className="header-navigation-icon" icon={faHeart} />
-                    </button>
+                    </Link>
                     <button
                         className="w-7 h-7 flex items-center justify-center relative group"
                         onClick={() => {

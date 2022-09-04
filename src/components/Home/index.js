@@ -10,7 +10,7 @@ import SidebarNavigationDrawer from '../SidebarNavigationDrawer'
 
 const Home = () => {
     return (
-        <main className="z-0">
+        <main className="z-0 flex-grow">
             <section className="md:mt-7">
                 <Hero />
             </section>

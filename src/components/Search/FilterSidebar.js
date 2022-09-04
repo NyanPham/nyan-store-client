@@ -87,7 +87,7 @@ export default function FilterSidebar(props) {
                 searchProducts(filterQuery, allAvailableOptions)
             }
         },
-        0,
+        350,
         [filterQuery]
     )
 

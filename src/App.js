@@ -24,6 +24,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from './components/Alert/Alert'
 import ReactDOM from 'react-dom'
+import WishlistPage from './components/Pages/WishlistPage'
 
 function App() {
     const { isLoggedIn } = useAuthContext()
@@ -55,7 +56,7 @@ function App() {
 
     return (
         <>
-            <div className="App ">
+            <div className="App min-h-screen flex flex-col">
                 <Routes>
                     <Route
                         path="/"
@@ -67,16 +68,6 @@ function App() {
                             </>
                         }
                     />
-                    {/* <Route
-                        path="/search/:categoryName"
-                        element={
-                            <>
-                                <Header />
-                                <Search />
-                                <Footer />
-                            </>
-                        }
-                    /> */}
                     <Route
                         path="/categories/:categoryName"
                         element={
@@ -103,6 +94,16 @@ function App() {
                             <>
                                 <Header />
                                 <CartPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/wishlist"
+                        element={
+                            <>
+                                <Header />
+                                <WishlistPage />
                                 <Footer />
                             </>
                         }

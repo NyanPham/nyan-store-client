@@ -14,6 +14,12 @@ function SearchForm() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const handleSearch = (e) => {
+        e.preventDefault()
+
+        navigate('/categories/all')
+    }
+
     useDebounce(
         () => {
             dispatch(search(searchTerm))
@@ -23,7 +29,7 @@ function SearchForm() {
     )
 
     return (
-        <form className="hidden md:flex flex-row justify-between relative w-full max-w-lg">
+        <form className="hidden md:flex flex-row justify-between relative w-full max-w-lg" onSubmit={handleSearch}>
             <label htmlFor="search" className="hidden">
                 Search
             </label>

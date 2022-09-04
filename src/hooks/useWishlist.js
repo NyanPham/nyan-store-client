@@ -10,7 +10,7 @@ export default function useWishlist(productId) {
     const navigate = useNavigate()
 
     const alreadyAdded = wishlist.some((item) => {
-        return item.item === productId
+        return item.item._id === productId
     })
 
     function handleWishlistClick(e) {

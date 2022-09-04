@@ -69,6 +69,7 @@ function VariantsPicker(props) {
             setIsSoldOut(availableVariant.inventory === 0)
         }
     }
+
     let actionButtonText = buttonText
     if (addedToCart) actionButtonText = 'Added To Cart'
     if (isEditing) actionButtonText = 'Edit now'

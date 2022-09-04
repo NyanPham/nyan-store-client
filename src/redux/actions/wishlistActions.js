@@ -36,7 +36,8 @@ export const addWishlist = (productId) => {
 }
 
 export const removeWishlist = (wishlist, productId) => {
-    const newWishlist = wishlist.filter((item) => item.item !== productId)
+    const newWishlist = wishlist.filter((item) => item.item._id !== productId)
+
     return async (dispatch) => {
         try {
             await axios({
