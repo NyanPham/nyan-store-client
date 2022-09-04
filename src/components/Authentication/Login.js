@@ -38,7 +38,6 @@ function Login() {
             const res = await axios({
                 method: 'POST',
                 url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/logIn`,
-                withCredentials: true,
                 data: {
                     email,
                     password,
