@@ -33,7 +33,9 @@ export default function MyAccount() {
     const handleUserUpdate = async (e) => {
         e.preventDefault()
         const url =
-            e.target.dataset.userUpdate === 'password' ? '/api/v1/users/updatePassword' : '/api/v1/users/updateMe'
+            e.target.dataset.userUpdate === 'password'
+                ? 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updatePassword'
+                : 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updateMe'
 
         const inputElemNames = [...e.target.querySelectorAll('input[name]')].map((input) => {
             return {

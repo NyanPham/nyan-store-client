@@ -34,7 +34,7 @@ export default function ForgotPassword() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: '/api/v1/users/forgotPassword',
+                url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/forgotPassword',
                 data: {
                     email,
                 },

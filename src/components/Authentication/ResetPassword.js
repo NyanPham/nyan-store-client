@@ -41,7 +41,7 @@ export default function ResetPassword() {
         try {
             const res = await axios({
                 method: 'PATCH',
-                url: `/api/v1/users/resetPassword/${resetToken}`,
+                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/resetPassword/${resetToken}`,
                 data: {
                     password,
                     passwordConfirm,

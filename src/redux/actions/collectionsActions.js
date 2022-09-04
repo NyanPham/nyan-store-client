@@ -10,7 +10,7 @@ export function fetchCollections() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: '/api/v1/collections',
+                url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/collections',
             })
 
             if (res.data.status === 'success') {

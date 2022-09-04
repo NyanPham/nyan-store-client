@@ -15,12 +15,11 @@ function ProductAuctionCard({ product }) {
     const [userBidsOnProduct, setUserBidsOnProduct] = useState([])
     const { message } = useSelector((state) => state.biddingProducts)
 
-    console.log(userBidsOnProduct)
     const fetchAutionData = async (productId) => {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `/api/v1/products/${productId}/bidding`,
+                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/${productId}/bidding`,
             })
             if (res.data.status === 'success') {
                 setAutionData(res.data.data.docs)
@@ -34,7 +33,7 @@ function ProductAuctionCard({ product }) {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `/api/v1/users/myBidding?product=${productId}`,
+                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myBidding?product=${productId}`,
             })
             if (res.data.status === 'success') {
                 setUserBidsOnProduct(res.data.data.docs)
