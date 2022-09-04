@@ -30,7 +30,7 @@ export default function Logout() {
         }
 
         logout()
-    }, [])
+    }, [authLogout, navigate])
     console.log(text)
 
     return <div>{text}</div>

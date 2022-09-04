@@ -13,7 +13,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import getMatchedButton from '../../utils/getMatchedButton'
-import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName }) {

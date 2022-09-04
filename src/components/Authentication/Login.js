@@ -5,18 +5,19 @@ import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate, Link } from 'react-router-dom'
 import Alert from '../Alert/Alert'
-import { useEffect } from 'react'
 
 const DELAY_TIME = 3000
 
 // Need to move the image background render to the className later
 function Login() {
-    const { authLogin, isLoggedIn } = useAuthContext()
+    const { authLogin } = useAuthContext()
     const [showAlert, setShowAlert] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
+
+    console.log(isLoading)
 
     const emailRef = useRef()
     const passwordRef = useRef()

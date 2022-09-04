@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import nyanLogo from '../../imgs/nyan-logo-white.png'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Alert from '../Alert/Alert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import EmailTemplate from '../Email/Welcome'
 
 const DELAY_TIME = 3000
 
