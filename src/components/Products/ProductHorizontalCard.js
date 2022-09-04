@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
 import { useSideCartContext } from '../../context/sideCartContext'
+import VariantsPicker from './VariantsPicker'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 function ProductHorizontalCard(props) {
     const {
@@ -23,15 +27,27 @@ function ProductHorizontalCard(props) {
     const firstVariant = variants[0]
     const { loading, error, message } = useSelector((state) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
+    const [openQuickView, setOpenQuickView] = useState(false)
     const dispatch = useDispatch()
-    const handleAddToCart = () => {
-        const data = {
-            variant: firstVariant._id,
-            product: id,
-            quantity: 1,
+
+    const handleAddToCart = (data) => {
+        let dataToSubmit = {}
+
+        if (data == null) {
+            dataToSubmit = {
+                variant: firstVariant._id,
+                product: id,
+                quantity: 1,
+            }
+        } else {
+            dataToSubmit = {
+                variant: data.variantId,
+                product: id,
+                quantity: data.quantity,
+            }
         }
 
-        dispatch(addToCart(data))
+        dispatch(addToCart(dataToSubmit))
     }
 
     useEffect(() => {
@@ -70,11 +86,45 @@ function ProductHorizontalCard(props) {
                 )}
             </div>
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
-                <ProductCardAction productId={id} handleAddToCart={handleAddToCart} />
+                <ProductCardAction
+                    productId={id}
+                    handleAddToCart={handleAddToCart}
+                    setOpenQuickView={setOpenQuickView}
+                />
             </div>
             {isNew && !inAuction && (
                 <div className="absolute top-5 left-2 bg-yellow-400 py-0.5 px-2 text-xs text-white rounded-lg">New</div>
             )}
+            {openQuickView &&
+                ReactDOM.createPortal(
+                    <div className="z-20 bg-slate-700/90 fixed top-0 left-0 w-full h-full">
+                        <div className="p-3 w-96 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <VariantsPicker
+                                productId={id}
+                                variants={variants}
+                                currentVariantId={firstVariant._id}
+                                buttonText={'Own Now'}
+                                formSubmitHandler={handleAddToCart}
+                                currentBid={false}
+                                nameStyles="text-2xl"
+                                review={{
+                                    show: false,
+                                }}
+                                quantityControl={true}
+                                wishlist={false}
+                                isEditing={false}
+                            />
+                            <button
+                                className="absolute right-4 top-3"
+                                type="button"
+                                onClick={() => setOpenQuickView(false)}
+                            >
+                                <FontAwesomeIcon icon={faClose} />
+                            </button>
+                        </div>
+                    </div>,
+                    document.getElementById('modal-container')
+                )}
         </div>
     )
 }
