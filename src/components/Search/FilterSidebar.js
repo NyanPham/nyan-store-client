@@ -61,7 +61,7 @@ export default function FilterSidebar(props) {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `/api/v1/products/filter`,
+                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/filter`,
                 data: {
                     filterQuery,
                     all: {
@@ -96,7 +96,7 @@ export default function FilterSidebar(props) {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `/api/v1/products/filterFacets`,
+                    url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/filterFacets`,
                 })
                 // console.log({ ...res.data.data.facets[0][0], ...res.data.data.facets[1][0] })
 

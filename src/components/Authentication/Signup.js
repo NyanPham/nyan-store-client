@@ -29,7 +29,7 @@ function Signup() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `/api/v1/users/signUp`,
+                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/signUp`,
                 data: {
                     name,
                     email,
