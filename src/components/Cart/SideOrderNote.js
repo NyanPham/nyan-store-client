@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch, useSelector } from 'react-redux'
-import { getOrderNote, updateOrderNote } from '../../redux/actions/orderNoteActions'
+import { useDispatch } from 'react-redux'
+import { updateOrderNote } from '../../redux/actions/orderNoteActions'
 
 export default function SideOrderNote() {
     const [openOrderNote, setOpenOrderNote] = useState(false)
-    const { orderNote, error } = useSelector((state) => state.orderNote)
     const orderNoteRef = useRef()
     const dispatch = useDispatch()
 

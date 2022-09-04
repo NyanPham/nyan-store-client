@@ -13,8 +13,7 @@ import SideShippingCalculator from './SideShippingCalculator'
 
 export default function SideCart() {
     const { pathname } = useLocation()
-    const { cart, loading, message, error } = useSelector((state) => state.cart)
-    const search = useSelector((state) => state.search)
+    const { cart } = useSelector((state) => state.cart)
     const { openSideCart, setOpenSideCart } = useSideCartContext()
     const subtotal = cart.reduce((_, item) => item?.variant?.price * item?.quantity, 0)
 

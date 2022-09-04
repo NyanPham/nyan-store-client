@@ -6,15 +6,13 @@ import CouponCode from '../Cart/CouponCode'
 import PreCheckoutInfo from '../Cart/PreCheckoutInfo'
 import ShippingCalculator from '../Cart/ShippingCalculator'
 import { Link } from 'react-router-dom'
-import useAsyncValidateState from '../../hooks/useAsyncValidateState'
 
 // const stripe = new Stripe(
 //     'pk_test_51LTguVLOgzrFtjz5bzBl5Qhh7jRQKuf5EWrmETmUX3acHGVdUKHqJqtO6rxgSW0wBliySFQGWLXhxazacdDVodZF00GdJ29Mwc'
 // )
 
 export default function CartPage() {
-    const { cart, loading, message, error } = useSelector((state) => state.cart)
-    const { isLoading, setIsLoading } = useAsyncValidateState()
+    const { cart } = useSelector((state) => state.cart)
 
     return (
         <>

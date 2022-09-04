@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import VariantOptions from './VariantOptions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
@@ -41,7 +41,7 @@ function VariantsPicker(props) {
     const [isSoldOut, setIsSoldOut] = useState(variants[0].inventory === 0)
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
     const { isLoggedIn } = useAuthContext()
-    const { loading, message, error, cart } = useSelector((state) => state.cart)
+    const { loading, cart } = useSelector((state) => state.cart)
     const addedToCart = useAddedToCart(cart, productId)
 
     const priceRef = useRef()

@@ -5,11 +5,9 @@ import { useState } from 'react'
 import useDebounce from '../hooks/useDebounce'
 import { search } from '../redux/actions/searchActions'
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 function SearchForm() {
-    const { pathname } = useLocation()
     const [searchTerm, setSearchTerm] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()

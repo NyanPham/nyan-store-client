@@ -10,18 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 function ProductHorizontalCard(props) {
-    const {
-        id,
-        images,
-        summary,
-        name,
-        slug,
-        variants,
-        vendor,
-        createdAt,
-        inAuction = false,
-        currentBid = false,
-    } = props
+    const { id, summary, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const firstVariant = variants[0]
@@ -56,7 +45,7 @@ function ProductHorizontalCard(props) {
             setOpenSideCart(true)
             dispatch(resetMessageError())
         }
-    }, [loading, error, message, setOpenSideCart])
+    }, [loading, error, message, setOpenSideCart, dispatch])
 
     return (
         <div className="flex flex-row gap-3 items-center justify-start bg-white relative group p-2 md:p-4 lg:gap-12 border-t border-gray-300/50">

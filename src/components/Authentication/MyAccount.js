@@ -1,9 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import nyanStore from '../../imgs/nyan-logo-white.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import backgroundImage from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
@@ -12,7 +9,7 @@ import Alert from '../Alert/Alert'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 
 export default function MyAccount() {
-    const { isLoggedIn, currentUser } = useAuthContext()
+    const { currentUser } = useAuthContext()
     const [email, setEmail] = useState(() => (currentUser && currentUser?.email) || '')
     const [name, setName] = useState(() => (currentUser && currentUser?.name) || '')
     const [photo, setPhoto] = useState(() => (currentUser && currentUser?.photo) || 'default.jpg')
@@ -26,6 +23,7 @@ export default function MyAccount() {
     const [showAlert, setShowAlert] = useState(false)
     const photoRef = useRef()
 
+    console.log(isLoading)
     const backgroundStyles = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -238,22 +236,6 @@ export default function MyAccount() {
                     >
                         Update Password
                     </button>
-                    {/* for other info */}
-                    {/* <div className="form-group workplace-and-job">
-                    <label className="form-label" htmlFor="workplace">
-                        Your Workplace
-                    </label>
-                    <input className="form-input" type="text" id="workplace" placeholder="Enter your workplace" />
-                </div>
-                <div className="form-group workplace-and-job">
-                    <label className="form-label" htmlFor="job-title">
-                        Your Job Title
-                    </label>
-                    <input className="form-input" type="text" id="job-title" placeholder="Enter your job title" />
-                </div>
-                <button className="form-submit-btn" type="submit">
-                    Update Profile
-                </button> */}
                 </form>
             </div>
             {showAlert &&

@@ -9,9 +9,6 @@ import VariantsPicker from '../Products/VariantsPicker'
 export default function CartEditor({ productId, variantId, onVariantChange }) {
     const [product, setProduct] = useState({})
     const [openEditor, setOpenEditor] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
 
     useEffect(() => {
         const getProduct = async (productId) => {

@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { SwiperSlide } from 'swiper/react'
-import { Link } from 'react-router-dom'
 import useInterval from '../hooks/useInterval'
 
 function SlideCountdown({ dueDate }) {

@@ -20,7 +20,6 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
     const [activeView, setActiveView] = useState('loose')
     const [sortBy, setSortBy] = useState('oldest')
     const [openSort, setOpenSort] = useState(false)
-    const { pathname } = useLocation()
     const search = useSelector((state) => state.search)
 
     const hanldeViewClick = (e) => {
@@ -58,7 +57,7 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
         window.addEventListener('click', handleCloseSortModal)
 
         return () => window.removeEventListener('click', handleCloseSortModal)
-    }, [])
+    }, [handleCloseSortModal])
 
     useEffect(() => {
         onSortBy(sortBy)

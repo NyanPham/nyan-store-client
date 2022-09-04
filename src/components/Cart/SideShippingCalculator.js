@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTruckFast } from '@fortawesome/free-solid-svg-icons'
 import useCountries from '../../hooks/useCountries'
 
 export default function SideShippingCalculator() {
     const [country, setCountry] = useState()
-    const [state, setState] = useState()
+    // const [state, setState] = useState()
     const [openShippingCalculator, setOpenShippingCalculator] = useState(false)
     const { countries, states } = useCountries()
 
@@ -19,7 +19,7 @@ export default function SideShippingCalculator() {
         if (e.target.name === 'side-country') {
             setCountry(e.target.value)
         } else if (e.target.name === 'side-state') {
-            setState(e.target.value)
+            // setState(e.target.value)
         }
     }
 
@@ -28,7 +28,7 @@ export default function SideShippingCalculator() {
     useEffect(() => {
         if (!country) return
 
-        setState(countryStates[0].code)
+        // setState(countryStates[0].code)
     }, [country, countryStates])
 
     return (

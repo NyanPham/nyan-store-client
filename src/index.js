@@ -14,9 +14,7 @@ import allReducers from './redux/reducers/allReducers'
 
 const store = createStore(allReducers, applyMiddleware(thunk))
 
-const stripePromise = loadStripe(
-    'pk_test_51LTguVLOgzrFtjz5bzBl5Qhh7jRQKuf5EWrmETmUX3acHGVdUKHqJqtO6rxgSW0wBliySFQGWLXhxazacdDVodZF00GdJ29Mwc'
-)
+const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

@@ -19,7 +19,7 @@ export default function useCountries() {
                     setCountriesData(JSON.parse(res.data.data.countriesAndStates))
                 }
             } catch (err) {
-                console.error(err.response.data.message)
+                alert(err.response.data.message)
             }
         }
 

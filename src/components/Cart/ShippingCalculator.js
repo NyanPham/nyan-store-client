@@ -3,7 +3,7 @@ import useCountries from '../../hooks/useCountries'
 
 export default function ShippingCalculator() {
     const [country, setCountry] = useState()
-    const [state, setState] = useState()
+    // const [state, setState] = useState()
     const { countries, states } = useCountries()
 
     const countryStates = useMemo(() => states[country], [country, states])
@@ -16,7 +16,7 @@ export default function ShippingCalculator() {
         if (e.target.name === 'country') {
             setCountry(e.target.value)
         } else if (e.target.name === 'state') {
-            setState(e.target.value)
+            // setState(e.target.value)
         }
     }
 
@@ -25,7 +25,7 @@ export default function ShippingCalculator() {
     useEffect(() => {
         if (!country) return
 
-        setState(countryStates[0]?.code)
+        // setState(countryStates[0]?.code)
     }, [country, countryStates])
 
     //  border border-gray-900/20 rounded-xl

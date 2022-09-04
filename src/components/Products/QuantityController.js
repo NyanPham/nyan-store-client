@@ -2,7 +2,6 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import useAddedToCart from '../../hooks/useAddedToCart'
 import getMatchedButton from '../../utils/getMatchedButton'
 
 export default function QuantityController({
@@ -18,7 +17,7 @@ export default function QuantityController({
     quantityInputSize = 'h-7',
 }) {
     const [quantity, setQuantity] = useState(currentQuantity)
-    const { loading, message, error, cart } = useSelector((state) => state.cart)
+    const { loading } = useSelector((state) => state.cart)
 
     const handleNumberInput = (e) => {
         if (e.target.value > inventory || e.target.value < 1) return alert(`You can only add ${inventory} to your cart`)

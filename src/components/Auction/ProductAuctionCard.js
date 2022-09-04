@@ -4,16 +4,18 @@ import { createPortal } from 'react-dom'
 import Countdown from '../Countdown'
 import ProductCard from '../Products/ProductCard'
 import AuctionForm from './AuctionForm'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useAuthContext } from '../../context/authContext'
+import { useCallback } from 'react'
 
 function ProductAuctionCard({ product }) {
     const { isLoggedIn } = useAuthContext()
     const [openAuctionModal, setOpenAuctionModal] = useState(false)
     const [autionData, setAutionData] = useState([])
     const [userBidsOnProduct, setUserBidsOnProduct] = useState([])
-    const { message, error } = useSelector((state) => state.biddingProducts)
+    const { message } = useSelector((state) => state.biddingProducts)
 
+    console.log(userBidsOnProduct)
     const fetchAutionData = async (productId) => {
         try {
             const res = await axios({
@@ -24,11 +26,11 @@ function ProductAuctionCard({ product }) {
                 setAutionData(res.data.data.docs)
             }
         } catch (err) {
-            console.error(err.response.data.message)
+            alert(err.response.data.message)
         }
     }
 
-    const fetchUserBiddingOnProduct = async (productId) => {
+    const fetchUserBiddingOnProduct = useCallback(async (productId) => {
         try {
             const res = await axios({
                 method: 'GET',
@@ -38,9 +40,9 @@ function ProductAuctionCard({ product }) {
                 setUserBidsOnProduct(res.data.data.docs)
             }
         } catch (err) {
-            console.error(err.response.data.message)
+            alert(err.response.data.message)
         }
-    }
+    }, [])
 
     useEffect(() => {
         fetchAutionData(product._id)
@@ -66,7 +68,7 @@ function ProductAuctionCard({ product }) {
         if (isLoggedIn) {
             fetchUserBiddingOnProduct(product._id)
         }
-    }, [currentBid, product._id, isLoggedIn])
+    }, [currentBid, product._id, isLoggedIn, fetchUserBiddingOnProduct])
 
     return (
         <>

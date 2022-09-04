@@ -36,7 +36,7 @@ function ProductInfo() {
         return location.state
     })
 
-    const { loading, message } = useSelector((state) => state.cart)
+    const { message } = useSelector((state) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [mainImage, setMainImage] = useState(product?.images[0])
     const images = getImagesFromVariants(product.variants)

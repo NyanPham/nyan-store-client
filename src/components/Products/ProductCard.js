@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 export default function ProductCard(props) {
-    const { id, images, name, slug, variants, vendor, createdAt, inAuction = false, currentBid = false } = props
+    const { id, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
+    // const { images, vendor } = props
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const { loading, error, message } = useSelector((state) => state.cart)
@@ -45,7 +46,7 @@ export default function ProductCard(props) {
             setOpenSideCart(true)
             dispatch(resetMessageError())
         }
-    }, [loading, error, message, setOpenSideCart])
+    }, [loading, error, message, setOpenSideCart, dispatch])
 
     return (
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">

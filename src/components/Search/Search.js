@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import Container from '../Container'
 import { heroSlides } from '../data'
 import Slider from '../Slider'

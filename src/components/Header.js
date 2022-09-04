@@ -12,7 +12,6 @@ import {
     faCaretUp,
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useLocation } from 'react-router-dom'
-import defaultAvatar from '../imgs/default.jpg'
 import { useSideCartContext } from '../context/sideCartContext'
 import { useSelector } from 'react-redux'
 import { useAuthContext } from '../context/authContext'

@@ -24,7 +24,7 @@ function AuctionForm({ product, setOpenModal, currentBid }) {
                 dispatch(resetMessagesAndError())
             }, 3000)
         }
-    }, [message, dispatch])
+    }, [message, dispatch, error])
 
     return (
         <>

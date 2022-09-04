@@ -1,11 +1,12 @@
 import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import useDebounce from './useDebounce'
+import useDeepCompareEffect from './useDeepCompareEffect'
 
 export function useFetchProductsFromCollection(collections, collectionName) {
     const [products, setProducts] = useState([])
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         const fetchProducts = async (collectionName) => {
             const collectionId = collections.find((category) => category.name === collectionName)?._id
 
@@ -22,12 +23,12 @@ export function useFetchProductsFromCollection(collections, collectionName) {
                     setProducts(res.data.data.docs)
                 }
             } catch (err) {
-                console.error(err)
+                alert(err)
             }
         }
 
         fetchProducts(collectionName)
-    }, [collectionName])
+    }, [collectionName, collections])
 
     return products
 }
@@ -60,7 +61,7 @@ export function useFetchProductsFromCategory(cateogryName) {
                     const products = [...responses.flatMap((res) => res.data.data.docs)]
                     setProducts(products)
                 } catch (err) {
-                    console.error(err.response.data.message)
+                    alert(err.response.data.message)
                 }
             }
 
