@@ -24,7 +24,7 @@ export default function CheckoutButton({ styles }) {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/orders/checkout-session',
+                url: `${process.env.ROOT_URL}/api/v1/orders/checkout-session`,
                 data: {
                     items: cart,
                 },

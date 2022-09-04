@@ -20,7 +20,7 @@ export const getBiddingProduct = () => {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products`,
+                url: `${process.env.ROOT_URL}/api/v1/products`,
                 params: {
                     isAuctioned: true,
                 },
@@ -47,7 +47,7 @@ export const auctionProduct = (data) => {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/bidding',
+                url: `${process.env.ROOT_URL}/api/v1/bidding`,
                 data,
             })
             if (res.data.status === 'success') {

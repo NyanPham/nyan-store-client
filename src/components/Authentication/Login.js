@@ -37,7 +37,7 @@ function Login() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/logIn',
+                url: `${process.env.ROOT_URL}/api/v1/users/logIn`,
                 data: {
                     email,
                     password,
@@ -46,8 +46,9 @@ function Login() {
 
             if (res.data.status === 'success') {
                 setMessage('You have logged in successfully!')
+                console.log(res)
                 authLogin(res.data.currentUser)
-                setTimeout(() => navigate('/'), 2500)
+                // setTimeout(() => navigate('/'), 2500)
             }
         } catch (err) {
             setError(err.response.data.message)

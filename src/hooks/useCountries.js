@@ -12,7 +12,7 @@ export default function useCountries() {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/countries',
+                    url: `${process.env.ROOT_URL}/api/v1/countries`,
                 })
 
                 if (res.data.status === 'success') {

@@ -10,9 +10,8 @@ export function useFetchProductsFromCollection(collections, collectionName) {
         const fetchProducts = async (collectionName) => {
             const collectionId = collections.find((category) => category.name === collectionName)?._id
 
-            let url = 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/products'
-            if (collectionId)
-                url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/collections/${collectionId}/products`
+            let url = `${process.env.ROOT_URL}/api/v1/products`
+            if (collectionId) url = `${process.env.ROOT_URL}/api/v1/collections/${collectionId}/products`
 
             try {
                 const res = await axios({

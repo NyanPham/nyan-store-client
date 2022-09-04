@@ -34,8 +34,8 @@ export default function MyAccount() {
         e.preventDefault()
         const url =
             e.target.dataset.userUpdate === 'password'
-                ? 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updatePassword'
-                : 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updateMe'
+                ? `${process.env.ROOT_URL}/api/v1/users/updatePassword`
+                : `${process.env.ROOT_URL}/api/v1/users/updateMe`
 
         const inputElemNames = [...e.target.querySelectorAll('input[name]')].map((input) => {
             return {

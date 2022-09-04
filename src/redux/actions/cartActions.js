@@ -20,7 +20,7 @@ export const addToCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/addToMyCart',
+            url: `${process.env.ROOT_URL}/api/v1/users/addToMyCart`,
             data,
         })
 
@@ -48,7 +48,7 @@ export const getCart = () => async (dispatch) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/getMyCart',
+            url: `${process.env.ROOT_URL}/api/v1/users/getMyCart`,
         })
 
         if (res.data.status === 'success') {
@@ -78,7 +78,7 @@ export const updateCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updateMyCart',
+            url: `${process.env.ROOT_URL}/api/v1/users/updateMyCart`,
             data,
         })
 
@@ -110,7 +110,7 @@ export const removeCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/removeMyCart',
+            url: `${process.env.ROOT_URL}/api/v1/users/removeMyCart`,
             data,
         })
 

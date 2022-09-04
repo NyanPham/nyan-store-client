@@ -11,7 +11,7 @@ export function getOrderNote() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myNote',
+                url: `${process.env.ROOT_URL}/api/v1/users/myNote`,
             })
 
             if (res.data.status === 'success') {
@@ -37,7 +37,7 @@ export const updateOrderNote = (orderNote) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: 'https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myNote',
+            url: `${process.env.ROOT_URL}/api/v1/users/myNote`,
             data: {
                 orderNote,
             },
