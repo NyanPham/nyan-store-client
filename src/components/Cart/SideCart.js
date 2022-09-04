@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { useSideCartContext } from '../../context/sideCartContext'
 import getMatchedButton from '../../utils/getMatchedButton'
+import CheckoutButton from '../Checkout/CheckoutButton'
 import SideCoupon from './SideCoupon'
 import SideOrderNote from './SideOrderNote'
 import SideProductCard from './SideProductCard'
@@ -81,13 +82,7 @@ export default function SideCart() {
                                 </span>
                             </div>
                             <div className="px-5 flex flex-col gap-3 justify-center items-center mt-4">
-                                <Link
-                                    to="/checkout"
-                                    className="text-lg text-center text-white font-semibold tracking-wide bg-cyan-400 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-cyan-500 disabled:text-gray-300 disabled:border-gray-200"
-                                    disabled={cart.length === 0}
-                                >
-                                    Checkout
-                                </Link>
+                                <CheckoutButton styles="text-lg text-center text-white font-semibold tracking-wide bg-cyan-400 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-cyan-500 disabled:text-gray-300 disabled:border-gray-200" />
                                 <Link
                                     to="/cart"
                                     className="text-lg text-center text-slate-700 font-semibold tracking-wide bg-white border border-slate-700 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-slate-700 active:text-white disabled:text-gray-300 disabled:border-gray-200"
