@@ -6,13 +6,15 @@ import CouponCode from '../Cart/CouponCode'
 import PreCheckoutInfo from '../Cart/PreCheckoutInfo'
 import ShippingCalculator from '../Cart/ShippingCalculator'
 import { Link } from 'react-router-dom'
+import useAsyncValidateState from '../../hooks/useAsyncValidateState'
+
+// const stripe = new Stripe(
+//     'pk_test_51LTguVLOgzrFtjz5bzBl5Qhh7jRQKuf5EWrmETmUX3acHGVdUKHqJqtO6rxgSW0wBliySFQGWLXhxazacdDVodZF00GdJ29Mwc'
+// )
 
 export default function CartPage() {
     const { cart, loading, message, error } = useSelector((state) => state.cart)
-
-    const handleCheckout = (e) => {
-        e.preventDefault()
-    }
+    const { isLoading, setIsLoading } = useAsyncValidateState()
 
     return (
         <>
@@ -33,7 +35,7 @@ export default function CartPage() {
                 <CartItems cart={cart} />
             </section>
             <section className="px-8 mx-auto md:px-0 md:w-4/5 pb-12">
-                <form className="flex flex-col md:flex-row" onSubmit={handleCheckout}>
+                <form className="flex flex-col md:flex-row">
                     <div className="w-full md:w-1/2">
                         <OrderNote />
                         <CouponCode />

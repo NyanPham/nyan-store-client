@@ -1,3 +1,5 @@
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -12,6 +14,10 @@ import allReducers from './redux/reducers/allReducers'
 
 const store = createStore(allReducers, applyMiddleware(thunk))
 
+const stripePromise = loadStripe(
+    'pk_test_51LTguVLOgzrFtjz5bzBl5Qhh7jRQKuf5EWrmETmUX3acHGVdUKHqJqtO6rxgSW0wBliySFQGWLXhxazacdDVodZF00GdJ29Mwc'
+)
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <React.StrictMode>
@@ -19,7 +25,9 @@ root.render(
             <Provider store={store}>
                 <AuthContextProvider>
                     <SideContextProvider>
-                        <App />
+                        <Elements stripe={stripePromise}>
+                            <App />
+                        </Elements>
                     </SideContextProvider>
                 </AuthContextProvider>
             </Provider>

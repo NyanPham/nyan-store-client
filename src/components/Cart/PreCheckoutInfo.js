@@ -2,6 +2,7 @@ import { faTruckFast } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import CheckoutButton from '../Checkout/CheckoutButton'
 import { cart_configures } from '../data'
 
 const getInstruction = (fraction) => {
@@ -71,12 +72,7 @@ export default function PreCheckoutInfo() {
                 <span className="text-slate-700 font-semibold">${subtotal}</span>
             </div>
             <p className="text-slate-700 font-normal mt-3">Shipping fee is calculated at checkout</p>
-            <button
-                type="submit"
-                className="py-2 w-1/3 bg-cyan-400 text-white font-semibold tracking-wide rounded-lg mt-5 transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:ring-2 active:ring-offset-2 active:ring-cyan-400"
-            >
-                Checkout
-            </button>
+            <CheckoutButton />
         </>
     )
 }
