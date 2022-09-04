@@ -15,7 +15,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     console.log(isLoading)
 
