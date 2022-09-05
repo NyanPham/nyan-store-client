@@ -30,10 +30,13 @@ export default function AuthContextProvider({ children }) {
                     withCredentials: true,
                 })
 
+                console.log(res)
+
                 if (res.data.status === 'success' && res.data.isLoggedIn && res.data.currentUser != null) {
                     return authLogin(res.data.currentUser)
                 }
             } catch (err) {
+                console.log(err.response.data)
                 authLogout()
             }
         }
