@@ -22,6 +22,7 @@ export const addToCart = (data) => async (dispatch) => {
             method: 'PATCH',
             url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/addToMyCart`,
             data,
+            withCredentials: true,
         })
 
         if (res.data.status === 'success') {
@@ -114,6 +115,7 @@ export const removeCart = (data) => async (dispatch) => {
             method: 'PATCH',
             url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/removeMyCart`,
             data,
+            withCredentials: true,
         })
 
         if (res.data.status === 'success') {

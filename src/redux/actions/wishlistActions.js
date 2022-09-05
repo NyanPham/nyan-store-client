@@ -17,6 +17,7 @@ export const addWishlist = (productId) => {
                 data: {
                     product: productId,
                 },
+                withCredentials: true,
             })
 
             if (res.data.status === 'success') {

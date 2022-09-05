@@ -22,6 +22,7 @@ export async function updateMyNote(orderNote) {
             data: {
                 orderNote,
             },
+            withCredentials: true,
         })
         if (res.data.status('success')) {
             return res.data.data.orderNote

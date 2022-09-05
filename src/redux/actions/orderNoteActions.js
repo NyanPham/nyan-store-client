@@ -41,6 +41,7 @@ export const updateOrderNote = (orderNote) => async (dispatch) => {
             data: {
                 orderNote,
             },
+            withCredentials: true,
         })
 
         dispatch({

@@ -61,6 +61,7 @@ export default function MyAccount() {
                 method: 'PATCH',
                 url,
                 data: userUpdateForm,
+                withCredentials: true,
             })
 
             if (res.data.status === 'success') {

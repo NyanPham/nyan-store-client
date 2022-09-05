@@ -46,6 +46,7 @@ export default function ResetPassword() {
                     password,
                     passwordConfirm,
                 },
+                withCredentials: true,
             })
 
             if (res.data.status === 'success') {
