@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Alert from '../Alert/Alert'
 
 const DELAY_TIME = 3000
@@ -15,7 +15,7 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     console.log(isLoading)
 
@@ -45,9 +45,8 @@ function Login() {
 
             if (res.data.status === 'success') {
                 setMessage('You have logged in successfully!')
-                console.log(res)
                 authLogin(res.data.currentUser)
-                // setTimeout(() => navigate('/'), 2500)
+                setTimeout(() => navigate('/'), 2500)
             }
         } catch (err) {
             setError(err.response.data.message)

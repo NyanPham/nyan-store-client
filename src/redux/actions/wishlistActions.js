@@ -48,6 +48,7 @@ export const removeWishlist = (wishlist, productId) => {
                     wishlist,
                     product: productId,
                 },
+                withCredentials: true,
             })
             dispatch({
                 type: ACTIONS.GET_WISHLIST,
