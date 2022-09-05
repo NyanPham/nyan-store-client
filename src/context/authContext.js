@@ -26,9 +26,8 @@ export default function AuthContextProvider({ children }) {
     useEffect(() => {
         async function fetchIsLoggedIn() {
             try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/isLoggedIn`,
+                const res = await axios.get('https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/isLoggedIn', {
+                    withCredentials: true,
                 })
 
                 if (res.data.status === 'success' && res.data.isLoggedIn && res.data.currentUser != null) {
