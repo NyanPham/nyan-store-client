@@ -57,6 +57,7 @@ function ProductInfo() {
             const res = await axios({
                 method: 'GET',
                 url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/slug/${slug}`,
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 setProduct(res.data.data.doc)

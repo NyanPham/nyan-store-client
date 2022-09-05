@@ -24,6 +24,7 @@ export const getBiddingProduct = () => {
                 params: {
                     isAuctioned: true,
                 },
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 return dispatch({
@@ -49,6 +50,7 @@ export const auctionProduct = (data) => {
                 method: 'POST',
                 url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/bidding`,
                 data,
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 dispatch({

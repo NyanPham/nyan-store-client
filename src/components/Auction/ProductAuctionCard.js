@@ -22,6 +22,7 @@ function ProductAuctionCard({ product }) {
             const res = await axios({
                 method: 'GET',
                 url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/${productId}/bidding`,
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 setAutionData(res.data.data.docs)
@@ -36,6 +37,7 @@ function ProductAuctionCard({ product }) {
             const res = await axios({
                 method: 'GET',
                 url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myBidding?product=${productId}`,
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 setUserBidsOnProduct(res.data.data.docs)

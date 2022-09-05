@@ -68,6 +68,7 @@ export default function FilterSidebar(props) {
                         ...allAvailableOptions,
                     },
                 },
+                withCredentials: true,
             })
 
             if (res.data.status === 'success') {

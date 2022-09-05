@@ -16,6 +16,7 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
                 const res = await axios({
                     method: 'GET',
                     url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/${productId}`,
+                    withCredentials: true,
                 })
 
                 if (res.data.status === 'success') {

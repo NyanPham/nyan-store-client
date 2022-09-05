@@ -28,6 +28,7 @@ export default function CheckoutButton({ styles }) {
                 data: {
                     items: cart,
                 },
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 stripe.redirectToCheckout({

@@ -12,6 +12,7 @@ export function getOrderNote() {
             const res = await axios({
                 method: 'GET',
                 url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myNote`,
+                withCredentials: true,
             })
 
             if (res.data.status === 'success') {

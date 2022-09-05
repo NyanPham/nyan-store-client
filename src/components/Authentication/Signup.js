@@ -36,6 +36,7 @@ function Signup() {
                     password,
                     passwordConfirm,
                 },
+                withCredentials: true,
             })
             if (res.data.status === 'success') {
                 alert('You have signed up successfully!')
