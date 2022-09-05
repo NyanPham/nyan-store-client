@@ -35,14 +35,14 @@ function Login() {
         setError('')
 
         try {
-            const res = await axios({
-                method: 'POST',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/logIn`,
-                data: {
-                    email,
-                    password,
-                },
-            })
+            const res = await axios.post(
+                `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/logIn`,
+                { email, password },
+                {
+                    withCredentials: true,
+                    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+                }
+            )
 
             if (res.data.status === 'success') {
                 setMessage('You have logged in successfully!')
