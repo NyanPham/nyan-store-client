@@ -15,6 +15,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useSideCartContext } from '../context/sideCartContext'
 import { useSelector } from 'react-redux'
 import { useAuthContext } from '../context/authContext'
+import defaultAvatar from '../imgs/default.jpg'
 
 const Header = () => {
     const { isLoggedIn, currentUser } = useAuthContext()
@@ -125,8 +126,13 @@ const Header = () => {
                     >
                         <img
                             className="w-full h-full object-cover rounded-full overflow-hidden"
-                            src={`/img/users/${currentUser?.photo || 'default.jpg'}`}
-                            alt="Avatar"
+                            src={
+                                currentUser?.photo
+                                    ? `https://enigmatic-harbor-26816.herokuapp.com/img/users/${currentUser.photo}`
+                                    : defaultAvatar
+                            }
+                            alt={`${currentUser?.name || 'avatar'}`}
+                            crossOrigin="anonymous"
                         />
                         <FontAwesomeIcon
                             className="hidden absolute left-full top-0 text-slate-300 group-hover:translate-y-1 transform transition duration-200 lg:inline-block"

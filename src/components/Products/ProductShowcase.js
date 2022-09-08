@@ -17,10 +17,10 @@ function ProductShowcase({ productCards, isSlider }) {
                         navigation
                         breakpoints={{
                             1024: {
-                                slidesPerView: 3,
+                                slidesPerView: 5,
                             },
                             768: {
-                                slidesPerView: 3,
+                                slidesPerView: 4,
                             },
                             450: {
                                 slidesPerView: 3,

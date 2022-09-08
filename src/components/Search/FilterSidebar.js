@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import useDebounce from '../../hooks/useDebounce'
-import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
+// import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import SideNavigation from '../SideNavigation'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
@@ -11,9 +11,7 @@ import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 export default function FilterSidebar(props) {
     const { setData, sortByTerm, categoryId, categoryName, setIsLoading, setMessage, setError, setShowAlert } = props
 
-    const [facetOptions, setFacetOptions] = useState([])
-    const [maxPrice, setMaxPrice] = useState(0)
-    const [minPrice, setMinPrice] = useState(0)
+    const [facetOptions, setFacetOptions] = useState({})
 
     const [filterQuery, setFilterQuery] = useState({
         skip: 0,
@@ -112,7 +110,8 @@ export default function FilterSidebar(props) {
                     )
                 }
             } catch (err) {
-                alert(err.response.data.message)
+                // alert(err.response.data.message)
+                console.error(err)
             }
         }
 
@@ -132,14 +131,8 @@ export default function FilterSidebar(props) {
         })
     }, [sortByTerm, categoryId, search, pathname, categoryName])
 
-    useDeepCompareEffect(() => {
-        if (facetOptions?.maxPrice?.length > 0) {
-            setMaxPrice(facetOptions.maxPrice[0].value)
-        }
-        if (facetOptions?.minPrice?.length > 0) {
-            setMinPrice(facetOptions.minPrice[0].value)
-        }
-    }, [facetOptions])
+    const maxPrice = facetOptions?.maxPrice?.length > 0 ? facetOptions.maxPrice[0].value : 0
+    const minPrice = facetOptions?.minPrice?.length > 0 ? facetOptions.minPrice[0].value : 0
 
     return (
         <div className="filter-sidebar pb-7 w-full row-span-6 border border-gray-300">

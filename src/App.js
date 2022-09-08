@@ -25,6 +25,15 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from './components/Alert/Alert'
 import ReactDOM from 'react-dom'
 import WishlistPage from './components/Pages/WishlistPage'
+import axios from 'axios'
+import { configure } from 'axios-hooks'
+
+const instance = axios.create({
+    withCredentials: true,
+    baseURL: 'https://enigmatic-harbor-26816.herokuapp.com',
+})
+
+configure({ instance })
 
 function App() {
     const { isLoggedIn } = useAuthContext()

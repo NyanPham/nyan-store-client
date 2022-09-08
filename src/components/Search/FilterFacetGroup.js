@@ -27,6 +27,8 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
         })
     }
 
+    console.log(checkedOptions)
+
     useDeepCompareEffect(() => {
         collectOptionsState({
             optionType,

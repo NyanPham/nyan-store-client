@@ -7,12 +7,13 @@ import { useAuthContext } from '../../context/authContext'
 import axios from 'axios'
 import Alert from '../Alert/Alert'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
+import { useEffect } from 'react'
 
 export default function MyAccount() {
     const { currentUser } = useAuthContext()
-    const [email, setEmail] = useState(() => (currentUser && currentUser?.email) || '')
-    const [name, setName] = useState(() => (currentUser && currentUser?.name) || '')
-    const [photo, setPhoto] = useState(() => (currentUser && currentUser?.photo) || 'default.jpg')
+    const [email, setEmail] = useState(() => currentUser?.email || '')
+    const [name, setName] = useState(() => currentUser?.name || '')
+    const [photo, setPhoto] = useState(() => currentUser?.photo || 'default.jpg')
     const [currentPassword, setCurrentPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -80,12 +81,6 @@ export default function MyAccount() {
             }
         }
     }
-
-    useDeepCompareEffect(() => {
-        setEmail(currentUser?.email)
-        setName(currentUser?.name)
-        setPhoto(currentUser?.photo)
-    }, [currentUser])
 
     return (
         <section className="auth-section p-5 text-center min-h-screen" style={backgroundStyles}>
@@ -163,8 +158,11 @@ export default function MyAccount() {
                         <div className="flex justify-start items-center gap-5 mt-3">
                             <img
                                 className="w-20 h-20 rounded-full object-cover object-center "
-                                src={`/img/users/${photo ? photo : 'default.jpg'}`}
+                                src={`https://enigmatic-harbor-26816.herokuapp.com/img/users/${
+                                    photo ? photo : 'default.jpg'
+                                }`}
                                 alt={name ? name : 'user photo'}
+                                crossOrigin="anonymous"
                             />
                             <input className="hidden" type="file" id="photo" name="photo" ref={photoRef} />
                             <label
