@@ -9,6 +9,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../Alert/Alert'
 import ReactDOM from 'react-dom'
+import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function FilterContainer() {
     const [data, setData] = useState({})
@@ -65,23 +66,13 @@ export default function FilterContainer() {
                     openSidebar ? 'pointer-events-auto bg-slate-900/70' : 'pointer-events-none'
                 }`}
             />
-            {isLoading && (
-                <div className="z-30 fixed top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center">
-                    <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
-                </div>
-            )}
-            {showAlert &&
-                ReactDOM.createPortal(
-                    <>
-                        <Alert
-                            type={message ? 'success' : 'error'}
-                            message={message ? message : error ? error : ''}
-                            delayToClose={3000}
-                            closeCallback={() => setShowAlert(false)}
-                        />
-                    </>,
-                    document.getElementById('modal-container')
-                )}
+            <LoadingWithAlert
+                loading={isLoading}
+                showAlert={showAlert}
+                message={message}
+                error={error}
+                setShowAlert={setShowAlert}
+            />
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Alert from '../Alert/Alert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import LoadingWithAlert from '../LoadingWithAlert'
 
 const DELAY_TIME = 3000
 
@@ -101,23 +102,13 @@ export default function ResetPassword() {
                     Reset now
                 </button>
             </form>
-            {isLoading && (
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center">
-                    <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
-                </div>
-            )}
-            {showAlert &&
-                ReactDOM.createPortal(
-                    <>
-                        <Alert
-                            type={message ? 'success' : 'error'}
-                            message={message ? message : error ? error : ''}
-                            delayToClose={DELAY_TIME}
-                            closeCallback={() => setShowAlert(false)}
-                        />
-                    </>,
-                    document.getElementById('modal-container')
-                )}
+            <LoadingWithAlert
+                loading={isLoading}
+                showAlert={showAlert}
+                message={message}
+                error={error}
+                setShowAlert={setShowAlert}
+            />
         </section>
     )
 }

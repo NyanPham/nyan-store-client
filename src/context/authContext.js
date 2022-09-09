@@ -34,7 +34,6 @@ export default function AuthContextProvider({ children }) {
                     return authLogin(res.data.currentUser)
                 }
             } catch (err) {
-                console.log(err.response.data)
                 authLogout()
             }
         }

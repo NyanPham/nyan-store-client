@@ -6,14 +6,12 @@ import backgroundImage from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import axios from 'axios'
 import Alert from '../Alert/Alert'
-import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
-import { useEffect } from 'react'
+import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function MyAccount() {
     const { currentUser } = useAuthContext()
     const [email, setEmail] = useState(() => currentUser?.email || '')
     const [name, setName] = useState(() => currentUser?.name || '')
-    const [photo, setPhoto] = useState(() => currentUser?.photo || 'default.jpg')
     const [currentPassword, setCurrentPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -24,7 +22,6 @@ export default function MyAccount() {
     const [showAlert, setShowAlert] = useState(false)
     const photoRef = useRef()
 
-    console.log(isLoading)
     const backgroundStyles = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -159,7 +156,7 @@ export default function MyAccount() {
                             <img
                                 className="w-20 h-20 rounded-full object-cover object-center "
                                 src={`https://enigmatic-harbor-26816.herokuapp.com/img/users/${
-                                    photo ? photo : 'default.jpg'
+                                    currentUser?.photo ? currentUser.photo : 'default.jpg'
                                 }`}
                                 alt={name ? name : 'user photo'}
                                 crossOrigin="anonymous"
@@ -239,16 +236,13 @@ export default function MyAccount() {
                     </button>
                 </form>
             </div>
-            {showAlert &&
-                ReactDOM.createPortal(
-                    <Alert
-                        type={message ? 'success' : 'error'}
-                        message={message ? message : error ? error : ''}
-                        delayToClose={3000}
-                        closeCallback={() => setShowAlert(false)}
-                    />,
-                    document.getElementById('modal-container')
-                )}
+            <LoadingWithAlert
+                loading={isLoading}
+                showAlert={showAlert}
+                message={message}
+                error={error}
+                setShowAlert={setShowAlert}
+            />
         </section>
     )
 }

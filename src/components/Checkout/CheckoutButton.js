@@ -7,6 +7,7 @@ import useAsyncValidateState from '../../hooks/useAsyncValidateState'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from '../Alert/Alert'
+import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function CheckoutButton({ styles }) {
     const { cart } = useSelector((state) => state.cart)
@@ -36,7 +37,6 @@ export default function CheckoutButton({ styles }) {
                 })
             }
         } catch (err) {
-            console.log(err.response)
             setError(
                 'Something went wrong when directing you to the checkout. Please wait for 10 minutes then try again later.'
             )
@@ -51,25 +51,13 @@ export default function CheckoutButton({ styles }) {
             <button type="button" className={styles} onClick={handleCheckout}>
                 Checkout
             </button>
-            {isLoading &&
-                ReactDOM.createPortal(
-                    <div className="z-30 fixed top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center">
-                        <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
-                    </div>,
-                    document.getElementById('modal-container')
-                )}
-            {showAlert &&
-                ReactDOM.createPortal(
-                    <>
-                        <Alert
-                            type={message ? 'success' : 'error'}
-                            message={message ? message : error ? error : ''}
-                            delayToClose={3000}
-                            closeCallback={() => setShowAlert(false)}
-                        />
-                    </>,
-                    document.getElementById('modal-container')
-                )}
+            <LoadingWithAlert
+                loading={isLoading}
+                showAlert={showAlert}
+                message={message}
+                error={error}
+                setShowAlert={setShowAlert}
+            />
         </>
     )
 }

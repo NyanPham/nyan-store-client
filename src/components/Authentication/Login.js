@@ -5,6 +5,7 @@ import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate, Link } from 'react-router-dom'
 import Alert from '../Alert/Alert'
+import LoadingWithAlert from '../LoadingWithAlert'
 
 const DELAY_TIME = 3000
 
@@ -16,8 +17,6 @@ function Login() {
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate()
-
-    console.log(isLoading)
 
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -55,14 +54,6 @@ function Login() {
             setIsLoading(false)
         }
     }
-
-    // useEffect(() => {
-    //     if (!isLoggedIn) return
-
-    //     setTimeout(() => {
-    //         navigate(-1)
-    //     }, DELAY_TIME)
-    // }, [isLoggedIn, navigate])
 
     const backgroundStyle = {
         backgroundImage: `url(${loginBackground})`,
@@ -104,18 +95,13 @@ function Login() {
                     Reset now
                 </Link>
             </h3>
-            {showAlert &&
-                ReactDOM.createPortal(
-                    <>
-                        <Alert
-                            type={message ? 'success' : 'error'}
-                            message={message ? message : error ? error : ''}
-                            delayToClose={DELAY_TIME}
-                            closeCallback={() => setShowAlert(false)}
-                        />
-                    </>,
-                    document.getElementById('modal-container')
-                )}
+            <LoadingWithAlert
+                loading={isLoading}
+                showAlert={showAlert}
+                message={message}
+                error={error}
+                setShowAlert={setShowAlert}
+            />
         </section>
     )
 }

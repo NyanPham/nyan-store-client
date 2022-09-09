@@ -31,7 +31,7 @@ export default function FilterSidebar(props) {
         )
     })
 
-    const collectOptionsState = ({ optionType, optionStates }) => {
+    const collectOptionsState = useCallback(({ optionType, optionStates }) => {
         const selectedOptions = Object.keys(optionStates).filter((key) => optionStates[key])
         setFilterQuery((prevFilterQuery) => {
             return {
@@ -39,7 +39,7 @@ export default function FilterSidebar(props) {
                 [optionType]: selectedOptions,
             }
         })
-    }
+    }, [])
 
     const collectPriceRange = useCallback(({ toValue, fromValue }) => {
         setFilterQuery((prevFilterQuery) => {
@@ -97,7 +97,6 @@ export default function FilterSidebar(props) {
                     method: 'GET',
                     url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/filterFacets`,
                 })
-                // console.log({ ...res.data.data.facets[0][0], ...res.data.data.facets[1][0] })
 
                 if (res.data.status === 'success') {
                     setFacetOptions(() =>

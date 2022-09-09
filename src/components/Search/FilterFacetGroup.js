@@ -1,6 +1,7 @@
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import FilterFacet from './FilterFacet'
 
@@ -27,14 +28,12 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
         })
     }
 
-    console.log(checkedOptions)
-
-    useDeepCompareEffect(() => {
+    useEffect(() => {
         collectOptionsState({
             optionType,
             optionStates: checkedOptions,
         })
-    }, [optionType, checkedOptions])
+    }, [optionType, checkedOptions, collectOptionsState])
 
     return (
         <form className="py-2 h-max px-4 select-none w-full transform transition duration-300 origin-top overflow-hidden">

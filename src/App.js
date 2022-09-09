@@ -27,6 +27,7 @@ import ReactDOM from 'react-dom'
 import WishlistPage from './components/Pages/WishlistPage'
 import axios from 'axios'
 import { configure } from 'axios-hooks'
+import LoadingWithAlert from './components/LoadingWithAlert'
 
 const instance = axios.create({
     withCredentials: true,
@@ -60,8 +61,6 @@ function App() {
             setShowAlert(true)
         }
     }, [error, message])
-
-    console.log(error)
 
     return (
         <>
@@ -126,23 +125,13 @@ function App() {
                 </Routes>
                 <SideCart />
 
-                {loading && (
-                    <div className="z-30 fixed top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center">
-                        <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
-                    </div>
-                )}
-                {showAlert &&
-                    ReactDOM.createPortal(
-                        <>
-                            <Alert
-                                type={message ? 'success' : 'error'}
-                                message={message ? message : error ? error : ''}
-                                delayToClose={3000}
-                                closeCallback={() => setShowAlert(false)}
-                            />
-                        </>,
-                        document.getElementById('modal-container')
-                    )}
+                <LoadingWithAlert
+                    loading={loading}
+                    showAlert={showAlert}
+                    message={message}
+                    error={error}
+                    setShowAlert={setShowAlert}
+                />
             </div>
             <div id="modal-container"></div>
         </>
