@@ -1,13 +1,9 @@
 import React, { useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate, Link } from 'react-router-dom'
-import Alert from '../Alert/Alert'
 import LoadingWithAlert from '../LoadingWithAlert'
-
-const DELAY_TIME = 3000
 
 // Need to move the image background render to the className later
 function Login() {

@@ -1,12 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import useAsyncValidateState from '../../hooks/useAsyncValidateState'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import Alert from '../Alert/Alert'
 import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function CheckoutButton({ styles }) {

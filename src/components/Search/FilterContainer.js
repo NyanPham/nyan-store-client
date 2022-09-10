@@ -6,9 +6,6 @@ import FilterView from './FilterView'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import Alert from '../Alert/Alert'
-import ReactDOM from 'react-dom'
 import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function FilterContainer() {

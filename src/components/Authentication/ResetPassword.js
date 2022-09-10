@@ -1,14 +1,8 @@
 import React, { useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useNavigate, useParams } from 'react-router-dom'
-import Alert from '../Alert/Alert'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import LoadingWithAlert from '../LoadingWithAlert'
-
-const DELAY_TIME = 3000
 
 // Need to move the image background render to the className later
 export default function ResetPassword() {
