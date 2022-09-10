@@ -1,18 +1,20 @@
 import axios from 'axios'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import useDebounce from './useDebounce'
-import useDeepCompareEffect from './useDeepCompareEffect'
 
 export function useFetchProductsFromCollection(collections, collectionName) {
     const [products, setProducts] = useState([])
+    const collectionId = collections.find((category) => category.name === collectionName)?._id
+    const limit = 8
 
-    useDeepCompareEffect(() => {
-        const fetchProducts = async (collectionName) => {
-            const collectionId = collections.find((category) => category.name === collectionName)?._id
+    console.log(collectionId)
 
-            let url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products`
+    useEffect(() => {
+        const fetchProducts = async () => {
+            let url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products?limit=${limit}`
             if (collectionId)
-                url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/collections/${collectionId}/products`
+                url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/collections/${collectionId}/products?limit=${limit}`
 
             try {
                 const res = await axios({
@@ -28,8 +30,8 @@ export function useFetchProductsFromCollection(collections, collectionName) {
             }
         }
 
-        fetchProducts(collectionName)
-    }, [collectionName, collections])
+        fetchProducts()
+    }, [collectionId])
 
     return products
 }

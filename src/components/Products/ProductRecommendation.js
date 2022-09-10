@@ -27,6 +27,8 @@ function ProductRecommendation({ showRecommendCard = true }) {
         )
     })
 
+    console.log(products)
+
     return (
         <ProductShowcase
             productCards={showRecommendCard ? [recommendationCard, ...productCards] : productCards}

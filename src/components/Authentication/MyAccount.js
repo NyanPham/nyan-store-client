@@ -18,6 +18,8 @@ export default function MyAccount() {
     const [showAlert, setShowAlert] = useState(false)
     const photoRef = useRef()
 
+    console.log(currentUser)
+
     const backgroundStyles = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',

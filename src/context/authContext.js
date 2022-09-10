@@ -11,11 +11,14 @@ export default function AuthContextProvider({ children }) {
     })
 
     const authLogin = useCallback((currentUser) => {
+        console.log(currentUser)
         setUser({
             isLoggedIn: true,
             currentUser: currentUser,
         })
     }, [])
+
+    console.log(user)
 
     const authLogout = useCallback(() => {
         setUser({

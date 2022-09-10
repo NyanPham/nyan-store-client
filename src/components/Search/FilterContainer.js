@@ -6,7 +6,6 @@ import FilterView from './FilterView'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function FilterContainer() {
     const [data, setData] = useState({})
@@ -55,20 +54,21 @@ export default function FilterContainer() {
                     onViewBy={setViewBy}
                     categoryName={categoryName}
                 />
-                <FilterView products={data.data?.docs} viewBy={viewBy} />
+                <FilterView
+                    products={data.data?.docs}
+                    viewBy={viewBy}
+                    isLoading={isLoading}
+                    error={error}
+                    message={message}
+                    showAlert={showAlert}
+                    setShowAlert={setShowAlert}
+                />
             </div>
             <span
                 onClick={() => setOpenSidebar(false)}
                 className={`fixed top-0 left-0 w-full h-full transform transition duration-200 ${
                     openSidebar ? 'pointer-events-auto bg-slate-900/70' : 'pointer-events-none'
                 }`}
-            />
-            <LoadingWithAlert
-                loading={isLoading}
-                showAlert={showAlert}
-                message={message}
-                error={error}
-                setShowAlert={setShowAlert}
             />
         </div>
     )

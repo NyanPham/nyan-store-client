@@ -41,7 +41,7 @@ function Login() {
             if (res.data.status === 'success') {
                 setMessage('You have logged in successfully!')
                 authLogin(res.data.currentUser)
-                setTimeout(() => navigate('/'), 2500)
+                setTimeout(() => navigate('/'), 1500)
             }
         } catch (err) {
             setError(err.response.data.message)

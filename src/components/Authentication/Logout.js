@@ -26,7 +26,7 @@ export default function Logout() {
             } finally {
                 setTimeout(() => {
                     navigate('/')
-                }, 2500)
+                }, 1000)
             }
         }
 
