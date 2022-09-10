@@ -1,17 +1,13 @@
 import React, { useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
 import nyanStore from '../../imgs/nyan-logo-white.png'
 import { Link } from 'react-router-dom'
 import backgroundImage from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import axios from 'axios'
-import Alert from '../Alert/Alert'
 import LoadingWithAlert from '../LoadingWithAlert'
 
 export default function MyAccount() {
-    const { currentUser } = useAuthContext()
-    const [email, setEmail] = useState(() => currentUser?.email || '')
-    const [name, setName] = useState(() => currentUser?.name || '')
+    const { currentUser, authLogin } = useAuthContext()
     const [currentPassword, setCurrentPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -44,7 +40,7 @@ export default function MyAccount() {
 
         const userUpdateForm = new FormData()
         inputElemNames.forEach((field) => {
-            if (field.name === 'photo') {
+            if (field.name === 'photo' && photoRef.current.files[0] != null) {
                 userUpdateForm.append('photo', photoRef.current.files[0])
             } else {
                 userUpdateForm.append(field.name, field.value)
@@ -54,6 +50,7 @@ export default function MyAccount() {
         setIsLoading(true)
         setMessage('')
         setError('')
+
         try {
             const res = await axios({
                 method: 'PATCH',
@@ -63,6 +60,7 @@ export default function MyAccount() {
             })
 
             if (res.data.status === 'success') {
+                authLogin(res.data.data.user)
                 setMessage(`Your ${e.target.dataset.userUpdate} has been updated successfully!`)
             }
         } catch (err) {
@@ -132,8 +130,7 @@ export default function MyAccount() {
                             id="name"
                             name="name"
                             placeholder="Enter your name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            defaultValue={currentUser?.name || ''}
                         />
                     </div>
                     <div className="form-group">
@@ -146,8 +143,7 @@ export default function MyAccount() {
                             id="email"
                             name="email"
                             placeholder="Enter your new email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            defaultValue={currentUser?.email || ''}
                         />
                     </div>
                     <div className="form-group">
@@ -158,7 +154,7 @@ export default function MyAccount() {
                                 src={`https://enigmatic-harbor-26816.herokuapp.com/img/users/${
                                     currentUser?.photo ? currentUser.photo : 'default.jpg'
                                 }`}
-                                alt={name ? name : 'user photo'}
+                                alt={currentUser?.name ? currentUser.name : 'user photo'}
                                 crossOrigin="anonymous"
                             />
                             <input className="hidden" type="file" id="photo" name="photo" ref={photoRef} />

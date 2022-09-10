@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useState, useEffect } from 'react'
+import React, { useContext, createContext, useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 
 const AuthContext = createContext()
@@ -10,18 +10,18 @@ export default function AuthContextProvider({ children }) {
         currentUser: {},
     })
 
-    const authLogin = (currentUser) => {
+    const authLogin = useCallback((currentUser) => {
         setUser({
             isLoggedIn: true,
             currentUser: currentUser,
         })
-    }
+    }, [])
 
-    const authLogout = () => {
+    const authLogout = useCallback(() => {
         setUser({
             isLoggedIn: false,
         })
-    }
+    }, [])
 
     useEffect(() => {
         async function fetchIsLoggedIn() {
@@ -39,7 +39,7 @@ export default function AuthContextProvider({ children }) {
         }
 
         fetchIsLoggedIn()
-    }, [])
+    }, [authLogin, authLogout])
 
     return (
         <AuthContext.Provider
