@@ -17,8 +17,6 @@ export default function Logout() {
                     withCredentials: true,
                 })
 
-                console.log(res.data)
-
                 if (res.data.status === 'success') {
                     authLogout()
                     setText(res.data.message)
@@ -26,9 +24,9 @@ export default function Logout() {
             } catch (err) {
                 setText(err.response.data.message)
             } finally {
-                // setTimeout(() => {
-                //     navigate('/')
-                // }, 2500)
+                setTimeout(() => {
+                    navigate('/')
+                }, 2500)
             }
         }
 
