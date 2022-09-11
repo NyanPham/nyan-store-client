@@ -10,11 +10,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 export default function ProductCard(props) {
-    const { id, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
+    const { id, name, slug, variants, createdAt, inAuction = false, currentBidData = {} } = props
     // const { images, vendor } = props
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const { loading, error, message } = useSelector((state) => state.cart)
+    // const { currentUser } = useAuthContext()
     const dispatch = useDispatch()
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
@@ -57,7 +58,7 @@ export default function ProductCard(props) {
             </Link>
             <div className="product-card-info mt-3">
                 <h3 className="text-center text-ellipsis text-gray-900 text-base font-semibold">{name}</h3>
-                {currentBid === false && (
+                {inAuction === false && (
                     <div className="flex justify-center items-center gap-2">
                         {firstVariant.comparePrice ? (
                             <>
@@ -69,8 +70,10 @@ export default function ProductCard(props) {
                         )}
                     </div>
                 )}
-                {(typeof currentBid === 'number' || typeof currentBid === 'string') && (
-                    <span className="product-card-price">${currentBid}</span>
+                {(typeof currentBidData.price === 'number' || typeof currentBidData.bidder === 'string') && (
+                    <>
+                        <span className="product-card-price">${currentBidData.price}</span>
+                    </>
                 )}
             </div>
             <div className="absolute top-2 right-2 flex flex-col gap-3 overflow-hidden">
@@ -95,7 +98,8 @@ export default function ProductCard(props) {
                                 currentVariantId={firstVariant._id}
                                 buttonText={'Own Now'}
                                 formSubmitHandler={handleAddToCart}
-                                currentBid={false}
+                                currentBid={currentBidData.price}
+                                inAuction={inAuction}
                                 nameStyles="text-2xl"
                                 review={{
                                     show: false,

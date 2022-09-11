@@ -5,18 +5,14 @@ import Countdown from '../Countdown'
 import ProductCard from '../Products/ProductCard'
 import AuctionForm from './AuctionForm'
 import { useSelector } from 'react-redux'
-import { useAuthContext } from '../../context/authContext'
-import { useCallback } from 'react'
+
 import { ROOT_URL } from '../../config'
+import { useMemo } from 'react'
 
 function ProductAuctionCard({ product }) {
-    const { isLoggedIn } = useAuthContext()
     const [openAuctionModal, setOpenAuctionModal] = useState(false)
     const [autionData, setAutionData] = useState([])
-    const [userBidsOnProduct, setUserBidsOnProduct] = useState([])
     const { message } = useSelector((state) => state.biddingProducts)
-
-    console.log(userBidsOnProduct)
 
     const fetchAutionData = async (productId) => {
         try {
@@ -33,21 +29,6 @@ function ProductAuctionCard({ product }) {
         }
     }
 
-    const fetchUserBiddingOnProduct = useCallback(async (productId) => {
-        try {
-            const res = await axios({
-                method: 'GET',
-                url: `${ROOT_URL}/api/v1/users/myBidding?product=${productId}`,
-                withCredentials: true,
-            })
-            if (res.data.status === 'success') {
-                setUserBidsOnProduct(res.data.data.docs)
-            }
-        } catch (err) {
-            alert(err.response.data.message)
-        }
-    }, [])
-
     useEffect(() => {
         fetchAutionData(product._id)
     }, [product._id])
@@ -61,23 +42,31 @@ function ProductAuctionCard({ product }) {
         }
     }, [message, product._id])
 
-    const currentBid = autionData
-        .map((bidding) => bidding.price)
-        .reduce((maxBid, price) => {
-            if (price > maxBid) return price
-            return maxBid
-        }, 0)
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            fetchUserBiddingOnProduct(product._id)
-        }
-    }, [currentBid, product._id, isLoggedIn, fetchUserBiddingOnProduct])
+    const currentBidData = useMemo(() => {
+        return autionData
+            .map((bidding) => {
+                return { price: bidding.price, bidder: bidding.user.email }
+            })
+            .reduce(
+                (maxBid, bidData) => {
+                    if (bidData.price > maxBid.price)
+                        return {
+                            ...bidData,
+                        }
+                    return maxBid
+                },
+                { price: 0, bidder: '' }
+            )
+    }, [autionData])
 
     return (
         <>
             <div>
-                <ProductCard {...product} inAuction={true} currentBid={isLoggedIn ? currentBid : 'Log in to bid'} />
+                <ProductCard {...product} inAuction={true} currentBidData={currentBidData} />
+                <div className="text-center my-2 text-slate-700 text-sm font-normal">
+                    Bidder:
+                    <span className="text-cyan-400 tracking-wide"> {currentBidData.bidder}</span>
+                </div>
                 <Countdown dueDate={product.auctionExpiresIn} />
                 <button
                     className="w-full py-1 mt-4 bg-cyan-400 text-white text-lg font-semibold rounded-2xl hover:bg-gray-900 hover:text-cyan-400 transition transform duration-200"
@@ -89,7 +78,11 @@ function ProductAuctionCard({ product }) {
             {openAuctionModal &&
                 createPortal(
                     <>
-                        <AuctionForm product={product} setOpenModal={setOpenAuctionModal} currentBid={currentBid} />
+                        <AuctionForm
+                            product={product}
+                            setOpenModal={setOpenAuctionModal}
+                            currentBid={currentBidData.price || false}
+                        />
                     </>,
                     document.getElementById('modal-container')
                 )}

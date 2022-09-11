@@ -58,6 +58,8 @@ function VariantsPicker(props) {
         onVariantChange = () => {},
     } = props
 
+    console.log(currentBid)
+
     const [selectedVariant, setSelectedVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
     const [desiredVariant, setDesiredVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
 
@@ -100,7 +102,7 @@ function VariantsPicker(props) {
     function handleSubmit(e) {
         e.preventDefault()
         const dataToSubmit = { variantId: selectedVariant._id }
-        if (currentBid !== false) dataToSubmit['bidPrice'] = priceRef.current.value
+        if (inAuction) dataToSubmit['bidPrice'] = priceRef.current.value
         if (quantityControl) dataToSubmit['quantity'] = quantity
 
         formSubmitHandler(dataToSubmit)
@@ -204,7 +206,7 @@ function VariantsPicker(props) {
                         optionType="Material"
                     />
                 )}
-                {currentBid != null && currentBid !== false && (
+                {inAuction && (
                     <div className="form-group">
                         <label htmlFor="auction-price" className="form-label">
                             Your Bid
