@@ -8,5 +8,6 @@ export default function useDeepCompareEffect(callback, dependencies) {
         currentDependenciesRef.current = dependencies
     }
 
+    // eslint-disable-next-line
     useEffect(callback, [currentDependenciesRef.current])
 }
