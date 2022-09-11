@@ -27,18 +27,22 @@ export default function Countdown({ dueDate }) {
     }, 1000)
 
     return (
-        <div className="flex justify-center gap-2 mt-4">
-            {Object.keys(remainingTime).map((key, index) => {
-                return (
-                    <CountDownCard
-                        time={remainingTime[key]}
-                        type={key}
-                        index={index}
-                        key={`countdown_${Math.random()}_${index}`}
-                    />
-                )
-            })}
-        </div>
+        <>
+            {dueDate && (
+                <div className="flex justify-center gap-2 mt-4">
+                    {Object.keys(remainingTime).map((key, index) => {
+                        return (
+                            <CountDownCard
+                                time={remainingTime[key]}
+                                type={key}
+                                index={index}
+                                key={`countdown_${Math.random()}_${index}`}
+                            />
+                        )
+                    })}
+                </div>
+            )}
+        </>
     )
 }
 

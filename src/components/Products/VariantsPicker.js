@@ -17,6 +17,29 @@ const getTargetVariantFromProduct = (currentVariantId, variants) => {
         : variants[0]
 }
 
+const getButtonText = ({
+    buttonText,
+    addedToCart,
+    isEditing,
+    isUnavailable,
+    isSoldOut,
+    loading,
+    inAuction,
+    currentVariantId,
+    selectedVariantId,
+}) => {
+    let actionButtonText = buttonText
+    if (addedToCart) actionButtonText = 'Added To Cart'
+    if (isEditing) actionButtonText = 'Edit now'
+    if (isUnavailable) actionButtonText = 'Unavailable'
+    if (isSoldOut) actionButtonText = 'Soldout'
+    if (isEditing && currentVariantId === selectedVariantId) actionButtonText = 'Updated'
+    if (inAuction) actionButtonText = 'Bid Now'
+    if (loading) actionButtonText = 'Loading...'
+
+    return actionButtonText
+}
+
 function VariantsPicker(props) {
     const {
         productId,
@@ -25,6 +48,7 @@ function VariantsPicker(props) {
         buttonText,
         formSubmitHandler,
         currentBid,
+        inAuction = false,
         nameStyles = 'text-xl',
         priceStyles = '',
         review = {},
@@ -44,6 +68,7 @@ function VariantsPicker(props) {
     const { isLoggedIn } = useAuthContext()
     const { loading, cart } = useSelector((state) => state.cart)
     const addedToCart = useAddedToCart(cart, productId)
+    const { loading: biddingLoading } = useSelector((state) => state.biddingProducts)
 
     const priceRef = useRef()
 
@@ -72,14 +97,6 @@ function VariantsPicker(props) {
         }
     }
 
-    let actionButtonText = buttonText
-    if (addedToCart) actionButtonText = 'Added To Cart'
-    if (isEditing) actionButtonText = 'Edit now'
-    if (isUnavailable) actionButtonText = 'Unavailable'
-    if (isSoldOut) actionButtonText = 'Soldout'
-    if (loading) actionButtonText = 'Loading...'
-    if (isEditing && currentVariantId === selectedVariant._id.toString()) actionButtonText = 'Updated'
-
     function handleSubmit(e) {
         e.preventDefault()
         const dataToSubmit = { variantId: selectedVariant._id }
@@ -100,6 +117,18 @@ function VariantsPicker(props) {
         setSelectedVariant(getTargetVariantFromProduct(currentVariantId, variants))
         setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
     }, [variants, currentVariantId])
+
+    const actionButtonText = getButtonText({
+        buttonText,
+        addedToCart,
+        isEditing,
+        isUnavailable,
+        isSoldOut,
+        loading,
+        inAuction,
+        currentVariantId,
+        selectedVariantId: selectedVariant._id.toString(),
+    })
 
     return (
         <div className="">
@@ -209,7 +238,8 @@ function VariantsPicker(props) {
                             isUnavailable ||
                             isSoldOut ||
                             loading ||
-                            (addedToCart && !isEditing) ||
+                            (biddingLoading && inAuction) ||
+                            (addedToCart && !isEditing && !inAuction) ||
                             currentVariantId === selectedVariant._id
                         }
                         type="submit"

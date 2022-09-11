@@ -40,6 +40,7 @@ function AuctionForm({ product, setOpenModal, currentBid }) {
                     buttonText={'Bid Now'}
                     formSubmitHandler={formSubmitHandler}
                     currentBid={currentBid}
+                    inAuction={true}
                 />
                 {error && <span className="alert-error">{error}</span>}
                 {message && <span className="alert-success">{message}</span>}

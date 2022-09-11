@@ -27,6 +27,7 @@ export const getBiddingProduct = () => {
                 },
                 withCredentials: true,
             })
+
             if (res.data.status === 'success') {
                 return dispatch({
                     type: ACTIONS.GET_BIDDING_PRODUCTS,
@@ -53,6 +54,7 @@ export const auctionProduct = (data) => {
                 data,
                 withCredentials: true,
             })
+
             if (res.data.status === 'success') {
                 dispatch({
                     type: ACTIONS.AUCTION_SUCCESS,
