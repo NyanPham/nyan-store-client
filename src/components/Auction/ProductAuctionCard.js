@@ -45,7 +45,7 @@ function ProductAuctionCard({ product }) {
     const currentBidData = useMemo(() => {
         return autionData
             .map((bidding) => {
-                return { price: bidding.price, bidder: bidding.user.email }
+                return { price: bidding.price, bidder: bidding.user.email, duesIn: bidding.duesIn }
             })
             .reduce(
                 (maxBid, bidData) => {
@@ -55,7 +55,7 @@ function ProductAuctionCard({ product }) {
                         }
                     return maxBid
                 },
-                { price: 0, bidder: '' }
+                { price: 0, bidder: '', duesIn: undefined }
             )
     }, [autionData])
 

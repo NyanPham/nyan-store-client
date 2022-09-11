@@ -97,9 +97,9 @@ export default function ProductCard(props) {
                                 variants={variants}
                                 currentVariantId={firstVariant._id}
                                 buttonText={'Own Now'}
+                                data={'hello'}
                                 formSubmitHandler={handleAddToCart}
-                                currentBid={currentBidData.price}
-                                inAuction={inAuction}
+                                inAuction={false}
                                 nameStyles="text-2xl"
                                 review={{
                                     show: false,

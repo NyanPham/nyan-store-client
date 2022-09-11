@@ -47,7 +47,7 @@ function VariantsPicker(props) {
         currentVariantId,
         buttonText,
         formSubmitHandler,
-        currentBid,
+        currentBidData = {},
         inAuction = false,
         nameStyles = 'text-xl',
         priceStyles = '',
@@ -57,8 +57,6 @@ function VariantsPicker(props) {
         isEditing = false,
         onVariantChange = () => {},
     } = props
-
-    console.log(currentBid)
 
     const [selectedVariant, setSelectedVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
     const [desiredVariant, setDesiredVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
@@ -115,7 +113,6 @@ function VariantsPicker(props) {
     }, [selectedVariant])
 
     useEffect(() => {
-        console.log('changing')
         setSelectedVariant(getTargetVariantFromProduct(currentVariantId, variants))
         setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
     }, [variants, currentVariantId])
@@ -206,7 +203,7 @@ function VariantsPicker(props) {
                         optionType="Material"
                     />
                 )}
-                {inAuction && (
+                {inAuction && currentBidData && (
                     <div className="form-group">
                         <label htmlFor="auction-price" className="form-label">
                             Your Bid
@@ -216,9 +213,9 @@ function VariantsPicker(props) {
                             type="number"
                             name="auction-price"
                             id="auction-price"
-                            min={currentBid + 1}
+                            min={currentBidData.price + 1}
                             step={1}
-                            defaultValue={currentBid + 1}
+                            defaultValue={currentBidData.price + 1}
                             ref={priceRef}
                         />
                     </div>

@@ -8,8 +8,20 @@ export default function Countdown({ dueDate }) {
         minutes: 0,
         seconds: 0,
     })
-    useInterval(() => {
-        let delta = Math.abs(new Date(dueDate) - Date.now()) / 1000
+
+    const { stop } = useInterval(() => {
+        let delta = (new Date(dueDate) - Date.now()) / 1000
+        if (delta <= 0) {
+            stop()
+            setRemaingTime({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
+            })
+            return
+        }
+
         const days = Math.floor(delta / 86400)
         delta -= days * 86400
         const hours = Math.floor(delta / 3600) % 24
