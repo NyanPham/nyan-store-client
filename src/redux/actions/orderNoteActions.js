@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ROOT_URL } from '../../config'
 
 const ACTIONS = {
     GET_ORDER: 'get-order',
@@ -11,7 +12,7 @@ export function getOrderNote() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myNote`,
+                url: `${ROOT_URL}/api/v1/users/myNote`,
                 withCredentials: true,
             })
 
@@ -38,7 +39,7 @@ export const updateOrderNote = (orderNote) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myNote`,
+            url: `${ROOT_URL}/api/v1/users/myNote`,
             data: {
                 orderNote,
             },

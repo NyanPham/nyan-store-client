@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import getMatchedButton from '../../utils/getMatchedButton'
 import VariantsPicker from '../Products/VariantsPicker'
+import { ROOT_URL } from '../../config'
 
 export default function CartEditor({ productId, variantId, onVariantChange }) {
     const [product, setProduct] = useState({})
@@ -15,7 +16,7 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/${productId}`,
+                    url: `${ROOT_URL}/api/v1/products/${productId}`,
                     withCredentials: true,
                 })
 

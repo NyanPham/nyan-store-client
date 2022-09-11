@@ -1,5 +1,6 @@
 import React, { useContext, createContext, useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
+import { ROOT_URL } from '../config'
 
 const AuthContext = createContext()
 export const useAuthContext = () => useContext(AuthContext)
@@ -11,14 +12,11 @@ export default function AuthContextProvider({ children }) {
     })
 
     const authLogin = useCallback((currentUser) => {
-        console.log(currentUser)
         setUser({
             isLoggedIn: true,
             currentUser: currentUser,
         })
     }, [])
-
-    console.log(user)
 
     const authLogout = useCallback(() => {
         setUser({
@@ -29,7 +27,7 @@ export default function AuthContextProvider({ children }) {
     useEffect(() => {
         async function fetchIsLoggedIn() {
             try {
-                const res = await axios.get('https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/isLoggedIn', {
+                const res = await axios.get(`${ROOT_URL}/api/v1/users/isLoggedIn`, {
                     withCredentials: true,
                 })
 

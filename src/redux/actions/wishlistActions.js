@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ROOT_URL } from '../../config'
 
 const ACTIONS = {
     GET_WISHLIST: 'get-wishlist',
@@ -13,7 +14,7 @@ export const addWishlist = (productId) => {
         try {
             const res = await axios({
                 method: 'PATCH',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myWishlist`,
+                url: `${ROOT_URL}/api/v1/users/myWishlist`,
                 data: {
                     product: productId,
                 },
@@ -43,7 +44,7 @@ export const removeWishlist = (wishlist, productId) => {
         try {
             await axios({
                 method: 'DELETE',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myWishlist`,
+                url: `${ROOT_URL}/api/v1/users/myWishlist`,
                 data: {
                     wishlist,
                     product: productId,
@@ -69,7 +70,7 @@ export const getWishlist = () => {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myWishlist`,
+                url: `${ROOT_URL}/api/v1/users/myWishlist`,
                 withCredentials: true,
             })
 

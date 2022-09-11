@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../context/authContext'
+import { ROOT_URL } from '../../config'
 
 export default function Logout() {
     const [text, setText] = useState('Is Logging out...')
@@ -13,7 +14,7 @@ export default function Logout() {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/logOut`,
+                    url: `${ROOT_URL}/api/v1/users/logOut`,
                     withCredentials: true,
                 })
 

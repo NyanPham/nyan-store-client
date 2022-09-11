@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ROOT_URL } from '../../config'
 
 const ACTIONS = {
     START_CART_ACT: 'start-cart-act',
@@ -20,7 +21,7 @@ export const addToCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/addToMyCart`,
+            url: `${ROOT_URL}api/v1/users/addToMyCart`,
             data,
             withCredentials: true,
         })
@@ -49,7 +50,7 @@ export const getCart = () => async (dispatch) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/getMyCart`,
+            url: `${ROOT_URL}/api/v1/users/getMyCart`,
             withCredentials: true,
         })
 
@@ -80,7 +81,7 @@ export const updateCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updateMyCart`,
+            url: `${ROOT_URL}/api/v1/users/updateMyCart`,
             data,
             withCredentials: true,
         })
@@ -113,7 +114,7 @@ export const removeCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/removeMyCart`,
+            url: `${ROOT_URL}/api/v1/users/removeMyCart`,
             data,
             withCredentials: true,
         })

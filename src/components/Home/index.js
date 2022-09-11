@@ -38,10 +38,10 @@ const Home = () => {
                     slides={sportSlides}
                 />
             </section>
-            <section className="py-10">
+            {/* <section className="py-10">
                 <GetSliderWithProducts
                     tags={['Footwear', 'sport']}
-                    category="Hats"
+                    category="Furnitures"
                     sideNavBackground="bg-slate-200"
                     borderColor="border-slate-200"
                     navTitle="Furniture"
@@ -51,7 +51,7 @@ const Home = () => {
             <section className="bg-gray-700 py-10">
                 <GetSliderWithVertical
                     tags={['Footwear', 'sport']}
-                    category="Hats"
+                    category="Cameras"
                     sideNavBackground="bg-gray-900"
                     borderColor="border-gray-900"
                     navTitle="Photography"
@@ -79,7 +79,7 @@ const Home = () => {
                     navTitle="Men"
                     slides={menSlides}
                 />
-            </section>
+            </section> */}
             <SidebarNavigationDrawer />
         </main>
     )

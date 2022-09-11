@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import useDeepCompareEffect from './useDeepCompareEffect'
+import { useEffect, useState } from 'react'
 
 const findInCart = (cart, productId) => {
     const product = cart.find((item) => item.product.toString() === productId)
@@ -9,7 +8,7 @@ const findInCart = (cart, productId) => {
 export default function useAddedToCart(cart, productId) {
     const [inCart, setInCart] = useState(() => findInCart(cart, productId))
 
-    useDeepCompareEffect(() => {
+    useEffect(() => {
         if (cart.length === 0) return setInCart(false)
 
         setInCart(() => findInCart(cart, productId))

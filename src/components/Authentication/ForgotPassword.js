@@ -4,6 +4,7 @@ import loginBackground from '../../imgs/ocean.jpg'
 import nyanLogo from '../../imgs/nyan-logo-white.png'
 import { Link } from 'react-router-dom'
 import LoadingWithAlert from '../LoadingWithAlert'
+import { ROOT_URL } from '../../config'
 
 // Need to move the image background render to the className later
 export default function ForgotPassword() {
@@ -29,7 +30,7 @@ export default function ForgotPassword() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/forgotPassword`,
+                url: `${ROOT_URL}/api/v1/users/forgotPassword`,
                 data: {
                     email,
                 },

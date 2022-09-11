@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
 // import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import SideNavigation from '../SideNavigation'
@@ -59,7 +60,7 @@ export default function FilterSidebar(props) {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/filter`,
+                url: `${ROOT_URL}/api/v1/products/filter`,
                 data: {
                     filterQuery,
                     all: {
@@ -95,7 +96,7 @@ export default function FilterSidebar(props) {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/filterFacets`,
+                    url: `${ROOT_URL}/api/v1/products/filterFacets`,
                 })
 
                 if (res.data.status === 'success') {

@@ -4,6 +4,7 @@ import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate, Link } from 'react-router-dom'
 import LoadingWithAlert from '../LoadingWithAlert'
+import { ROOT_URL } from '../../config'
 
 // Need to move the image background render to the className later
 function Login() {
@@ -31,7 +32,7 @@ function Login() {
 
         try {
             const res = await axios.post(
-                `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/logIn`,
+                `${ROOT_URL}/api/v1/users/logIn`,
                 { email, password },
                 {
                     withCredentials: true,

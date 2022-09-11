@@ -9,6 +9,7 @@ import QuantityController from './QuantityController'
 import { useSelector } from 'react-redux'
 import useAddedToCart from '../../hooks/useAddedToCart'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
+import { useEffect } from 'react'
 
 const getTargetVariantFromProduct = (currentVariantId, variants) => {
     return currentVariantId != null
@@ -61,6 +62,7 @@ function VariantsPicker(props) {
                 compareStringValue(variant.option2, newDesiredVariant.option2) &&
                 compareStringValue(variant.option3, newDesiredVariant.option3)
         )
+
         if (!availableVariant) {
             setIsUnavailable(true)
         } else {
@@ -93,7 +95,8 @@ function VariantsPicker(props) {
         onVariantChange(selectedVariant)
     }, [selectedVariant])
 
-    useDeepCompareEffect(() => {
+    useEffect(() => {
+        console.log('changing')
         setSelectedVariant(getTargetVariantFromProduct(currentVariantId, variants))
         setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
     }, [variants, currentVariantId])

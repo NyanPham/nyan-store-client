@@ -15,6 +15,7 @@ import { useSideCartContext } from '../../context/sideCartContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
 import ProductDetail from './ProductDetail'
+import { ROOT_URL } from '../../config'
 
 const getImagesFromVariants = (variants) => {
     return variants.flatMap((variant) => {
@@ -56,7 +57,7 @@ function ProductInfo() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/slug/${slug}`,
+                url: `${ROOT_URL}/api/v1/products/slug/${slug}`,
                 withCredentials: true,
             })
             if (res.data.status === 'success') {

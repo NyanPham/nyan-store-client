@@ -3,6 +3,7 @@ import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
+import { ROOT_URL } from '../../config'
 
 // Need to move the image background render to the className later
 function Signup() {
@@ -29,7 +30,7 @@ function Signup() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/signUp`,
+                url: `${ROOT_URL}/api/v1/users/signUp`,
                 data: {
                     name,
                     email,

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { ROOT_URL } from '../config'
 
 export default function useCountries() {
     const [countriesData, setCountriesData] = useState({
@@ -12,7 +13,7 @@ export default function useCountries() {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/countries`,
+                    url: `${ROOT_URL}/api/v1/countries`,
                 })
 
                 if (res.data.status === 'success') {

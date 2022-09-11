@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ROOT_URL } from '../../config'
 
 const ACTIONS = {
     FETCH_COLLECTIONS: 'fetch-collections',
@@ -10,7 +11,7 @@ export function fetchCollections() {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/collections`,
+                url: `${ROOT_URL}/api/v1/collections`,
             })
 
             if (res.data.status === 'success') {

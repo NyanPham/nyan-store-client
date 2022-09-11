@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ROOT_URL } from '../../config'
 
 const ACTIONS = {
     GET_BIDDING_PRODUCTS: 'get-bidding-products',
@@ -20,7 +21,7 @@ export const getBiddingProduct = () => {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products`,
+                url: `${ROOT_URL}/api/v1/products`,
                 params: {
                     isAuctioned: true,
                 },
@@ -48,7 +49,7 @@ export const auctionProduct = (data) => {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/bidding`,
+                url: `${ROOT_URL}/api/v1/bidding`,
                 data,
                 withCredentials: true,
             })

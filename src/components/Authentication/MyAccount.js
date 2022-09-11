@@ -5,6 +5,7 @@ import backgroundImage from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import axios from 'axios'
 import LoadingWithAlert from '../LoadingWithAlert'
+import { ROOT_URL } from '../../config'
 
 export default function MyAccount() {
     const { currentUser, authLogin } = useAuthContext()
@@ -30,8 +31,8 @@ export default function MyAccount() {
         e.preventDefault()
         const url =
             e.target.dataset.userUpdate === 'password'
-                ? `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updatePassword`
-                : `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/updateMe`
+                ? `${ROOT_URL}/api/v1/users/updatePassword`
+                : `${ROOT_URL}/api/v1/users/updateMe`
 
         const inputElemNames = [...e.target.querySelectorAll('input[name]')].map((input) => {
             return {
@@ -153,9 +154,7 @@ export default function MyAccount() {
                         <div className="flex justify-start items-center gap-5 mt-3">
                             <img
                                 className="w-20 h-20 rounded-full object-cover object-center "
-                                src={`https://enigmatic-harbor-26816.herokuapp.com/img/users/${
-                                    currentUser?.photo ? currentUser.photo : 'default.jpg'
-                                }`}
+                                src={`${ROOT_URL}/img/users/${currentUser?.photo ? currentUser.photo : 'default.jpg'}`}
                                 alt={currentUser?.name ? currentUser.name : 'user photo'}
                                 crossOrigin="anonymous"
                             />

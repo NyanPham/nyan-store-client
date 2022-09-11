@@ -7,6 +7,7 @@ import AuctionForm from './AuctionForm'
 import { useSelector } from 'react-redux'
 import { useAuthContext } from '../../context/authContext'
 import { useCallback } from 'react'
+import { ROOT_URL } from '../../config'
 
 function ProductAuctionCard({ product }) {
     const { isLoggedIn } = useAuthContext()
@@ -21,7 +22,7 @@ function ProductAuctionCard({ product }) {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products/${productId}/bidding`,
+                url: `${ROOT_URL}/api/v1/products/${productId}/bidding`,
                 withCredentials: true,
             })
             if (res.data.status === 'success') {
@@ -36,7 +37,7 @@ function ProductAuctionCard({ product }) {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/users/myBidding?product=${productId}`,
+                url: `${ROOT_URL}/api/v1/users/myBidding?product=${productId}`,
                 withCredentials: true,
             })
             if (res.data.status === 'success') {

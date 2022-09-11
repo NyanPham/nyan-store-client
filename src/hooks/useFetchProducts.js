@@ -1,6 +1,8 @@
 import axios from 'axios'
+import { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { ROOT_URL } from '../config'
 import useDebounce from './useDebounce'
 
 export function useFetchProductsFromCollection(collections, collectionName) {
@@ -8,13 +10,10 @@ export function useFetchProductsFromCollection(collections, collectionName) {
     const collectionId = collections.find((category) => category.name === collectionName)?._id
     const limit = 8
 
-    console.log(collectionId)
-
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/products?limit=${limit}`
-            if (collectionId)
-                url = `https://enigmatic-harbor-26816.herokuapp.com/api/v1/collections/${collectionId}/products?limit=${limit}`
+            let url = `${ROOT_URL}/api/v1/products?limit=${limit}`
+            if (collectionId) url = `${ROOT_URL}/api/v1/collections/${collectionId}/products?limit=${limit}`
 
             try {
                 const res = await axios({
@@ -36,42 +35,43 @@ export function useFetchProductsFromCollection(collections, collectionName) {
     return products
 }
 
-export function useFetchProductsFromCategory(cateogryName) {
+export function useFetchProductsFromCategory(categoryName) {
     const [products, setProducts] = useState([])
 
-    useDebounce(
-        async () => {
-            const fetchProducts = async (cateogryName) => {
-                let categoryIds
-                try {
-                    const res = await axios({
-                        method: 'GET',
-                        url: `api/v1/categories?name=${cateogryName}`,
-                    })
-                    if (res.data.status === 'success') {
-                        categoryIds = res.data.data.docs.map((category) => category._id)
-                    }
+    const fetchProducts = useCallback(async (categoryName) => {
+        let categoryIds
+        try {
+            const res = await axios({
+                method: 'GET',
+                url: `${ROOT_URL}/api/v1/categories?name=${categoryName}`,
+            })
 
-                    const responses = await Promise.all(
-                        categoryIds.map(async (categoryId) => {
-                            return await axios({
-                                method: 'GET',
-                                url: `api/v1/categories/${categoryId}/products`,
-                            })
-                        })
-                    )
-
-                    const products = [...responses.flatMap((res) => res.data.data.docs)]
-                    setProducts(products)
-                } catch (err) {
-                    alert(err.response.data.message)
-                }
+            if (res.data.status === 'success') {
+                categoryIds = res.data.data.docs.map((category) => category._id)
             }
 
-            fetchProducts(cateogryName)
+            const responses = await Promise.all(
+                categoryIds.map(async (categoryId) => {
+                    return await axios({
+                        method: 'GET',
+                        url: `${ROOT_URL}/api/v1/categories/${categoryId}/products`,
+                    })
+                })
+            )
+
+            const products = [...responses.flatMap((res) => res.data.data.docs)]
+            setProducts(products)
+        } catch (err) {
+            alert(err.response.data.message)
+        }
+    }, [])
+
+    useDebounce(
+        () => {
+            fetchProducts(categoryName)
         },
-        500,
-        [cateogryName]
+        200,
+        [categoryName]
     )
 
     return products

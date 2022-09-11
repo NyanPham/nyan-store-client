@@ -16,6 +16,7 @@ import { useSideCartContext } from '../context/sideCartContext'
 import { useSelector } from 'react-redux'
 import { useAuthContext } from '../context/authContext'
 import defaultAvatar from '../imgs/default.jpg'
+import { ROOT_URL } from '../config'
 
 const Header = () => {
     const { isLoggedIn, currentUser } = useAuthContext()
@@ -126,11 +127,7 @@ const Header = () => {
                     >
                         <img
                             className="w-full h-full object-cover rounded-full overflow-hidden"
-                            src={
-                                currentUser?.photo
-                                    ? `https://enigmatic-harbor-26816.herokuapp.com/img/users/${currentUser.photo}`
-                                    : defaultAvatar
-                            }
+                            src={currentUser?.photo ? `${ROOT_URL}/img/users/${currentUser.photo}` : defaultAvatar}
                             alt={`${currentUser?.name || 'avatar'}`}
                             crossOrigin="anonymous"
                         />

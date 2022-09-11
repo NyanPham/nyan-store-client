@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 import useAsyncValidateState from '../../hooks/useAsyncValidateState'
 import LoadingWithAlert from '../LoadingWithAlert'
+import { ROOT_URL } from '../../config'
 
 export default function CheckoutButton({ styles }) {
     const { cart } = useSelector((state) => state.cart)
@@ -21,7 +22,7 @@ export default function CheckoutButton({ styles }) {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `https://enigmatic-harbor-26816.herokuapp.com/api/v1/orders/checkout-session`,
+                url: `${ROOT_URL}/api/v1/orders/checkout-session`,
                 data: {
                     items: cart,
                 },
