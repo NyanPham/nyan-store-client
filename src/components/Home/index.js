@@ -38,7 +38,7 @@ const Home = () => {
                     slides={sportSlides}
                 />
             </section>
-            {/* <section className="py-10">
+            <section className="py-10">
                 <GetSliderWithProducts
                     tags={['Footwear', 'sport']}
                     category="Furnitures"
@@ -79,7 +79,7 @@ const Home = () => {
                     navTitle="Men"
                     slides={menSlides}
                 />
-            </section> */}
+            </section>
             <SidebarNavigationDrawer />
         </main>
     )
