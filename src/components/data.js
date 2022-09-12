@@ -20,6 +20,9 @@ import canon3 from '../imgs/canon3.jpg'
 import handsome from '../imgs/handsome.jpg'
 import shoes from '../imgs/shoes.jpg'
 import look from '../imgs/look.jpg'
+import shoesBanner1 from '../imgs/shoes-banner.jpg'
+import shoesBanner2 from '../imgs/shoes-wet.jpg'
+import shoesBanner3 from '../imgs/lying-shoes.jpg'
 
 export const cart_configures = {
     freeShippingThreshold: 850,
@@ -109,6 +112,87 @@ export const heroSlides = [
     },
     {
         image: look,
+        imageStyles: 'mx-auto',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'Express Yourself Instyle',
+            styles: 'text-3xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96',
+        },
+        subtitle: {
+            text: 'Hoodie',
+            styles: 'text-xl text-slate-700 font-medium uppercase mt-3',
+        },
+        text1: {
+            text: 'Best',
+            styles: 'text-lg text-slate-700 font-medium block mt-1',
+        },
+        text2: {
+            text: 'Deal',
+            styles: 'text-lg text-cyan-400 font-medium uppercase block leading-4',
+        },
+        button: {
+            text: 'Learn More',
+            link: '/',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+        },
+    },
+]
+
+export const searchHeroSlides = [
+    {
+        image: shoesBanner1,
+        imageStyles: 'mx-auto',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'Express Yourself Instyle',
+            styles: 'text-3xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96',
+        },
+        subtitle: {
+            text: 'Hoodie',
+            styles: 'text-xl text-slate-700 font-medium uppercase mt-3',
+        },
+        text1: {
+            text: 'Best',
+            styles: 'text-lg text-slate-700 font-medium block mt-1',
+        },
+        text2: {
+            text: 'Deal',
+            styles: 'text-lg text-cyan-400 font-medium uppercase block leading-4',
+        },
+        button: {
+            text: 'Learn More',
+            link: '/',
+            styles: 'bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+        },
+    },
+    {
+        image: shoesBanner2,
+        imageStyles: 'mx-auto',
+        contentStyles: 'top-5 left-5 md:top-10 md:left-20',
+        title: {
+            text: 'Express Yourself Instyle',
+            styles: 'text-3xl lg:text-5xl text-slate-200 font-semibold w-2/3 lg:w-96',
+        },
+        subtitle: {
+            text: 'Hoodie',
+            styles: 'text-xl text-slate-200 font-medium uppercase mt-3',
+        },
+        text1: {
+            text: 'Best',
+            styles: 'text-lg text-slate-200 font-medium block mt-1',
+        },
+        text2: {
+            text: 'Deal',
+            styles: 'text-lg text-cyan-400 font-medium uppercase block leading-4',
+        },
+        button: {
+            text: 'Learn More',
+            link: '/',
+            styles: 'bg-cyan-400 uppercase font-medium tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
+        },
+    },
+    {
+        image: shoesBanner3,
         imageStyles: 'mx-auto',
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {

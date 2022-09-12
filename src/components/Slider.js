@@ -35,7 +35,11 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
                                 direction === 'vertical' && 'flex-shrink-0 w-full self-start max-h-96'
                             }`}
                         >
-                            <img className={slide.imageStyles} src={slide.image} alt={slide.title} />
+                            <img
+                                className={`${slide.imageStyles} w-full h-full object-cover object-center`}
+                                src={slide.image}
+                                alt={slide.title}
+                            />
                             <div className={`absolute ${slide.contentStyles}`}>
                                 {slide.title && <h3 className={slide.title.styles}>{slide.title.text}</h3>}
                                 {slide.subtitle && <h4 className={slide.subtitle.styles}>{slide.subtitle.text}</h4>}

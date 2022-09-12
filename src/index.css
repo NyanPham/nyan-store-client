@@ -200,3 +200,7 @@
 .quantity-controller input[type='number'] {
     -moz-appearance: textfield;
 }
+
+#search-page .swiper {
+    max-height: 350px;
+}
