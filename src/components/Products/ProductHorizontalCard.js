@@ -8,6 +8,7 @@ import { useSideCartContext } from '../../context/sideCartContext'
 import VariantsPicker from './VariantsPicker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { ROOT_URL } from '../../config'
 
 function ProductHorizontalCard(props) {
     const { id, summary, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
@@ -50,8 +51,12 @@ function ProductHorizontalCard(props) {
     return (
         <div className="flex flex-row gap-3 items-center justify-start bg-white relative group p-2 md:p-4 lg:gap-12 border-t border-gray-300/50">
             <Link to={`/products/${slug}`} state={props} className="product-image w-36 h-max flex-shrink-0">
-                <span className="block aspect-29/37 bg-slate-700 mx-auto"></span>
-                {/* <img className="" src={images[0]} alt={name} /> */}
+                <img
+                    className="block aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
+                    src={`${ROOT_URL}/img/products/${firstVariant.images[0]}`}
+                    alt={firstVariant.name}
+                    crossOrigin="anonymous"
+                />
                 {/* <img className="" src={images[1]} alt={name} /> */}
             </Link>
             <div className="product-card-info mt-3 flex-grow-0">

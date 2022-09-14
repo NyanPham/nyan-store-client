@@ -125,7 +125,7 @@ function ProductInfo() {
                                         data-variant-id={variantId}
                                     >
                                         <img
-                                            className="w-20 h-20 bg-green-400 cursor-pointer"
+                                            className="w-20 h-20 bg-green-400 cursor-pointer object-cover object-center"
                                             src={`${ROOT_URL}/img/products/${imgUrl}`}
                                             alt={variantName}
                                             crossOrigin="anonymous"

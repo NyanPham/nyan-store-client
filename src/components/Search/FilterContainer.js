@@ -32,7 +32,7 @@ export default function FilterContainer() {
                 <FontAwesomeIcon className="text-cyan-400" icon={faArrowRight} />
             </button>
             <div
-                className={`w-64 fixed top-0 left-0 z-40 transform transition duration-300 h-screen overflow-auto ${
+                className={`w-64 fixed top-0 left-0 z-40 flex-shrink-0 transform transition duration-300 h-screen overflow-auto ${
                     openSidebar ? 'translate-x-0' : '-translate-x-full'
                 } bg-white md:translate-x-0 md:static md:h-max md:z-10`}
             >
