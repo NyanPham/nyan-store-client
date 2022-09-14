@@ -129,6 +129,13 @@ function VariantsPicker(props) {
         selectedVariantId: selectedVariant._id.toString(),
     })
 
+    useDeepCompareEffect(() => {
+        if (currentVariantId == null || variants.length === 0) return
+
+        setSelectedVariant(getTargetVariantFromProduct(currentVariantId, variants))
+        setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
+    }, [currentVariantId, variants])
+
     return (
         <div className="">
             <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>
@@ -182,7 +189,7 @@ function VariantsPicker(props) {
                         options={firstOptions}
                         currentOption={desiredVariant.option1}
                         styles={
-                            'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm'
+                            'w-8 h-8 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm uppercase'
                         }
                         textHidden={false}
                         handleOptionChange={handleOptionChange}
@@ -195,7 +202,7 @@ function VariantsPicker(props) {
                         options={thirdOptions}
                         currentOption={desiredVariant.option3}
                         styles={
-                            'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm'
+                            'h-7 w-fit px-3 flex items-center justify-center gap-3 text-slate-700 text-sm font-medium bg-slate-100 rounded-sm capitalize'
                         }
                         textHidden={false}
                         handleOptionChange={handleOptionChange}
@@ -238,8 +245,8 @@ function VariantsPicker(props) {
                             isSoldOut ||
                             loading ||
                             (biddingLoading && inAuction) ||
-                            (addedToCart && !isEditing && !inAuction) ||
-                            currentVariantId === selectedVariant._id
+                            (addedToCart && !isEditing && !inAuction)
+                            // || currentVariantId === selectedVariant._id
                         }
                         type="submit"
                     >

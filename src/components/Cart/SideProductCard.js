@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
+import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
 import { updateCart } from '../../redux/actions/cartActions'
 import QuantityController from '../Products/QuantityController'
@@ -44,9 +45,10 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
         <div className={`flex gap-3 py-3 ${!isLast && 'border-b border-gray-700/10'}`}>
             <div className="w-24 flex-shrink-0">
                 <img
-                    src={variant.images[0]}
-                    alt={variant.name}
                     className="bg-gray-400 w-full aspect-29/37 object-center object-cover"
+                    src={`${ROOT_URL}/img/products/${variant.images[0]}`}
+                    alt={variant.name}
+                    crossOrigin="anonymous"
                 />
             </div>
             <div>

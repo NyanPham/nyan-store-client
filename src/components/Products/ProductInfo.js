@@ -18,7 +18,7 @@ import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
 
 const getImagesFromVariants = (variants) => {
-    return variants.flatMap((variant) => {
+    return variants?.flatMap((variant) => {
         return variant.images.map((image) => {
             return {
                 variantId: variant._id,
@@ -39,8 +39,9 @@ function ProductInfo() {
 
     const { message } = useSelector((state) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
-    const [mainImage, setMainImage] = useState(product?.images[0])
-    const images = getImagesFromVariants(product.variants)
+    const [mainImage, setMainImage] = useState(product?.variants[0].images[0])
+    const [selectedVariantId, setSelectedVariantId] = useState(product?.variants[0]._id)
+    const images = getImagesFromVariants(product?.variants)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -50,6 +51,7 @@ function ProductInfo() {
         const selectedVariantImage = images.find((image) => image.variantId === variant._id)
         if (!selectedVariantImage) return
 
+        setSelectedVariantId(variant._id)
         setMainImage(selectedVariantImage.imgUrl)
     }
 
@@ -66,6 +68,10 @@ function ProductInfo() {
         } catch (err) {
             alert(err.respone.data.message)
         }
+    }
+
+    const selectVariant = (variantId) => {
+        setSelectedVariantId(variantId)
     }
 
     useDeepCompareEffect(() => {
@@ -111,21 +117,29 @@ function ProductInfo() {
                             direction="vertical"
                             loop={true}
                         >
-                            {images.map(({ imgUrl, variantId, variantName }, index) => (
-                                <SwiperSlide
-                                    className=" bg-green-400 flex-shrink-1"
-                                    key={`image_${variantId}_${index}`}
-                                    data-variant-id={variantId}
-                                >
-                                    <img className="w-20 h-20 bg-green-400" src={imgUrl} alt={variantName} />
-                                </SwiperSlide>
-                            ))}
+                            {images &&
+                                images.map(({ imgUrl, variantId, variantName }, index) => (
+                                    <SwiperSlide
+                                        className=" bg-green-400 flex-shrink-1"
+                                        key={`image_${variantId}_${index}`}
+                                        data-variant-id={variantId}
+                                    >
+                                        <img
+                                            className="w-20 h-20 bg-green-400 cursor-pointer"
+                                            src={`${ROOT_URL}/img/products/${imgUrl}`}
+                                            alt={variantName}
+                                            crossOrigin="anonymous"
+                                            onClick={() => selectVariant(variantId)}
+                                        />
+                                    </SwiperSlide>
+                                ))}
                         </Swiper>
                         <div className="aspect-square w-full bg-gray-400 relative">
                             <img
-                                className="w-full h-full object-cover object-center"
-                                src={mainImage}
-                                alt={product.name}
+                                className="w-full h-full object-contain object-center"
+                                src={`${ROOT_URL}/img/products/${mainImage}`}
+                                alt={product?.name}
+                                crossOrigin="anonymous"
                             />
                             {isNew && (
                                 <div className="absolute bottom-3 right-3 bg-yellow-400 py-0.5 px-2 text-sm text-white rounded-lg">
@@ -147,24 +161,27 @@ function ProductInfo() {
                     </div>
                 </div>
                 <div className="w-full md:w-1/3">
-                    <VariantsPicker
-                        productId={product._id}
-                        variants={product.variants}
-                        buttonText={'Buy Now'}
-                        formSubmitHandler={formSubmitHandler}
-                        currentBid={false}
-                        nameStyles="text-4xl border-b border-gray-200 w-full pb-3"
-                        priceStyles="border-b border-gray-200 w-full pb-3"
-                        review={{
-                            show: true,
-                            reviews: product.reviews,
-                            ratingsAverage: product.ratingsAverage,
-                            ratingsQuantity: product.ratingsQuantity,
-                        }}
-                        quantityControl={true}
-                        wishlist={true}
-                        onVariantChange={handleVariantChange}
-                    />
+                    {product != null && (
+                        <VariantsPicker
+                            productId={product._id}
+                            variants={product.variants}
+                            buttonText={'Buy Now'}
+                            formSubmitHandler={formSubmitHandler}
+                            currentBid={false}
+                            nameStyles="text-4xl border-b border-gray-200 w-full pb-3"
+                            priceStyles="border-b border-gray-200 w-full pb-3"
+                            review={{
+                                show: true,
+                                reviews: product.reviews,
+                                ratingsAverage: product.ratingsAverage,
+                                ratingsQuantity: product.ratingsQuantity,
+                            }}
+                            quantityControl={true}
+                            wishlist={true}
+                            onVariantChange={handleVariantChange}
+                            currentVariantId={selectedVariantId}
+                        />
+                    )}
                 </div>
             </div>
         </Container>

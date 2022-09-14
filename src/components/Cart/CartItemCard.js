@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import { updateCart } from '../../redux/actions/cartActions'
@@ -50,9 +51,10 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
             <div className="flex gap-3 items-center row-span-3 md:row-span-1 md:col-span-2">
                 <div className="w-24 flex-shrink-0">
                     <img
-                        src={variant.images[0]}
-                        alt={variant.name}
                         className="bg-gray-400 w-full aspect-29/37 object-center object-cover"
+                        src={`${ROOT_URL}/img/products/${variant.images[0]}`}
+                        alt={variant.name}
+                        crossOrigin="anonymous"
                     />
                 </div>
                 <div>

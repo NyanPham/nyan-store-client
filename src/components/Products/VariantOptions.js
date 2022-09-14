@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { COLOR_MAP } from '../data'
 
 function VariantOptions({
@@ -14,13 +15,19 @@ function VariantOptions({
         return currentOption != null ? currentOption : options[0]
     })
 
-    function handleOptionClick(e) {
+    const handleOptionClick = (e) => {
         setSelectOption(e.target.dataset.value)
         handleOptionChange({
             option: e.target.dataset.value,
             orderNum: optionOrderNum,
         })
     }
+
+    useEffect(() => {
+        if (currentOption == null) return
+
+        setSelectOption(currentOption)
+    }, [currentOption])
 
     return (
         <>

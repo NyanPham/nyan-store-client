@@ -21,7 +21,7 @@ export const addToCart = (data) => async (dispatch) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `${ROOT_URL}api/v1/users/addToMyCart`,
+            url: `${ROOT_URL}/api/v1/users/addToMyCart`,
             data,
             withCredentials: true,
         })
@@ -33,10 +33,11 @@ export const addToCart = (data) => async (dispatch) => {
             })
         }
     } catch (err) {
+        console.error(err)
         dispatch({
             type: ACTIONS.CART_ACT_FAIL,
             payload: {
-                error: err.response.data.message,
+                error: err.response?.data?.message,
             },
         })
     }
