@@ -152,12 +152,7 @@ function ProductInfo() {
                         </div>
                     </div>
                     <div className="w-full mt-7">
-                        <ProductDetail
-                            title="Product Detail"
-                            content={
-                                'Hello, this is just an empty string to let you know the size and height, fontsize of this p'
-                            }
-                        />
+                        <ProductDetail title="Product Detail" content={product?.description} />
                     </div>
                 </div>
                 <div className="w-full md:w-1/3">

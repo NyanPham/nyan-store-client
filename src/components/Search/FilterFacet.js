@@ -25,7 +25,7 @@ export default function FilterFacet({ option, optionType, onFacetInput }) {
             />
             <label
                 className={`flex cursor-pointer w-max items-center gap-3 relative before:content-[''] before:inline-block before:w-4 before:h-4 before:border before:border-gray-600 before:bg-slate-200 before:text-center before:align-text-center before:text-cyan-700 before:text-xs before:font-bold
-    ${isChecked ? 'before:bg-cyan-400' : 'before:bg-slate-200'}`}
+    ${isChecked ? 'before:bg-cyan-400' : 'before:bg-slate-200'} ${optionType === 'size' ? 'uppercase' : 'capitalize'}`}
                 htmlFor={option.value.toLowerCase()}
             >
                 <FontAwesomeIcon
@@ -34,7 +34,7 @@ export default function FilterFacet({ option, optionType, onFacetInput }) {
                     }`}
                     icon={faCheck}
                 />
-                {option.value}
+                {option.value.split('-').join(' ')}
             </label>
         </>
     )

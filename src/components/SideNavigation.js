@@ -10,6 +10,7 @@ import {
     faShirt,
     faSocks,
     faEnvelope,
+    faBottleDroplet,
 } from '@fortawesome/free-solid-svg-icons'
 
 const navObjArray = [
@@ -40,6 +41,10 @@ const navObjArray = [
     {
         navName: 'Footwear',
         icon: faSocks,
+    },
+    {
+        navName: 'Bodycare',
+        icon: faBottleDroplet,
     },
 ]
 

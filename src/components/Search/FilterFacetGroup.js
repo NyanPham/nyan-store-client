@@ -4,16 +4,29 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import FilterFacet from './FilterFacet'
 
+const processOptions = (options) => {
+    return [
+        ...options
+            .map((option) => {
+                return { value: option.value?.toLowerCase() }
+            })
+            .filter((option) => option.value != null && option.value !== ''),
+    ]
+}
+
 export default function FilterFacetGroup({ optionType, options, collectOptionsState }) {
+    const processedOptions = processOptions(options)
+    console.log(processedOptions)
     const [openFacet, setOpenFacet] = useState(true)
     const [checkedOptions, setCheckedOptions] = useState(() =>
-        options.reduce((state, option) => {
+        processedOptions.reduce((state, option) => {
             return {
                 ...state,
                 [option.value]: false,
             }
         }, {})
     )
+
     const toggleOpenFacet = () => {
         setOpenFacet((prevOpen) => !prevOpen)
     }

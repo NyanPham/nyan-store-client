@@ -140,6 +140,7 @@ export default function FilterSidebar(props) {
             {Object.entries(facetOptions)
                 .filter(([key, _]) => key !== 'minPrice' && key !== 'maxPrice')
                 .map(([optionType, options], index) => {
+                    console.log(options)
                     return (
                         <FilterFacetGroup
                             key={`${optionType}_${index}`}
