@@ -12,7 +12,7 @@ import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 export default function FilterSidebar(props) {
     const { setData, sortByTerm, categoryId, categoryName, setIsLoading, setMessage, setError, setShowAlert } = props
 
-    const [facetOptions, setFacetOptions] = useState({})
+    const [facetOptions, setFacetOptions] = useState([])
 
     const [filterQuery, setFilterQuery] = useState({
         skip: 0,
@@ -23,13 +23,17 @@ export default function FilterSidebar(props) {
         emptyCategory: true,
         categoryName,
     })
+
     const search = useSelector((state) => state.search)
     const { pathname } = useLocation()
     const allAvailableOptions = {}
-    Object.entries(facetOptions).forEach(([key, value]) => {
-        allAvailableOptions[`all${key.charAt(0).toUpperCase() + key.slice(1)}`] = Object.values(value).map(
-            (value) => value.value
-        )
+    facetOptions.forEach((facetOption) => {
+        const key = Object.keys(facetOption)[0]
+        const values = facetOption[key]
+
+        if (key === 'maxPrice' || key === 'minPrice') return
+
+        allAvailableOptions[`all${key.charAt(0).toUpperCase() + key.slice(1)}`] = values.map((value) => value.value)
     })
 
     const collectOptionsState = useCallback(({ optionType, optionStates }) => {
@@ -93,21 +97,33 @@ export default function FilterSidebar(props) {
 
     useEffect(() => {
         const fetchFilterFacets = async () => {
+            let url = `${ROOT_URL}/api/v1/products/filterFacets`
+            if (categoryId && categoryName.toLowerCase() !== 'all') url = url + `?category=${categoryId}`
+
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `${ROOT_URL}/api/v1/products/filterFacets`,
+                    url,
                 })
 
                 if (res.data.status === 'success') {
-                    setFacetOptions(() =>
-                        res.data.data.facets.reduce((facets, array) => {
+                    setFacetOptions(() => {
+                        return Object.entries(res.data.data.facets[0]).map(([key, value]) => {
                             return {
-                                ...facets,
-                                ...array[0],
+                                [key]: value.filter((value) => value.value != null || typeof value === 'number'),
                             }
-                        }, {})
-                    )
+                        })
+                    })
+
+                    setFilterQuery((prevFilterQuery) => {
+                        const resetFilterQuery = { ...prevFilterQuery }
+                        delete resetFilterQuery['size']
+                        delete resetFilterQuery['color']
+                        delete resetFilterQuery['material']
+                        delete resetFilterQuery['brand']
+
+                        return resetFilterQuery
+                    })
                 }
             } catch (err) {
                 // alert(err.response.data.message)
@@ -116,7 +132,7 @@ export default function FilterSidebar(props) {
         }
 
         fetchFilterFacets()
-    }, [])
+    }, [categoryId, categoryName])
 
     useEffect(() => {
         setFilterQuery((prevFilterQuery) => {
@@ -131,16 +147,22 @@ export default function FilterSidebar(props) {
         })
     }, [sortByTerm, categoryId, search, pathname, categoryName])
 
-    const maxPrice = facetOptions?.maxPrice?.length > 0 ? facetOptions.maxPrice[0].value : 0
-    const minPrice = facetOptions?.minPrice?.length > 0 ? facetOptions.minPrice[0].value : 0
+    const maxPrice = facetOptions?.find((facetOption) => Object.keys(facetOption)[0] === 'maxPrice')?.maxPrice[0]
+    const minPrice = facetOptions?.find((facetOption) => Object.keys(facetOption)[0] === 'minPrice')?.minPrice[0]
+
+    console.log(filterQuery)
 
     return (
         <div className="filter-sidebar pb-7 w-full row-span-6 border border-gray-300">
             <SideNavigation title="Categories" borderColor="border-0" />
-            {Object.entries(facetOptions)
-                .filter(([key, _]) => key !== 'minPrice' && key !== 'maxPrice')
-                .map(([optionType, options], index) => {
-                    console.log(options)
+            {facetOptions
+                ?.filter((facets) => {
+                    const key = Object.keys(facets)[0]
+                    return key !== 'minPrice' && key !== 'maxPrice'
+                })
+                .map((facets, index) => {
+                    const optionType = Object.keys(facets)[0]
+                    const options = facets[optionType]
                     return (
                         <FilterFacetGroup
                             key={`${optionType}_${index}`}
