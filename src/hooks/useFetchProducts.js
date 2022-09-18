@@ -1,78 +1,159 @@
 import axios from 'axios'
-import { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { ROOT_URL } from '../config'
-import useDebounce from './useDebounce'
 
-export function useFetchProductsFromCollection(collections, collectionName) {
-    const [products, setProducts] = useState([])
+const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setProducts, limit, page }) => {
+    let url
     const collectionId = collections.find((category) => category.name === collectionName)?._id
+    if (collectionId) {
+        url = `${ROOT_URL}/api/v1/collections/${collectionId}/products?limit=${limit}&page=${page}`
+    }
+    const successHandler = async (res) => {
+        if (res.data.status === 'success') {
+            setProducts(res.data.data.docs)
+        }
+    }
+
+    return { successHandler, url }
+}
+
+const getCategoryUrlAndSuccessHandler = ({ categoryName, setProducts, limit, page }) => {
+    const url = `${ROOT_URL}/api/v1/categories?name=${categoryName}`
+    const successHandler = async (res) => {
+        let categoryIds
+
+        if (res.data.status === 'success') {
+            categoryIds = res.data.data.docs.map((category) => category._id)
+        }
+
+        const responses = await Promise.all(
+            categoryIds.map(async (categoryId) => {
+                return await axios({
+                    method: 'GET',
+                    url: `${ROOT_URL}/api/v1/categories/${categoryId}/products?limit=${limit}&page=${page}`,
+                })
+            })
+        )
+
+        const products = [...responses.flatMap((res) => res.data.data.docs)]
+        setProducts(products)
+    }
+
+    return { url, successHandler }
+}
+
+export function useFetchProducts(type, props) {
+    const { collections, collectionName, categoryName } = props
+
+    const [products, setProducts] = useState([])
     const limit = 8
+    const page = 1
+
+    let url = `${ROOT_URL}/api/v1/products?limit=${limit}&page=${page}`
+    let successHandler = async () => {}
+    let urlAndHandler = {}
+    if (type === 'collections') {
+        urlAndHandler = getCollectionUrlAndSuccessHandler({
+            collections,
+            collectionName,
+            setProducts,
+            limit,
+            page,
+        })
+    } else if (type === 'category') {
+        urlAndHandler = getCategoryUrlAndSuccessHandler({ categoryName, setProducts, limit, page })
+    }
+
+    url = urlAndHandler.url
+    successHandler = urlAndHandler.successHandler
 
     useEffect(() => {
         const fetchProducts = async () => {
-            let url = `${ROOT_URL}/api/v1/products?limit=${limit}`
-            if (collectionId) url = `${ROOT_URL}/api/v1/collections/${collectionId}/products?limit=${limit}`
-
             try {
                 const res = await axios({
                     method: 'GET',
                     url,
                 })
 
-                if (res.data.status === 'success') {
-                    setProducts(res.data.data.docs)
-                }
+                await successHandler(res)
             } catch (err) {
-                alert(err)
+                alert(err.response.data.message)
             }
         }
 
         fetchProducts()
-    }, [collectionId])
+    }, [url, type])
 
     return products
 }
 
-export function useFetchProductsFromCategory(categoryName) {
-    const [products, setProducts] = useState([])
+// export function useFetchProductsFromCollection(collections, collectionName) {
+//     const [products, setProducts] = useState([])
+//     const collectionId = collections.find((category) => category.name === collectionName)?._id
+//     const limit = 8
+//     const page = 1
 
-    const fetchProducts = useCallback(async (categoryName) => {
-        let categoryIds
-        try {
-            const res = await axios({
-                method: 'GET',
-                url: `${ROOT_URL}/api/v1/categories?name=${categoryName}`,
-            })
+//     useEffect(() => {
+//         const fetchProducts = async () => {
+//             let url = `${ROOT_URL}/api/v1/products?limit=${limit}&page=${page}`
+//             if (collectionId)
+//                 url = `${ROOT_URL}/api/v1/collections/${collectionId}/products?limit=${limit}&page=${page}`
 
-            if (res.data.status === 'success') {
-                categoryIds = res.data.data.docs.map((category) => category._id)
-            }
+//             try {
+//                 const res = await axios({
+//                     method: 'GET',
+//                     url,
+//                 })
 
-            const responses = await Promise.all(
-                categoryIds.map(async (categoryId) => {
-                    return await axios({
-                        method: 'GET',
-                        url: `${ROOT_URL}/api/v1/categories/${categoryId}/products`,
-                    })
-                })
-            )
+//                 if (res.data.status === 'success') {
+//                     setProducts(res.data.data.docs)
+//                 }
+//             } catch (err) {
+//                 alert(err)
+//             }
+//         }
 
-            const products = [...responses.flatMap((res) => res.data.data.docs)]
-            setProducts(products)
-        } catch (err) {
-            alert(err.response.data.message)
-        }
-    }, [])
+//         fetchProducts()
+//     }, [collectionId])
 
-    useDebounce(
-        () => {
-            fetchProducts(categoryName)
-        },
-        200,
-        [categoryName]
-    )
+//     return products
+// }
 
-    return products
-}
+// export function useFetchProductsFromCategory(categoryName) {
+//     const [products, setProducts] = useState([])
+
+//     const fetchProducts = useCallback(async (categoryName) => {
+//         let categoryIds
+//         try {
+//             const res = await axios({
+//                 method: 'GET',
+//                 url: `${ROOT_URL}/api/v1/categories?name=${categoryName}`,
+//             })
+
+//             if (res.data.status === 'success') {
+//                 categoryIds = res.data.data.docs.map((category) => category._id)
+//             }
+
+//             const responses = await Promise.all(
+//                 categoryIds.map(async (categoryId) => {
+//                     return await axios({
+//                         method: 'GET',
+//                         url: `${ROOT_URL}/api/v1/categories/${categoryId}/products`,
+//                     })
+//                 })
+//             )
+
+//             const products = [...responses.flatMap((res) => res.data.data.docs)]
+//             setProducts(products)
+//         } catch (err) {
+//             alert(err.response.data.message)
+//         }
+//     }, [])
+
+//     useEffect(() => {
+//         fetchProducts(categoryName)
+//     }, [categoryName, fetchProducts])
+
+//     return products
+// }

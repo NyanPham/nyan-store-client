@@ -1,14 +1,18 @@
 import React from 'react'
 import { SwiperSlide } from 'swiper/react'
 import { useSelector } from 'react-redux/es/exports'
-import { useFetchProductsFromCollection } from '../../hooks/useFetchProducts'
+import { useFetchProducts } from '../../hooks/useFetchProducts'
 import ProductCard from './ProductCard'
 import ProductShowcase from './ProductShowcase'
 import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 
-function ProductRecommendation({ showRecommendCard = true }) {
-    const collections = useSelector((state) => state.collections)
-    const products = useFetchProductsFromCollection(collections, 'New Arrival')
+function ProductRecommendation({ showRecommendCard = true, category, collections, type = 'collections' }) {
+    const allCollections = useSelector((state) => state.collections)
+    const products = useFetchProducts(type, {
+        collections: allCollections,
+        collectionName: 'New Arrival',
+        categoryName: category?.name,
+    })
 
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>

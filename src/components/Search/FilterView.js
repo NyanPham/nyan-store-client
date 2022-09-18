@@ -68,7 +68,8 @@ export default function FilterView(props) {
                     setShowAlert={setShowAlert}
                     inContainer={true}
                 />
-                {pageNumbers && (
+
+                {pageNumbers && pageNumbers.length > 1 && (
                     <div className="mx-auto flex flex-row col-span-full mt-7">
                         <button
                             className="rounded-full h-10 w-10 bg-white text-cyan-400 border border-slate-700 hover:bg-cyan-400 hover:text-white transition duration-200"

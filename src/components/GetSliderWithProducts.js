@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFetchProductsFromCategory } from '../hooks/useFetchProducts'
+import { useFetchProducts } from '../hooks/useFetchProducts'
 import SliderWithProduct from './SliderWithProduct'
 
 function GetSliderWithProducts({
@@ -13,7 +13,7 @@ function GetSliderWithProducts({
     caretColor,
     slides,
 }) {
-    const products = useFetchProductsFromCategory(category)
+    const products = useFetchProducts('category', { categoryName: category })
 
     return (
         <SliderWithProduct

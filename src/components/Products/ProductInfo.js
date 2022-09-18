@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
 import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
+import { useCallback } from 'react'
 
 const getImagesFromVariants = (variants) => {
     return variants?.flatMap((variant) => {
@@ -30,13 +31,9 @@ const getImagesFromVariants = (variants) => {
     })
 }
 
-function ProductInfo() {
+function ProductInfo({ product, setProduct }) {
     const { isLoggedIn } = useAuthContext()
     const { slug } = useParams()
-    const location = useLocation()
-    const [product, setProduct] = useState(() => {
-        return location.state
-    })
 
     const { message } = useSelector((state) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
@@ -58,22 +55,25 @@ function ProductInfo() {
         setMainImage(selectedVariantImage.imgUrl)
     }
 
-    const catchProduct = async (slug) => {
-        try {
-            const res = await axios({
-                method: 'GET',
-                url: `${ROOT_URL}/api/v1/products/slug/${slug}`,
-                withCredentials: true,
-            })
-            if (res.data.status === 'success') {
-                const fetchedProduct = res.data.data.doc
-                setProduct(fetchedProduct)
-                setSelectedVariantId(fetchedProduct.variants[0]._id)
+    const catchProduct = useCallback(
+        async (slug) => {
+            try {
+                const res = await axios({
+                    method: 'GET',
+                    url: `${ROOT_URL}/api/v1/products/slug/${slug}`,
+                    withCredentials: true,
+                })
+                if (res.data.status === 'success') {
+                    const fetchedProduct = res.data.data.doc
+                    setProduct(fetchedProduct)
+                    setSelectedVariantId(fetchedProduct.variants[0]._id)
+                }
+            } catch (err) {
+                alert(err.respone.data.message)
             }
-        } catch (err) {
-            alert(err.respone.data.message)
-        }
-    }
+        },
+        [setProduct]
+    )
 
     const selectVariant = (variantId) => {
         setSelectedVariantId(variantId)
@@ -81,7 +81,7 @@ function ProductInfo() {
 
     useEffect(() => {
         catchProduct(slug)
-    }, [slug])
+    }, [slug, catchProduct])
 
     useEffect(() => {
         if (!message || message !== 'success') return
