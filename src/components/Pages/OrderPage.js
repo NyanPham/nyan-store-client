@@ -41,10 +41,10 @@ export default function OrderPage() {
 
     return (
         <>
-            <section className="flex-grow pb-12">
+            <section className="flex-grow pb-12 w-full">
                 <h2 className="text-cyan-400 text-3xl font-semibold mt-10 text-center">Orders</h2>
                 {orders && orders.length > 0 ? (
-                    <div className="grid grid-cols-5">
+                    <div className="w-full mx-auto mt-7 flex flex-col items-center justify-center md:w-1/2 ">
                         {orders.map((order, index) => (
                             <OrderCard key={`order_item_${index}`} order={order} />
                         ))}
