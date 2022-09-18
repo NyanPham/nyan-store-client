@@ -9,13 +9,13 @@ import ProductCard from './../Products/ProductCard'
 const getViewGrid = (viewTerm) => {
     switch (viewTerm) {
         case 'loose':
-            return 'grid-cols-2 lg:grid-cols-3 gap-5 p-5 auto-rows-min'
+            return 'grid grid-cols-2 lg:grid-cols-3 gap-5 p-5 auto-rows-min'
         case 'dense':
-            return 'grid-cols-5 gap-2 p-2 auto-rows-min'
+            return 'grid grid-cols-5 gap-2 p-2 auto-rows-min'
         case 'list':
-            return 'grid-cols-1'
+            return 'flex flex-col'
         default:
-            return 'grid-cols-3 auto-rows-min'
+            return 'grid grid-cols-3 auto-rows-min'
     }
 }
 
@@ -39,7 +39,7 @@ export default function FilterView(props) {
 
     return (
         <>
-            <div className={`filter-view w-full h-full grid ${viewGrid} bg-slate-200 relative`}>
+            <div className={`filter-view w-full h-full ${viewGrid} bg-slate-200 relative`}>
                 {products &&
                     viewBy !== 'list' &&
                     products.map((product, index) => (
