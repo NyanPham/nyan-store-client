@@ -6,6 +6,7 @@ import { useAuthContext } from '../../context/authContext'
 import axios from 'axios'
 import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
+import AdminMainPanel from '../Admin/AdminMainPanel'
 
 export default function MyAccount() {
     const { currentUser, authLogin } = useAuthContext()
@@ -239,13 +240,7 @@ export default function MyAccount() {
                     </button>
                 </form>
                 {/* For Admin */}
-                <form
-                    className={`absolute top-0 left-1/2 -translate-x-1/2 form w-3/4 p-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
-                        formShow === 'admin' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                    }`}
-                    data-user-update="admin"
-                    onSubmit={handleUserUpdate}
-                ></form>
+                <AdminMainPanel formShow={formShow} handleUserUpdate={handleUserUpdate} />
             </div>
             <LoadingWithAlert
                 loading={isLoading}
