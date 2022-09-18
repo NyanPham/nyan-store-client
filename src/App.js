@@ -25,6 +25,7 @@ import axios from 'axios'
 import { configure } from 'axios-hooks'
 import LoadingWithAlert from './components/LoadingWithAlert'
 import useScrollToTop from './hooks/useScrollToTop'
+import OrderPage from './components/Pages/OrderPage'
 
 const instance = axios.create({
     withCredentials: true,
@@ -111,6 +112,16 @@ function App() {
                             <>
                                 <Header />
                                 <WishlistPage />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/myOrders"
+                        element={
+                            <>
+                                <Header />
+                                <OrderPage />
                                 <Footer />
                             </>
                         }
