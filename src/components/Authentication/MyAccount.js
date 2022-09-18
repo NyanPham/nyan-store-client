@@ -19,8 +19,6 @@ export default function MyAccount() {
     const [showAlert, setShowAlert] = useState(false)
     const photoRef = useRef()
 
-    console.log(currentUser)
-
     const backgroundStyles = {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
@@ -109,10 +107,21 @@ export default function MyAccount() {
                 >
                     <span className="">Password</span>
                 </li>
+                {currentUser?.role === 'admin' && (
+                    <li
+                        className={`cursor-pointer p-2 rounded-lg text-white flex-grow transition transform duration-200 ${
+                            formShow === 'admin'
+                                ? 'bg-cyan-400 text-semibold'
+                                : 'bg-slate-700/30 hover:bg-slate-500/20 active:bg-slate-700/30 active:ring active:ring-cyan-400 active-ring-offset-2 '
+                        }`}
+                        onClick={() => setFormShow('admin')}
+                    >
+                        <span className="">Admin</span>
+                    </li>
+                )}
             </ul>
             <div className="relative w-full">
                 {/* For email and name */}
-
                 <form
                     className={`form w-3/4 p-7 mt-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
                         formShow === 'data' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -120,9 +129,6 @@ export default function MyAccount() {
                     data-user-update="data"
                     onSubmit={handleUserUpdate}
                 >
-                    {/* <h5 className="text-slate-600 text-lg font-normal">
-                    You can only update either email or password at a time
-                </h5> */}
                     <div className="form-group">
                         <label className="form-label" htmlFor="name">
                             Username:
@@ -232,6 +238,14 @@ export default function MyAccount() {
                         Update Password
                     </button>
                 </form>
+                {/* For Admin */}
+                <form
+                    className={`absolute top-0 left-1/2 -translate-x-1/2 form w-3/4 p-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
+                        formShow === 'admin' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                    }`}
+                    data-user-update="admin"
+                    onSubmit={handleUserUpdate}
+                ></form>
             </div>
             <LoadingWithAlert
                 loading={isLoading}
