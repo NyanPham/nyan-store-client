@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Signup from './components/Authentication/Signup'
 import Header from './components/Header'
 import Home from './components/Home'
@@ -24,6 +24,7 @@ import WishlistPage from './components/Pages/WishlistPage'
 import axios from 'axios'
 import { configure } from 'axios-hooks'
 import LoadingWithAlert from './components/LoadingWithAlert'
+import useScrollToTop from './hooks/useScrollToTop'
 
 const instance = axios.create({
     withCredentials: true,
@@ -37,6 +38,8 @@ function App() {
     const { loading, message, error } = useSelector((state) => state.cart)
     const [showAlert, setShowAlert] = useState(false)
     const dispatch = useDispatch()
+    const { pathname } = useLocation()
+    useScrollToTop(pathname)
 
     dispatch(fetchCollections())
     dispatch(fetchCategories())
