@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { COLOR_MAP } from '../data'
+import { COLOR_MAP } from '../../config'
 
 function VariantOptions({
     options,
@@ -57,7 +57,7 @@ function VariantOptions({
 
 function Option({ option, configures, handleClick, isSelected, optionOrderNum }) {
     const { styles, textHidden } = configures
-    const color = COLOR_MAP[option?.toLowerCase()]
+    const color = COLOR_MAP[option?.toLowerCase().split('-').join('')]
 
     return (
         <>

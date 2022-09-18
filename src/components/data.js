@@ -24,39 +24,6 @@ import shoesBanner1 from '../imgs/shoes-banner.jpg'
 import shoesBanner2 from '../imgs/shoes-wet.jpg'
 import shoesBanner3 from '../imgs/lying-shoes.jpg'
 
-export const cart_configures = {
-    freeShippingThreshold: 850,
-}
-
-export const COLOR_MAP = {
-    green: 'bg-green-500',
-    red: 'bg-red-500',
-    black: 'bg-gray-900',
-    white: 'bg-white',
-    blue: 'bg-blue-500',
-    purple: 'bg-purple-500',
-}
-
-export const OPTION_TYPES_MAP = {
-    color: [
-        'green',
-        'red',
-        'black',
-        'white',
-        'purple',
-        'blue',
-        'cyan',
-        'yellow',
-        'gray',
-        'slate',
-        'pink',
-        'orange',
-        'sky',
-    ],
-    size: ['XXS', 'XS', 'SM', 'M', 'L', 'XXL', 'XXXl'],
-    material: ['rubber', 'fabric', 'fiber'],
-}
-
 export const heroSlides = [
     {
         image: handsome,

@@ -187,9 +187,6 @@
     pointer-events: none;
 }
 
-.product-images .swiper-slide {
-    flex-shrink: 1;
-}
 
 .quantity-controller input[type='number']::-webkit-outer-spin-button,
 .quantity-controller input[type='number']::-webkit-inner-spin-button {

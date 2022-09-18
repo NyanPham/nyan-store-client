@@ -109,24 +109,24 @@ function ProductInfo({ product, setProduct }) {
                 <div className="flex flex-col w-full md:w-1/2">
                     <div className="flex product-images max-h-96 gap-3">
                         <Swiper
-                            className="flex-shrink-1 flex-grow-0 hidden md:flex"
+                            className="flex-shrink-1 flex-grow-0 hidden md:flex select-none"
                             spaceBetween={15}
                             slidesPerView={3}
                             modules={[Navigation]}
-                            navigation
+                            navigation={images && images.length >= 3}
                             direction="vertical"
-                            loop={true}
+                            loop={images && images.length >= 3}
                         >
                             {images &&
                                 images.map(({ imgUrl, variantId, variantName }, index) => (
                                     <SwiperSlide
-                                        className=" bg-green-400 flex-shrink-1 w-20 h-20"
+                                        className=" flex-shrink-1 w-20 h-20"
                                         key={`image_${variantId}_${index}`}
                                         data-variant-id={variantId}
                                     >
                                         {imgUrl ? (
                                             <img
-                                                className="w-full h-full bg-green-400 cursor-pointer object-cover object-center"
+                                                className="w-full h-full cursor-pointer object-cover object-center"
                                                 src={`${ROOT_URL}/img/products/${imgUrl}`}
                                                 alt={variantName}
                                                 crossOrigin="anonymous"
@@ -137,6 +137,13 @@ function ProductInfo({ product, setProduct }) {
                                             <Skeleton />
                                         )}
                                     </SwiperSlide>
+                                ))}
+                            {images.length < 3 &&
+                                Array.from(Array(3 - images.length)).map((_, index) => (
+                                    <SwiperSlide
+                                        className="bg-transparent flex-shrink-1 w-20 h-20"
+                                        key={`image_empty_${index}`}
+                                    ></SwiperSlide>
                                 ))}
                         </Swiper>
                         <div className="aspect-square w-full bg-gray-400 relative">

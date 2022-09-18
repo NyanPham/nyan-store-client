@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import CheckoutButton from '../Checkout/CheckoutButton'
-import { cart_configures } from '../data'
+import { cart_configures } from '../../config'
 
 const getInstruction = (fraction) => {
     let percent = fraction
