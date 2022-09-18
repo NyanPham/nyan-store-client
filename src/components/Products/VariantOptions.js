@@ -32,9 +32,9 @@ function VariantOptions({
     return (
         <>
             {options[0] && (
-                <div className="w-full flex flex-col flex-wrap mt-3">
+                <div className="w-full flex flex-col mt-3">
                     <h3 className="form-label">{optionType}</h3>
-                    <div className="flex mt-1 gap-2 w-full">
+                    <div className="flex mt-1 gap-2 w-full flex-wrap ">
                         {options.map((option, index) => (
                             <Option
                                 key={`option_${option}_${index}`}

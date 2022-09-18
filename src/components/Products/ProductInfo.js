@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import VariantsPicker from './VariantsPicker'
 import Container from '../Container'
 import { useAuthContext } from '../../context/authContext'
@@ -118,18 +120,22 @@ function ProductInfo() {
                             {images &&
                                 images.map(({ imgUrl, variantId, variantName }, index) => (
                                     <SwiperSlide
-                                        className=" bg-green-400 flex-shrink-1"
+                                        className=" bg-green-400 flex-shrink-1 w-20 h-20"
                                         key={`image_${variantId}_${index}`}
                                         data-variant-id={variantId}
                                     >
-                                        <img
-                                            className="w-20 h-20 bg-green-400 cursor-pointer object-cover object-center"
-                                            src={`${ROOT_URL}/img/products/${imgUrl}`}
-                                            alt={variantName}
-                                            crossOrigin="anonymous"
-                                            loading="lazy"
-                                            onClick={() => selectVariant(variantId)}
-                                        />
+                                        {imgUrl ? (
+                                            <img
+                                                className="w-full h-full bg-green-400 cursor-pointer object-cover object-center"
+                                                src={`${ROOT_URL}/img/products/${imgUrl}`}
+                                                alt={variantName}
+                                                crossOrigin="anonymous"
+                                                loading="lazy"
+                                                onClick={() => selectVariant(variantId)}
+                                            />
+                                        ) : (
+                                            <Skeleton />
+                                        )}
                                     </SwiperSlide>
                                 ))}
                         </Swiper>

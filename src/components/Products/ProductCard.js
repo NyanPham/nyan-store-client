@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 import { useDispatch, useSelector } from 'react-redux'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
 import { useSideCartContext } from '../../context/sideCartContext'
 import VariantsPicker from './VariantsPicker'
@@ -54,12 +56,18 @@ export default function ProductCard(props) {
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
             <Link to={`/products/${slug}`} state={props} className="product-image w-full h-fit">
                 {/* <span className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto"></span> */}
-                <img
-                    className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
-                    src={`${ROOT_URL}/img/products/${firstVariant.images[0]}`}
-                    alt={firstVariant.name}
-                    crossOrigin="anonymous"
-                />
+                {firstVariant ? (
+                    <img
+                        className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
+                        src={`${ROOT_URL}/img/products/${firstVariant.images[0]}`}
+                        alt={firstVariant.name}
+                        crossOrigin="anonymous"
+                        loading="lazy"
+                    />
+                ) : (
+                    <Skeleton />
+                )}
+
                 {/* <img className="" src={images[1]} alt={name} /> */}
             </Link>
             <div className="product-card-info mt-3">

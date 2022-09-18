@@ -15,10 +15,6 @@ function GetSliderWithProducts({
 }) {
     const products = useFetchProductsFromCategory(category)
 
-    if (category === 'Footwear') {
-        console.log(products)
-    }
-
     return (
         <SliderWithProduct
             slides={slides}

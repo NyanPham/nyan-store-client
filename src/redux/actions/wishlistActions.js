@@ -38,25 +38,27 @@ export const addWishlist = (productId) => {
 }
 
 export const removeWishlist = (wishlist, productId) => {
-    const newWishlist = wishlist.filter((item) => item.item._id !== productId)
+    console.log(productId)
 
     return async (dispatch) => {
         try {
-            await axios({
-                method: 'DELETE',
-                url: `${ROOT_URL}/api/v1/users/myWishlist`,
+            const res = await axios({
+                method: 'PATCH',
+                url: `${ROOT_URL}/api/v1/users/removeWishlist`,
                 data: {
-                    wishlist,
                     product: productId,
                 },
                 withCredentials: true,
             })
-            dispatch({
-                type: ACTIONS.GET_WISHLIST,
-                payload: {
-                    wishlist: newWishlist,
-                },
-            })
+
+            if (res.data.status === 'success') {
+                dispatch({
+                    type: ACTIONS.GET_WISHLIST,
+                    payload: {
+                        wishlist: res.data.data.wishlist,
+                    },
+                })
+            }
         } catch (err) {
             return {
                 type: ACTIONS.MAINTAIN_WISHLIST,
