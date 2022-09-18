@@ -16,7 +16,7 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
 
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>
-            <div className="flex flex-col items-center justify-center w-full h-full bg-cyan-500 gap-4 px-7">
+            <div className="flex flex-col items-center justify-center w-full h-full bg-cyan-500 gap-4 px-7 max-w-xs">
                 <h2 className="text-2xl font-semibold text-white uppercase">Recommend for you</h2>
                 <span className="text-base text-white font-normal align-baseline">By</span>
                 <img src={nyanLogoWhite} alt="Nyan Logo" loading="lazy" />
