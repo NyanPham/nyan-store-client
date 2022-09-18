@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 
 const getTargetVariantFromProduct = (currentVariantId, variants) => {
     return currentVariantId != null
-        ? variants.find((variant) => variant._id.toString() === currentVariantId)
+        ? variants.find((variant) => variant?._id.toString() === currentVariantId)
         : variants[0]
 }
 
@@ -126,7 +126,7 @@ function VariantsPicker(props) {
         loading,
         inAuction,
         currentVariantId,
-        selectedVariantId: selectedVariant._id.toString(),
+        selectedVariantId: selectedVariant?._id.toString(),
     })
 
     useDeepCompareEffect(() => {

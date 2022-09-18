@@ -39,6 +39,7 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
                                 className={`${slide.imageStyles} w-full h-full object-cover object-center`}
                                 src={slide.image}
                                 alt={slide.title}
+                                loading="lazy"
                             />
                             <div className={`absolute ${slide.contentStyles}`}>
                                 {slide.title && <h3 className={slide.title.styles}>{slide.title.text}</h3>}

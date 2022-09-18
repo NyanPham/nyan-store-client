@@ -48,7 +48,9 @@ function ProductInfo() {
     const isNew = new Date(Date.now() - new Date(product?.createdAt)).getHours() < 24 * 1
 
     const handleVariantChange = (variant) => {
-        const selectedVariantImage = images.find((image) => image.variantId === variant._id)
+        if (variant == null) return
+
+        const selectedVariantImage = images.find((image) => image?.variantId === variant._id)
         if (!selectedVariantImage) return
 
         setSelectedVariantId(variant._id)
@@ -63,7 +65,9 @@ function ProductInfo() {
                 withCredentials: true,
             })
             if (res.data.status === 'success') {
-                setProduct(res.data.data.doc)
+                const fetchedProduct = res.data.data.doc
+                setProduct(fetchedProduct)
+                setSelectedVariantId(fetchedProduct.variants[0]._id)
             }
         } catch (err) {
             alert(err.respone.data.message)
@@ -73,11 +77,6 @@ function ProductInfo() {
     const selectVariant = (variantId) => {
         setSelectedVariantId(variantId)
     }
-
-    useDeepCompareEffect(() => {
-        if (product != null) return
-        catchProduct(slug)
-    }, [product])
 
     useEffect(() => {
         catchProduct(slug)
@@ -129,6 +128,7 @@ function ProductInfo() {
                                             src={`${ROOT_URL}/img/products/${imgUrl}`}
                                             alt={variantName}
                                             crossOrigin="anonymous"
+                                            loading="lazy"
                                             onClick={() => selectVariant(variantId)}
                                         />
                                     </SwiperSlide>
@@ -139,6 +139,7 @@ function ProductInfo() {
                                 className="w-full h-full object-contain object-center"
                                 src={`${ROOT_URL}/img/products/${mainImage}`}
                                 alt={product?.name}
+                                loading="lazy"
                                 crossOrigin="anonymous"
                             />
                             {isNew && (

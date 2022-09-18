@@ -49,6 +49,7 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
                     src={`${ROOT_URL}/img/products/${variant.images[0]}`}
                     alt={variant.name}
                     crossOrigin="anonymous"
+                    loading="lazy"
                 />
             </div>
             <div>

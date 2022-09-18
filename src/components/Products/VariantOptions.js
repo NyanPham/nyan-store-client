@@ -32,7 +32,7 @@ function VariantOptions({
     return (
         <>
             {options[0] && (
-                <div className="w-full flex flex-col mt-3">
+                <div className="w-full flex flex-col flex-wrap mt-3">
                     <h3 className="form-label">{optionType}</h3>
                     <div className="flex mt-1 gap-2 w-full">
                         {options.map((option, index) => (
@@ -73,8 +73,10 @@ function Option({ option, configures, handleClick, isSelected, optionOrderNum })
                         data-value={option}
                         onClick={handleClick}
                     >
-                        {!textHidden && option}
-                        {textHidden && <span className="absolute top-full opacity-0">{option}</span>}
+                        {!textHidden && option.split('-').join(' ')}
+                        {textHidden && (
+                            <span className="absolute top-full opacity-0">{option.split('-').join(' ')}</span>
+                        )}
                     </label>
                 </>
             )}

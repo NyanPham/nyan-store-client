@@ -33,6 +33,7 @@ function SliderWithPreview() {
                                 className="h-full w-full object-cover object-center"
                                 src={slide.image}
                                 alt={slide.title}
+                                loading="lazy"
                             />
                         </div>
                     ))}

@@ -15,11 +15,23 @@ export default function FilterContainer() {
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
     const [showAlert, setShowAlert] = useState(false)
+    const [page, setPage] = useState(1)
+    const limit = 6
 
     const [openSidebar, setOpenSidebar] = useState(false)
     const { categoryName } = useParams()
     const categories = useSelector((state) => state.categories)
     const categoryId = categories.find((category) => category.name === categoryName)?._id
+
+    const pageCount = Math.ceil(data?.results / limit)
+    const pageNumbers = pageCount ? Array.from(Array(pageCount).keys()).map((count) => count + 1) : null
+
+    const onPaginationClick = (pageNum) => {
+        if (pageNum > pageCount) return setPage(pageCount)
+        if (pageNum <= 0) return setPage(1)
+
+        setPage(pageNum)
+    }
 
     return (
         <div className="filter-grid flex flex-row">
@@ -45,6 +57,7 @@ export default function FilterContainer() {
                     setMessage={setMessage}
                     setError={setError}
                     setShowAlert={setShowAlert}
+                    pagination={{ page, limit, setPage }}
                 />
             </div>
             <div className="flex flex-col flex-grow bg-slate-200">
@@ -62,6 +75,7 @@ export default function FilterContainer() {
                     message={message}
                     showAlert={showAlert}
                     setShowAlert={setShowAlert}
+                    pagination={{ page, pageNumbers, onPaginationClick }}
                 />
             </div>
             <span

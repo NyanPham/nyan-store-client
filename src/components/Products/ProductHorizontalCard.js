@@ -56,6 +56,7 @@ function ProductHorizontalCard(props) {
                     src={`${ROOT_URL}/img/products/${firstVariant.images[0]}`}
                     alt={firstVariant.name}
                     crossOrigin="anonymous"
+                    loading="lazy"
                 />
                 {/* <img className="" src={images[1]} alt={name} /> */}
             </Link>

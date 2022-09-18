@@ -10,13 +10,24 @@ import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
 export default function FilterSidebar(props) {
-    const { setData, sortByTerm, categoryId, categoryName, setIsLoading, setMessage, setError, setShowAlert } = props
+    const {
+        setData,
+        sortByTerm,
+        categoryId,
+        categoryName,
+        setIsLoading,
+        setMessage,
+        setError,
+        setShowAlert,
+        pagination,
+    } = props
+    const { page, limit, setPage } = pagination
 
     const [facetOptions, setFacetOptions] = useState([])
 
     const [filterQuery, setFilterQuery] = useState({
-        skip: 0,
-        limit: 15,
+        page: page,
+        limit: limit,
         sortByTerm,
         categoryId,
         searchTerm: '',
@@ -124,6 +135,8 @@ export default function FilterSidebar(props) {
 
                         return resetFilterQuery
                     })
+
+                    setPage(1)
                 }
             } catch (err) {
                 // alert(err.response.data.message)
@@ -132,7 +145,7 @@ export default function FilterSidebar(props) {
         }
 
         fetchFilterFacets()
-    }, [categoryId, categoryName])
+    }, [categoryId, categoryName, setPage])
 
     useEffect(() => {
         setFilterQuery((prevFilterQuery) => {
@@ -147,10 +160,18 @@ export default function FilterSidebar(props) {
         })
     }, [sortByTerm, categoryId, search, pathname, categoryName])
 
+    useEffect(() => {
+        setFilterQuery((prevFilterQuery) => {
+            return {
+                ...prevFilterQuery,
+                page,
+                limit,
+            }
+        })
+    }, [page, limit])
+
     const maxPrice = facetOptions?.find((facetOption) => Object.keys(facetOption)[0] === 'maxPrice')?.maxPrice[0]
     const minPrice = facetOptions?.find((facetOption) => Object.keys(facetOption)[0] === 'minPrice')?.minPrice[0]
-
-    console.log(filterQuery)
 
     return (
         <div className="filter-sidebar pb-7 w-full row-span-6 border border-gray-300">
