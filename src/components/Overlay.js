@@ -3,8 +3,7 @@ import React from 'react'
 export default function Overlay({ children, closeModal, childRef }) {
     const handleCloseModal = (e) => {
         if (childRef.current.contains(e.target)) return
-
-        closeModal()
+        if (typeof closeModal === 'function') return closeModal()
     }
 
     return (
