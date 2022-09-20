@@ -18,7 +18,7 @@ function ProductAuctionCard({ product }) {
         try {
             const res = await axios({
                 method: 'GET',
-                url: `${ROOT_URL}/api/v1/products/${productId}/bidding`,
+                url: `${ROOT_URL}/api/v1/products/${productId}/biddings`,
                 withCredentials: true,
             })
             if (res.data.status === 'success') {

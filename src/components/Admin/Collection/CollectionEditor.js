@@ -6,7 +6,7 @@ import { ROOT_URL } from '../../../config'
 import getInputInitialValue from '../../../utils/getInputInitialValue'
 import Overlay from '../../Overlay'
 
-const createInitialState = (configEntries, isAddForm, categoryToShow) => {
+const createInitialState = (configEntries, isAddForm, collectionToShow) => {
     if (isAddForm) {
         return configEntries.reduce((state, input) => {
             const [key, value] = input
@@ -19,19 +19,20 @@ const createInitialState = (configEntries, isAddForm, categoryToShow) => {
         }, {})
     }
 
-    const filteredCategoryToShow = {}
+    const filteredCollectionConfig = {}
     configEntries.forEach(([key, _]) => {
-        filteredCategoryToShow[key] = categoryToShow[key]
+        filteredCollectionConfig[key] = collectionToShow[key]
     })
 
-    return filteredCategoryToShow
+    return filteredCollectionConfig
 }
 
-export default function CategoryEditor({ categoryId, categories, isAddForm, closeModal, config }) {
-    const categoryToShow = categories.find((category) => category._id === categoryId)
+export default function CollectionEditor({ collectionId, collections, isAddForm, closeModal, config }) {
+    console.log(collectionId, collections)
+    const collectionToShow = collections.find((collection) => collection._id === collectionId)
     const ref = useRef()
     const configEntries = Object.entries(config)
-    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, categoryToShow))
+    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, collectionToShow))
     const [isLoading, setIsLoading] = useState(false)
 
     const hanldeInputChange = (e) => {
@@ -44,8 +45,8 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
     }
 
     const handleDataSubmit = async (method) => {
-        let url = `${ROOT_URL}/api/v1/categories`
-        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/categories/${categoryToShow._id}`
+        let url = `${ROOT_URL}/api/v1/collections`
+        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/collections/${collectionToShow._id}`
         const axiosConfig = {
             method,
             url,
@@ -67,7 +68,7 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
         }
 
         if (method === 'DELETE') {
-            const isConfirmed = window.confirm(`Are you sure to delete the ${categoryToShow.name} category?`)
+            const isConfirmed = window.confirm(`Are you sure to delete the ${collectionToShow.name} category?`)
             if (!isConfirmed) return
         }
 
@@ -76,7 +77,7 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
             const res = await axios(axiosConfig)
 
             if (res.data.status === 'success') {
-                alert(`Category named '${inputData.name}' has been ${successText}.`)
+                alert(`Collection named '${inputData.name}' has been ${successText}.`)
                 setTimeout(closeModal, 500)
             }
         } catch (err) {
@@ -107,22 +108,22 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
         <>
             <Overlay childRef={ref}>
                 <div ref={ref} className="admin-editor-form">
-                    {categoryToShow && !isAddForm && (
+                    {collectionToShow && !isAddForm && (
                         <>
                             <div className="flex justify-between">
-                                <h3 className="admin-editor-form-title">{categoryToShow.name}</h3>
+                                <h3 className="admin-editor-form-title">{collectionToShow.name}</h3>
                                 <FontAwesomeIcon
                                     icon={faTrash}
                                     className="text-red-400 transition hover:text-red-300 active:text-red-500 cursor-pointer"
                                     onClick={() => handleDataSubmit('DELETE')}
                                 />
                             </div>
-                            <div className="text-slate-700 font-semibold mt-2">ID: {categoryToShow._id}</div>
+                            <div className="text-slate-700 font-semibold mt-2">ID: {collectionToShow._id}</div>
                         </>
                     )}
                     {isAddForm && (
                         <>
-                            <h3 className="admin-editor-form-title">Create Category</h3>
+                            <h3 className="admin-editor-form-title">Create Collection</h3>
                         </>
                     )}
                     {inputElems}

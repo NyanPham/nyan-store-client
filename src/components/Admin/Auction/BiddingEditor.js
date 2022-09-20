@@ -6,7 +6,7 @@ import { ROOT_URL } from '../../../config'
 import getInputInitialValue from '../../../utils/getInputInitialValue'
 import Overlay from '../../Overlay'
 
-const createInitialState = (configEntries, isAddForm, categoryToShow) => {
+const createInitialState = (configEntries, isAddForm, biddingToShow) => {
     if (isAddForm) {
         return configEntries.reduce((state, input) => {
             const [key, value] = input
@@ -19,19 +19,19 @@ const createInitialState = (configEntries, isAddForm, categoryToShow) => {
         }, {})
     }
 
-    const filteredCategoryToShow = {}
+    const filterBiddingConfig = {}
     configEntries.forEach(([key, _]) => {
-        filteredCategoryToShow[key] = categoryToShow[key]
+        filterBiddingConfig[key] = biddingToShow[key]
     })
 
-    return filteredCategoryToShow
+    return filterBiddingConfig
 }
 
-export default function CategoryEditor({ categoryId, categories, isAddForm, closeModal, config }) {
-    const categoryToShow = categories.find((category) => category._id === categoryId)
+export default function BiddingEditor({ biddingId, biddings, isAddForm, closeModal, config }) {
+    const biddingToShow = biddings.find((bidding) => bidding._id === biddingId)
     const ref = useRef()
     const configEntries = Object.entries(config)
-    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, categoryToShow))
+    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, biddingToShow))
     const [isLoading, setIsLoading] = useState(false)
 
     const hanldeInputChange = (e) => {
@@ -44,15 +44,22 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
     }
 
     const handleDataSubmit = async (method) => {
-        let url = `${ROOT_URL}/api/v1/categories`
-        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/categories/${categoryToShow._id}`
+        let url = `${ROOT_URL}/api/v1/biddings`
+        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/biddings/${biddingToShow._id}`
         const axiosConfig = {
             method,
             url,
             withCredentials: true,
         }
 
-        if (method !== 'DELETE') axiosConfig.data = inputData
+        const data = { ...inputData }
+        Object.entries(config).forEach(([key, value]) => {
+            if (value.disabled) delete data[key]
+        })
+
+        if (method !== 'DELETE') axiosConfig.data = data
+
+        console.log(axiosConfig)
 
         let successText
         switch (method) {
@@ -67,7 +74,7 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
         }
 
         if (method === 'DELETE') {
-            const isConfirmed = window.confirm(`Are you sure to delete the ${categoryToShow.name} category?`)
+            const isConfirmed = window.confirm(`Are you sure to delete the ${biddingToShow.name} bidding?`)
             if (!isConfirmed) return
         }
 
@@ -76,7 +83,7 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
             const res = await axios(axiosConfig)
 
             if (res.data.status === 'success') {
-                alert(`Category named '${inputData.name}' has been ${successText}.`)
+                alert(`Bidding of user '${inputData.user}' has been ${successText}.`)
                 setTimeout(closeModal, 500)
             }
         } catch (err) {
@@ -91,15 +98,28 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
             <label htmlFor="key" className="capitalize form-title">
                 {key}:
             </label>
-            <input
-                type={value.type}
-                required={value.required}
-                name={key}
-                id={key}
-                className="form-input"
-                value={inputData[key]}
-                onChange={hanldeInputChange}
-            />
+            {value.type === 'textarea' ? (
+                <textarea
+                    required={value.required}
+                    name={key}
+                    id={key}
+                    className="form-input"
+                    value={inputData[key]}
+                    onChange={hanldeInputChange}
+                    // disabled={value.disabled || false}
+                ></textarea>
+            ) : (
+                <input
+                    type={value.type}
+                    required={value.required}
+                    name={key}
+                    id={key}
+                    className="form-input"
+                    value={inputData[key]}
+                    onChange={hanldeInputChange}
+                    // disabled={value.disabled || false}
+                />
+            )}
         </div>
     ))
 
@@ -107,22 +127,22 @@ export default function CategoryEditor({ categoryId, categories, isAddForm, clos
         <>
             <Overlay childRef={ref}>
                 <div ref={ref} className="admin-editor-form">
-                    {categoryToShow && !isAddForm && (
+                    {biddingToShow && !isAddForm && (
                         <>
                             <div className="flex justify-between">
-                                <h3 className="admin-editor-form-title">{categoryToShow.name}</h3>
+                                <h3 className="admin-editor-form-title">{biddingToShow.name}</h3>
                                 <FontAwesomeIcon
                                     icon={faTrash}
                                     className="text-red-400 transition hover:text-red-300 active:text-red-500 cursor-pointer"
                                     onClick={() => handleDataSubmit('DELETE')}
                                 />
                             </div>
-                            <div className="text-slate-700 font-semibold mt-2">ID: {categoryToShow._id}</div>
+                            <div className="text-slate-700 font-semibold mt-2">ID: {biddingToShow._id}</div>
                         </>
                     )}
                     {isAddForm && (
                         <>
-                            <h3 className="admin-editor-form-title">Create Category</h3>
+                            <h3 className="admin-editor-form-title">Create Bidding</h3>
                         </>
                     )}
                     {inputElems}
