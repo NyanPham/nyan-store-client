@@ -27,6 +27,20 @@ const createInitialState = (configEntries, isAddForm, couponToShow) => {
     return filteredCouponConfig
 }
 
+const processInputData = (inputData, config) => {
+    const data = { ...inputData }
+    Object.entries(config).forEach(([key, value]) => {
+        if (value.isArray && !Array.isArray(data[key])) {
+            data[key] = data[key]
+                .trim()
+                .replace(/[^a-zA-Z0-9, ]/g, '')
+                .split(',')
+        }
+    })
+
+    return data
+}
+
 export default function CouponEditor({ couponId, coupons, isAddForm, closeModal, config }) {
     const couponToShow = coupons.find((coupon) => coupon._id === couponId)
     const ref = useRef()
@@ -52,7 +66,9 @@ export default function CouponEditor({ couponId, coupons, isAddForm, closeModal,
             withCredentials: true,
         }
 
-        if (method !== 'DELETE') axiosConfig.data = inputData
+        const data = processInputData(inputData, config)
+
+        if (method !== 'DELETE') axiosConfig.data = data
 
         let successText
         switch (method) {
@@ -89,7 +105,7 @@ export default function CouponEditor({ couponId, coupons, isAddForm, closeModal,
     const inputElems = configEntries.map(([key, value]) => (
         <div className="form-group" key={key}>
             <label htmlFor="key" className="capitalize form-title">
-                {key}:
+                {key}: {value.type === 'date' ? inputData.expiresIn : ''}
             </label>
             {value.type === 'textarea' ? (
                 <textarea

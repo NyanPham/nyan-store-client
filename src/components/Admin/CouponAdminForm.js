@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useRef, useState, useEffect } from 'react'
 import { ROOT_URL } from '../../config'
+import formatDateToMDY from '../../utils/formatDateToMDY'
 import Overlay from '../Overlay'
 import CouponEditor from './Coupon/CouponEditor'
 
@@ -20,7 +21,7 @@ export default function CouponAdminForm({ closeModal }) {
             required: false,
         },
         amountOff: {
-            type: 'text',
+            type: 'number',
             required: false,
         },
         products: {
@@ -34,7 +35,7 @@ export default function CouponAdminForm({ closeModal }) {
             isArray: true,
         },
         expiresIn: {
-            type: String,
+            type: 'date',
             required: true,
         },
     }
@@ -70,7 +71,17 @@ export default function CouponAdminForm({ closeModal }) {
                 })
 
                 if (res.data.status === 'success') {
-                    setCoupons(res.data.data.docs)
+                    console.log(res.data.data.docs[0].expiresIn)
+                    setCoupons(() => {
+                        return res.data.data.docs.map((coupon) => {
+                            return {
+                                ...coupon,
+                                products: JSON.stringify(coupon.products),
+                                collections: JSON.stringify(coupon.collections),
+                                expiresIn: formatDateToMDY(new Date(coupon.expiresIn)),
+                            }
+                        })
+                    })
                 }
             } catch (err) {
                 alert(err.response.data.message)

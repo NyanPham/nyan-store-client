@@ -6,6 +6,8 @@ export default function getInputInitialValue(type) {
             return 0
         case 'boolean':
             return false
+        case 'date':
+            return Date.now()
         default:
             return type
     }
