@@ -7,6 +7,7 @@ import axios from 'axios'
 import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
 import AdminMainPanel from '../Admin/AdminMainPanel'
+import { useEffect } from 'react'
 
 export default function MyAccount() {
     const { currentUser, authLogin } = useAuthContext()
@@ -19,6 +20,9 @@ export default function MyAccount() {
     const [formShow, setFormShow] = useState('data')
     const [showAlert, setShowAlert] = useState(false)
     const photoRef = useRef()
+    const profileFormRef = useRef()
+    const passwordFormRef = useRef()
+    const adminFormRef = useRef()
 
     const backgroundStyles = {
         backgroundImage: `url(${backgroundImage})`,
@@ -79,8 +83,13 @@ export default function MyAccount() {
         }
     }
 
+    useEffect(() => {
+        if (formShow === 'data') {
+        }
+    }, [formShow])
+
     return (
-        <section className="auth-section p-5 text-center min-h-screen" style={backgroundStyles}>
+        <section className="auth-section p-5 text-center min-h-screen h-max" style={backgroundStyles}>
             <div className="logo-container mx-auto text-center">
                 <Link to="/" className="inline-block h-12 w-auto">
                     <img className="mx-auto w-full h-full" src={nyanStore} alt="Nyan Store Logo" />
@@ -125,10 +134,13 @@ export default function MyAccount() {
                 {/* For email and name */}
                 <form
                     className={`form w-3/4 p-7 mt-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
-                        formShow === 'data' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                        formShow === 'data'
+                            ? 'block opacity-100 pointer-events-auto'
+                            : ' hidden opacity-0 pointer-events-none'
                     }`}
                     data-user-update="data"
                     onSubmit={handleUserUpdate}
+                    ref={profileFormRef}
                 >
                     <div className="form-group">
                         <label className="form-label" htmlFor="name">
@@ -184,11 +196,14 @@ export default function MyAccount() {
                 {/* For password update  */}
 
                 <form
-                    className={`absolute top-0 left-1/2 -translate-x-1/2 form w-3/4 p-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
-                        formShow === 'password' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                    className={`form w-3/4 p-7 mt-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
+                        formShow === 'password'
+                            ? 'block opacity-100 pointer-events-auto'
+                            : ' hidden opacity-0 pointer-events-none'
                     }`}
                     data-user-update="password"
                     onSubmit={handleUserUpdate}
+                    ref={passwordFormRef}
                 >
                     <div className="form-group">
                         <label className="form-label" htmlFor="current-password">
@@ -240,7 +255,7 @@ export default function MyAccount() {
                     </button>
                 </form>
                 {/* For Admin */}
-                <AdminMainPanel formShow={formShow} handleUserUpdate={handleUserUpdate} />
+                <AdminMainPanel formShow={formShow} handleUserUpdate={handleUserUpdate} adminFormRef={adminFormRef} />
             </div>
             <LoadingWithAlert
                 loading={isLoading}

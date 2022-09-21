@@ -6,7 +6,7 @@ import { ROOT_URL } from '../../../config'
 import getInputInitialValue from '../../../utils/getInputInitialValue'
 import Overlay from '../../Overlay'
 
-const createInitialState = (configEntries, isAddForm, couponToShow) => {
+const createInitialState = (configEntries, isAddForm, orderToShow) => {
     if (isAddForm) {
         return configEntries.reduce((state, input) => {
             const [key, value] = input
@@ -19,33 +19,30 @@ const createInitialState = (configEntries, isAddForm, couponToShow) => {
         }, {})
     }
 
-    const filteredCouponConfig = {}
+    const filteredOrderConfig = {}
     configEntries.forEach(([key, _]) => {
-        filteredCouponConfig[key] = couponToShow[key]
+        filteredOrderConfig[key] = orderToShow[key]
     })
 
-    return filteredCouponConfig
+    return filteredOrderConfig
 }
 
 const processInputData = (inputData, config) => {
     const data = { ...inputData }
     Object.entries(config).forEach(([key, value]) => {
         if (value.isArray && !Array.isArray(data[key])) {
-            data[key] = data[key]
-                .trim()
-                .replace(/[^a-zA-Z0-9, ]/g, '')
-                .split(',')
+            data[key] = JSON.parse(data[key])
         }
     })
 
     return data
 }
 
-export default function CouponEditor({ couponId, coupons, isAddForm, closeModal, config }) {
-    const couponToShow = coupons.find((coupon) => coupon._id === couponId)
+export default function OrderEditor({ orderId, orders, isAddForm, closeModal, config }) {
+    const orderToShow = orders.find((order) => order._id === orderId)
     const ref = useRef()
     const configEntries = Object.entries(config)
-    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, couponToShow))
+    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, orderToShow))
     const [isLoading, setIsLoading] = useState(false)
 
     const hanldeInputChange = (e) => {
@@ -58,8 +55,8 @@ export default function CouponEditor({ couponId, coupons, isAddForm, closeModal,
     }
 
     const handleDataSubmit = async (method) => {
-        let url = `${ROOT_URL}/api/v1/coupons`
-        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/coupons/${couponToShow._id}`
+        let url = `${ROOT_URL}/api/v1/orders`
+        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/orders/${orderToShow._id}`
         const axiosConfig = {
             method,
             url,
@@ -83,7 +80,7 @@ export default function CouponEditor({ couponId, coupons, isAddForm, closeModal,
         }
 
         if (method === 'DELETE') {
-            const isConfirmed = window.confirm(`Are you sure to delete the ${couponToShow.name} coupon?`)
+            const isConfirmed = window.confirm(`Are you sure to delete the ${orderToShow._id} order?`)
             if (!isConfirmed) return
         }
 
@@ -92,7 +89,7 @@ export default function CouponEditor({ couponId, coupons, isAddForm, closeModal,
             const res = await axios(axiosConfig)
 
             if (res.data.status === 'success') {
-                alert(`Coupon has been ${successText}.`)
+                alert(`Order has been ${successText}.`)
                 setTimeout(closeModal, 500)
             }
         } catch (err) {
@@ -132,28 +129,26 @@ export default function CouponEditor({ couponId, coupons, isAddForm, closeModal,
         </div>
     ))
 
-    console.log(couponToShow)
-
     return (
         <>
             <Overlay childRef={ref}>
                 <div ref={ref} className="admin-editor-form">
-                    {couponToShow && !isAddForm && (
+                    {orderToShow && !isAddForm && (
                         <>
                             <div className="flex justify-between">
-                                <h3 className="admin-editor-form-title">{couponToShow.code}</h3>
+                                <h3 className="admin-editor-form-title">Order At</h3>
                                 <FontAwesomeIcon
                                     icon={faTrash}
                                     className="text-red-400 transition hover:text-red-300 active:text-red-500 cursor-pointer"
                                     onClick={() => handleDataSubmit('DELETE')}
                                 />
                             </div>
-                            <div className="text-slate-700 font-semibold mt-2">ID: {couponToShow._id}</div>
+                            <div className="text-slate-700 font-semibold mt-2">ID: {orderToShow._id}</div>
                         </>
                     )}
                     {isAddForm && (
                         <>
-                            <h3 className="admin-editor-form-title">Create Coupon</h3>
+                            <h3 className="admin-editor-form-title">Create Order</h3>
                         </>
                     )}
                     {inputElems}

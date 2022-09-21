@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useRef, useState, useEffect } from 'react'
-import { ROOT_URL } from '../../config'
-import formatDateToMDY from '../../utils/formatDateToMDY'
-import Overlay from '../Overlay'
-import CouponEditor from './Coupon/CouponEditor'
+import { ROOT_URL } from '../../../config'
+import formatDateToMDY from '../../../utils/formatDateToMDY'
+import Overlay from '../../Overlay'
+import CouponEditor from './CouponEditor'
 
 export default function CouponAdminForm({ closeModal }) {
     const [coupons, setCoupons] = useState([])

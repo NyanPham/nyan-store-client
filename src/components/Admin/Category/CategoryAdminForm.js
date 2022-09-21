@@ -1,15 +1,13 @@
+import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
-import React, { useRef } from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { ROOT_URL } from '../../config'
-import Overlay from '../Overlay'
-import CollectionEditor from './Collection/CollectionEditor'
+import { ROOT_URL } from '../../../config'
+import Overlay from '../../Overlay'
+import CategoryEditor from './CategoryEditor'
 
-export default function CollectionAdminForm({ closeModal }) {
-    const [collections, setCollections] = useState([])
-    const [collectionId, setCollectionId] = useState(false)
-    const [showCollection, setShowCollection] = useState(false)
+export default function CategoryAdminForm({ closeModal }) {
+    const [categories, setCategories] = useState([])
+    const [categoryId, setCategoryId] = useState(false)
+    const [showCategory, setShowCategory] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const ref = useRef()
     const config = {
@@ -23,63 +21,63 @@ export default function CollectionAdminForm({ closeModal }) {
         },
     }
 
-    const handleItemClick = (collection) => {
-        setCollectionId(collection._id)
-        setShowCollection(true)
+    const handleItemClick = (category) => {
+        setCategoryId(category._id)
+        setShowCategory(true)
     }
 
     useEffect(() => {
-        const fetchAllCollections = async () => {
+        const fetchAllCategories = async () => {
             try {
                 const res = await axios({
                     method: 'GET',
-                    url: `${ROOT_URL}/api/v1/collections`,
+                    url: `${ROOT_URL}/api/v1/categories`,
                     withCredentials: true,
                 })
 
                 if (res.data.status === 'success') {
-                    setCollections(res.data.data.docs)
+                    setCategories(res.data.data.docs)
                 }
             } catch (err) {
                 alert(err.response.data.message)
             }
         }
 
-        fetchAllCollections()
+        fetchAllCategories()
     }, [])
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
             <form className="admin-editor-form" ref={ref}>
-                <h2 className="admin-editor-form-title">Collections</h2>
+                <h2 className="admin-editor-form-title">Categories</h2>
                 <div className="max-h-96 overflow-y-auto mt-5">
-                    {collections.length > 0 &&
-                        collections.map((collection) => (
+                    {categories.length > 0 &&
+                        categories.map((category) => (
                             <div
-                                key={`collection_${collection._id}`}
+                                key={`category_${category._id}`}
                                 className="item-button"
-                                onClick={() => handleItemClick(collection)}
+                                onClick={() => handleItemClick(category)}
                             >
-                                {collection.name}
+                                {category.name}
                             </div>
                         ))}
                 </div>
                 <button type="button" className="submit-button" onClick={() => setShowAddForm(true)}>
                     +
                 </button>
-                {showCollection && (
-                    <CollectionEditor
-                        collectionId={collectionId}
-                        collections={collections}
+                {showCategory && (
+                    <CategoryEditor
+                        categoryId={categoryId}
+                        categories={categories}
                         isAddForm={false}
-                        closeModal={() => setShowCollection(false)}
+                        closeModal={() => setShowCategory(false)}
                         config={config}
                     />
                 )}
                 {showAddForm && (
-                    <CollectionEditor
-                        collectionId={collectionId}
-                        collections={collections}
+                    <CategoryEditor
+                        categoryId={categoryId}
+                        categories={categories}
                         isAddForm={true}
                         closeModal={() => setShowAddForm(false)}
                         config={config}

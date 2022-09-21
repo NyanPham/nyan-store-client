@@ -1,8 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState, useRef } from 'react'
-import Overlay from '../Overlay'
-import { ROOT_URL } from '../../config'
-import BiddingEditor from './Auction/BiddingEditor'
+import Overlay from '../../Overlay'
+import { ROOT_URL } from '../../../config'
+import BiddingEditor from './BiddingEditor'
 
 export default function AuctionAdminForm({ closeModal }) {
     const [biddings, setBiddings] = useState([])

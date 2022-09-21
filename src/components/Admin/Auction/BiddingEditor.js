@@ -130,7 +130,7 @@ export default function BiddingEditor({ biddingId, biddings, isAddForm, closeMod
                     {biddingToShow && !isAddForm && (
                         <>
                             <div className="flex justify-between">
-                                <h3 className="admin-editor-form-title">{biddingToShow.name}</h3>
+                                <h3 className="admin-editor-form-title">Bidding</h3>
                                 <FontAwesomeIcon
                                     icon={faTrash}
                                     className="text-red-400 transition hover:text-red-300 active:text-red-500 cursor-pointer"
