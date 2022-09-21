@@ -14,6 +14,8 @@ function ProductAuction() {
     const [userBiddingProducts, setUserBiddingProducts] = useState([])
     const biddingProducts = useSelector((state) => state.biddingProducts.data)
 
+    console.log(biddingProducts)
+
     const isInCartPage = pathname.startsWith('/cart')
 
     useDeepCompareEffect(() => {
@@ -25,7 +27,7 @@ function ProductAuction() {
                         productIds.map(async (productId) => {
                             return await axios({
                                 method: 'GET',
-                                url: `${ROOT_URL}/api/v1/users/myBidding?product=${productId}`,
+                                url: `${ROOT_URL}/api/v1/users/myBiddings?product=${productId}`,
                                 withCredentials: true,
                             })
                         })
