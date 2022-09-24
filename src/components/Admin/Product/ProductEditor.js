@@ -6,7 +6,7 @@ import { ROOT_URL } from '../../../config'
 import getInputInitialValue from '../../../utils/getInputInitialValue'
 import Overlay from '../../Overlay'
 
-const createInitialState = (configEntries, isAddForm, orderToShow) => {
+const createInitialState = (configEntries, isAddForm, productToShow) => {
     if (isAddForm) {
         return configEntries.reduce((state, input) => {
             const [key, value] = input
@@ -19,18 +19,18 @@ const createInitialState = (configEntries, isAddForm, orderToShow) => {
         }, {})
     }
 
-    const filteredOrderConfig = {}
+    const filteredProductConfig = {}
     configEntries.forEach(([key, _]) => {
-        filteredOrderConfig[key] = orderToShow[key]
+        filteredProductConfig[key] = productToShow[key]
     })
 
-    return filteredOrderConfig
+    return filteredProductConfig
 }
 
 const processInputData = (inputData, config) => {
     const data = { ...inputData }
     Object.entries(config).forEach(([key, value]) => {
-        if (value.isArray && !Array.isArray(data[key])) {
+        if (value.isArray && !Array.isArray(data[key]) && data[key].length > 0) {
             data[key] = JSON.parse(data[key])
         }
     })
@@ -38,11 +38,11 @@ const processInputData = (inputData, config) => {
     return data
 }
 
-export default function OrderEditor({ orderId, orders, isAddForm, closeModal, config }) {
-    const orderToShow = orders.find((order) => order._id === orderId)
+export default function ProductEditor({ productId, products, isAddForm, closeModal, config }) {
+    const productToShow = products.find((product) => product._id === productId)
     const ref = useRef()
     const configEntries = Object.entries(config)
-    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, orderToShow))
+    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, productToShow))
     const [isLoading, setIsLoading] = useState(false)
 
     const hanldeInputChange = (e) => {
@@ -55,8 +55,8 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
     }
 
     const handleDataSubmit = async (method) => {
-        let url = `${ROOT_URL}/api/v1/orders`
-        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/orders/${orderToShow._id}`
+        let url = `${ROOT_URL}/api/v1/products`
+        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/products/${productToShow._id}`
         const axiosConfig = {
             method,
             url,
@@ -80,7 +80,7 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
         }
 
         if (method === 'DELETE') {
-            const isConfirmed = window.confirm(`Are you sure to delete the ${orderToShow._id} order?`)
+            const isConfirmed = window.confirm(`Are you sure to delete the ${productToShow.name} product?`)
             if (!isConfirmed) return
         }
 
@@ -89,7 +89,7 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
             const res = await axios(axiosConfig)
 
             if (res.data.status === 'success') {
-                alert(`Order has been ${successText}.`)
+                alert(`The product has been ${successText}.`)
                 setTimeout(closeModal, 500)
             }
         } catch (err) {
@@ -102,10 +102,28 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
     const inputElems = configEntries.map(([key, value]) => (
         <div className="form-group" key={key}>
             <label htmlFor="key" className="capitalize form-title">
-                {key}: {value.type === 'date' ? inputData.expiresIn : ''}
+                {key}
             </label>
-            {value.type === 'textarea' ? (
+            {value.type === 'textarea' && (
                 <textarea
+                    required={value.required}
+                    name={key}
+                    id={key}
+                    className="form-input"
+                    value={
+                        typeof inputData[key] === 'string' || typeof inputData[key] === 'number'
+                            ? inputData[key]
+                            : JSON.stringify(
+                                  inputData[key].map((object) => (typeof object === 'object' ? object._id : object))
+                              )
+                    }
+                    onChange={hanldeInputChange}
+                    // disabled={value.disabled || false}
+                ></textarea>
+            )}
+            {value.type === 'boolean' && (
+                <select
+                    type={value.type}
                     required={value.required}
                     name={key}
                     id={key}
@@ -113,15 +131,23 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
                     value={inputData[key]}
                     onChange={hanldeInputChange}
                     // disabled={value.disabled || false}
-                ></textarea>
-            ) : (
+                >
+                    <option value={true}>True</option>
+                    <option value={false}>false</option>
+                </select>
+            )}
+            {(value.type === 'text' || value.type === 'number') && (
                 <input
                     type={value.type}
                     required={value.required}
                     name={key}
                     id={key}
                     className="form-input"
-                    value={inputData[key]}
+                    value={
+                        typeof inputData[key] === 'string' || typeof inputData[key] === 'number'
+                            ? inputData[key]
+                            : JSON.stringify(inputData[key])
+                    }
                     onChange={hanldeInputChange}
                     // disabled={value.disabled || false}
                 />
@@ -133,22 +159,22 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
         <>
             <Overlay childRef={ref}>
                 <div ref={ref} className="admin-editor-form">
-                    {orderToShow && !isAddForm && (
+                    {productToShow && !isAddForm && (
                         <>
                             <div className="flex justify-between">
-                                <h3 className="admin-editor-form-title">Order At</h3>
+                                <h3 className="admin-editor-form-title">{productToShow.name}</h3>
                                 <FontAwesomeIcon
                                     icon={faTrash}
                                     className="text-red-400 transition hover:text-red-300 active:text-red-500 cursor-pointer"
                                     onClick={() => handleDataSubmit('DELETE')}
                                 />
                             </div>
-                            <div className="text-slate-700 font-semibold mt-2">ID: {orderToShow._id}</div>
+                            <div className="text-slate-700 font-semibold mt-2">ID: {productToShow._id}</div>
                         </>
                     )}
                     {isAddForm && (
                         <>
-                            <h3 className="admin-editor-form-title">Create Order</h3>
+                            <h3 className="admin-editor-form-title">Create product</h3>
                         </>
                     )}
                     {inputElems}

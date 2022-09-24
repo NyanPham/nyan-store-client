@@ -6,7 +6,7 @@ import { ROOT_URL } from '../../../config'
 import getInputInitialValue from '../../../utils/getInputInitialValue'
 import Overlay from '../../Overlay'
 
-const createInitialState = (configEntries, isAddForm, orderToShow) => {
+const createInitialState = (configEntries, isAddForm, variantToShow) => {
     if (isAddForm) {
         return configEntries.reduce((state, input) => {
             const [key, value] = input
@@ -19,12 +19,12 @@ const createInitialState = (configEntries, isAddForm, orderToShow) => {
         }, {})
     }
 
-    const filteredOrderConfig = {}
+    const filteredVariantConfig = {}
     configEntries.forEach(([key, _]) => {
-        filteredOrderConfig[key] = orderToShow[key]
+        filteredVariantConfig[key] = variantToShow[key]
     })
 
-    return filteredOrderConfig
+    return filteredVariantConfig
 }
 
 const processInputData = (inputData, config) => {
@@ -33,16 +33,21 @@ const processInputData = (inputData, config) => {
         if (value.isArray && !Array.isArray(data[key])) {
             data[key] = JSON.parse(data[key])
         }
+        if (value.type === 'number' && typeof data[key] !== 'number') {
+            data[key] = parseInt(data[key])
+        }
     })
+
+    console.log(data)
 
     return data
 }
 
-export default function OrderEditor({ orderId, orders, isAddForm, closeModal, config }) {
-    const orderToShow = orders.find((order) => order._id === orderId)
+export default function VariantEditor({ variantId, variants, isAddForm, closeModal, config }) {
+    const variantToShow = variants?.find((variant) => variant._id === variantId)
     const ref = useRef()
     const configEntries = Object.entries(config)
-    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, orderToShow))
+    const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, variantToShow))
     const [isLoading, setIsLoading] = useState(false)
 
     const hanldeInputChange = (e) => {
@@ -55,8 +60,8 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
     }
 
     const handleDataSubmit = async (method) => {
-        let url = `${ROOT_URL}/api/v1/orders`
-        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/orders/${orderToShow._id}`
+        let url = `${ROOT_URL}/api/v1/variants`
+        if (method === 'DELETE' || method === 'PATCH') url = `${ROOT_URL}/api/v1/variants/${variantToShow._id}`
         const axiosConfig = {
             method,
             url,
@@ -80,7 +85,7 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
         }
 
         if (method === 'DELETE') {
-            const isConfirmed = window.confirm(`Are you sure to delete the ${orderToShow._id} order?`)
+            const isConfirmed = window.confirm(`Are you sure to delete the ${variantToShow.name} variant?`)
             if (!isConfirmed) return
         }
 
@@ -89,7 +94,7 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
             const res = await axios(axiosConfig)
 
             if (res.data.status === 'success') {
-                alert(`Order has been ${successText}.`)
+                alert(`The variant has been ${successText}.`)
                 setTimeout(closeModal, 500)
             }
         } catch (err) {
@@ -133,22 +138,22 @@ export default function OrderEditor({ orderId, orders, isAddForm, closeModal, co
         <>
             <Overlay childRef={ref}>
                 <div ref={ref} className="admin-editor-form">
-                    {orderToShow && !isAddForm && (
+                    {variantToShow && !isAddForm && (
                         <>
                             <div className="flex justify-between">
-                                <h3 className="admin-editor-form-title">Order At</h3>
+                                <h3 className="admin-editor-form-title">{variantToShow.name}</h3>
                                 <FontAwesomeIcon
                                     icon={faTrash}
                                     className="text-red-400 transition hover:text-red-300 active:text-red-500 cursor-pointer"
                                     onClick={() => handleDataSubmit('DELETE')}
                                 />
                             </div>
-                            <div className="text-slate-700 font-semibold mt-2">ID: {orderToShow._id}</div>
+                            <div className="text-slate-700 font-semibold mt-2">ID: {variantToShow._id}</div>
                         </>
                     )}
                     {isAddForm && (
                         <>
-                            <h3 className="admin-editor-form-title">Create Order</h3>
+                            <h3 className="admin-editor-form-title">Create variant</h3>
                         </>
                     )}
                     {inputElems}
