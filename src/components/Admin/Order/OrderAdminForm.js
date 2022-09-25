@@ -1,67 +1,28 @@
-import axios from 'axios'
-import React, { useRef, useState, useEffect } from 'react'
-import { ROOT_URL } from '../../../config'
+import React, { useRef, useState } from 'react'
+import { orderConfig } from '../../../config'
+import useFetchDocs from '../../../hooks/useFetchDocs'
 import Overlay from '../../Overlay'
 import OrderEditor from './OrderEditor'
 
 export default function OrderAdminForm({ closeModal }) {
-    const [orders, setOrders] = useState([])
+    const [orders] = useFetchDocs('orders', (orders) =>
+        orders.map((order) => {
+            return {
+                ...order,
+                items: JSON.stringify(order.items),
+            }
+        })
+    )
+
     const [orderId, setOrderId] = useState(false)
     const [showOrder, setShowOrder] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const ref = useRef()
-    const config = {
-        total: {
-            type: 'number',
-            required: true,
-        },
-        items: {
-            type: 'textarea',
-            required: false,
-            isArray: true,
-        },
-        user: {
-            type: 'text',
-            required: false,
-        },
-        createdAt: {
-            type: 'date',
-            required: false,
-        },
-    }
 
     const handleItemClick = (collection) => {
         setOrderId(collection._id)
         setShowOrder(true)
     }
-
-    useEffect(() => {
-        const fetchAllOrders = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/orders`,
-                    withCredentials: true,
-                })
-
-                if (res.data.status === 'success') {
-                    console.log(res.data.data.docs[0].expiresIn)
-                    setOrders(() => {
-                        return res.data.data.docs.map((order) => {
-                            return {
-                                ...order,
-                                items: JSON.stringify(order.items),
-                            }
-                        })
-                    })
-                }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
-        }
-
-        fetchAllOrders()
-    }, [])
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
@@ -90,7 +51,7 @@ export default function OrderAdminForm({ closeModal }) {
                         orders={orders}
                         isAddForm={false}
                         closeModal={() => setShowOrder(false)}
-                        config={config}
+                        config={orderConfig}
                     />
                 )}
                 {showAddForm && (
@@ -99,7 +60,7 @@ export default function OrderAdminForm({ closeModal }) {
                         orders={orders}
                         isAddForm={true}
                         closeModal={() => setShowAddForm(false)}
-                        config={config}
+                        config={orderConfig}
                     />
                 )}
             </form>

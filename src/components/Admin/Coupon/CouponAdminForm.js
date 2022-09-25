@@ -1,95 +1,30 @@
-import axios from 'axios'
-import React, { useRef, useState, useEffect } from 'react'
-import { ROOT_URL } from '../../../config'
+import React, { useRef, useState } from 'react'
+import { couponConfig } from '../../../config'
+import useFetchDocs from '../../../hooks/useFetchDocs'
 import formatDateToMDY from '../../../utils/formatDateToMDY'
 import Overlay from '../../Overlay'
 import CouponEditor from './CouponEditor'
 
 export default function CouponAdminForm({ closeModal }) {
-    const [coupons, setCoupons] = useState([])
+    const [coupons] = useFetchDocs('coupons', (coupons) =>
+        coupons.map((coupon) => {
+            return {
+                ...coupon,
+                products: JSON.stringify(coupon.products),
+                collections: JSON.stringify(coupon.collections),
+                expiresIn: formatDateToMDY(new Date(coupon.expiresIn)),
+            }
+        })
+    )
     const [couponId, setCouponId] = useState(false)
     const [showCoupon, setShowCoupon] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const ref = useRef()
-    const config = {
-        code: {
-            type: 'text',
-            required: true,
-        },
-        percentOff: {
-            type: 'number',
-            required: false,
-        },
-        amountOff: {
-            type: 'number',
-            required: false,
-        },
-        products: {
-            type: 'text',
-            required: false,
-            isArray: true,
-        },
-        collections: {
-            type: 'text',
-            required: false,
-            isArray: true,
-        },
-        expiresIn: {
-            type: 'date',
-            required: true,
-        },
-    }
-
-    // const processedcoupons = coupons.map((bidding) => {
-    //     return Object.entries(bidding).reduce((processedBidding, data) => {
-    //         const [key, value] = data
-    //         if (typeof value === 'object') {
-    //             return {
-    //                 ...processedBidding,
-    //                 [key]: value._id,
-    //             }
-    //         }
-    //         return {
-    //             ...processedBidding,
-    //             [key]: value,
-    //         }
-    //     }, {})
-    // })
 
     const handleItemClick = (collection) => {
         setCouponId(collection._id)
         setShowCoupon(true)
     }
-
-    useEffect(() => {
-        const fetchAllcoupons = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/coupons`,
-                    withCredentials: true,
-                })
-
-                if (res.data.status === 'success') {
-                    console.log(res.data.data.docs[0].expiresIn)
-                    setCoupons(() => {
-                        return res.data.data.docs.map((coupon) => {
-                            return {
-                                ...coupon,
-                                products: JSON.stringify(coupon.products),
-                                collections: JSON.stringify(coupon.collections),
-                                expiresIn: formatDateToMDY(new Date(coupon.expiresIn)),
-                            }
-                        })
-                    })
-                }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
-        }
-
-        fetchAllcoupons()
-    }, [])
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
@@ -118,7 +53,7 @@ export default function CouponAdminForm({ closeModal }) {
                         coupons={coupons}
                         isAddForm={false}
                         closeModal={() => setShowCoupon(false)}
-                        config={config}
+                        config={couponConfig}
                     />
                 )}
                 {showAddForm && (
@@ -127,7 +62,7 @@ export default function CouponAdminForm({ closeModal }) {
                         coupons={coupons}
                         isAddForm={true}
                         closeModal={() => setShowAddForm(false)}
-                        config={config}
+                        config={couponConfig}
                     />
                 )}
             </form>

@@ -1,50 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react'
-import axios from 'axios'
-import { ROOT_URL } from '../../../config'
+import React, { useState, useRef } from 'react'
+import { categoryConfig } from '../../../config'
 import Overlay from '../../Overlay'
 import CategoryEditor from './CategoryEditor'
+import useFetchDocs from '../../../hooks/useFetchDocs'
 
 export default function CategoryAdminForm({ closeModal }) {
-    const [categories, setCategories] = useState([])
+    const [categories] = useFetchDocs('categories')
     const [categoryId, setCategoryId] = useState(false)
     const [showCategory, setShowCategory] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const ref = useRef()
-    const config = {
-        name: {
-            type: 'text',
-            required: true,
-        },
-        summary: {
-            type: 'text',
-            required: true,
-        },
-    }
 
     const handleItemClick = (category) => {
         setCategoryId(category._id)
         setShowCategory(true)
     }
-
-    useEffect(() => {
-        const fetchAllCategories = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/categories`,
-                    withCredentials: true,
-                })
-
-                if (res.data.status === 'success') {
-                    setCategories(res.data.data.docs)
-                }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
-        }
-
-        fetchAllCategories()
-    }, [])
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
@@ -71,7 +41,7 @@ export default function CategoryAdminForm({ closeModal }) {
                         categories={categories}
                         isAddForm={false}
                         closeModal={() => setShowCategory(false)}
-                        config={config}
+                        config={categoryConfig}
                     />
                 )}
                 {showAddForm && (
@@ -80,7 +50,7 @@ export default function CategoryAdminForm({ closeModal }) {
                         categories={categories}
                         isAddForm={true}
                         closeModal={() => setShowAddForm(false)}
-                        config={config}
+                        config={categoryConfig}
                     />
                 )}
             </form>

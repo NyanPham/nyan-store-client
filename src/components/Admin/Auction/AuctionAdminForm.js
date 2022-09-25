@@ -1,37 +1,15 @@
-import axios from 'axios'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import Overlay from '../../Overlay'
-import { ROOT_URL } from '../../../config'
+import { biddingConfig } from '../../../config'
 import BiddingEditor from './BiddingEditor'
+import useFetchDocs from '../../../hooks/useFetchDocs'
 
 export default function AuctionAdminForm({ closeModal }) {
-    const [biddings, setBiddings] = useState([])
+    const [biddings] = useFetchDocs('biddings')
     const [biddingId, setBiddingId] = useState(false)
     const [showBidding, setShowBidding] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const ref = useRef()
-    const config = {
-        product: {
-            type: 'text',
-            required: true,
-        },
-        variant: {
-            type: 'text',
-            required: true,
-        },
-        user: {
-            type: 'text',
-            required: true,
-        },
-        duesIn: {
-            type: 'text',
-            required: true,
-        },
-        price: {
-            type: 'number',
-            required: true,
-        },
-    }
 
     const processedBiddings = biddings.map((bidding) => {
         return Object.entries(bidding).reduce((processedBidding, data) => {
@@ -53,26 +31,6 @@ export default function AuctionAdminForm({ closeModal }) {
         setBiddingId(collection._id)
         setShowBidding(true)
     }
-
-    useEffect(() => {
-        const fetchAllBiddings = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/biddings`,
-                    withCredentials: true,
-                })
-
-                if (res.data.status === 'success') {
-                    setBiddings(res.data.data.docs)
-                }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
-        }
-
-        fetchAllBiddings()
-    }, [])
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
@@ -101,7 +59,7 @@ export default function AuctionAdminForm({ closeModal }) {
                         biddings={processedBiddings}
                         isAddForm={false}
                         closeModal={() => setShowBidding(false)}
-                        config={config}
+                        config={biddingConfig}
                     />
                 )}
                 {showAddForm && (
@@ -110,7 +68,7 @@ export default function AuctionAdminForm({ closeModal }) {
                         biddings={processedBiddings}
                         isAddForm={true}
                         closeModal={() => setShowAddForm(false)}
-                        config={config}
+                        config={biddingConfig}
                     />
                 )}
             </form>

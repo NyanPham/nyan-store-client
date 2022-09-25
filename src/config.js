@@ -46,3 +46,214 @@ export const OPTION_TYPES_MAP = {
     size: ['XXS', 'XS', 'SM', 'M', 'L', 'XXL', 'XXXl'],
     material: ['rubber', 'fabric', 'fiber'],
 }
+
+export const productConfig = {
+    name: {
+        type: 'text',
+        required: true,
+    },
+    vendor: {
+        type: 'text',
+        required: true,
+    },
+    price: {
+        type: 'number',
+        required: false,
+    },
+    images: {
+        type: 'textarea',
+        isArray: true,
+        required: false,
+    },
+    description: {
+        type: 'textarea',
+        required: false,
+    },
+    summary: {
+        type: 'textarea',
+        required: true,
+    },
+    variants: {
+        type: 'textarea',
+        isArray: true,
+        required: true,
+    },
+    minPrice: {
+        type: 'number',
+        required: false,
+    },
+    maxPrice: {
+        type: 'number',
+        required: false,
+    },
+    SKU: {
+        type: 'text',
+        required: true,
+    },
+    category: {
+        type: 'text',
+        required: false,
+    },
+    collections: {
+        type: 'textarea',
+        required: false,
+        isArray: true,
+    },
+    tags: {
+        type: 'textarea',
+        isArray: true,
+        required: false,
+    },
+    isAuctioned: {
+        type: 'boolean',
+        required: false,
+    },
+    auctionExpiresIn: {
+        type: 'date',
+        required: false,
+    },
+    reviews: {
+        type: 'text',
+        isArray: true,
+        required: false,
+    },
+    ratingsAverage: {
+        type: 'number',
+        required: false,
+    },
+    ratingsQuantity: {
+        type: 'number',
+        required: false,
+    },
+}
+
+export const variantConfig = {
+    name: {
+        type: 'text',
+        required: true,
+    },
+    option1: {
+        type: 'text',
+        required: false,
+    },
+    option2: {
+        type: 'text',
+        required: false,
+    },
+    option3: {
+        type: 'text',
+        required: false,
+    },
+    price: {
+        type: 'number',
+        required: true,
+    },
+    comparePrice: {
+        type: 'number',
+        required: false,
+    },
+    images: {
+        type: 'file',
+        // isArray: true,
+        isMultiple: true,
+        required: false,
+    },
+    inventory: {
+        type: 'number',
+        required: true,
+    },
+}
+
+export const orderConfig = {
+    total: {
+        type: 'number',
+        required: true,
+    },
+    items: {
+        type: 'textarea',
+        required: false,
+        isArray: true,
+    },
+    user: {
+        type: 'text',
+        required: false,
+    },
+    createdAt: {
+        type: 'date',
+        required: false,
+    },
+}
+
+export const couponConfig = {
+    code: {
+        type: 'text',
+        required: true,
+    },
+    percentOff: {
+        type: 'number',
+        required: false,
+    },
+    amountOff: {
+        type: 'number',
+        required: false,
+    },
+    products: {
+        type: 'text',
+        required: false,
+        isArray: true,
+    },
+    collections: {
+        type: 'text',
+        required: false,
+        isArray: true,
+    },
+    expiresIn: {
+        type: 'date',
+        required: true,
+    },
+}
+
+export const biddingConfig = {
+    product: {
+        type: 'text',
+        required: true,
+    },
+    variant: {
+        type: 'text',
+        required: true,
+    },
+    user: {
+        type: 'text',
+        required: true,
+    },
+    duesIn: {
+        type: 'text',
+        required: true,
+    },
+    price: {
+        type: 'number',
+        required: true,
+    },
+}
+
+export const categoryConfig = {
+    name: {
+        type: 'text',
+        required: true,
+    },
+    summary: {
+        type: 'text',
+        required: true,
+    },
+}
+
+export const collectionConfig = {
+    name: {
+        type: 'text',
+        required: true,
+    },
+    summary: {
+        type: 'text',
+        required: true,
+    },
+}

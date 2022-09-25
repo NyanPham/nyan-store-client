@@ -1,52 +1,20 @@
-import axios from 'axios'
-import React, { useRef } from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { ROOT_URL } from '../../../config'
+import React, { useState, useRef } from 'react'
+import { collectionConfig } from '../../../config'
+import useFetchDocs from '../../../hooks/useFetchDocs'
 import Overlay from '../../Overlay'
 import CollectionEditor from './CollectionEditor'
 
 export default function CollectionAdminForm({ closeModal }) {
-    const [collections, setCollections] = useState([])
+    const [collections] = useFetchDocs('collections')
     const [collectionId, setCollectionId] = useState(false)
     const [showCollection, setShowCollection] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
     const ref = useRef()
-    const config = {
-        name: {
-            type: 'text',
-            required: true,
-        },
-        summary: {
-            type: 'text',
-            required: true,
-        },
-    }
 
     const handleItemClick = (collection) => {
         setCollectionId(collection._id)
         setShowCollection(true)
     }
-
-    useEffect(() => {
-        const fetchAllCollections = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/collections`,
-                    withCredentials: true,
-                })
-
-                if (res.data.status === 'success') {
-                    setCollections(res.data.data.docs)
-                }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
-        }
-
-        fetchAllCollections()
-    }, [])
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
@@ -73,7 +41,7 @@ export default function CollectionAdminForm({ closeModal }) {
                         collections={collections}
                         isAddForm={false}
                         closeModal={() => setShowCollection(false)}
-                        config={config}
+                        config={collectionConfig}
                     />
                 )}
                 {showAddForm && (
@@ -82,7 +50,7 @@ export default function CollectionAdminForm({ closeModal }) {
                         collections={collections}
                         isAddForm={true}
                         closeModal={() => setShowAddForm(false)}
-                        config={config}
+                        config={collectionConfig}
                     />
                 )}
             </form>
