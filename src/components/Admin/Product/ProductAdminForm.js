@@ -242,7 +242,7 @@ export default function ProductAdminForm({ closeModal }) {
                 </div>
                 <button
                     type="button"
-                    className="submit-button"
+                    className="submit-button font-semibold text-lg"
                     onClick={() => {
                         setShowAddForm(true)
                         setShowProduct(true)
@@ -252,7 +252,7 @@ export default function ProductAdminForm({ closeModal }) {
                 </button>
                 <button
                     type="button"
-                    className="submit-button"
+                    className="submit-button font-semibold text-lg"
                     onClick={() => {
                         setShowAddForm(true)
                         setShowVariant(true)
