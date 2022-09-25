@@ -14,11 +14,9 @@ import { ROOT_URL } from '../../config'
 
 export default function ProductCard(props) {
     const { id, name, slug, variants, createdAt, inAuction = false, currentBidData = {} } = props
-    // const { images, vendor } = props
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const { loading, error, message } = useSelector((state) => state.cart)
-    // const { currentUser } = useAuthContext()
     const dispatch = useDispatch()
 
     const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
@@ -53,7 +51,7 @@ export default function ProductCard(props) {
     }, [loading, error, message, setOpenSideCart, dispatch])
 
     return (
-        <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4">
+        <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4 transition transform duration-300 hover:border hover:border-slate-900/10 hover:-translate-y-2 hover:shadow-lg">
             <Link to={`/products/${slug}`} state={props} className="product-image w-full h-fit">
                 {/* <span className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto"></span> */}
                 {firstVariant ? (

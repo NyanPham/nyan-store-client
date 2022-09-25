@@ -32,7 +32,7 @@ function SliderWithProduct({
                         />
                     </div>
                     <Slider slides={slides} slidesPerView={1} />
-                    <div className="flex-shrink-0 w-full self-start grid grid-cols-2 md:grid-cols-2 lg:w-2/5 ">
+                    <div className="flex-shrink-0 w-full self-start grid grid-cols-2 md:grid-cols-3 lg:w-2/5 lg:grid-cols-2">
                         {productsToShow.map((product, index) => (
                             <ProductCard {...product} key={`slider_w_product_${index}`} />
                         ))}
