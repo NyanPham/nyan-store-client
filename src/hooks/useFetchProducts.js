@@ -61,7 +61,7 @@ export function useFetchProducts(type, props) {
     const { collections, collectionName, categoryName, tags } = props
 
     const [products, setProducts] = useState([])
-    const limit = 8
+    const limit = 4
     const page = 1
 
     let url = `${ROOT_URL}/api/v1/products?limit=${limit}&page=${page}`

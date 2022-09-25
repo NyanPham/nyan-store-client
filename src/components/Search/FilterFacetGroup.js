@@ -50,7 +50,7 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
                         </div>
                     </div>
                     <div
-                        className={`columns-2 max-w-full flex-nowrap mt-4 transition-all transform duration-300 ease-in origin-top ${
+                        className={`columns-2 max-w-full mt-4 transition-all transform duration-300 ease-in origin-top ${
                             openFacet ? 'scale-y-100 max-h-96 overflow-auto' : 'scale-y-0 max-h-0 overflow-clip'
                         }`}
                     >
