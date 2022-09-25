@@ -56,14 +56,17 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
                     >
                         {options
                             .filter((option) => option.value !== null)
-                            .map((option, index) => (
-                                <FilterFacet
-                                    key={`${optionType}_${index}`}
-                                    option={option}
-                                    optionType={optionType}
-                                    onFacetInput={hanldeFacetInput}
-                                />
-                            ))}
+                            .map(
+                                (option, index) =>
+                                    option.value && (
+                                        <FilterFacet
+                                            key={`${optionType}_${index}`}
+                                            option={option}
+                                            optionType={optionType}
+                                            onFacetInput={hanldeFacetInput}
+                                        />
+                                    )
+                            )}
                     </div>
                 </form>
             )}
