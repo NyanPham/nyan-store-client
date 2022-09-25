@@ -32,20 +32,21 @@ const processInputData = (inputData, config, imageInput) => {
     const formData = new FormData()
     Object.entries(config).forEach(([key, value]) => {
         if (value.isArray && !Array.isArray(data[key]) && value.type !== 'file') {
-            formData.append(key, JSON.parse(data[key]))
+            return formData.append(key, JSON.parse(data[key]))
         }
         if (value.type === 'number' && typeof data[key] !== 'number') {
-            formData.append(key, parseInt(data[key]))
+            return formData.append(key, parseInt(data[key]))
         }
         if (value.type === 'file') {
             if (value.isMultiple) {
-                ;[...imageInput.files].forEach((file) => {
+                return [...imageInput.files].forEach((file) => {
                     formData.append(key, file)
                 })
-            } else {
-                formData.append(key, imageInput.files[0])
             }
+            return formData.append(key, imageInput.files[0])
         }
+
+        formData.append(key, data[key])
     })
 
     return formData
