@@ -8,7 +8,7 @@ import 'swiper/css/navigation'
 function ProductShowcase({ productCards, isSlider }) {
     return (
         <Container>
-            <div className="flex flex-row gap-7 justify-center items-stretch">
+            <div className="">
                 {isSlider ? (
                     <Swiper
                         spaceBetween={15}

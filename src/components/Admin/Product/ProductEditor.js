@@ -136,7 +136,7 @@ export default function ProductEditor({ productId, products, isAddForm, closeMod
                     <option value={false}>false</option>
                 </select>
             )}
-            {(value.type === 'text' || value.type === 'number') && (
+            {value.type !== 'textarea' && value.type !== 'boolean' && (
                 <input
                     type={value.type}
                     required={value.required}

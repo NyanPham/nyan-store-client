@@ -32,12 +32,15 @@ const processInputData = (inputData, config, imageInput) => {
     const formData = new FormData()
     Object.entries(config).forEach(([key, value]) => {
         if (value.isArray && !Array.isArray(data[key]) && value.type !== 'file') {
+            data[key] = JSON.parse(data[key])
             return formData.append(key, JSON.parse(data[key]))
         }
         if (value.type === 'number' && typeof data[key] !== 'number') {
+            data[key] = parseInt(data[key])
             return formData.append(key, parseInt(data[key]))
         }
         if (value.type === 'file') {
+            delete data[key]
             if (value.isMultiple) {
                 return [...imageInput.files].forEach((file) => {
                     formData.append(key, file)
@@ -46,10 +49,13 @@ const processInputData = (inputData, config, imageInput) => {
             return formData.append(key, imageInput.files[0])
         }
 
+        if (key === 'comparePrice' && data[key] === 0) return delete data['comparePrice']
+        if (data[key] == null || data[key] === '') return
+
         formData.append(key, data[key])
     })
 
-    return formData
+    return { formData, data }
 }
 
 export default function VariantEditor({ variantId, variants, isAddForm, closeModal, config }) {
@@ -78,11 +84,9 @@ export default function VariantEditor({ variantId, variants, isAddForm, closeMod
             withCredentials: true,
         }
 
-        const data = processInputData(inputData, config, imageInputRef.current)
+        const { formData, data } = processInputData(inputData, config, imageInputRef.current)
 
-        console.log(...data)
-
-        if (method !== 'DELETE') axiosConfig.data = data
+        if (method !== 'DELETE') axiosConfig.data = method === 'PATCH' ? formData : data
 
         let successText
         switch (method) {
