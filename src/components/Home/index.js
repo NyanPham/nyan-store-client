@@ -73,7 +73,7 @@ const Home = () => {
             </section>
             <section className="bg-gray-100 py-10">
                 <GetSliderWithProducts
-                    tags={['men']}
+                    tags={['men', 'male']}
                     category="Men"
                     sideNavBackground="bg-white"
                     borderColor="border-white"

@@ -43,8 +43,22 @@ const getCategoryUrlAndSuccessHandler = ({ categoryName, setProducts, limit, pag
     return { url, successHandler }
 }
 
+const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page }) => {
+    const tagQueryParams = tags.join(`&tags[in]=`)
+
+    const url = `${ROOT_URL}/api/v1/products?tags[in]=${tagQueryParams}&limit=${limit}&page=${page}`
+    console.log(url)
+    const successHandler = async (res) => {
+        if (res.data.status === 'success') {
+            setProducts(res.data.data.docs)
+        }
+    }
+
+    return { successHandler, url }
+}
+
 export function useFetchProducts(type, props) {
-    const { collections, collectionName, categoryName } = props
+    const { collections, collectionName, categoryName, tags } = props
 
     const [products, setProducts] = useState([])
     const limit = 8
@@ -63,6 +77,8 @@ export function useFetchProducts(type, props) {
         })
     } else if (type === 'category') {
         urlAndHandler = getCategoryUrlAndSuccessHandler({ categoryName, setProducts, limit, page })
+    } else if (type === 'tags') {
+        urlAndHandler = getTagsUrlAndSuccessHandler({ tags, setProducts, limit, page })
     }
 
     url = urlAndHandler.url

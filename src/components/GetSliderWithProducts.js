@@ -12,9 +12,16 @@ function GetSliderWithProducts({
     itemBorderColor,
     caretColor,
     slides,
-    from,
+    from = 'category',
 }) {
-    const products = useFetchProducts('category', { categoryName: category })
+    const options = {}
+    if (from === 'category') {
+        options.categoryName = category
+    } else if (from === 'tags') {
+        options.tags = tags
+    }
+
+    const products = useFetchProducts(from, options)
 
     return (
         <SliderWithProduct
