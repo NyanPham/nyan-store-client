@@ -27,25 +27,34 @@ const createInitialState = (configEntries, isAddForm, variantToShow) => {
     return filteredVariantConfig
 }
 
-const processInputData = (inputData, config) => {
+const processInputData = (inputData, config, imageInput) => {
     const data = { ...inputData }
+    const formData = new FormData()
     Object.entries(config).forEach(([key, value]) => {
-        if (value.isArray && !Array.isArray(data[key])) {
-            data[key] = JSON.parse(data[key])
+        if (value.isArray && !Array.isArray(data[key]) && value.type !== 'file') {
+            formData.append(key, JSON.parse(data[key]))
         }
         if (value.type === 'number' && typeof data[key] !== 'number') {
-            data[key] = parseInt(data[key])
+            formData.append(key, parseInt(data[key]))
+        }
+        if (value.type === 'file') {
+            if (value.isMultiple) {
+                ;[...imageInput.files].forEach((file) => {
+                    formData.append(key, file)
+                })
+            } else {
+                formData.append(key, imageInput.files[0])
+            }
         }
     })
 
-    console.log(data)
-
-    return data
+    return formData
 }
 
 export default function VariantEditor({ variantId, variants, isAddForm, closeModal, config }) {
     const variantToShow = variants?.find((variant) => variant._id === variantId)
     const ref = useRef()
+    const imageInputRef = useRef()
     const configEntries = Object.entries(config)
     const [inputData, setInputData] = useState(() => createInitialState(configEntries, isAddForm, variantToShow))
     const [isLoading, setIsLoading] = useState(false)
@@ -68,7 +77,9 @@ export default function VariantEditor({ variantId, variants, isAddForm, closeMod
             withCredentials: true,
         }
 
-        const data = processInputData(inputData, config)
+        const data = processInputData(inputData, config, imageInputRef.current)
+
+        console.log(...data)
 
         if (method !== 'DELETE') axiosConfig.data = data
 
@@ -108,8 +119,9 @@ export default function VariantEditor({ variantId, variants, isAddForm, closeMod
         <div className="form-group" key={key}>
             <label htmlFor="key" className="capitalize form-title">
                 {key}: {value.type === 'date' ? inputData.expiresIn : ''}
+                {value.type === 'file' ? inputData[key] : ''}
             </label>
-            {value.type === 'textarea' ? (
+            {value.type === 'textarea' && (
                 <textarea
                     required={value.required}
                     name={key}
@@ -119,15 +131,31 @@ export default function VariantEditor({ variantId, variants, isAddForm, closeMod
                     onChange={hanldeInputChange}
                     // disabled={value.disabled || false}
                 ></textarea>
-            ) : (
+            )}
+            {value.type === 'file' && (
+                <input
+                    type="file"
+                    required={value.required}
+                    name={key}
+                    id={key}
+                    className="form-input"
+                    onChange={hanldeInputChange}
+                    multiple={value.type === 'file' && value.isMultiple}
+                    ref={imageInputRef}
+                    // disabled={value.disabled || false}
+                />
+            )}
+            {value.type !== 'file' && value.type !== 'textarea' && (
                 <input
                     type={value.type}
                     required={value.required}
                     name={key}
                     id={key}
                     className="form-input"
-                    value={inputData[key]}
+                    value={value.type === 'file' ? null : inputData[key]}
                     onChange={hanldeInputChange}
+                    multiple={value.type === 'file' && value.isMultiple}
+                    ref={value.type === 'file' ? imageInputRef : null}
                     // disabled={value.disabled || false}
                 />
             )}

@@ -127,8 +127,9 @@ export default function ProductAdminForm({ closeModal }) {
             required: false,
         },
         images: {
-            type: 'textarea',
-            isArray: true,
+            type: 'file',
+            // isArray: true,
+            isMultiple: true,
             required: false,
         },
         inventory: {
