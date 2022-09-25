@@ -62,22 +62,24 @@ const Home = () => {
             </section>
             <section className="py-10">
                 <GetSliderWithProducts
-                    tags={['women', 'fashion', 'beauty']}
+                    tags={['women']}
                     category="Women"
                     sideNavBackground="bg-slate-200"
                     borderColor="border-slate-200"
                     navTitle="Women"
                     slides={womenSlides}
+                    from="tags"
                 />
             </section>
             <section className="bg-gray-100 py-10">
                 <GetSliderWithProducts
-                    tags={['women', 'fashion', 'beauty']}
+                    tags={['men']}
                     category="Men"
                     sideNavBackground="bg-white"
                     borderColor="border-white"
                     navTitle="Men"
                     slides={menSlides}
+                    from="tags"
                 />
             </section>
             <SidebarNavigationDrawer />

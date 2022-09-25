@@ -12,6 +12,7 @@ function GetSliderWithProducts({
     itemBorderColor,
     caretColor,
     slides,
+    from,
 }) {
     const products = useFetchProducts('category', { categoryName: category })
 
