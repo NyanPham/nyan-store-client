@@ -110,7 +110,7 @@ export default function VariantEditor({ variantId, variants, isAddForm, closeMod
             const res = await axios(axiosConfig)
 
             if (res.data.status === 'success') {
-                alert(`The variant has been ${successText}.`)
+                alert(`The variant has been ${successText}. ID: ${res.data.data.doc._id}`)
                 setTimeout(closeModal, 500)
             }
         } catch (err) {

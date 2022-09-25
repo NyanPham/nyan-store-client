@@ -13,7 +13,7 @@ export const COLOR_MAP = {
     white: 'bg-white',
     blue: 'bg-blue-500',
     purple: 'bg-purple-500',
-
+    gray: 'bg-gray-500',
     ocean: 'bg-blue-400',
     lightgreen: 'bg-green-400',
     lightorange: 'bg-orange-400',
