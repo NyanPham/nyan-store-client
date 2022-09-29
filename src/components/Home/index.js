@@ -40,12 +40,13 @@ const Home = () => {
             </section>
             <section className="py-10">
                 <GetSliderWithProducts
-                    tags={['Footwear', 'sport']}
+                    tags={['furniture', 'chair', 'sofa', 'plant']}
                     category="Furnitures"
                     sideNavBackground="bg-slate-200"
                     borderColor="border-slate-200"
                     navTitle="Furniture"
                     slides={furnitureSlides}
+                    from="tags"
                 />
             </section>
             <section className="bg-gray-700 py-10">

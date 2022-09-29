@@ -72,7 +72,7 @@
     }
 
     .admin-editor-form {
-        @apply w-1/2 bg-white py-5 px-7 rounded-lg max-h-96 overflow-auto
+        @apply w-4/5 bg-white py-5 px-7 rounded-lg max-h-96 overflow-auto md:w-1/2
     }
 
     .admin-editor-form-title {

@@ -7,6 +7,7 @@ export const cart_configures = {
 }
 
 export const COLOR_MAP = {
+    darkgreen: 'bg-green-700',
     green: 'bg-green-500',
     red: 'bg-red-500',
     black: 'bg-gray-900',

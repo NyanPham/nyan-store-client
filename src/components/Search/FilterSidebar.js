@@ -119,6 +119,8 @@ export default function FilterSidebar(props) {
 
                 if (res.data.status === 'success') {
                     setFacetOptions(() => {
+                        if (res.data.data.facets[0] == null) return []
+
                         return Object.entries(res.data.data.facets[0]).map(([key, value]) => {
                             return {
                                 [key]: value.filter((value) => value.value != null || typeof value === 'number'),

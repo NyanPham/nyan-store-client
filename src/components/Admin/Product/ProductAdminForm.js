@@ -66,7 +66,7 @@ export default function ProductAdminForm({ closeModal }) {
 
     return (
         <Overlay closeModal={closeModal} childRef={ref}>
-            <form className="w-1/2 bg-white py-3 px-7" ref={ref}>
+            <form className="admin-editor-form" ref={ref}>
                 <h2 className="text-center text-2xl text-cyan-400 font-semibold">Products</h2>
                 <div className="max-h-96 mt-5 overflow-y-auto select-none">
                     {products.length > 0 &&

@@ -10,7 +10,7 @@ import ProductAdminForm from './Product/ProductAdminForm'
 export default function AdminMainPanel({ formShow, handleUserUpdate, adminFormRef }) {
     return (
         <div
-            className={`form w-3/4 p-7 mt-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
+            className={`form md:w-3/4 p-7 mt-7 rounded-lg bg-white mx-auto transform transition duration-300 ${
                 formShow === 'admin' ? 'block opacity-100 pointer-events-auto' : 'hidden opacity-0 pointer-events-none'
             }`}
             data-user-update="admin"
