@@ -9,7 +9,6 @@ export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPri
     const rangeSliderRef = useRef()
 
     const fullRange = maxPrice - minPrice
-    const rangeSliderWidth = rangeSliderRef.current?.clientWidth
 
     const handleSliderChange = (e) => {
         if (e.target.dataset.type === 'from') {
@@ -21,11 +20,11 @@ export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPri
 
     const updateRangeColor = useCallback(() => {
         const currentRange = (toValue - fromValue) / fullRange
-        const leftPosition = rangeSliderWidth
+        const leftPosition = ((fromValue - minPrice) / fullRange) * 100
 
         rangeSliderRef.current.style.setProperty('--left-position', leftPosition)
         rangeSliderRef.current.style.setProperty('--current-range', currentRange)
-    }, [fromValue, toValue, fullRange, rangeSliderWidth])
+    }, [fromValue, toValue, fullRange, minPrice])
 
     useEffect(() => {
         collectPriceRange({

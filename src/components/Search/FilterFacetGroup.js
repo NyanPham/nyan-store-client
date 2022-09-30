@@ -50,8 +50,8 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
                         </div>
                     </div>
                     <div
-                        className={`flex flex-wrap gap-2 p-2 max-w-full mt-3 transition-all transform duration-300 ease-in origin-top ${
-                            openFacet ? 'scale-y-100 max-h-96 overflow-auto' : 'scale-y-0 max-h-0 overflow-clip'
+                        className={`flex flex-wrap gap-2 p-2 max-w-full mt-3 transition-all transform duration-300 ease-in origin-top scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 scrollbar-rounded ${
+                            openFacet ? 'scale-y-100 max-h-56 overflow-auto' : 'scale-y-0 max-h-0 overflow-clip'
                         }`}
                     >
                         {options

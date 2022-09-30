@@ -196,7 +196,7 @@
     max-height: 350px;
 }
 
-#range-slider::after {
+#range-slider::before {
     content: '';
     position: absolute;
     top: 0;

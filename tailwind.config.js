@@ -5,6 +5,7 @@ module.exports = {
         extend: {
             boxShadow: {
                 top: '0 -3px 15px -8px rgba(0, 0, 0, 0.3)',
+                frame: 'inset 0 -1px 5px -4px rgba(0, 0, 0, 0.3)',
             },
             transitionProperty: {
                 height: 'height',
@@ -34,6 +35,6 @@ module.exports = {
     },
     plugins: [require('tailwind-scrollbar')],
     variants: {
-        scrollbar: ['rounded'],
+        scrollbar: ['rounded', 'thinner'],
     },
 }
