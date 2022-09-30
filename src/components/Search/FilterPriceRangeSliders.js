@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPriceRange }) {
     const [fromValue, setFromValue] = useState(0)
     const [toValue, setToValue] = useState(0)
-
     const [openFacet, setOpenFacet] = useState(true)
+    const rangeSliderRef = useRef()
+
+    const fullRange = maxPrice - minPrice
+    const rangeSliderWidth = rangeSliderRef.current?.clientWidth
 
     const handleSliderChange = (e) => {
         if (e.target.dataset.type === 'from') {
@@ -16,12 +19,22 @@ export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPri
         }
     }
 
+    const updateRangeColor = useCallback(() => {
+        const currentRange = (toValue - fromValue) / fullRange
+        const leftPosition = rangeSliderWidth
+
+        rangeSliderRef.current.style.setProperty('--left-position', leftPosition)
+        rangeSliderRef.current.style.setProperty('--current-range', currentRange)
+    }, [fromValue, toValue, fullRange, rangeSliderWidth])
+
     useEffect(() => {
         collectPriceRange({
             toValue,
             fromValue,
         })
-    }, [fromValue, toValue, maxPrice, minPrice, collectPriceRange])
+
+        updateRangeColor()
+    }, [fromValue, toValue, maxPrice, minPrice, collectPriceRange, updateRangeColor])
 
     useEffect(() => {
         setFromValue(minPrice)
@@ -47,7 +60,7 @@ export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPri
                     openFacet ? 'scale-y-100 h-max' : 'scale-y-0 h-0'
                 }`}
             >
-                <div className="relative w-full h-1 bg-gray-200">
+                <div className="relative w-full h-1 bg-gray-200" ref={rangeSliderRef} id="range-slider">
                     <input
                         className="absolute w-full h-1 appearance-none"
                         type="range"

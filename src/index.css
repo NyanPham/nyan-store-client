@@ -195,3 +195,13 @@
 #search-page .swiper {
     max-height: 350px;
 }
+
+#range-slider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: calc(var(--current-range) * 100%); 
+    left: calc((var(--left-position)) * 1%);
+    background: rgb(34 211 238);
+}
