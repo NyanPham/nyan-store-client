@@ -5,10 +5,8 @@ import ProductCardAction from './ProductCardAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
 import { useSideCartContext } from '../../context/sideCartContext'
-import VariantsPicker from './VariantsPicker'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { ROOT_URL } from '../../config'
+import VariantsPickerWithImage from './VariantsPickerWithImage'
 
 function ProductHorizontalCard(props) {
     const { id, summary, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
@@ -98,43 +96,14 @@ function ProductHorizontalCard(props) {
             )}
             {openQuickView &&
                 ReactDOM.createPortal(
-                    <div className="z-20 bg-slate-700/90 fixed top-0 left-0 w-full h-full">
-                        <div className="p-3 w-30-rem bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4">
-                            <div className="w-1/3">
-                                <img
-                                    className="block aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
-                                    src={`${ROOT_URL}/img/products/${selectedVariant.images[0]}`}
-                                    alt={selectedVariant.name}
-                                    crossOrigin="anonymous"
-                                    loading="lazy"
-                                />
-                            </div>
-                            <VariantsPicker
-                                productId={id}
-                                variants={variants}
-                                currentVariantId={firstVariant._id}
-                                buttonText={'Own Now'}
-                                data={'hello'}
-                                formSubmitHandler={handleAddToCart}
-                                inAuction={false}
-                                nameStyles="text-2xl"
-                                review={{
-                                    show: false,
-                                }}
-                                quantityControl={true}
-                                wishlist={false}
-                                isEditing={false}
-                                onVariantChange={handleVariantChange}
-                            />
-                            <button
-                                className="absolute right-4 top-3"
-                                type="button"
-                                onClick={() => setOpenQuickView(false)}
-                            >
-                                <FontAwesomeIcon icon={faClose} />
-                            </button>
-                        </div>
-                    </div>,
+                    <VariantsPickerWithImage
+                        selectedVariant={selectedVariant}
+                        id={id}
+                        variants={variants}
+                        handleAddToCart={handleAddToCart}
+                        handleVariantChange={handleVariantChange}
+                        setOpenQuickView={setOpenQuickView}
+                    />,
                     document.getElementById('modal-container')
                 )}
         </div>
