@@ -18,6 +18,8 @@ function ProductHorizontalCard(props) {
     const { loading, error, message } = useSelector((state) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
+    const [selectedVariant, setSelectedVariant] = useState(variants[0])
+
     const dispatch = useDispatch()
 
     const handleAddToCart = (data) => {
@@ -38,6 +40,10 @@ function ProductHorizontalCard(props) {
         }
 
         dispatch(addToCart(dataToSubmit))
+    }
+
+    const handleVariantChange = (variant) => {
+        setSelectedVariant(variant)
     }
 
     useEffect(() => {
@@ -93,14 +99,24 @@ function ProductHorizontalCard(props) {
             {openQuickView &&
                 ReactDOM.createPortal(
                     <div className="z-20 bg-slate-700/90 fixed top-0 left-0 w-full h-full">
-                        <div className="p-3 w-96 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <div className="p-3 w-30-rem bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4">
+                            <div className="w-1/3">
+                                <img
+                                    className="block aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
+                                    src={`${ROOT_URL}/img/products/${selectedVariant.images[0]}`}
+                                    alt={selectedVariant.name}
+                                    crossOrigin="anonymous"
+                                    loading="lazy"
+                                />
+                            </div>
                             <VariantsPicker
                                 productId={id}
                                 variants={variants}
                                 currentVariantId={firstVariant._id}
                                 buttonText={'Own Now'}
+                                data={'hello'}
                                 formSubmitHandler={handleAddToCart}
-                                currentBid={false}
+                                inAuction={false}
                                 nameStyles="text-2xl"
                                 review={{
                                     show: false,
@@ -108,6 +124,7 @@ function ProductHorizontalCard(props) {
                                 quantityControl={true}
                                 wishlist={false}
                                 isEditing={false}
+                                onVariantChange={handleVariantChange}
                             />
                             <button
                                 className="absolute right-4 top-3"

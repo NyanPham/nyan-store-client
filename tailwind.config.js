@@ -3,6 +3,9 @@ module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
+            width: {
+                '30-rem': '30rem',
+            },
             boxShadow: {
                 top: '0 -3px 15px -8px rgba(0, 0, 0, 0.3)',
                 frame: 'inset 0 -1px 5px -4px rgba(0, 0, 0, 0.3)',
