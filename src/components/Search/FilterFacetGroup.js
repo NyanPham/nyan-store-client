@@ -5,7 +5,13 @@ import { useCallback } from 'react'
 import { useEffect } from 'react'
 import FilterFacet from './FilterFacet'
 
-export default function FilterFacetGroup({ optionType, options, collectOptionsState }) {
+export default function FilterFacetGroup({
+    optionType,
+    options,
+    collectOptionsState,
+    filterToRemove,
+    setFilterToRemove,
+}) {
     const [openFacet, setOpenFacet] = useState(true)
     const [checkedOptions, setCheckedOptions] = useState(() =>
         options.reduce((state, option) => {
@@ -64,6 +70,8 @@ export default function FilterFacetGroup({ optionType, options, collectOptionsSt
                                             option={option}
                                             optionType={optionType}
                                             onFacetInput={hanldeFacetInput}
+                                            filterToRemove={filterToRemove}
+                                            setFilterToRemove={setFilterToRemove}
                                         />
                                     )
                             )}

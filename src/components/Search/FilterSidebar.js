@@ -6,6 +6,7 @@ import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
 // import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import SideNavigation from '../SideNavigation'
+import CurrentFacets from './CurrentFacets'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
@@ -24,7 +25,6 @@ export default function FilterSidebar(props) {
     const { page, limit, setPage } = pagination
 
     const [facetOptions, setFacetOptions] = useState([])
-
     const [filterQuery, setFilterQuery] = useState({
         page: page,
         limit: limit,
@@ -33,6 +33,12 @@ export default function FilterSidebar(props) {
         searchTerm: '',
         emptyCategory: true,
         categoryName,
+    })
+
+    const [selectedFacets, setSelectedFacets] = useState({})
+    const [filterToRemove, setFilterToRemove] = useState({
+        optionType: null,
+        value: null,
     })
 
     const search = useSelector((state) => state.search)
@@ -55,6 +61,13 @@ export default function FilterSidebar(props) {
                 [optionType]: selectedOptions,
             }
         })
+
+        setSelectedFacets((preSelectedFacets) => {
+            return {
+                ...preSelectedFacets,
+                [optionType]: selectedOptions,
+            }
+        })
     }, [])
 
     const collectPriceRange = useCallback(({ toValue, fromValue }) => {
@@ -66,6 +79,13 @@ export default function FilterSidebar(props) {
             }
         })
     }, [])
+
+    const handleRemoveFilter = (optionType, value) => {
+        setFilterToRemove({
+            optionType,
+            value,
+        })
+    }
 
     const searchProducts = async (filterQuery, allAvailableOptions) => {
         setIsLoading(true)
@@ -177,6 +197,7 @@ export default function FilterSidebar(props) {
 
     return (
         <div className="filter-sidebar pb-7 w-full row-span-6 border border-gray-300">
+            <CurrentFacets selectedFacets={selectedFacets} handleRemoveFilter={handleRemoveFilter} />
             <SideNavigation title="Categories" borderColor="border-0" />
             {facetOptions
                 ?.filter((facets) => {
@@ -192,6 +213,8 @@ export default function FilterSidebar(props) {
                             optionType={optionType}
                             options={options}
                             collectOptionsState={collectOptionsState}
+                            filterToRemove={filterToRemove}
+                            setFilterToRemove={setFilterToRemove}
                         />
                     )
                 })}

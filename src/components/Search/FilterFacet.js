@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 
-export default function FilterFacet({ option, optionType, onFacetInput }) {
+export default function FilterFacet({ option, optionType, onFacetInput, filterToRemove, setFilterToRemove }) {
     const [isChecked, setIsChecked] = useState(false)
 
     const handleOptionInput = (e) => {
@@ -11,6 +11,24 @@ export default function FilterFacet({ option, optionType, onFacetInput }) {
             isChecked: e.target.checked,
         })
     }
+
+    const { optionType: filterTypeToRemove, value: filterValueToRemove } = filterToRemove
+
+    useEffect(() => {
+        if (filterTypeToRemove == null || filterValueToRemove == null) return
+        if (filterTypeToRemove !== optionType) return
+
+        setIsChecked(false)
+        onFacetInput({
+            option: { value: filterValueToRemove },
+            isChecked: false,
+        })
+
+        setFilterToRemove({
+            optionType: null,
+            value: null,
+        })
+    }, [filterTypeToRemove, filterValueToRemove, optionType, onFacetInput, setIsChecked])
 
     useEffect(() => {
         setIsChecked(false)
@@ -35,12 +53,6 @@ export default function FilterFacet({ option, optionType, onFacetInput }) {
     ${isChecked && 'ring-2 ring-offset-1 ring-cyan-400'} ${optionType === 'size' ? 'uppercase' : 'capitalize'}`}
                 htmlFor={option.value}
             >
-                {/* <FontAwesomeIcon
-                    className={`absolute top-1/2 left-0.5 -translate-y-1/2 text-sm ${
-                        isChecked ? 'text-white' : 'hidden'
-                    }`}
-                    icon={faCheck}
-                /> */}
                 {option.value.split('-').join(' ')}
             </label>
         </>
