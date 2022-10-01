@@ -4,7 +4,7 @@ export default function CurrentFacets({ selectedFacets, handleRemoveFilter }) {
     const facets = Object.entries(selectedFacets).flatMap(([key, options]) =>
         options.map((option) => (
             <div
-                className={`flex cursor-pointer items-center gap-3 relative rounded-full border border-slate-700 px-3 py-2 leading-none transition duration-200 ${
+                className={`flex cursor-pointer items-center gap-3 relative rounded-full border border-slate-700 px-3 py-2 leading-none transition duration-200 hover:bg-red-400 ${
                     key === 'size' ? 'uppercase' : 'capitalize'
                 }`}
                 onClick={() => handleRemoveFilter(key, option)}

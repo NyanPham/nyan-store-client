@@ -75,8 +75,9 @@ function ProductInfo({ product, setProduct }) {
         [setProduct]
     )
 
-    const selectVariant = (variantId) => {
+    const selectVariant = (variantId, imgUrl) => {
         setSelectedVariantId(variantId)
+        setMainImage(imgUrl)
     }
 
     useEffect(() => {
@@ -131,7 +132,7 @@ function ProductInfo({ product, setProduct }) {
                                                 alt={variantName}
                                                 crossOrigin="anonymous"
                                                 loading="lazy"
-                                                onClick={() => selectVariant(variantId)}
+                                                onClick={() => selectVariant(variantId, imgUrl)}
                                             />
                                         ) : (
                                             <Skeleton />

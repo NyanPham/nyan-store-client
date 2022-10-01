@@ -290,7 +290,7 @@ export const auctionSlides = [
             },
         },
         button: {
-            text: 'Bid Now',
+            text: 'Buy Now',
             link: '/',
             styles: 'block bg-cyan-400 uppercase font-medium tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
@@ -325,7 +325,7 @@ export const auctionSlides = [
             },
         },
         button: {
-            text: 'Bid Now',
+            text: 'Buy Now',
             link: '/',
             styles: 'block bg-cyan-400 uppercase font-medium tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
@@ -360,7 +360,7 @@ export const auctionSlides = [
             },
         },
         button: {
-            text: 'Bid Now',
+            text: 'Buy Now',
             link: '/',
             styles: 'block bg-cyan-400 uppercase font-medium text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
@@ -548,7 +548,7 @@ export const photographySlides = [
         contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'DSRL Nikon 5RX',
-            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96 relative after:content-[""] after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-cyan-300 after:w-full after:scale-x-0 after:origin-right hover:text-cyan-300 hover:after:scale-x-100 hover:after:origin-left after:transition after:duration-200 transition duration-200',
         },
         price: {
             text: '$178',
@@ -561,7 +561,7 @@ export const photographySlides = [
         contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'DSRL Nikon III',
-            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96 relative after:content-[""] after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-cyan-300 after:w-full after:scale-x-0 after:origin-right hover:text-cyan-300 hover:after:scale-x-100 hover:after:origin-left after:transition after:duration-200 transition duration-200',
         },
         price: {
             text: '$178',
@@ -574,7 +574,7 @@ export const photographySlides = [
         contentStyles: 'top-5 left-5 md:top-7 md:left-7',
         title: {
             text: 'Nikon 7D',
-            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
+            styles: 'text-4xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96 relative after:content-[""] after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-cyan-300 after:w-full after:scale-x-0 after:origin-right hover:text-cyan-300 hover:after:scale-x-100 hover:after:origin-left after:transition after:duration-200 transition duration-200',
         },
         price: {
             text: '$178',

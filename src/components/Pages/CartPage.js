@@ -43,9 +43,9 @@ export default function CartPage() {
                     <ShippingCalculator />
                 </div>
             </section>
-            <section>
+            {/* <section>
                 <ProductAuction />
-            </section>
+            </section> */}
         </>
     )
 }

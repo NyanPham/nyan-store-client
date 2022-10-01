@@ -20,9 +20,9 @@ const Home = () => {
             <section className="py-12">
                 <SliderWithPreview />
             </section>
-            <section className="bg-slate-200 py-7">
+            {/* <section className="bg-slate-200 py-7">
                 <ProductAuction />
-            </section>
+            </section> */}
             <section className="pb-7 pt-3 bg-slate-200">
                 <AuctionSlider />
             </section>

@@ -42,7 +42,11 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
                                 loading="lazy"
                             />
                             <div className={`absolute ${slide.contentStyles}`}>
-                                {slide.title && <h3 className={slide.title.styles}>{slide.title.text}</h3>}
+                                {slide.title && (
+                                    <h3 className={slide.title.styles}>
+                                        <a href={slide.link || '#'}>{slide.title.text}</a>
+                                    </h3>
+                                )}
                                 {slide.subtitle && <h4 className={slide.subtitle.styles}>{slide.subtitle.text}</h4>}
                                 {slide.text1 && <span className={slide.text1.styles}>{slide.text1.text}</span>}
                                 {slide.text2 && <span className={slide.text2.styles}>{slide.text2.text}</span>}

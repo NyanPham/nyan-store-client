@@ -14,8 +14,6 @@ function ProductAuction() {
     const [userBiddingProducts, setUserBiddingProducts] = useState([])
     const biddingProducts = useSelector((state) => state.biddingProducts.data)
 
-    console.log(biddingProducts)
-
     const isInCartPage = pathname.startsWith('/cart')
 
     useDeepCompareEffect(() => {

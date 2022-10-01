@@ -11,10 +11,10 @@ import { useMemo } from 'react'
 
 function ProductAuctionCard({ product }) {
     const [openAuctionModal, setOpenAuctionModal] = useState(false)
-    const [autionData, setAutionData] = useState([])
+    const [auctionData, setAuctionData] = useState([])
     const { message } = useSelector((state) => state.biddingProducts)
 
-    const fetchAutionData = async (productId) => {
+    const fetchauctionData = async (productId) => {
         try {
             const res = await axios({
                 method: 'GET',
@@ -22,20 +22,41 @@ function ProductAuctionCard({ product }) {
                 withCredentials: true,
             })
             if (res.data.status === 'success') {
-                setAutionData(res.data.data.docs)
+                setAuctionData(res.data.data.docs)
             }
         } catch (err) {
             alert(err.response.data.message)
         }
     }
 
+    // const setAuctionWinner = async (currentBidData) => {
+    //     try {
+    //         const res = await axios({
+    //             method: 'PATCH',
+    //             url: `${ROOT_URL}/api/v1/users/myBiddings/setWonBid`,
+    //             data: {
+    //                 product: product._id,
+    //                 variant: currentBidData.variant,
+    //                 bidPrice: currentBidData.price,
+    //                 winner: currentBidData.bidder,
+    //             },
+    //             withCredentials: true,
+    //         })
+    //         if (res.data.status === 'success') {
+    //             setAuctionData(res.data.data.docs)
+    //         }
+    //     } catch (err) {
+    //         alert(err.response.data.message)
+    //     }
+    // }
+
     useEffect(() => {
-        fetchAutionData(product._id)
+        fetchauctionData(product._id)
     }, [product._id])
 
     useEffect(() => {
         if (message) {
-            fetchAutionData(product._id)
+            fetchauctionData(product._id)
             setTimeout(() => {
                 setOpenAuctionModal(false)
             }, 2000)
@@ -43,9 +64,14 @@ function ProductAuctionCard({ product }) {
     }, [message, product._id])
 
     const currentBidData = useMemo(() => {
-        return autionData
+        return auctionData
             .map((bidding) => {
-                return { price: bidding.price, bidder: bidding.user.email, duesIn: bidding.duesIn }
+                return {
+                    price: bidding.price,
+                    bidder: bidding.user.email,
+                    duesIn: bidding.duesIn,
+                    variant: bidding.variant,
+                }
             })
             .reduce(
                 (maxBid, bidData) => {
@@ -57,7 +83,15 @@ function ProductAuctionCard({ product }) {
                 },
                 { price: 0, bidder: '', duesIn: undefined }
             )
-    }, [autionData])
+    }, [auctionData])
+
+    // const isEnd = new Date(currentBidData.duesIn).getTime() <= Date.now() || false
+
+    // useEffect(() => {
+    //     if (!isEnd || currentBidData == null) return
+
+    //     setAuctionWinner(currentBidData)
+    // }, [isEnd, setAuctionWinner, currentBidData])
 
     return (
         <>
@@ -69,8 +103,9 @@ function ProductAuctionCard({ product }) {
                 </div>
                 <Countdown dueDate={product.auctionExpiresIn} />
                 <button
-                    className="w-full py-1 mt-4 bg-cyan-400 text-white text-lg font-semibold rounded-2xl hover:bg-gray-900 hover:text-cyan-400 transition transform duration-200"
+                    className="w-full py-1 mt-4 bg-cyan-400 text-white text-lg font-semibold rounded-2xl hover:bg-gray-900 hover:text-cyan-400 transition transform duration-200 disabled:bg-gray-300 disabled:text-slate-100"
                     onClick={() => setOpenAuctionModal(true)}
+                    // disabled={isEnd}
                 >
                     Bid Now
                 </button>
