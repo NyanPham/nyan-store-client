@@ -1,5 +1,4 @@
 import AuctionSlider from '../Auction/AuctionSlider'
-import ProductAuction from '../Auction/ProductAuction'
 import GetSliderWithProducts from '../GetSliderWithProducts'
 import Hero from '../Hero'
 import ProductRecommendation from '../Products/ProductRecommendation'
