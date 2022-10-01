@@ -28,7 +28,7 @@ export default function FilterFacet({ option, optionType, onFacetInput, filterTo
             optionType: null,
             value: null,
         })
-    }, [filterTypeToRemove, filterValueToRemove, optionType, onFacetInput, setIsChecked])
+    }, [filterTypeToRemove, filterValueToRemove, optionType, onFacetInput, setIsChecked, setFilterToRemove])
 
     useEffect(() => {
         setIsChecked(false)
