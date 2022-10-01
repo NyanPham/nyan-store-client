@@ -6,7 +6,6 @@ import CouponCode from '../Cart/CouponCode'
 import PreCheckoutInfo from '../Cart/PreCheckoutInfo'
 import ShippingCalculator from '../Cart/ShippingCalculator'
 import { Link } from 'react-router-dom'
-import ProductAuction from '../Auction/ProductAuction'
 
 export default function CartPage() {
     const { cart } = useSelector((state) => state.cart)
