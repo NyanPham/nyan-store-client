@@ -34,5 +34,9 @@ export default function Logout() {
         logout()
     }, [authLogout, navigate])
 
-    return <div>{text}</div>
+    return (
+        <div className="w-screen h-screen flex justify-center items-center text-3xl font-semibold text-cyan-400">
+            {text}
+        </div>
+    )
 }

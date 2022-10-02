@@ -169,7 +169,7 @@ function VariantsPicker(props) {
                     <div className="flex justify-start items-center gap-2 xl:justify-center">
                         <button
                             className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300"
-                            onClick={() => setShowReviews(true)}
+                            onClick={() => (review.reviews.length > 0 ? setShowReviews(true) : setShowReviews(false))}
                         >
                             {review.ratingsQuantity > 0 ? `Read ${review.ratingsQuantity} reviews` : 'No reviews yet'}
                         </button>
