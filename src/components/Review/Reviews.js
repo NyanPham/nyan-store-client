@@ -1,7 +1,6 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useRef } from 'react'
-import LoadingWithAlert from '../LoadingWithAlert'
 import Overlay from '../Overlay'
 import Review from './Review'
 
