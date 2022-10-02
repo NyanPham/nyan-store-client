@@ -8,7 +8,7 @@ export default function Overlay({ children, closeModal, childRef }) {
 
     return (
         <div
-            className="fixed top-0 left-0 w-full h-full bg-gray-800/90 flex justify-center items-center"
+            className="fixed top-0 left-0 w-full h-full bg-gray-800/90 flex justify-center items-center z-20"
             onClick={handleCloseModal}
         >
             {children}

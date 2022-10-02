@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
@@ -17,7 +17,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
 import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
-import { useCallback } from 'react'
 
 const getImagesFromVariants = (variants) => {
     return variants?.flatMap((variant) => {
@@ -39,9 +38,16 @@ function ProductInfo({ product, setProduct }) {
     const { setOpenSideCart } = useSideCartContext()
     const [mainImage, setMainImage] = useState(product?.variants[0].images[0])
     const [selectedVariantId, setSelectedVariantId] = useState(product?.variants[0]._id)
-    const images = getImagesFromVariants(product?.variants)
+    const images = getImagesFromVariants(product?.variants) || []
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [lenPosition, setLenPosition] = useState({ x: 0, y: 0 })
+    const [resultBackgroundPos, setResultBackgroundPos] = useState({ x: 0, y: 0 })
+    const [showZoom, setShowZoom] = useState(false)
+
+    const mainImageRef = useRef()
+    const imgLenRef = useRef()
+    const imgZoomResultRef = useRef()
 
     const isNew = new Date(Date.now() - new Date(product?.createdAt)).getHours() < 24 * 1
 
@@ -65,6 +71,7 @@ function ProductInfo({ product, setProduct }) {
                 })
                 if (res.data.status === 'success') {
                     const fetchedProduct = res.data.data.doc
+                    console.log(fetchedProduct)
                     setProduct(fetchedProduct)
                     setSelectedVariantId(fetchedProduct.variants[0]._id)
                 }
@@ -83,6 +90,12 @@ function ProductInfo({ product, setProduct }) {
     useEffect(() => {
         catchProduct(slug)
     }, [slug, catchProduct])
+
+    useEffect(() => {
+        if (product != null) return
+
+        catchProduct(slug)
+    }, [slug, product, catchProduct])
 
     useEffect(() => {
         if (!message || message !== 'success') return
@@ -104,11 +117,64 @@ function ProductInfo({ product, setProduct }) {
         dispatch(addToCart(dataToSubmit))
     }
 
+    const getCursorPosition = (e) => {
+        let x = 0,
+            y = 0,
+            imgBox
+        e = e || window.event
+
+        imgBox = mainImageRef.current.getBoundingClientRect()
+
+        x = e.pageX - imgBox.left
+        y = e.pageY - imgBox.top
+
+        x = x - window.scrollX
+        y = y - window.scrollY
+
+        return { x, y }
+    }
+
+    const moveLens = (e) => {
+        e.preventDefault()
+
+        if (!showZoom) setShowZoom(true)
+
+        const position = getCursorPosition(e)
+
+        let x = position.x - imgLenRef.current.offsetWidth / 2
+        let y = position.y - imgLenRef.current.offsetHeight / 2
+
+        if (x > mainImageRef.current.width - imgLenRef.current.offsetWidth)
+            x = mainImageRef.current.width - imgLenRef.current.offsetWidth
+        if (x < 0) x = 0
+        if (y > mainImageRef.current.height - imgLenRef.current.offsetHeight)
+            y = mainImageRef.current.height - imgLenRef.current.offsetHeight
+
+        if (y < 0) y = 0
+
+        const cx = mainImageRef.current.clientWidth / imgLenRef.current.offsetWidth
+        const cy = mainImageRef.current.clientHeight / imgLenRef.current.offsetHeight
+
+        imgZoomResultRef.current.style.width = `${mainImageRef.current.clientWidth * cx}px`
+        imgZoomResultRef.current.style.height = `${mainImageRef.current.clientHeight * cy}px`
+
+        setResultBackgroundPos({
+            x: cx * x,
+            y: cy * y,
+        })
+        setLenPosition({
+            x,
+            y,
+        })
+    }
+
+    console.log(product)
+
     return (
         <Container>
             <div className="flex flex-col gap-5 mt-5 justify-center md:mt-10 md:gap-10 md:flex-row">
                 <div className="flex flex-col w-full md:w-1/2">
-                    <div className="flex product-images max-h-96 gap-3">
+                    <div className="flex product-images max-h-96 max-w-96 gap-3">
                         <Swiper
                             className="flex-shrink-1 flex-grow-0 hidden md:flex select-none"
                             spaceBetween={15}
@@ -118,7 +184,8 @@ function ProductInfo({ product, setProduct }) {
                             direction="vertical"
                             loop={images && images.length >= 3}
                         >
-                            {images &&
+                            {product &&
+                                images &&
                                 images.map(({ imgUrl, variantId, variantName }, index) => (
                                     <SwiperSlide
                                         className=" flex-shrink-1 w-20 h-20"
@@ -149,11 +216,28 @@ function ProductInfo({ product, setProduct }) {
                         </Swiper>
                         <div className="aspect-square w-full bg-gray-400 relative">
                             <img
-                                className="w-full h-full object-contain object-center"
+                                className="w-full h-full object-cover object-center"
                                 src={`${ROOT_URL}/img/products/${mainImage}`}
                                 alt={product?.name}
                                 loading="lazy"
                                 crossOrigin="anonymous"
+                                onMouseMove={moveLens}
+                                onTouchMove={moveLens}
+                                onMouseLeave={() => setShowZoom(false)}
+                                ref={mainImageRef}
+                            />
+                            <span
+                                className={`absolute w-20 h-20 border border-slate-500 transition  ${
+                                    showZoom ? 'opacity-100' : 'opacity-0'
+                                }`}
+                                onMouseMove={moveLens}
+                                onTouchMove={moveLens}
+                                onMouseLeave={() => setShowZoom(false)}
+                                ref={imgLenRef}
+                                style={{
+                                    left: lenPosition.x + 'px',
+                                    top: lenPosition.y + 'px',
+                                }}
                             />
                             {isNew && (
                                 <div className="absolute bottom-3 right-3 bg-yellow-400 py-0.5 px-2 text-sm text-white rounded-lg">
@@ -169,10 +253,11 @@ function ProductInfo({ product, setProduct }) {
                         <ProductDetail title="Product Detail" content={product?.description} />
                     </div>
                 </div>
-                <div className="w-full md:w-1/3">
+                <div className="w-full md:w-1/3 relative">
                     {product != null && (
                         <VariantsPicker
                             productId={product._id}
+                            productName={product.name}
                             variants={product.variants}
                             buttonText={'Buy Now'}
                             formSubmitHandler={formSubmitHandler}
@@ -181,7 +266,7 @@ function ProductInfo({ product, setProduct }) {
                             priceStyles="border-b border-gray-200 w-full pb-3"
                             review={{
                                 show: true,
-                                reviews: product.reviews,
+                                reviews: product?.reviews || [],
                                 ratingsAverage: product.ratingsAverage,
                                 ratingsQuantity: product.ratingsQuantity,
                             }}
@@ -191,6 +276,23 @@ function ProductInfo({ product, setProduct }) {
                             currentVariantId={selectedVariantId}
                         />
                     )}
+                    <div
+                        className={`absolute top-4 left-4 w-96 h-96 border border-slate-800 transform transition duration-200 overflow-hidden pointer-events-none ${
+                            showZoom ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
+                        }`}
+                    >
+                        <img
+                            src={`${ROOT_URL}/img/products/${mainImage}`}
+                            alt={product?.name}
+                            loading="lazy"
+                            crossOrigin="anonymous"
+                            className="object-cover object-center"
+                            style={{
+                                objectPosition: `-${resultBackgroundPos.x}px -${resultBackgroundPos.y}px`,
+                            }}
+                            ref={imgZoomResultRef}
+                        />
+                    </div>
                 </div>
             </div>
         </Container>

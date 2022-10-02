@@ -24,7 +24,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                         <FontAwesomeIcon
                             className={`${
                                 alreadyAdded ? 'text-red-500' : 'text-slate-500'
-                            } w-4 h-4 hover:animate-shake`}
+                            } w-4 h-4 hover:text-cyan-500 transition duration-200`}
                             icon={faHeart}
                         />
                     </button>
@@ -32,13 +32,19 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                         onClick={() => setOpenQuickView(true)}
                     >
-                        <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faEye} />
+                        <FontAwesomeIcon
+                            className="text-slate-500 w-4 h-4 hover:text-cyan-500 transition duration-200"
+                            icon={faEye}
+                        />
                     </button>
                     <button
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                         onClick={() => handleAddToCart(null)}
                     >
-                        <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faCartPlus} />
+                        <FontAwesomeIcon
+                            className="text-slate-500 w-4 h-4 hover:text-cyan-500 transition duration-200"
+                            icon={faCartPlus}
+                        />
                     </button>
                 </>
             ) : (
@@ -54,7 +60,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                         <FontAwesomeIcon
                             className={`${
                                 alreadyAdded ? 'text-red-500' : 'text-slate-500'
-                            } w-4 h-4 hover:animate-shake`}
+                            } w-4 h-4 hover:text-cyan-500 transition duration-200`}
                             icon={faHeart}
                         />
                     </Link>
@@ -62,13 +68,19 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                         to={'/login'}
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                     >
-                        <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faEye} />
+                        <FontAwesomeIcon
+                            className="text-slate-500 w-4 h-4 hover:text-cyan-500 transition duration-200"
+                            icon={faEye}
+                        />
                     </Link>
                     <Link
                         to={'/login'}
                         className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                     >
-                        <FontAwesomeIcon className="text-slate-500 w-4 h-4 hover:animate-shake" icon={faCartPlus} />
+                        <FontAwesomeIcon
+                            className="text-slate-500 w-4 h-4 hover:text-cyan-500 transition duration-200"
+                            icon={faCartPlus}
+                        />
                     </Link>
                 </>
             )}

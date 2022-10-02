@@ -103,6 +103,15 @@ function ProductHorizontalCard(props) {
                         handleAddToCart={handleAddToCart}
                         handleVariantChange={handleVariantChange}
                         setOpenQuickView={setOpenQuickView}
+                        buttonText="Own Now"
+                        data="hello"
+                        nameStyles="text-2xl"
+                        review={{
+                            show: false,
+                        }}
+                        quantityControl={true}
+                        wishlist={false}
+                        isEditing={false}
                     />,
                     document.getElementById('modal-container')
                 )}

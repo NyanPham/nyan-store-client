@@ -87,6 +87,16 @@ function App() {
                         }
                     />
                     <Route
+                        path="/categories/:categoryName/:collectionName"
+                        element={
+                            <>
+                                <Header />
+                                <Search />
+                                <Footer />
+                            </>
+                        }
+                    />
+                    <Route
                         path="/products/:slug"
                         element={
                             <>

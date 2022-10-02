@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import ReactDOM from 'react-dom'
 import VariantOptions from './VariantOptions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +11,8 @@ import { useSelector } from 'react-redux'
 import useAddedToCart from '../../hooks/useAddedToCart'
 import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import { useEffect } from 'react'
+import Reviews from '../Review/Reviews'
+import AddReviewButton from '../Review/AddReviewButton'
 
 const getTargetVariantFromProduct = (currentVariantId, variants) => {
     return currentVariantId != null
@@ -43,6 +46,7 @@ const getButtonText = ({
 function VariantsPicker(props) {
     const {
         productId,
+        productName = '',
         variants,
         currentVariantId,
         buttonText,
@@ -69,6 +73,7 @@ function VariantsPicker(props) {
     const { loading, cart } = useSelector((state) => state.cart)
     const addedToCart = useAddedToCart(cart, productId)
     const { loading: biddingLoading } = useSelector((state) => state.biddingProducts)
+    const [showReviews, setShowReviews] = useState(false)
 
     const priceRef = useRef()
 
@@ -136,6 +141,8 @@ function VariantsPicker(props) {
         setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
     }, [currentVariantId, variants])
 
+    console.log(review)
+
     return (
         <div className="">
             <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>
@@ -160,13 +167,14 @@ function VariantsPicker(props) {
                             ))}
                     </div>
                     <div className="flex justify-start items-center gap-2 xl:justify-center">
-                        <button className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300">
+                        <button
+                            className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300"
+                            onClick={() => setShowReviews(true)}
+                        >
                             {review.ratingsQuantity > 0 ? `Read ${review.ratingsQuantity} reviews` : 'No reviews yet'}
                         </button>
                         <span className="text-cyan-500 font-semibold">|</span>
-                        <button className="text-cyan-500 font-semibold transition duration-200 hover:text-cyan-300">
-                            Write your review
-                        </button>
+                        <AddReviewButton productName={productName} productId={productId} />
                     </div>
                 </div>
             )}
@@ -272,6 +280,13 @@ function VariantsPicker(props) {
                     )}
                 </div>
             </form>
+            {showReviews &&
+                ReactDOM.createPortal(
+                    <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
+                        <Reviews reviews={review.reviews} closeReviews={() => setShowReviews(false)} />
+                    </div>,
+                    document.getElementById('modal-container')
+                )}
         </div>
     )
 }

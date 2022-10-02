@@ -5,7 +5,22 @@ import { ROOT_URL } from '../../config'
 import VariantsPicker from './VariantsPicker'
 
 export default function VariantsPickerWithImage(props) {
-    const { selectedVariant, id, variants, handleAddToCart, handleVariantChange, setOpenQuickView } = props
+    const {
+        selectedVariant,
+        id,
+        variants,
+        handleAddToCart = () => {},
+        handleVariantChange,
+        setOpenQuickView,
+        buttonText = 'Own Now',
+        data = 'hello',
+        nameStyles = 'text-2xl',
+        review = {},
+        quantityControl = true,
+        wishlist = false,
+        isEditing = false,
+        currentBid = false,
+    } = props
 
     return (
         <div className="z-20 bg-slate-700/90 fixed top-0 left-0 w-full h-full">
@@ -23,18 +38,17 @@ export default function VariantsPickerWithImage(props) {
                     productId={id}
                     variants={variants}
                     currentVariantId={variants[0]?._id}
-                    buttonText={'Own Now'}
-                    data={'hello'}
+                    buttonText={buttonText}
+                    data={data}
                     formSubmitHandler={handleAddToCart}
                     inAuction={false}
-                    nameStyles="text-2xl"
-                    review={{
-                        show: false,
-                    }}
-                    quantityControl={true}
-                    wishlist={false}
-                    isEditing={false}
+                    nameStyles={nameStyles}
+                    review={review}
+                    quantityControl={quantityControl}
+                    wishlist={wishlist}
+                    isEditing={isEditing}
                     onVariantChange={handleVariantChange}
+                    currentBid={currentBid}
                 />
                 <button className="absolute right-4 top-3" type="button" onClick={() => setOpenQuickView(false)}>
                     <FontAwesomeIcon icon={faClose} />

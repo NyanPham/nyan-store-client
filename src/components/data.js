@@ -205,7 +205,7 @@ export const slidesWPreview = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/catalyst',
             styles: 'block bg-cyan-400 uppercase font-semibold tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -231,7 +231,7 @@ export const slidesWPreview = [
         },
         button: {
             text: 'Learn More',
-            link: '/',
+            link: '/products/turbo',
             styles: 'bg-cyan-400 uppercase font-semibold tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -253,7 +253,7 @@ export const slidesWPreview = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/ereal',
             styles: 'block bg-cyan-400 uppercase font-semibold tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -269,29 +269,37 @@ export const auctionSlides = [
             styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
 
-        expiresTime: {
-            label: {
-                text: 'Time left:',
-                styles: 'text-sm text-slate-700 font-semibold',
-            },
-            timeLeft: {
-                date: new Date('2022-08-31'),
-                styles: 'text-lg text-amber-400 font-semibold',
-            },
+        // expiresTime: {
+        //     label: {
+        //         text: 'Time left:',
+        //         styles: 'text-sm text-slate-700 font-semibold',
+        //     },
+        //     timeLeft: {
+        //         date: new Date('2022-08-31'),
+        //         styles: 'text-lg text-amber-400 font-semibold',
+        //     },
+        // },
+        // currentBid: {
+        //     label: {
+        //         text: 'Current Bid:',
+        //         styles: 'text-sm text-slate-700 font-semibold',
+        //     },
+        //     value: {
+        //         text: '$3600',
+        //         styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
+        //     },
+        // },
+        comparePrice: {
+            text: '$398',
+            styles: 'relative text-lg font-medium text-amber-400 inline-block mr-2 after:content-[""] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-0 after:bg-amber-400 after:w-full after:h-0.5 after:rotate-30',
         },
-        currentBid: {
-            label: {
-                text: 'Current Bid:',
-                styles: 'text-sm text-slate-700 font-semibold',
-            },
-            value: {
-                text: '$3600',
-                styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
-            },
+        price: {
+            text: '$176',
+            styles: 'text-2xl font-bold text-slate-700 inline-block',
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/pearl-pendant',
             styles: 'block bg-cyan-400 uppercase font-medium tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -303,30 +311,37 @@ export const auctionSlides = [
             text: 'Necklace Saphire',
             styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
-
-        expiresTime: {
-            label: {
-                text: 'Time left:',
-                styles: 'text-sm text-slate-700 font-semibold',
-            },
-            timeLeft: {
-                date: new Date('2022-08-31'),
-                styles: 'text-lg text-amber-400 font-semibold',
-            },
+        comparePrice: {
+            text: '$398',
+            styles: 'relative text-lg font-medium text-amber-400 inline-block mr-2 after:content-[""] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-0 after:bg-amber-400 after:w-full after:h-0.5 after:rotate-30',
         },
-        currentBid: {
-            label: {
-                text: 'Current Bid:',
-                styles: 'text-sm text-slate-700 font-semibold',
-            },
-            value: {
-                text: '$3550',
-                styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
-            },
+        price: {
+            text: '$176',
+            styles: 'text-2xl font-bold text-slate-700 inline-block',
         },
+        // expiresTime: {
+        //     label: {
+        //         text: 'Time left:',
+        //         styles: 'text-sm text-slate-700 font-semibold',
+        //     },
+        //     timeLeft: {
+        //         date: new Date('2022-08-31'),
+        //         styles: 'text-lg text-amber-400 font-semibold',
+        //     },
+        // },
+        // currentBid: {
+        //     label: {
+        //         text: 'Current Bid:',
+        //         styles: 'text-sm text-slate-700 font-semibold',
+        //     },
+        //     value: {
+        //         text: '$3550',
+        //         styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
+        //     },
+        // },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/necklace-saphire',
             styles: 'block bg-cyan-400 uppercase font-medium tracking-wider text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -339,29 +354,37 @@ export const auctionSlides = [
             styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold w-72',
         },
 
-        expiresTime: {
-            label: {
-                text: 'Time left:',
-                styles: 'text-sm text-slate-700 font-semibold',
-            },
-            timeLeft: {
-                date: new Date('2022-08-31'),
-                styles: 'text-lg text-amber-400 font-semibold',
-            },
+        // expiresTime: {
+        //     label: {
+        //         text: 'Time left:',
+        //         styles: 'text-sm text-slate-700 font-semibold',
+        //     },
+        //     timeLeft: {
+        //         date: new Date('2022-08-31'),
+        //         styles: 'text-lg text-amber-400 font-semibold',
+        //     },
+        // },
+        // currentBid: {
+        //     label: {
+        //         text: 'Current Bid:',
+        //         styles: 'text-sm text-slate-700 font-semibold',
+        //     },
+        //     value: {
+        //         text: '$3550',
+        //         styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
+        //     },
+        // },
+        comparePrice: {
+            text: '$398',
+            styles: 'relative text-lg font-medium text-amber-400 inline-block mr-2 after:content-[""] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-0 after:bg-amber-400 after:w-full after:h-0.5 after:rotate-30',
         },
-        currentBid: {
-            label: {
-                text: 'Current Bid:',
-                styles: 'text-sm text-slate-700 font-semibold',
-            },
-            value: {
-                text: '$3550',
-                styles: 'text-3xl lg:text-4xl text-slate-700 font-semibold',
-            },
+        price: {
+            text: '$176',
+            styles: 'text-2xl font-bold text-slate-700 inline-block',
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/necklace-saphire',
             styles: 'block bg-cyan-400 uppercase font-medium text-white text-base py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -382,7 +405,7 @@ export const sportSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/alexander-rotker',
             styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold text-white tracking-wide text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -400,7 +423,7 @@ export const sportSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/umicharm',
             styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold text-white tracking-wide text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -421,7 +444,7 @@ export const furnitureSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/marlon',
             styles: 'bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -439,7 +462,7 @@ export const furnitureSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/products/burgos',
             styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -460,7 +483,7 @@ export const womenSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/categories/all/women',
             styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -478,7 +501,7 @@ export const womenSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/categories/all/women',
             styles: 'flex max-w-max ml-auto mr-unset bg-cyan-400 uppercase font-semibold tracking-wide  text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -499,7 +522,7 @@ export const menSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/categories/all/men',
             styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -517,7 +540,7 @@ export const menSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/categories/all/men',
             styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -535,7 +558,7 @@ export const menSlides = [
         },
         button: {
             text: 'Buy Now',
-            link: '/',
+            link: '/categories/all/men',
             styles: 'bg-cyan-400 uppercase font-semibold tracking-wide text-white text-md py-1 px-5 rounded-lg block mt-5 hover:bg-slate-700 hover:text-cyan-400 duration-200 transition',
         },
     },
@@ -554,6 +577,7 @@ export const photographySlides = [
             text: '$178',
             styles: 'text-2xl font-bold text-cyan-400 inline-block w-full',
         },
+        link: '/products/nikon-7d',
     },
     {
         image: canon2,
@@ -567,6 +591,7 @@ export const photographySlides = [
             text: '$178',
             styles: 'text-2xl font-bold text-cyan-400 inline-block w-full',
         },
+        link: '/products/nikon-7d',
     },
     {
         image: canon3,
@@ -580,5 +605,6 @@ export const photographySlides = [
             text: '$178',
             styles: 'text-2xl font-bold text-cyan-400 inline-block w-full',
         },
+        link: '/products/nikon-7d',
     },
 ]

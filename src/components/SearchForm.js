@@ -5,10 +5,12 @@ import { useState } from 'react'
 import useDebounce from '../hooks/useDebounce'
 import { search } from '../redux/actions/searchActions'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
 function SearchForm() {
-    const [searchTerm, setSearchTerm] = useState('')
+    const { collectionName } = useParams()
+    const [searchTerm, setSearchTerm] = useState(() => collectionName || '')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -17,6 +19,12 @@ function SearchForm() {
 
         navigate('/categories/all')
     }
+
+    useEffect(() => {
+        if (collectionName == null || collectionName === '') return
+
+        setSearchTerm(collectionName)
+    }, [collectionName])
 
     useDebounce(
         () => {

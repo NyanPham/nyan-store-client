@@ -4,12 +4,13 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import getMatchedButton from '../../utils/getMatchedButton'
-import VariantsPicker from '../Products/VariantsPicker'
 import { ROOT_URL } from '../../config'
+import VariantsPickerWithImage from '../Products/VariantsPickerWithImage'
 
 export default function CartEditor({ productId, variantId, onVariantChange }) {
     const [product, setProduct] = useState({})
     const [openEditor, setOpenEditor] = useState(false)
+    const [selectedVariant, setSelectedVariant] = useState({})
 
     useEffect(() => {
         const getProduct = async (productId) => {
@@ -22,6 +23,7 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
 
                 if (res.data.status === 'success') {
                     setProduct(res.data.data.doc)
+                    setSelectedVariant(res.data.data.doc.variants[0])
                 }
             } catch (err) {
                 alert(err.response.data.message)
@@ -43,6 +45,10 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
         onVariantChange(variant)
     }
 
+    const handleVariantChange = (variant) => {
+        setSelectedVariant(variant)
+    }
+
     return (
         <>
             <button
@@ -57,20 +63,22 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
                 ReactDOM.createPortal(
                     <div className="z-20 bg-slate-700/90 fixed top-0 left-0 w-full h-full">
                         <div className="p-3 w-96 bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <VariantsPicker
-                                productId={product?._id}
+                            <VariantsPickerWithImage
+                                selectedVariant={selectedVariant}
+                                id={product?._id}
                                 variants={product?.variants}
-                                currentVariantId={variantId}
-                                buttonText={'Edit'}
-                                formSubmitHandler={formSubmitHandler}
-                                currentBid={false}
+                                handleVariantChange={handleVariantChange}
+                                handleAddToCart={formSubmitHandler}
+                                setOpenQuickView={setOpenEditor}
+                                buttonText="Edit"
+                                data="hello"
                                 nameStyles="text-2xl"
                                 review={{
                                     show: false,
                                 }}
-                                quantityControl={false}
+                                quantityControl={true}
                                 wishlist={false}
-                                isEditing={true}
+                                isEditing={false}
                             />
                             <button
                                 className="absolute right-4 top-3"
