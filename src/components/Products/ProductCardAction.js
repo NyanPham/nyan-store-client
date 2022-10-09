@@ -14,7 +14,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
             {isLoggedIn ? (
                 <>
                     <button
-                        className={`w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 ${
+                        className={`w-8 h-6 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 ${
                             alreadyAdded
                                 ? ''
                                 : 'translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto'
@@ -29,7 +29,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                         />
                     </button>
                     <button
-                        className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
+                        className="w-8 h-6 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                         onClick={() => setOpenQuickView(true)}
                     >
                         <FontAwesomeIcon
@@ -38,7 +38,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                         />
                     </button>
                     <button
-                        className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
+                        className="w-8 h-6 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                         onClick={() => handleAddToCart(null)}
                     >
                         <FontAwesomeIcon
@@ -51,7 +51,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                 <>
                     <Link
                         to={'/login'}
-                        className={`w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 ${
+                        className={`w-8 h-6 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 ${
                             alreadyAdded
                                 ? ''
                                 : 'translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto'
@@ -66,7 +66,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                     </Link>
                     <Link
                         to={'/login'}
-                        className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
+                        className="w-8 h-6 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                     >
                         <FontAwesomeIcon
                             className="text-slate-500 w-5 h-5 hover:text-cyan-500 transition duration-200"
@@ -75,7 +75,7 @@ function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
                     </Link>
                     <Link
                         to={'/login'}
-                        className="w-7 h-5 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
+                        className="w-8 h-6 rounded-3xl border border-slate-500 flex items-center justify-center transform transition duration-200 translate-x-full pointer-events-none group-hover:translate-x-0 group-hover:pointer-events-auto"
                     >
                         <FontAwesomeIcon
                             className="text-slate-500 w-5 h-5 hover:text-cyan-500 transition duration-200"
