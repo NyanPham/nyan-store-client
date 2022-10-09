@@ -11,7 +11,7 @@ export default function LoadingWithAlert({ loading, showAlert, message, error, s
             {loading && (
                 <div
                     className={`${
-                        inContainer ? 'absolute z-10' : 'fixed z-30'
+                        inContainer ? 'absolute z-10' : 'fixed z-20'
                     } top-0 left-0 w-full h-full bg-gray-900/80 flex justify-center items-center`}
                 >
                     <FontAwesomeIcon icon={faSpinner} className="text-cyan-400 w-16 h-16 animate-spin" />
