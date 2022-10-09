@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
 import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
+import Overlay from '../Overlay'
 
 const getImagesFromVariants = (variants) => {
     return variants?.flatMap((variant) => {
@@ -38,16 +39,20 @@ function ProductInfo({ product, setProduct }) {
     const { setOpenSideCart } = useSideCartContext()
     const [mainImage, setMainImage] = useState(product?.variants[0].images[0])
     const [selectedVariantId, setSelectedVariantId] = useState(product?.variants[0]._id)
+
+    const [showZoomImage, setShowZoomImage] = useState(false)
     const images = getImagesFromVariants(product?.variants) || []
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [lenPosition, setLenPosition] = useState({ x: 0, y: 0 })
-    const [resultBackgroundPos, setResultBackgroundPos] = useState({ x: 0, y: 0 })
-    const [showZoom, setShowZoom] = useState(false)
+    // const [lenPosition, setLenPosition] = useState({ x: 0, y: 0 })
+    // const [resultBackgroundPos, setResultBackgroundPos] = useState({ x: 0, y: 0 })
+    // const [showZoom, setShowZoom] = useState(false)
 
-    const mainImageRef = useRef()
-    const imgLenRef = useRef()
-    const imgZoomResultRef = useRef()
+    // const mainImageRef = useRef()
+    // const imgLenRef = useRef()
+    // const imgZoomResultRef = useRef()
+
+    const imageZoomRef = useRef()
 
     const isNew = new Date(Date.now() - new Date(product?.createdAt)).getHours() < 24 * 1
 
@@ -71,7 +76,6 @@ function ProductInfo({ product, setProduct }) {
                 })
                 if (res.data.status === 'success') {
                     const fetchedProduct = res.data.data.doc
-                    console.log(fetchedProduct)
                     setProduct(fetchedProduct)
                     setSelectedVariantId(fetchedProduct.variants[0]._id)
                 }
@@ -117,62 +121,60 @@ function ProductInfo({ product, setProduct }) {
         dispatch(addToCart(dataToSubmit))
     }
 
-    const getCursorPosition = (e) => {
-        let x = 0,
-            y = 0,
-            imgBox
-        e = e || window.event
+    // const getCursorPosition = (e) => {
+    //     let x = 0,
+    //         y = 0,
+    //         imgBox
+    //     e = e || window.event
 
-        imgBox = mainImageRef.current.getBoundingClientRect()
+    //     imgBox = mainImageRef.current.getBoundingClientRect()
 
-        x = e.pageX - imgBox.left
-        y = e.pageY - imgBox.top
+    //     x = e.pageX - imgBox.left
+    //     y = e.pageY - imgBox.top
 
-        x = x - window.scrollX
-        y = y - window.scrollY
+    //     x = x - window.scrollX
+    //     y = y - window.scrollY
 
-        return { x, y }
-    }
+    //     return { x, y }
+    // }
 
-    const moveLens = (e) => {
-        e.preventDefault()
+    // const moveLens = (e) => {
+    //     e.preventDefault()
 
-        if (!showZoom) setShowZoom(true)
+    //     if (!showZoom) setShowZoom(true)
 
-        const position = getCursorPosition(e)
+    //     const position = getCursorPosition(e)
 
-        let x = position.x - imgLenRef.current.offsetWidth / 2
-        let y = position.y - imgLenRef.current.offsetHeight / 2
+    //     let x = position.x - imgLenRef.current.offsetWidth / 2
+    //     let y = position.y - imgLenRef.current.offsetHeight / 2
 
-        if (x > mainImageRef.current.width - imgLenRef.current.offsetWidth)
-            x = mainImageRef.current.width - imgLenRef.current.offsetWidth
-        if (x < 0) x = 0
-        if (y > mainImageRef.current.height - imgLenRef.current.offsetHeight)
-            y = mainImageRef.current.height - imgLenRef.current.offsetHeight
+    //     if (x > mainImageRef.current.width - imgLenRef.current.offsetWidth)
+    //         x = mainImageRef.current.width - imgLenRef.current.offsetWidth
+    //     if (x < 0) x = 0
+    //     if (y > mainImageRef.current.height - imgLenRef.current.offsetHeight)
+    //         y = mainImageRef.current.height - imgLenRef.current.offsetHeight
 
-        if (y < 0) y = 0
+    //     if (y < 0) y = 0
 
-        const cx = mainImageRef.current.clientWidth / imgLenRef.current.offsetWidth
-        const cy = mainImageRef.current.clientHeight / imgLenRef.current.offsetHeight
+    //     const cx = mainImageRef.current.clientWidth / imgLenRef.current.offsetWidth
+    //     const cy = mainImageRef.current.clientHeight / imgLenRef.current.offsetHeight
 
-        imgZoomResultRef.current.style.width = `${mainImageRef.current.clientWidth * cx}px`
-        imgZoomResultRef.current.style.height = `${mainImageRef.current.clientHeight * cy}px`
+    //     imgZoomResultRef.current.style.width = `${mainImageRef.current.clientWidth * cx}px`
+    //     imgZoomResultRef.current.style.height = `${mainImageRef.current.clientHeight * cy}px`
 
-        setResultBackgroundPos({
-            x: cx * x,
-            y: cy * y,
-        })
-        setLenPosition({
-            x,
-            y,
-        })
-    }
-
-    console.log(product)
+    //     setResultBackgroundPos({
+    //         x: cx * x,
+    //         y: cy * y,
+    //     })
+    //     setLenPosition({
+    //         x,
+    //         y,
+    //     })
+    // }
 
     return (
         <Container>
-            <div className="flex flex-col gap-5 mt-5 justify-center md:mt-10 md:gap-10 md:flex-row">
+            <div className="flex flex-col gap-5 mt-5 justify-center md:mt-10 md:gap-10 md:flex-row relative">
                 <div className="flex flex-col w-full md:w-1/2">
                     <div className="flex product-images max-h-96 max-w-96 gap-3">
                         <Swiper
@@ -221,30 +223,27 @@ function ProductInfo({ product, setProduct }) {
                                 alt={product?.name}
                                 loading="lazy"
                                 crossOrigin="anonymous"
-                                onMouseMove={moveLens}
-                                onTouchMove={moveLens}
-                                onMouseLeave={() => setShowZoom(false)}
-                                ref={mainImageRef}
+                                // ref={mainImageRef}
                             />
-                            <span
+                            {/* <span
                                 className={`absolute w-20 h-20 border border-slate-500 transition  ${
                                     showZoom ? 'opacity-100' : 'opacity-0'
                                 }`}
-                                onMouseMove={moveLens}
-                                onTouchMove={moveLens}
-                                onMouseLeave={() => setShowZoom(false)}
                                 ref={imgLenRef}
                                 style={{
                                     left: lenPosition.x + 'px',
                                     top: lenPosition.y + 'px',
                                 }}
-                            />
+                            /> */}
                             {isNew && (
                                 <div className="absolute bottom-3 right-3 bg-yellow-400 py-0.5 px-2 text-sm text-white rounded-lg">
                                     New
                                 </div>
                             )}
-                            <button className="absolute left-3 bottom-3 w-8 h-8 text-white border border-white rounded-full transition transform duration-300 hover:bg-slate-200/90 hover:scale-110">
+                            <button
+                                className="absolute left-3 bottom-3 w-8 h-8 text-white border border-white rounded-full transition transform duration-300 hover:bg-slate-200/90 hover:scale-110"
+                                onClick={() => setShowZoomImage(true)}
+                            >
                                 <FontAwesomeIcon className="w-1/2 h-1/2" icon={faExpand} />
                             </button>
                         </div>
@@ -276,7 +275,7 @@ function ProductInfo({ product, setProduct }) {
                             currentVariantId={selectedVariantId}
                         />
                     )}
-                    <div
+                    {/* <div
                         className={`absolute top-4 left-4 w-96 h-96 border border-slate-800 transform transition duration-200 overflow-hidden pointer-events-none ${
                             showZoom ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
                         }`}
@@ -292,8 +291,21 @@ function ProductInfo({ product, setProduct }) {
                             }}
                             ref={imgZoomResultRef}
                         />
-                    </div>
+                    </div> */}
                 </div>
+                {showZoomImage && (
+                    <Overlay closeModal={() => setShowZoomImage(false)} childRef={imageZoomRef}>
+                        <div className="w-96 aspect-square bg-white" ref={imageZoomRef}>
+                            <img
+                                className="w-full h-full object-cover object-center"
+                                src={`${ROOT_URL}/img/products/${mainImage}`}
+                                alt={product?.name}
+                                loading="lazy"
+                                crossOrigin="anonymous"
+                            />
+                        </div>
+                    </Overlay>
+                )}
             </div>
         </Container>
     )

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from './Alert/Alert'
+import Overlay from './Overlay'
 
 export default function LoadingWithAlert({ loading, showAlert, message, error, setShowAlert, inContainer = false }) {
     return (
@@ -18,14 +19,14 @@ export default function LoadingWithAlert({ loading, showAlert, message, error, s
             )}
             {showAlert &&
                 ReactDOM.createPortal(
-                    <>
+                    <Overlay position="top">
                         <Alert
                             type={message ? 'success' : 'error'}
                             message={message ? message : error ? error : ''}
                             delayToClose={3000}
                             closeCallback={() => setShowAlert(false)}
                         />
-                    </>,
+                    </Overlay>,
                     document.getElementById('modal-container')
                 )}
         </>

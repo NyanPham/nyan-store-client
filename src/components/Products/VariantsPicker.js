@@ -141,8 +141,6 @@ function VariantsPicker(props) {
         setDesiredVariant(getTargetVariantFromProduct(currentVariantId, variants))
     }, [currentVariantId, variants])
 
-    console.log(review)
-
     return (
         <div className="">
             <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>

@@ -70,9 +70,9 @@ export default function FilterView(props) {
                 />
 
                 {pageNumbers && pageNumbers.length > 1 && (
-                    <div className="mx-auto flex flex-row col-span-full mt-7 mb-4">
+                    <div className="mx-auto flex flex-row gap-2 col-span-full mt-7 mb-4">
                         <button
-                            className="rounded-full h-10 w-10 bg-white text-cyan-400 border border-slate-700 hover:bg-cyan-400 hover:text-white transition duration-200"
+                            className="rounded-full h-10 w-10 mr-2 bg-white text-cyan-400 border border-slate-700 hover:bg-cyan-400 hover:text-white transition duration-200"
                             onClick={handlePaginationClick}
                             data-pagination="prev"
                         >
@@ -81,8 +81,8 @@ export default function FilterView(props) {
                         {pageNumbers.map((pageNum) => (
                             <button
                                 key={`pagination_${pageNum}`}
-                                className={`text-cyan-400 h-10 w-10 relative after:absolute after:left-1/2 after:-bottom-0.5 after:-translate-x-1/2 after:h-0.5 after:w-1/4 after:bg-cyan-500 after:origin-left hover:after:origin-right hover:after:scale-x-100 after:transform after:transition-all after:duration-200 ${
-                                    page === pageNum ? 'font-bold after:scale-x-100' : 'after:scale-x-0'
+                                className={`h-10 w-10 relative font-bold rounded-md hover:text-white hover:bg-cyan-400 ${
+                                    page === pageNum ? ' text-white bg-cyan-500' : 'text-cyan-400'
                                 }`}
                                 onClick={handlePaginationClick}
                                 data-pagination={pageNum}
@@ -91,7 +91,7 @@ export default function FilterView(props) {
                             </button>
                         ))}
                         <button
-                            className="rounded-full h-10 w-10 bg-white text-cyan-400 border border-slate-700 hover:bg-cyan-400 hover:text-white transition duration-200"
+                            className="rounded-full h-10 w-10 ml-2 bg-white text-cyan-400 border border-slate-700 hover:bg-cyan-400 hover:text-white transition duration-200"
                             onClick={handlePaginationClick}
                             data-pagination="next"
                         >

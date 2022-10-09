@@ -22,6 +22,7 @@ module.exports = {
             },
             animation: {
                 shake: 'shake 0.82s cubic-bezier(.36,.07,.19,.97) infinite',
+                showUp: 'showUp 350ms cubic-bezier(.36,.07,.19,.97) forwards',
             },
             keyframes: {
                 shake: {
@@ -32,6 +33,10 @@ module.exports = {
                     '30%, 50%, 70%': { transform: 'translate3d(-2px, 0, 0)' },
 
                     '40%, 60%': { transform: 'translate3d(2px, 0, 0)' },
+                },
+                showUp: {
+                    '0%': { opacity: '0', transform: 'translateY(-10%)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
                 },
             },
         },

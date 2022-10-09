@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { removeCart } from '../../redux/actions/cartActions'
 import getMatchedButton from '../../utils/getMatchedButton'
 import AlertWithConfirm from '../Alert/AlertWithConfirm'
+import Overlay from '../Overlay'
 
 export default function CartRemover({ productId, variantId }) {
     const [openConfirm, setOpenConfirm] = useState(false)
@@ -48,7 +49,7 @@ export default function CartRemover({ productId, variantId }) {
             </button>
             {openConfirm &&
                 ReactDOM.createPortal(
-                    <div className="fixed top-0 left-0 w-full h-full z-20 bg-slate-900/50">
+                    <Overlay>
                         <AlertWithConfirm
                             type="warning"
                             message="Are you sure to remove the item from your cart"
@@ -58,7 +59,7 @@ export default function CartRemover({ productId, variantId }) {
                             cancelCallback={onCancel}
                             closeCallback={onClose}
                         />
-                    </div>,
+                    </Overlay>,
                     document.getElementById('modal-container')
                 )}
         </>

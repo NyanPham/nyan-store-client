@@ -124,14 +124,14 @@ export default function AddReviewButton({ productName, productId }) {
                 )}
             {showAlert &&
                 ReactDOM.createPortal(
-                    <>
+                    <Overlay position="top">
                         <Alert
                             type={message ? 'success' : 'error'}
                             message={message ? message : error ? error : ''}
                             delayToClose={3000}
                             closeCallback={() => setShowAlert(false)}
                         />
-                    </>,
+                    </Overlay>,
                     document.getElementById('modal-container')
                 )}
         </>
