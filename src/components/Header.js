@@ -4,7 +4,7 @@ import nyanLogo from '../imgs/nyan-logo.png'
 import SearchForm from './SearchForm'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-    faArrowRightArrowLeft,
+    faClipboard,
     faShoppingCart,
     faHeart,
     faMagnifyingGlass,
@@ -91,14 +91,8 @@ const Header = () => {
                     >
                         <FontAwesomeIcon className="header-navigation-icon" icon={faMagnifyingGlass} />
                     </button>
-                    <Link
-                        to={`/myOrders`}
-                        className="rounded-full border-cyan-400 border-2 header-navigation-btn group"
-                    >
-                        <FontAwesomeIcon
-                            className="text-cyan-400 group-hover:text-cyan-300 group-active:text-cyan-500 transition duration-200"
-                            icon={faArrowRightArrowLeft}
-                        />
+                    <Link to={`/myOrders`} className="text-sm header-navigation-btn group">
+                        <FontAwesomeIcon className="header-navigation-icon" icon={faClipboard} />
                     </Link>
                     <button
                         className="header-navigation-btn group relative"

@@ -16,7 +16,7 @@ export default function FilterContainer() {
     const [error, setError] = useState('')
     const [showAlert, setShowAlert] = useState(false)
     const [page, setPage] = useState(1)
-    const limit = 6
+    const limit = 9
 
     const [openSidebar, setOpenSidebar] = useState(false)
     const { categoryName } = useParams()

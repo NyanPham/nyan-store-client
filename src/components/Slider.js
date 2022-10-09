@@ -1,6 +1,6 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination } from 'swiper'
+import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -14,13 +14,17 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
             direction={direction}
             spaceBetween={2}
             slidesPerView={1}
-            modules={[Navigation, Pagination]}
+            modules={[Navigation, Pagination, Autoplay]}
             navigation
             pagination={{ clickable: true }}
             onSlideChangeTransitionStart={function () {
                 setCurrentSlide(this.realIndex)
             }}
             loop={true}
+            autoplay={{
+                delay: 2500,
+                disableOnInteraction: true,
+            }}
             breakpoints={{
                 768: {
                     slidesPerView: slidesPerView,

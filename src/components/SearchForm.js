@@ -5,11 +5,12 @@ import { useState } from 'react'
 import useDebounce from '../hooks/useDebounce'
 import { search } from '../redux/actions/searchActions'
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
 function SearchForm({ openSearch, setOpenSearch }) {
     const { collectionName } = useParams()
+    const { pathname } = useLocation()
     const [searchTerm, setSearchTerm] = useState(() => collectionName || '')
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -25,6 +26,12 @@ function SearchForm({ openSearch, setOpenSearch }) {
 
         setSearchTerm(collectionName)
     }, [collectionName])
+
+    useEffect(() => {
+        if (!pathname.startsWith('/categories')) {
+            setSearchTerm('')
+        }
+    }, [pathname])
 
     useDebounce(
         () => {
@@ -52,8 +59,9 @@ function SearchForm({ openSearch, setOpenSearch }) {
                 onInput={(e) => setSearchTerm(e.target.value)}
                 placeholder="search"
             />
+
             <button
-                type="button"
+                type="submit"
                 className="absolute top-1/2 right-10 md:right-7 -translate-y-1/2"
                 onClick={() => setOpenSearch(false)}
             >
