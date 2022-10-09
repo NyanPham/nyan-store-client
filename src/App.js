@@ -18,6 +18,7 @@ import axios from 'axios'
 import { configure } from 'axios-hooks'
 import LoadingWithAlert from './components/LoadingWithAlert'
 import useScrollToTop from './hooks/useScrollToTop'
+import SidebarNavigationDrawer from './components/SidebarNavigationDrawer'
 
 const instance = axios.create({
     withCredentials: true,
@@ -145,7 +146,9 @@ function App() {
                     setShowAlert={setShowAlert}
                 />
             </div>
-            <div id="modal-container"></div>
+            <div id="modal-container">
+                <SidebarNavigationDrawer />
+            </div>
         </>
     )
 }
