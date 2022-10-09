@@ -56,6 +56,7 @@ function SideNavigation({
     itemBorderColor = 'border-slate-900/10',
     caretColor = 'text-slate-400',
     themeColor = 'text-cyan-400',
+    setOpenSidebar = () => {},
 }) {
     return (
         <div
@@ -73,6 +74,7 @@ function SideNavigation({
                                 index === navObjArray.length - 1 ? '' : `border-b ${itemBorderColor}`
                             }`}
                             key={`navigation_${index}_${Date.now()}`}
+                            onClick={() => isDrawer && setOpenSidebar(false)}
                         >
                             <div className="flex items-center justify-start gap-3">
                                 <FontAwesomeIcon

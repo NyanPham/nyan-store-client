@@ -180,6 +180,8 @@ export default function FilterSidebar(props) {
                 categoryName: categoryName,
             }
         })
+
+        setSelectedFacets({})
     }, [sortByTerm, categoryId, search, pathname, categoryName])
 
     useEffect(() => {
