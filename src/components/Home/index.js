@@ -9,7 +9,7 @@ import GetSliderWithVertical from '../GetSliderWithVertical'
 const Home = () => {
     return (
         <main className="z-0 flex-grow">
-            <section className="md:mt-7">
+            <section className="md:mt-7 md:mb-7">
                 <Hero />
             </section>
             <section className="bg-slate-200 p-5 lg:py-12 lg:px-12">

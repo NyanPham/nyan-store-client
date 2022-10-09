@@ -16,6 +16,9 @@ function ProductShowcase({ productCards, isSlider }) {
                         modules={[Navigation]}
                         navigation
                         breakpoints={{
+                            1200: {
+                                slidesPerView: 5,
+                            },
                             1024: {
                                 slidesPerView: 4,
                             },
