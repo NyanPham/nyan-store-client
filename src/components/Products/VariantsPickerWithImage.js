@@ -1,7 +1,8 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useRef } from 'react'
 import { ROOT_URL } from '../../config'
+import Overlay from '../Overlay'
 import VariantsPicker from './VariantsPicker'
 
 export default function VariantsPickerWithImage(props) {
@@ -22,9 +23,11 @@ export default function VariantsPickerWithImage(props) {
         currentBid = false,
     } = props
 
+    const popupRef = useRef()
+
     return (
-        <div className="z-20 bg-slate-700/90 fixed top-0 left-0 w-full h-full">
-            <div className="p-3 w-30-rem bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4">
+        <Overlay closeModal={() => setOpenQuickView(false)} childRef={popupRef}>
+            <div className="p-5 pb-7 w-30-rem bg-white flex gap-4" ref={popupRef}>
                 <div className="w-1/3">
                     <img
                         className="block aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
@@ -54,6 +57,6 @@ export default function VariantsPickerWithImage(props) {
                     <FontAwesomeIcon icon={faClose} />
                 </button>
             </div>
-        </div>
+        </Overlay>
     )
 }

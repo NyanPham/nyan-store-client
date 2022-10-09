@@ -49,7 +49,7 @@ export default function CartRemover({ productId, variantId }) {
             </button>
             {openConfirm &&
                 ReactDOM.createPortal(
-                    <Overlay>
+                    <Overlay position="top">
                         <AlertWithConfirm
                             type="warning"
                             message="Are you sure to remove the item from your cart"

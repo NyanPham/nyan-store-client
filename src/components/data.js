@@ -83,15 +83,15 @@ export const heroSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Express Yourself Instyle',
-            styles: 'text-3xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96',
+            styles: 'text-3xl lg:text-5xl text-gray-900 font-semibold w-2/3 lg:w-96',
         },
         subtitle: {
             text: 'Hoodie',
-            styles: 'text-xl text-slate-700 font-medium uppercase mt-3',
+            styles: 'text-xl text-cyan-500 font-medium uppercase mt-3',
         },
         text1: {
             text: 'Best',
-            styles: 'text-lg text-slate-700 font-medium block mt-1',
+            styles: 'text-lg text-cyan-500 font-medium block mt-1',
         },
         text2: {
             text: 'Deal',
@@ -112,15 +112,15 @@ export const searchHeroSlides = [
         contentStyles: 'top-5 left-5 md:top-10 md:left-20',
         title: {
             text: 'Express Yourself Instyle',
-            styles: 'text-3xl lg:text-5xl text-slate-700 font-semibold w-2/3 lg:w-96',
+            styles: 'text-3xl lg:text-5xl text-white font-semibold w-2/3 lg:w-96',
         },
         subtitle: {
             text: 'Hoodie',
-            styles: 'text-xl text-slate-700 font-medium uppercase mt-3',
+            styles: 'text-xl text-white font-medium uppercase mt-3',
         },
         text1: {
             text: 'Best',
-            styles: 'text-lg text-slate-700 font-medium block mt-1',
+            styles: 'text-lg text-white font-medium block mt-1',
         },
         text2: {
             text: 'Deal',

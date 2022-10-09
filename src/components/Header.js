@@ -10,6 +10,8 @@ import {
     faMagnifyingGlass,
     faCaretDown,
     faCaretUp,
+    faUserCircle,
+    faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useLocation } from 'react-router-dom'
 import { useSideCartContext } from '../context/sideCartContext'
@@ -22,6 +24,7 @@ const Header = () => {
     const { isLoggedIn, currentUser } = useAuthContext()
     const [scrollDir, setScrollDir] = useState('up')
     const [openAuth, setOpenAuth] = useState(false)
+    const [openSearch, setOpenSearch] = useState(false)
     const { setOpenSideCart } = useSideCartContext()
     const { pathname } = useLocation()
     const { cart } = useSelector((state) => state.cart)
@@ -74,15 +77,18 @@ const Header = () => {
                 scrollDir === 'down' ? '-translate-y-full' : 'translate-y-0'
             }`}
         >
-            <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16">
+            <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16 relative">
                 <div className="flex items-center gap-6 grow">
                     <Link to="/">
                         <img className="w-32 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />
                     </Link>
-                    <SearchForm />
+                    <SearchForm openSearch={openSearch} />
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                    <button className="header-navigation-btn group md:hidden">
+                    <button
+                        className="header-navigation-btn group md:hidden"
+                        onClick={() => setOpenSearch((prevOpenSearch) => !prevOpenSearch)}
+                    >
                         <FontAwesomeIcon className="header-navigation-icon" icon={faMagnifyingGlass} />
                     </button>
                     <Link
@@ -146,14 +152,16 @@ const Header = () => {
                                 >
                                     <Link
                                         to="/myAccount"
-                                        className="block py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700"
+                                        className="flex items-center py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700 text-left"
                                     >
+                                        <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faUserCircle} />
                                         My Account
                                     </Link>
                                     <Link
                                         to="/logout"
-                                        className="block py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700"
+                                        className="flex items-center py-2 px-4 text-slate-700 text-sm transition duration-200 hover:text-white hover:bg-slate-700 text-left"
                                     >
+                                        <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faRightFromBracket} />
                                         Logout
                                     </Link>
                                 </div>

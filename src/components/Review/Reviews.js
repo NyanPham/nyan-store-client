@@ -10,7 +10,7 @@ export default function Reviews({ reviews, closeReviews }) {
     return (
         <Overlay closeModal={closeReviews} childRef={ref}>
             <div
-                className="w-3/4 h-1/2 relative p-4 bg-white md:w-30-rem max-h-96 overflow-y-autoscrollbar-thumb-rounded scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-gray-100"
+                className="w-80 h-1/2 relative p-4 bg-white md:w-30-rem max-h-96 overflow-y-autoscrollbar-thumb-rounded scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-gray-100"
                 ref={ref}
             >
                 <h2 className="text-center text-2xl font-semibold text-cyan-400">Reviews</h2>

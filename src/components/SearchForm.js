@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
-function SearchForm() {
+function SearchForm({ openSearch }) {
     const { collectionName } = useParams()
     const [searchTerm, setSearchTerm] = useState(() => collectionName || '')
     const dispatch = useDispatch()
@@ -35,7 +35,12 @@ function SearchForm() {
     )
 
     return (
-        <form className="hidden md:flex flex-row justify-between relative w-full max-w-lg" onSubmit={handleSearch}>
+        <form
+            className={`${
+                openSearch && window.innerWidth <= 767 ? 'flex shadow-lg' : 'hidden'
+            } absolute top-full left-0 bg-white p-5 md:p-0 md:relative md:flex flex-row justify-between w-full max-w-lg`}
+            onSubmit={handleSearch}
+        >
             <label htmlFor="search" className="hidden">
                 Search
             </label>

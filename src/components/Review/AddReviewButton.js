@@ -74,7 +74,7 @@ export default function AddReviewButton({ productName, productId }) {
                     <Overlay childRef={ref} closeModal={() => setOpenAddReview(false)}>
                         <form
                             ref={ref}
-                            className="p-4 bg-white w-3/4 md:w-30-rem z-40 relative"
+                            className="p-4 bg-white w-80 md:w-30-rem z-40 relative"
                             onSubmit={handleSubmitReview}
                         >
                             <h2 className="text-2xl text-cyan-400 font-semibold text-center">Write A Review</h2>

@@ -6,6 +6,10 @@ module.exports = {
             width: {
                 '30-rem': '30rem',
             },
+            height: {
+                'screen-2/3': '66vh',
+                'screen-4/5': '80vh',
+            },
             boxShadow: {
                 top: '0 -3px 15px -8px rgba(0, 0, 0, 0.3)',
                 frame: 'inset 0 -1px 5px -4px rgba(0, 0, 0, 0.3)',

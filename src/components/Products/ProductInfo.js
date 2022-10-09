@@ -295,7 +295,7 @@ function ProductInfo({ product, setProduct }) {
                 </div>
                 {showZoomImage && (
                     <Overlay closeModal={() => setShowZoomImage(false)} childRef={imageZoomRef}>
-                        <div className="w-96 aspect-square bg-white" ref={imageZoomRef}>
+                        <div className="h-screen-4/5 aspect-square bg-white" ref={imageZoomRef}>
                             <img
                                 className="w-full h-full object-cover object-center"
                                 src={`${ROOT_URL}/img/products/${mainImage}`}
