@@ -16,7 +16,11 @@ export default function Alert({ type, message, delayToClose = 10000, closeCallba
 
     return (
         <>
-            <div className="bg-white max-w-md flex flex-col rounded-lg" ref={modalRef} onClick={handleOverlayClick}>
+            <div
+                className="bg-white max-w-md flex flex-col rounded-lg z-20"
+                ref={modalRef}
+                onClick={handleOverlayClick}
+            >
                 <div className="flex justify-end items-center py-2 px-4 border-b border-slate-900/10">
                     <FontAwesomeIcon className="cursor-pointer" icon={faClose} onClick={closeCallback} />
                 </div>
