@@ -47,7 +47,6 @@ const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page }) => {
     const tagQueryParams = tags.join(`&tags[in]=`)
 
     const url = `${ROOT_URL}/api/v1/products?tags[in]=${tagQueryParams}&limit=${limit}&page=${page}`
-    console.log(url)
     const successHandler = async (res) => {
         if (res.data.status === 'success') {
             setProducts(res.data.data.docs)

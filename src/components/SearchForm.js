@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
-function SearchForm({ openSearch }) {
+function SearchForm({ openSearch, setOpenSearch }) {
     const { collectionName } = useParams()
     const [searchTerm, setSearchTerm] = useState(() => collectionName || '')
     const dispatch = useDispatch()
@@ -52,7 +52,11 @@ function SearchForm({ openSearch }) {
                 onInput={(e) => setSearchTerm(e.target.value)}
                 placeholder="search"
             />
-            <button className="absolute top-1/2 right-7 -translate-y-1/2">
+            <button
+                type="button"
+                className="absolute top-1/2 right-10 md:right-7 -translate-y-1/2"
+                onClick={() => setOpenSearch(false)}
+            >
                 <FontAwesomeIcon className="text-slate-700" icon={faMagnifyingGlass} />
             </button>
         </form>

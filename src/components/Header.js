@@ -82,7 +82,7 @@ const Header = () => {
                     <Link to="/">
                         <img className="w-32 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />
                     </Link>
-                    <SearchForm openSearch={openSearch} />
+                    <SearchForm openSearch={openSearch} setOpenSearch={setOpenSearch} />
                 </div>
                 <div className="flex items-center justify-between gap-3">
                     <button
