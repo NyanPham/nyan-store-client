@@ -23,8 +23,6 @@ function GetSliderWithProducts({
 
     const products = useFetchProducts(from, options)
 
-    console.log(products)
-
     return (
         <SliderWithProduct
             slides={slides}

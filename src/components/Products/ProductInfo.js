@@ -54,7 +54,8 @@ function ProductInfo({ product, setProduct }) {
 
     const imageZoomRef = useRef()
 
-    const isNew = new Date(Date.now() - new Date(product?.createdAt)).getHours() < 24 * 1
+    const createdTimeDelta = new Date(Date.now() - new Date(product?.createdAt)).getHours()
+    const isNew = createdTimeDelta < 24 * 1 && createdTimeDelta > 0
 
     const handleVariantChange = (variant) => {
         if (variant == null) return

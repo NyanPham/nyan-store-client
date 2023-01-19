@@ -1,5 +1,5 @@
 const ROOT_URL =
-    process.env.NODE_ENV === 'production' ? 'https://enigmatic-harbor-26816.herokuapp.com' : 'http://127.0.0.1:3000'
+    process.env.NODE_ENV === 'production' ? 'https://nyan-store-production.up.railway.app/' : 'http://127.0.0.1:3000'
 export { ROOT_URL }
 
 export const cart_configures = {

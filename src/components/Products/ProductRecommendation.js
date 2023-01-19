@@ -8,6 +8,7 @@ import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 
 function ProductRecommendation({ showRecommendCard = true, category, collections, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
+
     const products = useFetchProducts(type, {
         collections: allCollections,
         collectionName: 'New Arrival',

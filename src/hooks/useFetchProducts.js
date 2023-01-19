@@ -5,12 +5,15 @@ import { ROOT_URL } from '../config'
 
 const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setProducts, limit, page }) => {
     let url
+
     const collectionId = collections.find((category) => category.name === collectionName)?._id
     if (collectionId) {
         url = `${ROOT_URL}/api/v1/collections/${collectionId}/products?limit=${limit}&page=${page}`
     }
     const successHandler = async (res) => {
         if (res.data.status === 'success') {
+            console.log('res: ', res)
+            console.log('data: ', res.data)
             setProducts(res.data.data.docs)
         }
     }
