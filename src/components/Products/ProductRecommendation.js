@@ -5,6 +5,8 @@ import { useFetchProducts } from '../../hooks/useFetchProducts'
 import ProductCard from './ProductCard'
 import ProductShowcase from './ProductShowcase'
 import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 function ProductRecommendation({ showRecommendCard = true, category, collections, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
@@ -20,7 +22,7 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
             <div className="flex flex-col items-center justify-center w-full h-full bg-cyan-500 gap-4 px-7 max-w-xs">
                 <h2 className="text-2xl font-semibold text-white uppercase">Recommend for you</h2>
                 <span className="text-base text-white font-normal align-baseline">By</span>
-                <img src={nyanLogoWhite} alt="Nyan Logo" loading="lazy" />
+                <LazyLoadImage src={nyanLogoWhite} alt="Nyan Logo" loading="lazy" />
             </div>
         </SwiperSlide>
     )

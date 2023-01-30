@@ -1,9 +1,11 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useRef } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { ROOT_URL } from '../../config'
 import Overlay from '../Overlay'
 import VariantsPicker from './VariantsPicker'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 export default function VariantsPickerWithImage(props) {
     const {
@@ -29,7 +31,7 @@ export default function VariantsPickerWithImage(props) {
         <Overlay closeModal={() => setOpenQuickView(false)} childRef={popupRef}>
             <div className="p-5 pb-7 w-30-rem bg-white flex gap-4" ref={popupRef}>
                 <div className="w-1/3">
-                    <img
+                    <LazyLoadImage
                         className="block aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
                         src={`${ROOT_URL}/img/products/${selectedVariant?.images[0]}`}
                         alt={selectedVariant?.name}

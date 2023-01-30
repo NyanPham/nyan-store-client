@@ -7,6 +7,8 @@ import 'swiper/css/pagination'
 // import 'swiper/css/effect-creative'
 import { Link } from 'react-router-dom'
 import SlideCountdown from './SlideCountdown'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 export default function Slider({ slides, slidesPerView, direction = 'horizontal', setCurrentSlide = () => {} }) {
     return (
@@ -39,11 +41,13 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
                                 direction === 'vertical' && 'flex-shrink-0 w-full self-start max-h-96'
                             }`}
                         >
-                            <img
+                            <LazyLoadImage
                                 className={`${slide.imageStyles} w-full h-full object-cover object-center`}
                                 src={slide.image}
                                 alt={slide.title}
                                 loading="lazy"
+                                width={900}
+                                height={380}
                             />
                             <div className={`absolute ${slide.contentStyles}`}>
                                 {slide.title && (

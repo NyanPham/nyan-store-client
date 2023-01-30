@@ -5,6 +5,8 @@ import nyanLogo from '../../imgs/nyan-logo-white.png'
 import { Link } from 'react-router-dom'
 import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 // Need to move the image background render to the className later
 export default function ForgotPassword() {
@@ -58,7 +60,7 @@ export default function ForgotPassword() {
             <div className="h-screen w-screen flex flex-col items-center justify-center" style={backgroundStyle}>
                 <div className="logo-container mx-auto text-center">
                     <Link to="/" className="inline-block h-12 w-auto">
-                        <img className="mx-auto w-full h-full" src={nyanLogo} alt="Nyan Store Logo" />
+                        <LazyLoadImage className="mx-auto w-full h-full" src={nyanLogo} alt="Nyan Store Logo" />
                     </Link>
                 </div>
                 <h1 className="auth-title text-white">Forgot your password?</h1>

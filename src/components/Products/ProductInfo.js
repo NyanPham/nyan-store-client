@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import Skeleton from 'react-loading-skeleton'
@@ -18,6 +19,7 @@ import { faExpand } from '@fortawesome/free-solid-svg-icons'
 import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
 import Overlay from '../Overlay'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 const getImagesFromVariants = (variants) => {
     return variants?.flatMap((variant) => {
@@ -196,7 +198,7 @@ function ProductInfo({ product, setProduct }) {
                                         data-variant-id={variantId}
                                     >
                                         {imgUrl ? (
-                                            <img
+                                            <LazyLoadImage
                                                 className="w-full h-full cursor-pointer object-cover object-center"
                                                 src={`${ROOT_URL}/img/products/${imgUrl}`}
                                                 alt={variantName}
@@ -218,7 +220,7 @@ function ProductInfo({ product, setProduct }) {
                                 ))}
                         </Swiper>
                         <div className="aspect-square w-full bg-gray-400 relative">
-                            <img
+                            <LazyLoadImage
                                 className="w-full h-full object-cover object-center"
                                 src={`${ROOT_URL}/img/products/${mainImage}`}
                                 alt={product?.name}
@@ -297,7 +299,7 @@ function ProductInfo({ product, setProduct }) {
                 {showZoomImage && (
                     <Overlay closeModal={() => setShowZoomImage(false)} childRef={imageZoomRef}>
                         <div className="h-screen-4/5 aspect-square bg-white" ref={imageZoomRef}>
-                            <img
+                            <LazyLoadImage
                                 className="w-full h-full object-cover object-center"
                                 src={`${ROOT_URL}/img/products/${mainImage}`}
                                 alt={product?.name}

@@ -4,6 +4,8 @@ import React from 'react'
 import SideNavigation from './SideNavigation'
 import Slider from './Slider'
 import { slidesWPreview } from './data'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 function SliderWithPreview() {
     const [currentSlide, setCurrentSlide] = useState(0)
@@ -29,7 +31,7 @@ function SliderWithPreview() {
                             }`}
                             key={`slide_preview_image_${index}`}
                         >
-                            <img
+                            <LazyLoadImage
                                 className="h-full w-full object-cover object-center"
                                 src={slide.image}
                                 alt={slide.title}

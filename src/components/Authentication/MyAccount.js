@@ -8,6 +8,8 @@ import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
 import AdminMainPanel from '../Admin/AdminMainPanel'
 import { useEffect } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 export default function MyAccount() {
     const { currentUser, authLogin } = useAuthContext()
@@ -92,7 +94,7 @@ export default function MyAccount() {
         <section className="auth-section p-5 text-center min-h-screen h-max" style={backgroundStyles}>
             <div className="logo-container mx-auto text-center">
                 <Link to="/" className="inline-block h-12 w-auto">
-                    <img className="mx-auto w-full h-full" src={nyanStore} alt="Nyan Store Logo" />
+                    <LazyLoadImage className="mx-auto w-full h-full" src={nyanStore} alt="Nyan Store Logo" />
                 </Link>
             </div>
             <h2 className="text-white text-3xl font-semibold mt-2">Your Account</h2>
@@ -171,7 +173,7 @@ export default function MyAccount() {
                     <div className="form-group">
                         <h1 className="form-label">Avatar:</h1>
                         <div className="flex justify-start items-center gap-5 mt-3">
-                            <img
+                            <LazyLoadImage
                                 className="w-20 h-20 rounded-full object-cover object-center "
                                 src={`${ROOT_URL}/img/users/${currentUser?.photo ? currentUser.photo : 'default.jpg'}`}
                                 alt={currentUser?.name ? currentUser.name : 'user photo'}

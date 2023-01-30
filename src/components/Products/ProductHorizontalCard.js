@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
 import { useSideCartContext } from '../../context/sideCartContext'
 import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from './VariantsPickerWithImage'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 function ProductHorizontalCard(props) {
     const { id, summary, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
@@ -55,14 +57,13 @@ function ProductHorizontalCard(props) {
     return (
         <div className="flex flex-row gap-3 items-center justify-start bg-white relative group p-2 md:p-4 lg:gap-12 border-t border-gray-300/50">
             <Link to={`/products/${slug}`} state={props} className="product-image w-36 h-max flex-shrink-0">
-                <img
+                <LazyLoadImage
                     className="block aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
                     src={`${ROOT_URL}/img/products/${firstVariant.images[0]}`}
                     alt={firstVariant.name}
                     crossOrigin="anonymous"
                     loading="lazy"
                 />
-                {/* <img className="" src={images[1]} alt={name} /> */}
             </Link>
             <div className="product-card-info mt-3 flex-grow-0">
                 <h3 className="text-left text-lg truncate text-gray-900 font-semibold">{name}</h3>

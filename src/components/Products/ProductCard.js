@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { addToCart, resetMessageError } from '../../redux/actions/cartActions'
 import { useSideCartContext } from '../../context/sideCartContext'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from './VariantsPickerWithImage'
@@ -57,9 +59,8 @@ export default function ProductCard(props) {
     return (
         <div className="flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4 transition transform duration-300 hover:border hover:border-slate-900/10 hover:-translate-y-2 hover:shadow-lg">
             <Link to={`/products/${slug}`} state={props} className="product-image w-full h-fit">
-                {/* <span className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto"></span> */}
                 {firstVariant ? (
-                    <img
+                    <LazyLoadImage
                         className="block w-4/5 aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
                         src={`${ROOT_URL}/img/products/${firstVariant.images[0]}`}
                         alt={firstVariant.name}
@@ -69,8 +70,6 @@ export default function ProductCard(props) {
                 ) : (
                     <Skeleton />
                 )}
-
-                {/* <img className="" src={images[1]} alt={name} /> */}
             </Link>
             <div className="product-card-info mt-3">
                 <h3 className="text-center text-ellipsis text-gray-900 text-base font-semibold">{name}</h3>

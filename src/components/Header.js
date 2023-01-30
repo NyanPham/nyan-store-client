@@ -19,6 +19,8 @@ import { useSelector } from 'react-redux'
 import { useAuthContext } from '../context/authContext'
 import defaultAvatar from '../imgs/default.jpg'
 import { ROOT_URL } from '../config'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 const Header = () => {
     const { isLoggedIn, currentUser } = useAuthContext()
@@ -80,7 +82,13 @@ const Header = () => {
             <div className="px-1 py-2 flex flex-row justify-between items-center shadow-lg md:gap-16 md:px-8 lg:px-16 relative">
                 <div className="flex items-center gap-6 grow">
                     <Link to="/">
-                        <img className="w-32 aspect-40/15" src={nyanLogo} alt="Nyan Logo" />
+                        <LazyLoadImage
+                            className="w-32 aspect-40/15"
+                            src={nyanLogo}
+                            alt="Nyan Logo"
+                            width={128}
+                            height={48}
+                        />
                     </Link>
                     <SearchForm openSearch={openSearch} setOpenSearch={setOpenSearch} />
                 </div>

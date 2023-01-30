@@ -1,5 +1,7 @@
 import React from 'react'
 import { COLOR_MAP, ROOT_URL } from '../../config'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 export default function OrderCard({ order }) {
     const { total, items, createdAt } = order
@@ -30,12 +32,13 @@ export default function OrderCard({ order }) {
                         className="mt-3 flex flex-row justify-start items-center gap-5"
                     >
                         <div className="w-32">
-                            <img
+                            <LazyLoadImage
                                 src={`${ROOT_URL}/img/products/${item.variant.images[0]}`}
                                 alt={item.variant.name}
                                 className="w-full aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
                                 loading="lazy"
                                 crossOrigin="anonymous"
+                                width={128}
                             />
                         </div>
                         <div>

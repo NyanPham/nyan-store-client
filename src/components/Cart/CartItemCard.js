@@ -7,6 +7,8 @@ import { updateCart } from '../../redux/actions/cartActions'
 import QuantityController from '../Products/QuantityController'
 import CartEditor from './CartEditor'
 import CartRemover from './CartRemover'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 export default function CartItemCard({ currentVariant, currentQuantity, productId, isLast }) {
     const [quantity, setQuantity] = useState(currentQuantity)
@@ -50,7 +52,7 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
         >
             <div className="flex gap-3 items-center row-span-3 md:row-span-1 md:col-span-2">
                 <div className="w-24 flex-shrink-0">
-                    <img
+                    <LazyLoadImage
                         className="bg-gray-400 w-full aspect-29/37 object-center object-cover"
                         src={`${ROOT_URL}/img/products/${variant.images[0]}`}
                         alt={variant.name}
