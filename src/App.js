@@ -8,7 +8,6 @@ import { fetchCategories } from './redux/actions/categoriesActions'
 import { Login, ForgotPassword, ResetPassword, Logout, MyAccount, Signup } from './components/Authentication'
 import { useAuthContext } from './context/authContext'
 import { emptyWishlist, getWishlist } from './redux/actions/wishlistActions'
-import { getBiddingProduct } from './redux/actions/biddingActions'
 import Footer from './components/Footer'
 import Search from './components/Search/Search'
 import { emptyCart, getCart } from './redux/actions/cartActions'
@@ -37,7 +36,6 @@ function App() {
 
     dispatch(fetchCollections())
     dispatch(fetchCategories())
-    dispatch(getBiddingProduct())
 
     useEffect(() => {
         if (isLoggedIn) {
