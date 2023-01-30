@@ -78,7 +78,7 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
                                 }}
                                 quantityControl={true}
                                 wishlist={false}
-                                isEditing={false}
+                                isEditing={true}
                             />
                             <button
                                 className="absolute right-4 top-3"
