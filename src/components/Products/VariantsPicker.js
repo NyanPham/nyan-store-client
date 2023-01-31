@@ -36,9 +36,11 @@ const getButtonText = ({
     if (isEditing) actionButtonText = 'Edit now'
     if (isUnavailable) actionButtonText = 'Unavailable'
     if (isSoldOut) actionButtonText = 'Soldout'
-    if (isEditing && currentVariantId === selectedVariantId) actionButtonText = 'Updated'
+    if (isEditing && currentVariantId === selectedVariantId) actionButtonText = 'Update now'
     if (inAuction) actionButtonText = 'Bid Now'
     if (loading) actionButtonText = 'Loading...'
+
+    console.log(currentVariantId === selectedVariantId)
 
     return actionButtonText
 }
@@ -252,7 +254,6 @@ function VariantsPicker(props) {
                             loading ||
                             (biddingLoading && inAuction) ||
                             (addedToCart && !isEditing && !inAuction)
-                            // || currentVariantId === selectedVariant._id
                         }
                         type="submit"
                     >

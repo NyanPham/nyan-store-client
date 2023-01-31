@@ -23,7 +23,7 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
 
                 if (res.data.status === 'success') {
                     setProduct(res.data.data.doc)
-                    setSelectedVariant(res.data.data.doc.variants[0])
+                    setSelectedVariant(res.data.data.doc.variants.find((variant) => variant._id === variantId))
                 }
             } catch (err) {
                 alert(err.response.data.message)
@@ -31,7 +31,7 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
         }
 
         getProduct(productId)
-    }, [productId])
+    }, [productId, variantId])
 
     const handleEditClick = (e) => {
         const button = getMatchedButton(e, '[data-edit-btn]')

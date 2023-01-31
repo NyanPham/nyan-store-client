@@ -26,7 +26,6 @@ const createInitialState = (configEntries, isAddForm, variantToShow) => {
 
     return filteredVariantConfig
 }
-
 const processInputData = (inputData, config, imageInput) => {
     const data = { ...inputData }
     const formData = new FormData()
