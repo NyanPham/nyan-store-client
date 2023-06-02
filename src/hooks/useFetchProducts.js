@@ -12,8 +12,6 @@ const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setPro
     }
     const successHandler = async (res) => {
         if (res.data.status === 'success') {
-            console.log('res: ', res)
-            console.log('data: ', res.data)
             setProducts(res.data.data.docs)
         }
     }
