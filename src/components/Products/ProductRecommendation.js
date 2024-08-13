@@ -7,15 +7,18 @@ import ProductShowcase from './ProductShowcase'
 import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import SkeletonCard from '../SkeletonCard'
 
 function ProductRecommendation({ showRecommendCard = true, category, collections, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
 
-    const products = useFetchProducts(type, {
-        collections: allCollections,
-        collectionName: 'New Arrival',
-        categoryName: category?.name,
-    })
+    // const products = useFetchProducts(type, {
+    //     collections: allCollections,
+    //     collectionName: 'New Arrival',
+    //     categoryName: category?.name,
+    // })
+
+    const products = []
 
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>
@@ -25,19 +28,26 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
                 <LazyLoadImage src={nyanLogoWhite} alt="Nyan Logo" loading="lazy" />
             </div>
         </SwiperSlide>
-    )
-    const productCards = products.map((product, index) => {
-        return (
+    )   
+
+    const productCards = products?.length 
+        ? products.map((product, index) => {
+            return (
+                <SwiperSlide key={`recommendation_${index}`}>
+                    <ProductCard {...product} />
+                </SwiperSlide>
+            )
+        })  
+        : Array.from({ length: 7 }, (_, index) => (
             <SwiperSlide key={`recommendation_${index}`}>
-                <ProductCard {...product} />
+                <SkeletonCard />
             </SwiperSlide>
-        )
-    })
+        ))
 
     return (
         <ProductShowcase
             productCards={showRecommendCard ? [recommendationCard, ...productCards] : productCards}
-            isSlider={true}
+            isSlider={false}
         />
     )
 }

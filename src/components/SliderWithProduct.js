@@ -16,7 +16,7 @@ function SliderWithProduct({
     caretColor,
 }) {
     const productsToShow = shuffle(products).slice(0, 6)
-
+    
     return (
         <div>
             <Container>

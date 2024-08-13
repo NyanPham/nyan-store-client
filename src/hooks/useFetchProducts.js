@@ -59,7 +59,7 @@ const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page }) => {
 
 export function useFetchProducts(type, props) {
     const { collections, collectionName, categoryName, tags } = props
-
+    
     const [products, setProducts] = useState([])
     const limit = 4
     const page = 1
