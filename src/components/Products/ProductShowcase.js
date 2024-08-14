@@ -8,13 +8,12 @@ import 'swiper/css/navigation'
 function ProductShowcase({ productCards, isSlider }) {
     return (
         <Container>
-            <div className={`${isSlider ? '' : 'pointer-events-none'}`}>
+            <div className={`${isSlider ? '' : 'pointer-events-none hide-navigation'}`}>
                 <Swiper
                     spaceBetween={15}
                     slidesPerView={2}
-                    modules={isSlider ? [Navigation] : []}
-                    navigation={isSlider}
-                    noSwiping={!isSlider}
+                    modules={[Navigation]}
+                    navigation
                     breakpoints={{
                         1200: {
                             slidesPerView: 5,

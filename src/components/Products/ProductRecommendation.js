@@ -12,13 +12,11 @@ import SkeletonCard from '../SkeletonCard'
 function ProductRecommendation({ showRecommendCard = true, category, collections, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
 
-    // const products = useFetchProducts(type, {
-    //     collections: allCollections,
-    //     collectionName: 'New Arrival',
-    //     categoryName: category?.name,
-    // })
-
-    const products = []
+    const products = useFetchProducts(type, {
+        collections: allCollections,
+        collectionName: 'New Arrival',
+        categoryName: category?.name,
+    })
 
     const recommendationCard = (
         <SwiperSlide key={`recommendation_message`}>
@@ -47,7 +45,7 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
     return (
         <ProductShowcase
             productCards={showRecommendCard ? [recommendationCard, ...productCards] : productCards}
-            isSlider={false}
+            isSlider={products?.length}
         />
     )
 }

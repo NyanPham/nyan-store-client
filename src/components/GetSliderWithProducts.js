@@ -20,9 +20,8 @@ function GetSliderWithProducts({
     } else if (from === 'tags') {
         options.tags = tags
     }
-
-    // const products = useFetchProducts(from, options)
-    const products = []
+        
+    const products = useFetchProducts(from, options)
 
     return (
         <SliderWithProduct

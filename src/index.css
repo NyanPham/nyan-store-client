@@ -205,3 +205,9 @@
     left: calc((var(--left-position)) * 1%);
     background: rgb(34 211 238);
 }
+
+.hide-navigation .swiper-button-prev,
+.hide-navigation .swiper-button-next {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}

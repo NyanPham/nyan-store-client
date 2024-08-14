@@ -15,9 +15,10 @@ function SliderWithProduct({
     borderColor,
     itemBorderColor,
     caretColor,
+    showNumber = 4
 }) {
-    const productsToShow = shuffle(products).slice(0, 6)
-
+    const productsToShow = shuffle(products).slice(0, showNumber)
+    
     return (
         <div>
             <Container>
