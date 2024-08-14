@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import VariantOptions from './VariantOptions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,9 +15,7 @@ import Reviews from '../Review/Reviews'
 import AddReviewButton from '../Review/AddReviewButton'
 
 const getTargetVariantFromProduct = (currentVariantId, variants) => {
-    return currentVariantId != null
-        ? variants.find((variant) => variant?._id.toString() === currentVariantId)
-        : variants[0]
+    return variants.find((variant) => variant.id === currentVariantId) || variants[0]
 }
 
 const getButtonText = ({
@@ -79,9 +77,9 @@ function VariantsPicker(props) {
 
     const priceRef = useRef()
 
-    const firstOptions = filterDuplicateOption(variants, 'option1')
-    const secondOptions = filterDuplicateOption(variants, 'option2')
-    const thirdOptions = filterDuplicateOption(variants, 'option3')
+    const firstOptions = useMemo(() => filterDuplicateOption(variants, 'option1'), [variants])
+    const secondOptions = useMemo(() => filterDuplicateOption(variants, 'option2'), [variants])
+    const thirdOptions = useMemo(() => filterDuplicateOption(variants, 'option3'), [variants])
 
     function handleOptionChange(data) {
         const newDesiredVariant = { ...desiredVariant, [data.orderNum]: data.option }
@@ -290,11 +288,8 @@ function VariantsPicker(props) {
     )
 }
 
-function filterDuplicateOption(variants, optionPosition) {
-    return variants.reduce((options, variant) => {
-        if (options.includes(variant[optionPosition])) return options
-        return [...options, variant[optionPosition]]
-    }, [])
+function filterDuplicateOption(variants, optionKey) {
+    return [...new Set(variants.map((variant) => variant[optionKey]))]
 }
 
 export function compareStringValue(value1, value2) {

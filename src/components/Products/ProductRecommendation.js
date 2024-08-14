@@ -40,7 +40,7 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
         })  
         : Array.from({ length: 7 }, (_, index) => (
             <SwiperSlide key={`recommendation_${index}`}>
-                <SkeletonCard />
+                <SkeletonCard  />
             </SwiperSlide>
         ))
 

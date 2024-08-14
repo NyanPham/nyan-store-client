@@ -4,6 +4,7 @@ import Container from './Container'
 import ProductCard from './Products/ProductCard'
 import SideNavigation from './SideNavigation'
 import Slider from './Slider'
+import SkeletonCard from './SkeletonCard'
 
 function SliderWithProduct({
     slides,
@@ -16,7 +17,7 @@ function SliderWithProduct({
     caretColor,
 }) {
     const productsToShow = shuffle(products).slice(0, 6)
-    
+
     return (
         <div>
             <Container>
@@ -33,9 +34,11 @@ function SliderWithProduct({
                     </div>
                     <Slider slides={slides} slidesPerView={1} />
                     <div className="flex-shrink-0 w-full self-start grid grid-cols-2 md:grid-cols-3 lg:w-2/5 lg:grid-cols-2">
-                        {productsToShow.map((product, index) => (
-                            <ProductCard {...product} key={`slider_w_product_${index}`} />
-                        ))}
+                        {productsToShow.length > 0
+                            ? productsToShow.map((product, index) => (
+                                  <ProductCard {...product} key={`slider_w_product_${index}`} />
+                              ))
+                            : Array.from({ length: 4 }, (_, index) => <SkeletonCard key={`recommendation_${index}`} />)}
                     </div>
                 </div>
             </Container>

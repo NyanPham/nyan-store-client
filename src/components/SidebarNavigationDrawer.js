@@ -41,7 +41,10 @@ function SidebarNavigationDrawer() {
                     <div className="w-64 h-full flex flex-shrink-0">
                         <SideNavigation title="Categories" isDrawer={true} setOpenSidebar={setOpenSidebar} />
                     </div>
-                    <button className="absolute top-5 right-5" onClick={() => setOpenSidebar(false)}>
+                    <button
+                        className="absolute top-5 right-5 p-3rounded-full text-xl focus:outline-none"
+                        onClick={() => setOpenSidebar(false)}
+                    >
                         &times;
                     </button>
                 </div>

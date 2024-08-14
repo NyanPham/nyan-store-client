@@ -21,8 +21,9 @@ function GetSliderWithProducts({
         options.tags = tags
     }
 
-    const products = useFetchProducts(from, options)
-    
+    // const products = useFetchProducts(from, options)
+    const products = []
+
     return (
         <SliderWithProduct
             slides={slides}

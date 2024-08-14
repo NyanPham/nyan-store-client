@@ -1,5 +1,4 @@
-const ROOT_URL =
-    process.env.NODE_ENV === 'production' ? 'https://nyan-store.onrender.com' : 'http://127.0.0.1:8080'
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://nyan-store.onrender.com' : 'http://127.0.0.1:8080'
 export { ROOT_URL }
 
 export const cart_configures = {
