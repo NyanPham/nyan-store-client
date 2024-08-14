@@ -159,7 +159,7 @@ const Footer = () => {
                 </form>
             </div>
             <div className="p-3 bg-slate-700 text-white text-center">
-                &copy; 2022 Built by Nhan Pham. All right reserved
+                &copy; 2024 Built by Nhan Pham. All Right Reserved
             </div>
         </footer>
     )

@@ -4,16 +4,17 @@ import { Swiper } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
-    
+
 function ProductShowcase({ productCards, isSlider }) {
     return (
         <Container>
-            <div className="">
+            <div className={`${isSlider ? '' : 'pointer-events-none'}`}>
                 <Swiper
                     spaceBetween={15}
                     slidesPerView={2}
                     modules={isSlider ? [Navigation] : []}
                     navigation={isSlider}
+                    noSwiping={!isSlider}
                     breakpoints={{
                         1200: {
                             slidesPerView: 5,
@@ -31,7 +32,6 @@ function ProductShowcase({ productCards, isSlider }) {
                 >
                     {productCards}
                 </Swiper>
-                
             </div>
         </Container>
     )

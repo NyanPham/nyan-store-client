@@ -83,7 +83,7 @@ function ProductInfo({ product, setProduct }) {
                     setSelectedVariantId(fetchedProduct.variants[0]._id)
                 }
             } catch (err) {
-                alert(err.respone.data.message)
+                alert(err.response.data.message)
             }
         },
         [setProduct]
@@ -180,54 +180,65 @@ function ProductInfo({ product, setProduct }) {
             <div className="flex flex-col gap-5 mt-5 justify-center md:mt-10 md:gap-10 md:flex-row relative">
                 <div className="flex flex-col w-full md:w-1/2">
                     <div className="flex product-images max-h-96 max-w-96 gap-3">
-                        <Swiper
-                            className="flex-shrink-1 flex-grow-0 hidden md:flex select-none"
-                            spaceBetween={15}
-                            slidesPerView={3}
-                            modules={[Navigation]}
-                            navigation={images && images.length >= 3}
-                            direction="vertical"
-                            loop={images && images.length >= 3}
-                        >
-                            {product &&
-                                images &&
-                                images.map(({ imgUrl, variantId, variantName }, index) => (
-                                    <SwiperSlide
-                                        className=" flex-shrink-1 w-20 h-20"
-                                        key={`image_${variantId}_${index}`}
-                                        data-variant-id={variantId}
-                                    >
-                                        {imgUrl ? (
-                                            <LazyLoadImage
-                                                className="w-full h-full cursor-pointer object-cover object-center"
-                                                src={`${ROOT_URL}/img/products/${imgUrl}`}
-                                                alt={variantName}
-                                                crossOrigin="anonymous"
-                                                loading="lazy"
-                                                onClick={() => selectVariant(variantId, imgUrl)}
-                                            />
-                                        ) : (
-                                            <Skeleton />
-                                        )}
-                                    </SwiperSlide>
+                        {product ? (
+                            <Swiper
+                                className="flex-shrink-1 flex-grow-0 hidden md:flex select-none"
+                                spaceBetween={15}
+                                slidesPerView={3}
+                                modules={[Navigation]}
+                                navigation={images && images.length >= 3}
+                                direction="vertical"
+                                loop={images && images.length >= 3}
+                            >
+                                {images &&
+                                    images.map(({ imgUrl, variantId, variantName }, index) => (
+                                        <SwiperSlide
+                                            className="flex-shrink-1 w-20 h-20"
+                                            key={`image_${variantId}_${index}`}
+                                            data-variant-id={variantId}
+                                        >
+                                            {imgUrl ? (
+                                                <LazyLoadImage
+                                                    className="w-full h-full cursor-pointer object-cover object-center"
+                                                    src={`${ROOT_URL}/img/products/${imgUrl}`}
+                                                    alt={variantName}
+                                                    crossOrigin="anonymous"
+                                                    loading="lazy"
+                                                    onClick={() => selectVariant(variantId, imgUrl)}
+                                                />
+                                            ) : (
+                                                <Skeleton />
+                                            )}
+                                        </SwiperSlide>
+                                    ))}
+                                {images.length < 3 &&
+                                    Array.from(Array(3 - images.length)).map((_, index) => (
+                                        <SwiperSlide
+                                            className="bg-transparent flex-shrink-1 w-20 h-20"
+                                            key={`image_empty_${index}`}
+                                        ></SwiperSlide>
+                                    ))}
+                            </Swiper>
+                        ) : (
+                            <div className="flex-shrink-1 flex-grow-0 hidden md:flex flex-col space-y-4">
+                                {Array.from(Array(3)).map((_, index) => (
+                                    <Skeleton key={index} className="w-20 h-20 rounded-md" />
                                 ))}
-                            {images.length < 3 &&
-                                Array.from(Array(3 - images.length)).map((_, index) => (
-                                    <SwiperSlide
-                                        className="bg-transparent flex-shrink-1 w-20 h-20"
-                                        key={`image_empty_${index}`}
-                                    ></SwiperSlide>
-                                ))}
-                        </Swiper>
-                        <div className="aspect-square w-full bg-gray-400 relative">
-                            <LazyLoadImage
-                                className="w-full h-full object-cover object-center"
-                                src={`${ROOT_URL}/img/products/${mainImage}`}
-                                alt={product?.name}
-                                loading="lazy"
-                                crossOrigin="anonymous"
-                                // ref={mainImageRef}
-                            />
+                            </div>
+                        )}
+                        <div className="aspect-square w-full relative">
+                            {product ? (
+                                <LazyLoadImage
+                                    className="w-full h-full object-cover object-center"
+                                    src={`${ROOT_URL}/img/products/${mainImage}`}
+                                    alt={product?.name}
+                                    loading="lazy"
+                                    crossOrigin="anonymous"
+                                    // ref={mainImageRef}
+                                />
+                            ) : (
+                                <Skeleton height={'100%'} width={'100%'} />
+                            )}
                             {/* <span
                                 className={`absolute w-20 h-20 border border-slate-500 transition  ${
                                     showZoom ? 'opacity-100' : 'opacity-0'
@@ -252,11 +263,18 @@ function ProductInfo({ product, setProduct }) {
                         </div>
                     </div>
                     <div className="w-full mt-7">
-                        <ProductDetail title="Product Detail" content={product?.description} />
+                        {product ? (
+                            <ProductDetail title="Product Detail" content={product.description} />
+                        ) : (
+                            <div>
+                                <Skeleton height={30} width={200} />
+                                <Skeleton count={3} />
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="w-full md:w-1/3 relative">
-                    {product != null && (
+                    {product != null ? (
                         <VariantsPicker
                             productId={product._id}
                             productName={product.name}
@@ -277,6 +295,27 @@ function ProductInfo({ product, setProduct }) {
                             onVariantChange={handleVariantChange}
                             currentVariantId={selectedVariantId}
                         />
+                    ) : (
+                        <div className="space-y-7">
+                            <div>
+                                <Skeleton height={30} width={'80%'} />
+                                <Skeleton height={20} width={'60%'} />
+                                <Skeleton height={20} width={'60%'} />
+                                <Skeleton height={20} width={'60%'} />
+                            </div>
+                            <div>
+                                <Skeleton height={30} width={'80%'} />
+                                <Skeleton height={20} width={'60%'} />
+                                <Skeleton height={20} width={'60%'} />
+                                <Skeleton height={20} width={'60%'} />
+                            </div>
+                            <div>
+                                <Skeleton height={30} width={'80%'} />
+                                <Skeleton height={20} width={'60%'} />
+                                <Skeleton height={20} width={'60%'} />
+                                <Skeleton height={20} width={'60%'} />
+                            </div>
+                        </div>
                     )}
                     {/* <div
                         className={`absolute top-4 left-4 w-96 h-96 border border-slate-800 transform transition duration-200 overflow-hidden pointer-events-none ${
