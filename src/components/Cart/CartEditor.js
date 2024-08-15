@@ -7,7 +7,7 @@ import getMatchedButton from '../../utils/getMatchedButton'
 import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from '../Products/VariantsPickerWithImage'
 
-export default function CartEditor({ productId, variantId, onVariantChange }) {
+const CartEditor = React.memo(({ productId, variantId, onVariantChange }) => {
     const [product, setProduct] = useState({})
     const [openEditor, setOpenEditor] = useState(false)
     const [selectedVariant, setSelectedVariant] = useState({})
@@ -93,4 +93,6 @@ export default function CartEditor({ productId, variantId, onVariantChange }) {
                 )}
         </>
     )
-}
+})
+
+export default CartEditor

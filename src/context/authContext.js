@@ -14,13 +14,14 @@ export default function AuthContextProvider({ children }) {
     const authLogin = useCallback((currentUser) => {
         setUser({
             isLoggedIn: true,
-            currentUser: currentUser,
+            currentUser,
         })
     }, [])
 
     const authLogout = useCallback(() => {
         setUser({
             isLoggedIn: false,
+            currentUser: null,
         })
     }, [])
 
@@ -35,6 +36,7 @@ export default function AuthContextProvider({ children }) {
                     return authLogin(res.data.currentUser)
                 }
             } catch (err) {
+                console.error('Failed to fetch login status:', err)
                 authLogout()
             }
         }

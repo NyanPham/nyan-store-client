@@ -45,6 +45,7 @@ const Home = () => {
                     navTitle="Furniture"
                     slides={furnitureSlides}
                     from="tags"
+                    sliderFirst={false}
                 />
             </section>
             <section className="bg-gray-700 py-10">
@@ -79,6 +80,7 @@ const Home = () => {
                     navTitle="Men"
                     slides={menSlides}
                     from="tags"
+                    sliderFirst={false}
                 />
             </section>
         </main>

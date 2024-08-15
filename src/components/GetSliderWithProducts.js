@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useFetchProducts } from '../hooks/useFetchProducts'
 import SliderWithProduct from './SliderWithProduct'
 
@@ -12,15 +12,23 @@ function GetSliderWithProducts({
     itemBorderColor,
     caretColor,
     slides,
+    sliderFirst = true,
     from = 'category',
 }) {
-    const options = {}
-    if (from === 'category') {
-        options.categoryName = category
-    } else if (from === 'tags') {
-        options.tags = tags
-    }
-        
+    const options = useMemo(() => {
+        const opts = {
+            page: 1,
+            limit: 4,
+        }
+
+        if (from === 'category') {
+            opts.categoryName = category
+        } else if (from === 'tags') {
+            opts.tags = tags
+        }
+        return opts
+    }, [from, category, tags])
+
     const products = useFetchProducts(from, options)
 
     return (
@@ -33,6 +41,8 @@ function GetSliderWithProducts({
             borderColor={borderColor}
             itemBorderColor={itemBorderColor}
             caretColor={caretColor}
+            sliderFirst={sliderFirst}
+            showNumber={options.limit}
         />
     )
 }

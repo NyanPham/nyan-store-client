@@ -34,8 +34,10 @@ function App() {
     const { pathname } = useLocation()
     useScrollToTop(pathname)
 
-    dispatch(fetchCollections())
-    dispatch(fetchCategories())
+    useEffect(() => {
+        dispatch(fetchCollections())
+        dispatch(fetchCategories())
+    }, [dispatch])
 
     useEffect(() => {
         if (isLoggedIn) {

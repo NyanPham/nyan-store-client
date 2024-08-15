@@ -16,6 +16,8 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
         collections: allCollections,
         collectionName: 'New Arrival',
         categoryName: category?.name,
+        limit: 4,
+        page: 1,
     })
 
     const recommendationCard = (
@@ -26,21 +28,21 @@ function ProductRecommendation({ showRecommendCard = true, category, collections
                 <LazyLoadImage src={nyanLogoWhite} alt="Nyan Logo" loading="lazy" />
             </div>
         </SwiperSlide>
-    )   
+    )
 
-    const productCards = products?.length 
+    const productCards = products?.length
         ? products.map((product, index) => {
-            return (
-                <SwiperSlide key={`recommendation_${index}`}>
-                    <ProductCard {...product} />
-                </SwiperSlide>
-            )
-        })  
+              return (
+                  <SwiperSlide key={`recommendation_${index}`}>
+                      <ProductCard {...product} />
+                  </SwiperSlide>
+              )
+          })
         : Array.from({ length: 7 }, (_, index) => (
-            <SwiperSlide key={`recommendation_${index}`}>
-                <SkeletonCard  />
-            </SwiperSlide>
-        ))
+              <SwiperSlide key={`recommendation_${index}`}>
+                  <SkeletonCard />
+              </SwiperSlide>
+          ))
 
     return (
         <ProductShowcase
