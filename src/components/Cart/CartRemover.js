@@ -29,10 +29,6 @@ export default function CartRemover({ productId, variantId }) {
         setOpenConfirm(false)
     }
 
-    const onCancel = () => {
-        setOpenConfirm(false)
-    }
-
     const onClose = () => {
         setOpenConfirm(false)
     }
@@ -56,7 +52,7 @@ export default function CartRemover({ productId, variantId }) {
                             confirmText="Yes"
                             cancelText="No"
                             confirmCallback={onConfirm}
-                            cancelCallback={onCancel}
+                            cancelCallback={onClose}
                             closeCallback={onClose}
                         />
                     </Overlay>,

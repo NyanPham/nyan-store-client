@@ -14,12 +14,12 @@ export default function CartItems({ cart }) {
                 </h2>
                 <h2 className="text-slate-700 font-semibold text-md justify-self-end hidden md:inline-block">Total</h2>
             </div>
-            {cart?.map((item, index) => (
+            {cart?.map(({ product, variant, quantity }, index) => (
                 <CartItemCard
-                    key={`cart_item_${index}`}
-                    productId={item.product}
-                    currentVariant={item.variant}
-                    currentQuantity={item.quantity}
+                    key={`cart_item_${product}_${variant}`}
+                    productId={product}
+                    currentVariant={variant}
+                    currentQuantity={quantity}
                     isLast={index === cart.length - 1}
                 />
             ))}

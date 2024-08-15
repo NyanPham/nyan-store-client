@@ -57,7 +57,7 @@ function SearchForm({ openSearch, setOpenSearch }) {
                 type="text"
                 value={searchTerm}
                 onInput={(e) => setSearchTerm(e.target.value)}
-                placeholder="search"
+                placeholder="What do you want to search?"
             />
 
             <button

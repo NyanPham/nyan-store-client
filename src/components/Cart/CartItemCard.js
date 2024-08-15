@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
@@ -18,13 +18,13 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
     })
     const dispatch = useDispatch()
 
-    const handleQuantityChange = (quantity) => {
+    const handleQuantityChange = useCallback((quantity) => {
         setQuantity(quantity)
-    }
+    }, [])
 
-    const handleVariantChange = (variant) => {
+    const handleVariantChange = useCallback((variant) => {
         setVariant(variant)
-    }
+    }, [])
 
     useDebounce(
         () => {
