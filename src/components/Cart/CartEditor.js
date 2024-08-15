@@ -39,10 +39,10 @@ const CartEditor = React.memo(({ productId, variantId, onVariantChange }) => {
 
         setOpenEditor(true)
     }
-
+        
     const formSubmitHandler = (data) => {
         const variant = product.variants.find((variant) => variant._id.toString() === data.variantId)
-        onVariantChange(variant)
+        onVariantChange(variant, data.quantity)
     }
 
     const handleVariantChange = (variant) => {

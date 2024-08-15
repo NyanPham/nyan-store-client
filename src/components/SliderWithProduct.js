@@ -19,7 +19,7 @@ function SliderWithProduct({
     showNumber = 4,
 }) {
     const productsToShow = useMemo(() => shuffle(products).slice(0, showNumber), [products, showNumber])
-
+    
     const ProductCards = (
         <div className="flex-shrink-0 w-full self-start grid grid-cols-2 md:grid-cols-3 lg:w-2/5 lg:grid-cols-2">
             {productsToShow.length > 0

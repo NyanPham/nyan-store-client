@@ -17,6 +17,7 @@ import useOnScreen from '../../hooks/useOnScreen'
 
 export default function ProductCard(props) {
     const cardRef = useRef()
+    const alreadyVisible = useRef(false)
     const isVisible = useOnScreen(cardRef, '0px', 0.3)
 
     const { id, name, slug, variants, createdAt, inAuction = false, currentBidData = {} } = props
@@ -54,18 +55,24 @@ export default function ProductCard(props) {
     }
 
     useEffect(() => {
+        if (isVisible && !alreadyVisible.current) {
+            alreadyVisible.current = true
+        }
+    }, [isVisible])
+
+    useEffect(() => {
         if (loading || error || message !== 'success') return
         if (!loading && message === 'success') {
             setOpenSideCart(true)
             dispatch(resetMessageError())
         }
     }, [loading, error, message, setOpenSideCart, dispatch])
-
+    
     return (
         <div
             ref={cardRef}
             className={`${
-                isVisible ? 'translate-y-0 opacity-100 duration-500' : 'translate-y-12 opacity-0'
+                isVisible || alreadyVisible.current ? 'translate-y-0 opacity-100 duration-500' : 'translate-y-12 opacity-0'
             } flex flex-col items-center justify-between aspect-29/37 bg-white relative group p-2 md:p-4 transition transform duration-300 hover:border hover:border-slate-900/10 hover:-translate-y-2 hover:shadow-lg`}
         >
             <Link to={`/products/${slug}`} state={props} className="product-image w-full h-fit">

@@ -33,8 +33,8 @@ export default function OrderCard({ order }) {
                     >
                         <div className="w-32">
                             <LazyLoadImage
-                                src={`${ROOT_URL}/img/products/${item.variant.images[0]}`}
-                                alt={item.variant.name}
+                                src={`${ROOT_URL}/img/products/${item?.variant?.images[0]}`}
+                                alt={item?.variant?.name}
                                 className="w-full aspect-29/37 bg-slate-700 mx-auto object-cover object-center"
                                 loading="lazy"
                                 crossOrigin="anonymous"
@@ -42,33 +42,33 @@ export default function OrderCard({ order }) {
                             />
                         </div>
                         <div>
-                            <h4 className="text-cyan-400 text-xl font-semibold tracking-wide">{item.variant.name}</h4>
+                            <h4 className="text-cyan-400 text-xl font-semibold tracking-wide">{item?.variant?.name}</h4>
                             <div className="mt-2">
                                 <span className="text-slate-700 text-xl font-semibold tracking-wide">
-                                    ${item.variant.price.toLocaleString('en-US')}
+                                    ${item?.variant?.price.toLocaleString('en-US')}
                                 </span>
                                 <span className="text-slate-500 text-sm font-medium ml-2">&times;{item.quantity}</span>
                             </div>
-                            {item.variant.option1 && (
+                            {item?.variant?.option1 && (
                                 <div className="flex justify-start items-center gap-2 mt-1">
                                     <h5 className="text-slate-600 text-base font-semibold">Size:</h5>
-                                    <span className="text-slate-700 text-lg font-semibold">{item.variant.option1}</span>
+                                    <span className="text-slate-700 text-lg font-semibold">{item?.variant?.option1}</span>
                                 </div>
                             )}
-                            {item.variant.option2 && (
+                            {item?.variant?.option2 && (
                                 <div className="flex justify-start items-center gap-2 mt-1">
                                     <h5 className="text-slate-600 text-base font-semibold">Color: </h5>
                                     <span
                                         className={`${
-                                            COLOR_MAP[item.variant.option2.toLowerCase().split('-').join('')]
+                                            COLOR_MAP[item?.variant?.option2.toLowerCase().split('-').join('')]
                                         } w-6 h-6 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold`}
                                     ></span>
                                 </div>
                             )}
-                            {item.variant.option3 && (
+                            {item?.variant?.option3 && (
                                 <div className="flex justify-start items-center gap-2 mt-1">
                                     <h5 className="text-slate-600 text-base font-semibold">Material:</h5>
-                                    <span className="text-slate-700 text-lg font-semibold">{item.variant.option3}</span>
+                                    <span className="text-slate-700 text-lg font-semibold">{item?.variant?.option3}</span>
                                 </div>
                             )}
                         </div>

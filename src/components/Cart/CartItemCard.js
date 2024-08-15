@@ -16,14 +16,18 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
     const [total, setTotal] = useState(() => {
         return currentVariant.price * currentQuantity
     })
+    
     const dispatch = useDispatch()
 
     const handleQuantityChange = useCallback((quantity) => {
         setQuantity(quantity)
     }, [])
 
-    const handleVariantChange = useCallback((variant) => {
+    const handleVariantChange = useCallback((variant, quantity) => {
         setVariant(variant)
+        setQuantity(quantity)
+
+        console.log(variant, quantity)
     }, [])
 
     useDebounce(
