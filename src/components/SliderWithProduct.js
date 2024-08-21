@@ -20,15 +20,15 @@ function SliderWithProduct({
     showNumber = 4,
 }) {
     const productsToShow = useMemo(() => shuffle(products).slice(0, showNumber), [products, showNumber])
-    
+
     const ProductCards = (
         <div className="flex-shrink-0 w-full self-start grid grid-cols-2 md:grid-cols-3 lg:w-2/5 lg:grid-cols-2">
-            {productsToShow.length > 0 && !isLoading
+            {productsToShow?.length > 0 && !isLoading
                 ? productsToShow.map((product, index) => <ProductCard {...product} key={`slider_w_product_${index}`} />)
                 : Array.from({ length: 4 }, (_, index) => <SkeletonCard key={`recommendation_${index}`} />)}
         </div>
     )
-        
+            
     return (
         <div>
             <Container>

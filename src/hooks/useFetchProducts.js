@@ -46,7 +46,7 @@ const getCategoryUrlAndSuccessHandler = ({ categoryName, setProducts, limit, pag
                 axios(`${ROOT_URL}/api/v1/categories/${categoryId}/products?limit=${limit}&page=${page}`)
             )
         )
-
+        
         const products = responses
             .filter((res) => res.status === 'fulfilled')
             .map((res) => res.value.data.data.docs)
@@ -66,17 +66,16 @@ const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page }) => {
         if (res.data.status !== 'success') return
         setProducts(res.data.data.docs)
     }
-    
+
     return { successHandler, url }
 }   
 
 export function useFetchProducts(type, props) {
     const { collections, collectionName, categoryName, tags, limit = 4, page = 1 } = props
-    const [products, setProducts] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
+    const [products, setProducts] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     const fetchProducts = useCallback(async () => {
-        setIsLoading(true)
         try {
             let url, successHandler
             switch (type) {

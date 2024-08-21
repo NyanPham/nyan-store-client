@@ -19,6 +19,8 @@ function ProductRecommendation({ showRecommendCard = true, category, type = 'col
         limit: 4,
         page: 1,
     })
+    
+    console.log(products, isLoading)
 
     const recommendationCard = (
         <SwiperSlide key="recommendation_message">
@@ -29,8 +31,8 @@ function ProductRecommendation({ showRecommendCard = true, category, type = 'col
             </div>
         </SwiperSlide>
     )
-    
-    const productCards = isLoading ? (
+
+    const productCards = isLoading || !products ? (
         Array.from({ length: 8 }, (_, index) => (
             <SwiperSlide key={`recommendation_${index}`}>
                 <SkeletonCard />
