@@ -9,6 +9,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import SkeletonCard from '../SkeletonCard'
 
+// TODO: Only call useFetchProducts hook if in view
+// TODO: Do the cache as a state for the whole app to store the products
 function ProductRecommendation({ showRecommendCard = true, category, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
 

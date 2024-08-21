@@ -26,6 +26,9 @@ const instance = axios.create({
 
 configure({ instance })
 
+// ISSUES: useAuthContext in the app rerender the whole app for sections of products
+// though they don't need the authentication to fetch and show products 
+// TODO: Find a better place to call the useAuthContext hook
 function App() {
     const { isLoggedIn } = useAuthContext()
     const { loading, message, error } = useSelector((state) => state.cart)

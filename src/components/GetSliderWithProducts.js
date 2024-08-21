@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
 import { useFetchProducts } from '../hooks/useFetchProducts'
 import SliderWithProduct from './SliderWithProduct'
-
+    
+// TODO: Only call useFetchProducts hook if in view
+// TODO: Do the cache as a state for the whole app to store the products
 function GetSliderWithProducts({
     tags,
     category,
