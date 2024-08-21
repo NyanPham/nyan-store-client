@@ -3,29 +3,30 @@ import { useEffect, useState } from 'react'
 import { ROOT_URL } from '../config'
 
 export default function useCountries() {
-    const [countriesData, setCountriesData] = useState({
+    const [countriesData, setCountriesData] = useState(() => ({
         countries: {},
         states: {},
-    })
+    }))
 
     useEffect(() => {
-        const getCountries = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/countries`,
+        const cachedData = localStorage.getItem('countriesAndStates')
+        if (cachedData) {
+            setCountriesData(JSON.parse(cachedData))
+        } else {
+            axios.get(`${ROOT_URL}/api/v1/countries`)
+                .then(res => {
+                    if (res.data.status === 'success') {
+                        const countriesAndStates = JSON.parse(res.data.data.countriesAndStates)
+                        localStorage.setItem('countriesAndStates', JSON.stringify(countriesAndStates))
+                        setCountriesData(countriesAndStates)
+                    }
                 })
-
-                if (res.data.status === 'success') {
-                    setCountriesData(JSON.parse(res.data.data.countriesAndStates))
-                }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
+                .catch(err => {
+                    alert(err.response.data.message)
+                })
         }
-
-        getCountries()
     }, [])
 
     return countriesData
 }
+

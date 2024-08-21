@@ -7,7 +7,7 @@ import getMatchedButton from '../../utils/getMatchedButton'
 import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from '../Products/VariantsPickerWithImage'
 
-const CartEditor = React.memo(({ productId, variantId, onVariantChange }) => {
+const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVariantChange, onQuantityChange }) => {
     const [product, setProduct] = useState({})
     const [openEditor, setOpenEditor] = useState(false)
     const [selectedVariant, setSelectedVariant] = useState({})
@@ -39,10 +39,11 @@ const CartEditor = React.memo(({ productId, variantId, onVariantChange }) => {
 
         setOpenEditor(true)
     }
-        
+    
     const formSubmitHandler = (data) => {
         const variant = product.variants.find((variant) => variant._id.toString() === data.variantId)
-        onVariantChange(variant, data.quantity)
+        onVariantChange(variant)
+        onQuantityChange(data.quantity)
     }
 
     const handleVariantChange = (variant) => {
@@ -77,6 +78,7 @@ const CartEditor = React.memo(({ productId, variantId, onVariantChange }) => {
                                     show: false,
                                 }}
                                 quantityControl={true}
+                                currentQuantity={currentQuantity}
                                 wishlist={false}
                                 isEditing={true}
                             />

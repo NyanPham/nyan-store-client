@@ -15,19 +15,16 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
     const [variant, setVariant] = useState(currentVariant)
     const [total, setTotal] = useState(() => {
         return currentVariant.price * currentQuantity
-    })
-    
+    })  
+
     const dispatch = useDispatch()
 
     const handleQuantityChange = useCallback((quantity) => {
         setQuantity(quantity)
     }, [])
 
-    const handleVariantChange = useCallback((variant, quantity) => {
+    const handleVariantChange = useCallback((variant) => {
         setVariant(variant)
-        setQuantity(quantity)
-
-        console.log(variant, quantity)
     }, [])
 
     useDebounce(
@@ -83,7 +80,9 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
                         <CartEditor
                             productId={productId}
                             variantId={variant._id}
+                            currentQuantity={quantity}
                             onVariantChange={handleVariantChange}
+                            onQuantityChange={handleQuantityChange}
                         />
                         <CartRemover productId={productId} variantId={variant._id} />
                     </div>
@@ -105,7 +104,7 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
                     inventory={variant.inventory}
                     isSoldout={false}
                     isUnavailable={false}
-                    currentQuantity={currentQuantity}
+                    currentQuantity={quantity}
                     onQuantityChange={handleQuantityChange}
                     spacing="mt-1"
                     showLabel={false}

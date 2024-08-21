@@ -42,7 +42,7 @@ export default function QuantityController({
             })
         }
     }
-
+    
     useEffect(() => {
         onQuantityChange(quantity)
     }, [quantity, onQuantityChange])

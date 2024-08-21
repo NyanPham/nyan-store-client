@@ -23,6 +23,7 @@ export default function VariantsPickerWithImage(props) {
         wishlist = false,
         isEditing = false,
         currentBid = false,
+        currentQuantity = 1,
     } = props
 
     const popupRef = useRef()
@@ -54,6 +55,7 @@ export default function VariantsPickerWithImage(props) {
                     isEditing={isEditing}
                     onVariantChange={handleVariantChange}
                     currentBid={currentBid}
+                    currentQuantity={currentQuantity}
                 />
                 <button className="absolute right-4 top-3" type="button" onClick={() => setOpenQuickView(false)}>
                     <FontAwesomeIcon icon={faClose} />

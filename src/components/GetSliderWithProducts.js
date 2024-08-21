@@ -14,7 +14,7 @@ function GetSliderWithProducts({
     slides,
     sliderFirst = true,
     from = 'category',
-}) {
+}) {    
     const options = useMemo(() => {
         const opts = {
             page: 1,
@@ -29,7 +29,7 @@ function GetSliderWithProducts({
         return opts
     }, [from, category, tags])
 
-    const products = useFetchProducts(from, options)
+    const { data: products, isLoading } = useFetchProducts(from, options)
 
     return (
         <SliderWithProduct
@@ -43,6 +43,7 @@ function GetSliderWithProducts({
             caretColor={caretColor}
             sliderFirst={sliderFirst}
             showNumber={options.limit}
+            isLoading={isLoading}
         />
     )
 }

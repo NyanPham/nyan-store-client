@@ -39,9 +39,7 @@ const getButtonText = ({
     if (isEditing && currentVariantId === selectedVariantId) actionButtonText = 'Update now'
     if (inAuction) actionButtonText = 'Bid Now'
     if (loading) actionButtonText = 'Loading...'
-
-    console.log(currentVariantId === selectedVariantId)
-
+    
     return actionButtonText
 }
 
@@ -62,13 +60,14 @@ function VariantsPicker(props) {
         wishlist = false,
         isEditing = false,
         onVariantChange = () => {},
+        currentQuantity = 1,
     } = props
-
+    
     const [selectedVariant, setSelectedVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
     const [desiredVariant, setDesiredVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
 
     const [isUnavailable, setIsUnavailable] = useState(false)
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(currentQuantity)
     const [isSoldOut, setIsSoldOut] = useState(variants[0].inventory === 0)
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
     const { isLoggedIn } = useAuthContext()

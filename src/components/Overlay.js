@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function Overlay({ children, closeModal, childRef, position = 'center' }) {
     const handleCloseModal = (e) => {
-        if (childRef.current.contains(e.target)) return
+        if (childRef?.current.contains(e.target)) return
         if (typeof closeModal === 'function') return closeModal()
-    }
-
+    }   
+    
     let popupPosition = 'items-center'
     if (position === 'top') popupPosition = 'items-start pt-7'
 

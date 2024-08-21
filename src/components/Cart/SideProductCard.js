@@ -10,24 +10,25 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
 export default function SideProductCard({ currentVariant, currentQuantity, productId, isLast }) {
-    const [quantity, setQuantity] = useState(currentQuantity)
     const [variant, setVariant] = useState(currentVariant)
+    const [quantity, setQuantity] = useState(currentQuantity)
+
     const dispatch = useDispatch()
     const firstRenderRef = useRef(true)
 
-    const handleQuantityChange = (quantity) => {
-        setQuantity(quantity)
-    }
+    const handleQuantityChange = (newQuantity) => {
+        setQuantity(() => newQuantity)
+    }   
 
-    const handleVariantChange = (variant) => {
-        setVariant(variant)
+    const handleVariantChange = (newVariant) => {
+        setVariant(() => newVariant)
     }
 
     useEffect(() => {
         firstRenderRef.current = false
-    }, [])
-
-    useDebounce(
+    }, [])  
+    
+    useDebounce(    
         () => {
             if (firstRenderRef.current) return
 
@@ -39,7 +40,7 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
             }
             dispatch(updateCart(data))
         },
-        500,
+        1000,
         [quantity, variant._id]
     )
 
@@ -91,7 +92,7 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
                     quantityInputSize="h-5"
                 />
                 <div className="flex gap-2 mt-2">
-                    <CartEditor productId={productId} variantId={variant._id} onVariantChange={handleVariantChange} />
+                    <CartEditor productId={productId} variantId={variant._id} currentQuantity={quantity} onVariantChange={handleVariantChange} onQuantityChange={handleQuantityChange} />
                     <CartRemover productId={productId} variantId={variant._id} />
                 </div>
             </div>

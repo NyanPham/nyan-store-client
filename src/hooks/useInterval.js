@@ -1,25 +1,21 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 export default function useInterval(callback, timeSpan) {
-    const callbackRef = useRef(callback)
-    const intervalRef = useRef()
-
-    useEffect(() => {
-        callbackRef.current = callback
-    }, [callback])
+    const intervalRef = useRef(null);
 
     const set = useCallback(() => {
-        intervalRef.current = setInterval(() => callbackRef.current(), timeSpan)
-    }, [timeSpan])
+        intervalRef.current = setInterval(callback, timeSpan);
+    }, [timeSpan, callback]);
 
     const stop = useCallback(() => {
-        intervalRef.current && clearInterval(intervalRef.current)
-    }, [])
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+    }, []);
 
     useEffect(() => {
-        set()
-        return stop
-    }, [timeSpan, set, stop])
+        set();
+        return stop;
+    }, [set, stop]);
 
-    return { set, stop }
+    return { set, stop };
 }

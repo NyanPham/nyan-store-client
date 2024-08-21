@@ -6,27 +6,16 @@ export default function useFetchDocs(docType, setFunction) {
     const [docs, setDocs] = useState([])
 
     useEffect(() => {
-        const fetchDocs = async () => {
-            try {
-                const res = await axios({
-                    method: 'GET',
-                    url: `${ROOT_URL}/api/v1/${docType}`,
-                    withCredentials: true,
-                })
-
+        axios.get(`${ROOT_URL}/api/v1/${docType}`, { withCredentials: true })
+            .then(res => {
                 if (res.data.status === 'success') {
-                    if (typeof setFunction !== 'function') return setDocs(res.data.data.docs)
-
-                    setDocs(setFunction(res.data.data.docs))
+                    const docs = setFunction ? setFunction(res.data.data.docs) : res.data.data.docs
+                    setDocs(docs)
                 }
-            } catch (err) {
-                alert(err.response.data.message)
-            }
-        }
-
-        fetchDocs()
-        // eslint-disable-next-line
-    }, [docType])
+            })
+            .catch(err => alert(err.response.data.message))
+    }, [docType, setFunction])
 
     return [docs, setDocs]
 }
+
