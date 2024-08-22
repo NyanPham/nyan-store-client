@@ -3,8 +3,6 @@ import { useEffect, useCallback, useMemo } from 'react'
 import { useState } from 'react'
 import { ROOT_URL } from '../config'
 
-const cachedProductsOnUrl = new Map()
-
 const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setProducts, limit, page }) => {
     const collection = collections.find((c) => c.name === collectionName);
     if (!collection) {

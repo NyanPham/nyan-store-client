@@ -15,12 +15,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useLocation } from 'react-router-dom'
 import { useSideCartContext } from '../context/sideCartContext'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useAuthContext } from '../context/authContext'
 import defaultAvatar from '../imgs/default.jpg'
 import { ROOT_URL } from '../config'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { emptyWishlist, getWishlist } from '../redux/actions/wishlistActions'
+import { emptyCart, getCart } from '../redux/actions/cartActions'
 
 const Header = () => {
     const { isLoggedIn, currentUser } = useAuthContext()
@@ -31,7 +33,8 @@ const Header = () => {
     const { pathname } = useLocation()
     const { cart } = useSelector((state) => state.cart)
     const authRef = useRef()
-
+    const dispatch = useDispatch()  
+    
     const closeAuth = (e) => {
         if (authRef.current.contains(e.target)) return
         setOpenAuth(false)
@@ -66,6 +69,16 @@ const Header = () => {
 
         return () => window.removeEventListener('scroll', onScroll)
     }, [scrollDir])
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            dispatch(getWishlist())
+            dispatch(getCart())
+        } else {
+            dispatch(emptyWishlist())
+            dispatch(emptyCart())
+        }
+    }, [isLoggedIn, dispatch])
 
     useEffect(() => {
         window.addEventListener('click', closeAuth)

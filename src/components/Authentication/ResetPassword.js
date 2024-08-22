@@ -97,13 +97,13 @@ export default function ResetPassword() {
                     Reset now
                 </button>
             </form>
-            <LoadingWithAlert
+            {/* <LoadingWithAlert
                 loading={isLoading}
                 showAlert={showAlert}
                 message={message}
                 error={error}
                 setShowAlert={setShowAlert}
-            />
+            /> */}
         </section>
     )
 }

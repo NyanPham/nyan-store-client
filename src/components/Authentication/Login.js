@@ -92,13 +92,13 @@ function Login() {
                     Reset now
                 </Link>
             </h3>
-            <LoadingWithAlert
+            {/* <LoadingWithAlert
                 loading={isLoading}
                 showAlert={showAlert}
                 message={message}
                 error={error}
                 setShowAlert={setShowAlert}
-            />
+            /> */}
         </section>
     )
 }

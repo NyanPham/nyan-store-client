@@ -60,14 +60,14 @@ export default function FilterView(props) {
                             currentBid={false}
                         />
                     ))}
-                <LoadingWithAlert
+                {/* <LoadingWithAlert
                     loading={isLoading}
                     showAlert={showAlert}
                     message={message}
                     error={error}
                     setShowAlert={setShowAlert}
                     inContainer={true}
-                />
+                /> */}
 
                 {pageNumbers && pageNumbers.length > 1 && (
                     <div className="mx-auto flex flex-row gap-2 col-span-full mt-7 mb-4">

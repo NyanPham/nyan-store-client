@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './components/Home'
@@ -6,11 +6,8 @@ import { useDispatch, useSelector } from 'react-redux/es/exports'
 import { fetchCollections } from './redux/actions/collectionsActions'
 import { fetchCategories } from './redux/actions/categoriesActions'
 import { Login, ForgotPassword, ResetPassword, Logout, MyAccount, Signup } from './components/Authentication'
-import { useAuthContext } from './context/authContext'
-import { emptyWishlist, getWishlist } from './redux/actions/wishlistActions'
 import Footer from './components/Footer'
 import Search from './components/Search/Search'
-import { emptyCart, getCart } from './redux/actions/cartActions'
 import { SideCart } from './components/Cart'
 import { CartPage, WishlistPage, OrderPage, ProductPage } from './components/Pages/index'
 import axios from 'axios'
@@ -18,6 +15,7 @@ import { configure } from 'axios-hooks'
 import LoadingWithAlert from './components/LoadingWithAlert'
 import useScrollToTop from './hooks/useScrollToTop'
 import SidebarNavigationDrawer from './components/SidebarNavigationDrawer'
+import { hideAlert } from './redux/actions/appStatusActions'
 
 const instance = axios.create({
     withCredentials: true,
@@ -30,33 +28,24 @@ configure({ instance })
 // though they don't need the authentication to fetch and show products 
 // TODO: Find a better place to call the useAuthContext hook
 function App() {
-    const { isLoggedIn } = useAuthContext()
-    const { loading, message, error } = useSelector((state) => state.cart)
-    const [showAlert, setShowAlert] = useState(false)
+    const { loading, message, error, showAlert } = useSelector(state => state.appStatus)
+
     const dispatch = useDispatch()
     const { pathname } = useLocation()
     useScrollToTop(pathname)
+
+    const countRef = useRef(0)
+    countRef.current++
+    console.log("Render: ", countRef.current)
 
     useEffect(() => {
         dispatch(fetchCollections())
         dispatch(fetchCategories())
     }, [dispatch])
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            dispatch(getWishlist())
-            dispatch(getCart())
-        } else {
-            dispatch(emptyWishlist())
-            dispatch(emptyCart())
-        }
-    }, [isLoggedIn, dispatch])
-
-    useEffect(() => {
-        if (error) {
-            setShowAlert(true)
-        }
-    }, [error, message])
+    const closeAlert = useCallback(() => {
+        dispatch(hideAlert())
+    }, [])
 
     return (
         <>
@@ -146,9 +135,9 @@ function App() {
                     showAlert={showAlert}
                     message={message}
                     error={error}
-                    setShowAlert={setShowAlert}
-                />
-            </div>
+                    closeAlert={closeAlert}
+                />  
+            </div>  
             <div id="modal-container">
                 <SidebarNavigationDrawer />
             </div>

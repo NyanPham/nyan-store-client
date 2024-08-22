@@ -259,13 +259,13 @@ export default function MyAccount() {
                 {/* For Admin */}
                 <AdminMainPanel formShow={formShow} handleUserUpdate={handleUserUpdate} adminFormRef={adminFormRef} />
             </div>
-            <LoadingWithAlert
+            {/* <LoadingWithAlert
                 loading={isLoading}
                 showAlert={showAlert}
                 message={message}
                 error={error}
                 setShowAlert={setShowAlert}
-            />
+            /> */}
         </section>
     )
 }

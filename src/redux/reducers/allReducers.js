@@ -6,6 +6,7 @@ import collectionsReducer from './collectionsReducer'
 import orderNoteReducer from './orderNoteReducer'
 import searchReducder from './searchReducer'
 import wishlistReducer from './wishlistReducer'
+import appStatusReducer from './appStatusReducer'
 
 const allReducers = combineReducers({
     wishlist: wishlistReducer,
@@ -15,6 +16,7 @@ const allReducers = combineReducers({
     cart: cartReducer,
     orderNote: orderNoteReducer,
     search: searchReducder,
+    appStatus: appStatusReducer,
 })
 
 export default allReducers

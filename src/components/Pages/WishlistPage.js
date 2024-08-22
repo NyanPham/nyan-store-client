@@ -4,7 +4,7 @@ import ProductCard from '../Products/ProductCard'
 
 export default function WishlistPage() {
     const wishlist = useSelector((state) => state.wishlist)
-
+    
     return (
         <section className="flex-grow pb-12">
             <div className="container mx-auto">

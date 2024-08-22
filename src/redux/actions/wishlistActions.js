@@ -66,7 +66,7 @@ export const removeWishlist = (wishlist, productId) => {
         }
     }
 }
-
+    
 export const getWishlist = () => {
     return async (dispatch) => {
         try {

@@ -55,13 +55,13 @@ export default function OrderPage() {
                     </h3>
                 )}
             </section>
-            <LoadingWithAlert
+            {/* <LoadingWithAlert
                 loading={isLoading}
                 message={message}
                 error={error}
                 showAlert={showAlert}
                 setShowAlert={setShowAlert}
-            />
+            /> */}
         </>
     )
 }

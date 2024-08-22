@@ -28,7 +28,7 @@ export default function ForgotPassword() {
         setIsLoading(true)
         setMessage('')
         setError('')
-
+        
         try {
             const res = await axios({
                 method: 'POST',
@@ -81,13 +81,13 @@ export default function ForgotPassword() {
                     </button>
                 </form>
             </div>
-            <LoadingWithAlert
+            {/* <LoadingWithAlert
                 loading={isLoading}
                 showAlert={showAlert}
                 message={message}
                 error={error}
                 setShowAlert={setShowAlert}
-            />
+            /> */}
         </>
     )
 }

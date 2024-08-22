@@ -5,7 +5,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from './Alert/Alert'
 import Overlay from './Overlay'
 
-export default function LoadingWithAlert({ loading, showAlert, message, error, setShowAlert, inContainer = false }) {
+export default function LoadingWithAlert({ loading, showAlert, message, error, closeAlert, inContainer = false }) {
     return (
         <>
             {loading && (
@@ -24,7 +24,7 @@ export default function LoadingWithAlert({ loading, showAlert, message, error, s
                             type={message ? 'success' : 'error'}
                             message={message ? message : error ? error : ''}
                             delayToClose={3000}
-                            closeCallback={() => setShowAlert(false)}
+                            closeCallback={closeAlert}
                         />
                     </Overlay>,
                     document.getElementById('modal-container')

@@ -48,13 +48,13 @@ export default function CheckoutButton({ styles }) {
             <button type="button" className={styles} onClick={handleCheckout}>
                 Checkout
             </button>
-            <LoadingWithAlert
+            {/* <LoadingWithAlert
                 loading={isLoading}
                 showAlert={showAlert}
                 message={message}
                 error={error}
                 setShowAlert={setShowAlert}
-            />
+            /> */}
         </>
     )
 }
