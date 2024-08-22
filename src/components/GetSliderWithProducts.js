@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
-import { useFetchProducts } from '../hooks/useFetchProducts'
+import React, { useMemo, useRef } from 'react'
+import { useFetchProducts, useFetchProductsWithVisibility } from '../hooks/useFetchProducts'
 import SliderWithProduct from './SliderWithProduct'
+import useOnScreen from '../hooks/useOnScreen'
     
-// TODO: Only call useFetchProducts hook if in view
 // TODO: Do the cache as a state for the whole app to store the products
 function GetSliderWithProducts({
     tags,
@@ -17,6 +17,9 @@ function GetSliderWithProducts({
     sliderFirst = true,
     from = 'category',
 }) {    
+    const divRef = useRef()
+    const isVisible = useOnScreen(divRef, '0px', 0.3)
+
     const options = useMemo(() => {
         const opts = {
             page: 1,
@@ -31,22 +34,24 @@ function GetSliderWithProducts({
         return opts
     }, [from, category, tags])
 
-    const { data: products, isLoading } = useFetchProducts(from, options)
-
+    const { data: products, isLoading } = useFetchProductsWithVisibility(from, options, isVisible)
+    
     return (
-        <SliderWithProduct
-            slides={slides}
-            products={products}
-            navTitle={navTitle}
-            sideNavBackground={sideNavBackground}
-            nameColor={nameColor}
-            borderColor={borderColor}
-            itemBorderColor={itemBorderColor}
-            caretColor={caretColor}
-            sliderFirst={sliderFirst}
-            showNumber={options.limit}
-            isLoading={isLoading}
-        />
+        <div ref={divRef}>
+            <SliderWithProduct
+                slides={slides}
+                products={products}
+                navTitle={navTitle}
+                sideNavBackground={sideNavBackground}
+                nameColor={nameColor}
+                borderColor={borderColor}
+                itemBorderColor={itemBorderColor}
+                caretColor={caretColor}
+                sliderFirst={sliderFirst}
+                showNumber={options.limit}
+                isLoading={isLoading}
+            />
+        </div>
     )
 }
 

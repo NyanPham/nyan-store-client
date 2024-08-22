@@ -1,29 +1,29 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { SwiperSlide } from 'swiper/react'
 import { useSelector } from 'react-redux/es/exports'
-import { useFetchProducts } from '../../hooks/useFetchProducts'
+import {useFetchProductsWithVisibility } from '../../hooks/useFetchProducts'
 import ProductCard from './ProductCard'
 import ProductShowcase from './ProductShowcase'
 import nyanLogoWhite from '../../imgs/nyan-logo-white.png'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import SkeletonCard from '../SkeletonCard'
+import useOnScreen from '../../hooks/useOnScreen'
 
-// TODO: Only call useFetchProducts hook if in view
 // TODO: Do the cache as a state for the whole app to store the products
 function ProductRecommendation({ showRecommendCard = true, category, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
+    const divRef = useRef()
+    const isVisible = useOnScreen(divRef, '0px', 0.3)
 
-    const { data: products, isLoading } = useFetchProducts(type, {
+    const { data: products, isLoading } = useFetchProductsWithVisibility(type, {
         collections: allCollections,
         collectionName: 'New Arrival',
         categoryName: category?.name,
         limit: 4,
         page: 1,
-    })
+    }, isVisible)  
     
-    console.log(products, isLoading)
-
     const recommendationCard = (
         <SwiperSlide key="recommendation_message">
             <div className="flex flex-col items-center justify-center w-full h-full bg-cyan-500 gap-4 px-7 max-w-xs">
@@ -49,10 +49,12 @@ function ProductRecommendation({ showRecommendCard = true, category, type = 'col
     )
 
     return (
-        <ProductShowcase
-            productCards={showRecommendCard ? [recommendationCard, ...productCards] : productCards}
-            isSlider={!isLoading}
-        />
+        <div ref={divRef}>
+            <ProductShowcase
+                productCards={showRecommendCard ? [recommendationCard, ...productCards] : productCards}
+                isSlider={!isLoading}
+            />
+        </div>
     )
 }
 
