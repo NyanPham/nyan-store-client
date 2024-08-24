@@ -28,12 +28,11 @@ configure({ instance })
 // though they don't need the authentication to fetch and show products 
 // TODO: Find a better place to call the useAuthContext hook
 function App() {
-    const { loading, message, error, showAlert } = useSelector(state => state.appStatus)
-
+    const { loading, message, error, toShowAlert } = useSelector(state => state.appStatus)
     const dispatch = useDispatch()
     const { pathname } = useLocation()
     useScrollToTop(pathname)
-
+    
     const countRef = useRef(0)
     countRef.current++
     console.log("Render: ", countRef.current)
@@ -45,7 +44,7 @@ function App() {
 
     const closeAlert = useCallback(() => {
         dispatch(hideAlert())
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -129,10 +128,10 @@ function App() {
                     <Route path="/resetPassword/:resetToken" element={<ResetPassword />} />
                 </Routes>
                 <SideCart />
-
+                            
                 <LoadingWithAlert
                     loading={loading}
-                    showAlert={showAlert}
+                    showAlert={toShowAlert}
                     message={message}
                     error={error}
                     closeAlert={closeAlert}

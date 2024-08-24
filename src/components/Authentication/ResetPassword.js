@@ -1,38 +1,38 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useNavigate, useParams } from 'react-router-dom'
-import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
+import { useDispatch } from 'react-redux'
+import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
 
 // Need to move the image background render to the className later
 export default function ResetPassword() {
     const { resetToken } = useParams()
-    const [showAlert, setShowAlert] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
-
+   
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
 
     const navigate = useNavigate()
 
+    const dispatch = useDispatch()
+
     async function handleFormSubmit(e) {
         e.preventDefault()
-
+        
         const password = passwordRef.current.value
         const passwordConfirm = passwordConfirmRef.current.value
 
         if (password == null) {
-            setMessage('Please enter new password to reset!')
-            setShowAlert(true)
+            dispatch(setMessage('Please enter new password to reset!'))
+            dispatch(showAlert())
             return
         }
-
-        setIsLoading(true)
-        setMessage('')
-        setError('')
+        
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
+        dispatch(hideAlert())
 
         try {
             const res = await axios({
@@ -46,14 +46,14 @@ export default function ResetPassword() {
             })
 
             if (res.data.status === 'success') {
-                setMessage('Your password has been reset!')
+                dispatch(setMessage('Your password has been reset!'))
                 setTimeout(() => navigate('/login'), 2000)
             }
         } catch (err) {
-            setError(err.response.data.message)
+            dispatch(setError(err.response.data.message))
         } finally {
-            setShowAlert(true)
-            setIsLoading(false)
+            dispatch(showAlert())
+            dispatch(hideLoading())
         }
     }
 
@@ -97,13 +97,6 @@ export default function ResetPassword() {
                     Reset now
                 </button>
             </form>
-            {/* <LoadingWithAlert
-                loading={isLoading}
-                showAlert={showAlert}
-                message={message}
-                error={error}
-                setShowAlert={setShowAlert}
-            /> */}
         </section>
     )
 }

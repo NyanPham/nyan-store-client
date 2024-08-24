@@ -4,27 +4,27 @@ import { Link } from 'react-router-dom'
 import backgroundImage from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import axios from 'axios'
-import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
 import AdminMainPanel from '../Admin/AdminMainPanel'
 import { useEffect } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { useDispatch } from 'react-redux'
+import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
+
 
 export default function MyAccount() {
     const { currentUser, authLogin } = useAuthContext()
     const [currentPassword, setCurrentPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
     const [formShow, setFormShow] = useState('data')
-    const [showAlert, setShowAlert] = useState(false)
     const photoRef = useRef()
     const profileFormRef = useRef()
     const passwordFormRef = useRef()
     const adminFormRef = useRef()
+
+    const dispatch = useDispatch()
 
     const backgroundStyles = {
         backgroundImage: `url(${backgroundImage})`,
@@ -55,9 +55,10 @@ export default function MyAccount() {
             }
         })
 
-        setIsLoading(true)
-        setMessage('')
-        setError('')
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
+        dispatch(hideAlert())
 
         try {
             const res = await axios({
@@ -69,13 +70,13 @@ export default function MyAccount() {
 
             if (res.data.status === 'success') {
                 authLogin(res.data.data.user)
-                setMessage(`Your ${e.target.dataset.userUpdate} has been updated successfully!`)
+                dispatch(setMessage(`Your ${e.target.dataset.userUpdate} has been updated successfully!`))
             }
         } catch (err) {
-            setError(err.response.data.message)
+            dispatch(setError(err.response.data.message))
         } finally {
-            setIsLoading(false)
-            setShowAlert(true)
+            dispatch(hideLoading())
+            dispatch(showAlert())
 
             if (e.target.dataset.userUpdate === 'password') {
                 setCurrentPassword('')
@@ -84,7 +85,7 @@ export default function MyAccount() {
             }
         }
     }
-
+    
     useEffect(() => {
         if (formShow === 'data') {
         }
@@ -259,13 +260,6 @@ export default function MyAccount() {
                 {/* For Admin */}
                 <AdminMainPanel formShow={formShow} handleUserUpdate={handleUserUpdate} adminFormRef={adminFormRef} />
             </div>
-            {/* <LoadingWithAlert
-                loading={isLoading}
-                showAlert={showAlert}
-                message={message}
-                error={error}
-                setShowAlert={setShowAlert}
-            /> */}
         </section>
     )
 }

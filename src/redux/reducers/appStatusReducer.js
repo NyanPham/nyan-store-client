@@ -2,10 +2,10 @@ import ACTIONS from '../actions/appStatusActions'
 
 const initialState = {
     loading: false,
-    showAlert: true,
-    message: 'Hello world',
+    toShowAlert: false,
+    message: '',
     error: null,
-}
+} 
 
 const statusReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -22,19 +22,22 @@ const statusReducer = (state = initialState, action) => {
         case ACTIONS.SHOW_ALERT:
             return { 
               ...state, 
-              showAlert: true, 
-              message: action.payload 
+              toShowAlert: true, 
             }
         case ACTIONS.HIDE_ALERT:
             return { 
               ...state, 
-              showAlert: false, 
-              message: '' 
+              toShowAlert: false, 
             }
         case ACTIONS.SET_ERROR:
             return { 
               ...state, 
               error: action.payload 
+            }
+        case ACTIONS.SET_MESSAGE:
+            return {
+              ...state,
+              message: action.payload
             }
         default:
             return state

@@ -1,23 +1,22 @@
 import React from 'react'
 import { useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
-import useAsyncValidateState from '../../hooks/useAsyncValidateState'
-import LoadingWithAlert from '../LoadingWithAlert'
+import { useDispatch, useSelector } from 'react-redux'
 import { ROOT_URL } from '../../config'
+import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
 
 export default function CheckoutButton({ styles }) {
     const { cart } = useSelector((state) => state.cart)
-    const { isLoading, setIsLoading, message, setMessage, error, setError, showAlert, setShowAlert } =
-        useAsyncValidateState()
+    const dispatch = useDispatch()
+    
     const stripe = useStripe()
     const handleCheckout = async (e) => {
         e.preventDefault()
 
-        setIsLoading(true)
-        setMessage('')
-        setError('')
-        setShowAlert(false)
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
+        dispatch(hideAlert())
 
         try {
             const res = await axios({
@@ -34,12 +33,12 @@ export default function CheckoutButton({ styles }) {
                 })
             }
         } catch (err) {
-            setError(
+            dispatch(setError(
                 'Something went wrong when directing you to the checkout. Please wait for 10 minutes then try again later.'
-            )
-            setShowAlert(true)
+            ))
+            dispatch(showAlert())
         } finally {
-            setIsLoading(false)
+            dispatch(hideLoading())
         }
     }
 
@@ -48,13 +47,6 @@ export default function CheckoutButton({ styles }) {
             <button type="button" className={styles} onClick={handleCheckout}>
                 Checkout
             </button>
-            {/* <LoadingWithAlert
-                loading={isLoading}
-                showAlert={showAlert}
-                message={message}
-                error={error}
-                setShowAlert={setShowAlert}
-            /> */}
         </>
     )
 }

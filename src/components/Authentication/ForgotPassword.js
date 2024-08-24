@@ -1,22 +1,20 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import nyanLogo from '../../imgs/nyan-logo-white.png'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { hideLoading, setError, setMessage, showLoading, showAlert } from '../../redux/actions/appStatusActions'
 
 // Need to move the image background render to the className later
 export default function ForgotPassword() {
-    const [showAlert, setShowAlert] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
-    // const navigate = useNavigate()
-
     const emailRef = useRef()
+    
+    const { loading } = useSelector(state => state.appStatus)
+    const dispatch = useDispatch()
 
     async function handleFormSubmit(e) {
         e.preventDefault()
@@ -25,10 +23,10 @@ export default function ForgotPassword() {
 
         if (email == null) return alert('Please enter email')
 
-        setIsLoading(true)
-        setMessage('')
-        setError('')
-        
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
+
         try {
             const res = await axios({
                 method: 'POST',
@@ -36,16 +34,16 @@ export default function ForgotPassword() {
                 data: {
                     email,
                 },
-            })
+            })  
 
             if (res.data.status === 'success') {
-                setMessage('We have sent you an email to reset your password!')
-            }
+                dispatch(setMessage('We have sent you an email to reset your password!'))
+            }   
         } catch (err) {
-            setError(err.response.data.message)
+            dispatch(setError(err.response.data.message))
         } finally {
-            setShowAlert(true)
-            setIsLoading(false)
+            dispatch(showAlert())
+            dispatch(hideLoading())
         }
     }
 
@@ -75,7 +73,7 @@ export default function ForgotPassword() {
                     <button
                         className="form-btn text-white disabled:bg-gray-300 disabled:text-slate-700"
                         type="submit"
-                        disabled={isLoading}
+                        disabled={loading}
                     >
                         Reset now
                     </button>

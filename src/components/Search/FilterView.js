@@ -2,9 +2,9 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import getMatchedButton from '../../utils/getMatchedButton'
-import LoadingWithAlert from '../LoadingWithAlert'
 import ProductHorizontalCard from '../Products/ProductHorizontalCard'
 import ProductCard from './../Products/ProductCard'
+
 
 const getViewGrid = (viewTerm) => {
     switch (viewTerm) {
@@ -20,7 +20,7 @@ const getViewGrid = (viewTerm) => {
 }
 
 export default function FilterView(props) {
-    const { products, viewBy, isLoading, error, message, showAlert, setShowAlert, pagination } = props
+    const { products, viewBy, pagination } = props
     const { page, pageNumbers, onPaginationClick } = pagination
     let viewGrid = getViewGrid(viewBy)
 
@@ -60,14 +60,6 @@ export default function FilterView(props) {
                             currentBid={false}
                         />
                     ))}
-                {/* <LoadingWithAlert
-                    loading={isLoading}
-                    showAlert={showAlert}
-                    message={message}
-                    error={error}
-                    setShowAlert={setShowAlert}
-                    inContainer={true}
-                /> */}
 
                 {pageNumbers && pageNumbers.length > 1 && (
                     <div className="mx-auto flex flex-row gap-2 col-span-full mt-7 mb-4">

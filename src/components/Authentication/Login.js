@@ -1,19 +1,17 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate, Link } from 'react-router-dom'
-import LoadingWithAlert from '../LoadingWithAlert'
 import { ROOT_URL } from '../../config'
+import { useDispatch } from 'react-redux'
+import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
 
 // Need to move the image background render to the className later
 function Login() {
     const { authLogin } = useAuthContext()
-    const [showAlert, setShowAlert] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -26,9 +24,10 @@ function Login() {
 
         if (email == null || password == null) return alert('Please enter email and password!')
 
-        setIsLoading(true)
-        setMessage('')
-        setError('')
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
+        dispatch(hideAlert())
 
         try {
             const res = await axios.post(
@@ -40,15 +39,15 @@ function Login() {
             )
 
             if (res.data.status === 'success') {
-                setMessage('Login Successful! Redirecting...')
+                dispatch(setMessage('Login Successful! Redirecting...'))
                 authLogin(res.data.currentUser)
                 setTimeout(() => navigate('/'), 1500)
             }
         } catch (err) {
-            setError(err.response.data.message)
+            dispatch(setError(err.response.data.message))
         } finally {
-            setShowAlert(true)
-            setIsLoading(false)
+            dispatch(hideLoading())
+            dispatch(showAlert())
         }
     }
 
@@ -92,13 +91,6 @@ function Login() {
                     Reset now
                 </Link>
             </h3>
-            {/* <LoadingWithAlert
-                loading={isLoading}
-                showAlert={showAlert}
-                message={message}
-                error={error}
-                setShowAlert={setShowAlert}
-            /> */}
         </section>
     )
 }

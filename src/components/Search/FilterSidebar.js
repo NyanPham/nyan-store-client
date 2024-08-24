@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
@@ -10,16 +10,14 @@ import CurrentFacets from './CurrentFacets'
 import FilterFacetGroup from './FilterFacetGroup'
 import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
+import { hideLoading, setError, setMessage, showLoading, showAlert } from '../../redux/actions/appStatusActions'
+
 export default function FilterSidebar(props) {
     const {
         setData,
         sortByTerm,
         categoryId,
         categoryName,
-        setIsLoading,
-        setMessage,
-        setError,
-        setShowAlert,
         pagination,
     } = props
     const { page, limit, setPage } = pagination
@@ -40,6 +38,8 @@ export default function FilterSidebar(props) {
         optionType: null,
         value: null,
     })
+    
+    const dispatch = useDispatch()
 
     const search = useSelector((state) => state.search)
     const { pathname } = useLocation()
@@ -88,9 +88,9 @@ export default function FilterSidebar(props) {
     }
 
     const searchProducts = async (filterQuery, allAvailableOptions) => {
-        setIsLoading(true)
-        setMessage('')
-        setError('')
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
 
         try {
             const res = await axios({
@@ -109,10 +109,10 @@ export default function FilterSidebar(props) {
                 setData(res.data)
             }
         } catch (err) {
-            setError(err.response.data.message)
-            setShowAlert(true)
+            dispatch(setError(err.response.data.message))
+            dispatch(showAlert())
         } finally {
-            setIsLoading(false)
+            dispatch(hideLoading())
         }
     }
 

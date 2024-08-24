@@ -1,21 +1,18 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
 import { ROOT_URL } from '../../config'
-import LoadingWithAlert from '../LoadingWithAlert'
+import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
+import { useDispatch } from 'react-redux'
 
 // Need to move the image background render to the className later
 function Signup() {
     const { authLogin } = useAuthContext()
     const navigate = useNavigate()
 
-    const [showAlert, setShowAlert] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
-
+    const dispatch = useDispatch()
     const nameRef = useRef()
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -33,10 +30,11 @@ function Signup() {
 
         if (password !== passwordConfirm) return alert('Passwords do not match!')
 
-        setIsLoading(true)
-        setMessage('')
-        setError('')
-
+        dispatch(showLoading())
+        dispatch(setMessage(''))
+        dispatch(setError(''))
+        dispatch(hideAlert())
+    
         try {
             const res = await axios({
                 method: 'POST',
@@ -50,16 +48,16 @@ function Signup() {
                 withCredentials: true,
             })
             if (res.data.status === 'success') {
-                setMessage('You have signed up successfully!')
+                dispatch(setMessage('You have signed up successfully!'))
                 authLogin()
                 navigate('/')
             }
         } catch (err) {
             console.log(err)
-            setError(err.response.data.message)
+            dispatch((setError(err.response.data.message)))
         } finally {
-            setShowAlert(true)
-            setIsLoading(false)
+            dispatch(hideLoading())
+            dispatch(showAlert())
         }
     }
 
@@ -118,13 +116,6 @@ function Signup() {
                     </button>
                 </form>
             </div>
-            {/* <LoadingWithAlert
-                loading={isLoading}
-                showAlert={showAlert}
-                message={message}
-                error={error}
-                setShowAlert={setShowAlert}
-            /> */}
         </>
     )
 }

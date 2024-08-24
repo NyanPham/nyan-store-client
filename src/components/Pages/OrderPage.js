@@ -4,22 +4,20 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ROOT_URL } from '../../config'
-import LoadingWithAlert from '../LoadingWithAlert'
 import OrderCard from '../Order/OrderCard'
+import { useDispatch } from 'react-redux'
+import { hideAlert, hideLoading, setError, setMessage, showLoading } from '../../redux/actions/appStatusActions'
 
 export default function OrderPage() {
     const [orders, setOrders] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
-    const [showAlert, setShowAlert] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchOrders = async () => {
-            setIsLoading(true)
-            setMessage('')
-            setError('')
-            setShowAlert(false)
+            dispatch(showLoading())
+            dispatch(setMessage(''))
+            dispatch(setError(''))
+            dispatch(hideAlert())
 
             try {
                 const res = await axios.get(`${ROOT_URL}/api/v1/users/myOrders`, {
@@ -30,14 +28,14 @@ export default function OrderPage() {
                     setOrders(res.data.data.docs)
                 }
             } catch (err) {
-                setError('Failed to load your orders. Please try again later...!')
+                dispatch(setError('Failed to load your orders. Please try again later...!'))
             } finally {
-                setIsLoading(false)
+                dispatch(hideLoading())
             }
         }
 
         fetchOrders()
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -55,13 +53,6 @@ export default function OrderPage() {
                     </h3>
                 )}
             </section>
-            {/* <LoadingWithAlert
-                loading={isLoading}
-                message={message}
-                error={error}
-                showAlert={showAlert}
-                setShowAlert={setShowAlert}
-            /> */}
         </>
     )
 }

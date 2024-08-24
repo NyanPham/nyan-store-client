@@ -3,18 +3,14 @@ import { useParams } from 'react-router-dom'
 import FilterSidebar from './FilterSidebar'
 import FilterTopbar from './FilterTopbar'
 import FilterView from './FilterView'
-import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { useSelector } from 'react-redux'
 
 export default function FilterContainer() {
     const [data, setData] = useState({})
     const [sortBy, setSortBy] = useState('oldest')
     const [viewBy, setViewBy] = useState('loose')
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('')
-    const [showAlert, setShowAlert] = useState(false)
     const [page, setPage] = useState(1)
     const limit = 9
 
@@ -53,10 +49,6 @@ export default function FilterContainer() {
                     sortByTerm={sortBy}
                     categoryId={categoryId ? categoryId : null}
                     categoryName={categoryName}
-                    setIsLoading={setIsLoading}
-                    setMessage={setMessage}
-                    setError={setError}
-                    setShowAlert={setShowAlert}
                     pagination={{ page, limit, setPage }}
                 />
             </div>
@@ -70,11 +62,6 @@ export default function FilterContainer() {
                 <FilterView
                     products={data.data?.docs}
                     viewBy={viewBy}
-                    isLoading={isLoading}
-                    error={error}
-                    message={message}
-                    showAlert={showAlert}
-                    setShowAlert={setShowAlert}
                     pagination={{ page, pageNumbers, onPaginationClick }}
                 />
             </div>
