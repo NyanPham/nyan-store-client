@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from 'react'
-import { useFetchProducts, useFetchProductsWithVisibility } from '../hooks/useFetchProducts'
+import { useFetchProductsWithVisibility } from '../hooks/useFetchProducts'
 import SliderWithProduct from './SliderWithProduct'
 import useOnScreen from '../hooks/useOnScreen'
     
