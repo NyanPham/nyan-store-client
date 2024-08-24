@@ -15,15 +15,15 @@ function ProductRecommendation({ showRecommendCard = true, category, type = 'col
     const allCollections = useSelector((state) => state.collections)
     const divRef = useRef()
     const isVisible = useOnScreen(divRef, '-50px', 0)
-    
+
     const { data: products, isLoading } = useFetchProductsWithVisibility(type, {
         collections: allCollections,
         collectionName: 'New Arrival',
         categoryName: category?.name,
-        limit: 4,
+        limit: 8,
         page: 1,
     }, isVisible)  
-    
+
     const recommendationCard = (
         <SwiperSlide key="recommendation_message">
             <div className="flex flex-col items-center justify-center w-full h-full bg-cyan-500 gap-4 px-7 max-w-xs">
