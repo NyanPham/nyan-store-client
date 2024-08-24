@@ -18,7 +18,7 @@ function GetSliderWithProducts({
     from = 'category',
 }) {    
     const divRef = useRef()
-    const isVisible = useOnScreen(divRef, '0px', 0.3)
+    const isVisible = useOnScreen(divRef, '-50px', 0)
 
     const options = useMemo(() => {
         const opts = {

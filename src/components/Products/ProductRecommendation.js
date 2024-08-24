@@ -14,8 +14,8 @@ import useOnScreen from '../../hooks/useOnScreen'
 function ProductRecommendation({ showRecommendCard = true, category, type = 'collections' }) {
     const allCollections = useSelector((state) => state.collections)
     const divRef = useRef()
-    const isVisible = useOnScreen(divRef, '0px', 0.3)
-
+    const isVisible = useOnScreen(divRef, '-50px', 0)
+    
     const { data: products, isLoading } = useFetchProductsWithVisibility(type, {
         collections: allCollections,
         collectionName: 'New Arrival',
