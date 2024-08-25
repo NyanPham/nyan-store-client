@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import VariantsPicker from '../Products/VariantsPicker'
+import VariantsPicker from '../Products/VariantsPicker.tsx'
 import { useDispatch, useSelector } from 'react-redux'
-import { auctionProduct, resetMessagesAndError } from '../../redux/actions/biddingActions'
+import { auctionProduct, resetMessagesAndError } from '../../redux/actions/biddingActions.ts'
 import { useState } from 'react'
 import { ROOT_URL } from '../../config'
 
