@@ -1,7 +1,16 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 
+type AlertWithConfirmProps = {
+    type: string
+    message: string
+    confirmText: string
+    cancelText: string
+    confirmCallback: () => void
+    cancelCallback: () => void
+    closeCallback: () => void
+} 
+    
 export default function AlertWithConfirm({
     type,
     message,
@@ -10,7 +19,7 @@ export default function AlertWithConfirm({
     confirmCallback,
     cancelCallback,
     closeCallback,
-}) {
+}: AlertWithConfirmProps) {
     return (
         <div className="bg-white max-w-md flex flex-col rounded-lg">
             <div className="flex justify-end items-center py-2 px-4 border-b border-slate-900/10">

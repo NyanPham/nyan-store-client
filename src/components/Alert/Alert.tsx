@@ -1,16 +1,23 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { useRef } from 'react'
 import useTimeout from '../../hooks/useTimeout'
 
-export default function Alert({ type, message, delayToClose = 10000, closeCallback }) {
-    useTimeout(closeCallback, delayToClose)
-    const modalRef = useRef()
+type AlertProps = {
+    type: string
+    message: string
+    delayToClose?: number
+    closeCallback: () => void
+}
 
+export default function Alert({ type, message, delayToClose = 10000, closeCallback } : AlertProps) {
+    useTimeout(closeCallback, delayToClose)
+    const modalRef = useRef<HTMLDivElement>(null)
+    
     const handleOverlayClick = useCallback(
-        (e) => {
-            if (modalRef.current.contains(e.target)) return
+        (e : React.MouseEvent<HTMLDivElement>) => {
+            if (modalRef.current?.contains(e.target as Node)) return
             closeCallback()
         },
         [closeCallback]

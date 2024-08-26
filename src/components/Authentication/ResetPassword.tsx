@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { FormEvent, useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -10,18 +10,18 @@ import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } 
 export default function ResetPassword() {
     const { resetToken } = useParams()
    
-    const passwordRef = useRef()
-    const passwordConfirmRef = useRef()
+    const passwordRef = useRef<HTMLInputElement>(null)
+    const passwordConfirmRef = useRef<HTMLInputElement>(null)
 
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
-
-    async function handleFormSubmit(e) {
+    
+    async function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         
-        const password = passwordRef.current.value
-        const passwordConfirm = passwordConfirmRef.current.value
+        const password = passwordRef.current?.value
+        const passwordConfirm = passwordConfirmRef.current?.value
 
         if (password == null) {
             dispatch(setMessage('Please enter new password to reset!'))
@@ -49,7 +49,7 @@ export default function ResetPassword() {
                 dispatch(setMessage('Your password has been reset!'))
                 setTimeout(() => navigate('/login'), 2000)
             }
-        } catch (err) {
+        } catch (err: any) {
             dispatch(setError(err.response.data.message))
         } finally {
             dispatch(showAlert())

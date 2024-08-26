@@ -2,8 +2,17 @@ import axios from 'axios'
 import { useEffect, useCallback, useMemo } from 'react'
 import { useState } from 'react'
 import { ROOT_URL } from '../config'
+import { Category, Collection, ServerResponse, Tag, Product } from '../types'
 
-const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setProducts, limit, page }) => {
+type getCollectionUrlAndSuccessHandlerType = {
+    collections: Collection[],
+    collectionName: string,
+    setProducts: (products: Product[]) => void,
+    limit: number,
+    page: number
+}
+
+const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setProducts, limit, page } : getCollectionUrlAndSuccessHandlerType) => {
     const collection = collections.find((c) => c.name === collectionName);
     if (!collection) {
         throw new Error(`Collection with name ${collectionName} not found`);
@@ -16,7 +25,7 @@ const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setPro
 
     const url = `${ROOT_URL}/api/v1/collections/${collectionId}/products?limit=${limit}&page=${page}`;
 
-    const successHandler = async (res) => {
+    const successHandler = async (res : ServerResponse) => {
         if (res.status !== 200) {
             throw new Error(`Failed to fetch products from collection ${collectionName}`);
         }
@@ -32,17 +41,24 @@ const getCollectionUrlAndSuccessHandler = ({ collections, collectionName, setPro
     return { successHandler, url };
 }
 
-const getCategoryUrlAndSuccessHandler = ({ categoryName, setProducts, limit, page }) => {
+type getCategoryUrlAndSuccessHandlerType = {
+    categoryName: string,
+    setProducts: Function,
+    limit: number,
+    page: number
+}
+
+const getCategoryUrlAndSuccessHandler = ({ categoryName, setProducts, limit, page } : getCategoryUrlAndSuccessHandlerType) => {
     const url = `${ROOT_URL}/api/v1/categories?name=${categoryName}`
-    const successHandler = async (res) => {
+    const successHandler = async (res: ServerResponse) => {
         if (res.data.status !== 'success') {
             throw new Error(`Failed to fetch categories of name ${categoryName}`)
         }
 
-        const categoryIds = res.data.data.docs.map((category) => category._id)
+        const categoryIds : string[] = res.data.data.docs.map((category : Category) => category._id)
 
         const responses = await Promise.allSettled(
-            categoryIds.map((categoryId) =>
+            categoryIds.map((categoryId: string) =>
                 axios(`${ROOT_URL}/api/v1/categories/${categoryId}/products?limit=${limit}&page=${page}`)
             )
         )
@@ -58,11 +74,18 @@ const getCategoryUrlAndSuccessHandler = ({ categoryName, setProducts, limit, pag
     return { url, successHandler }
 }
 
-const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page }) => {
+type getTagsUrlAndSuccessHandlerType = {
+    tags: Tag[],
+    setProducts: Function,
+    limit: number,
+    page: number
+}
+
+const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page } : getTagsUrlAndSuccessHandlerType) => {
     const tagQueryParams = tags.join(`&tags[in]=`)
 
     const url = `${ROOT_URL}/api/v1/products?tags[in]=${tagQueryParams}&limit=${limit}&page=${page}`
-    const successHandler = async (res) => {
+    const successHandler = async (res: ServerResponse) => {
         if (res.data.status !== 'success') return
         setProducts(res.data.data.docs)
     }
@@ -70,9 +93,18 @@ const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page }) => {
     return { successHandler, url }
 }   
 
-export function useFetchProducts(type, props) {
+type useFetchProductProps = {
+    collections: Collection[],
+    collectionName: string,
+    categoryName?: string,
+    tags?: Tag[],
+    limit?: number,
+    page?: number
+}
+
+export function useFetchProducts(type : string, props: useFetchProductProps) {
     const { collections, collectionName, categoryName, tags, limit = 4, page = 1 } = props
-    const [products, setProducts] = useState(null)
+    const [products, setProducts] = useState<Product[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
 
     const getUrlAndSuccessHandler = useMemo(() => {
@@ -82,26 +114,30 @@ export function useFetchProducts(type, props) {
             'tags': getTagsUrlAndSuccessHandler,
         }[type]
     }, [type])
-    
+
     const fetchProducts = useCallback(async () => {
         if (isLoading || products) return
         setIsLoading(true)
-
+        
         try {
-            const { url, successHandler } = getUrlAndSuccessHandler({
+            const { url, successHandler } = getUrlAndSuccessHandler!({
                 collections,
                 collectionName,
-                categoryName,
-                tags,
+                categoryName: categoryName || '',
+                tags: tags || [],
                 setProducts,
                 limit,
                 page,
-            })
+            })      
 
             const res = await axios(url)
             await successHandler(res)
-        } catch (err) {
-            console.error(err.response?.data?.message || err.message)
+        } catch (err: any) {
+            if (err instanceof Error) {
+                console.error(err.message)
+            } else if (err.response) { 
+                console.error(err.response.data?.message)
+            }
         } finally { 
             setIsLoading(false)
         }  
@@ -114,12 +150,12 @@ export function useFetchProducts(type, props) {
     return { data: products, isLoading }
 }
 
-export function useFetchProductsWithVisibility(type, props, isVisible) {
+export function useFetchProductsWithVisibility(type :string, props : useFetchProductProps, isVisible: boolean) {
     const { collections, collectionName, categoryName, tags, limit = 4, page = 1 } = props
-    const [products, setProducts] = useState(null)
+    const [products, setProducts] = useState<Product[] | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isAlreadyFetched, setIsAlreadyFetched] = useState(false)
-    
+
     const getUrlAndSuccessHandler = useMemo(() => {
         switch (type) {
             case 'collections':
@@ -141,17 +177,21 @@ export function useFetchProductsWithVisibility(type, props, isVisible) {
             const { url, successHandler } = getUrlAndSuccessHandler({
                 collections,
                 collectionName,
-                categoryName,
-                tags,
+                categoryName: categoryName || '',
+                tags: tags || [],
                 setProducts,
                 limit,
                 page,
             })  
-            
+
             const res = await axios(url)
             await successHandler(res)
-        } catch (err) {
-            console.error(err.response?.data?.message || err.message)
+        } catch (err: any) {
+            if (err instanceof Error) {
+                console.error(err.message)
+            } else if (err.response) { 
+                console.error(err.response.data?.message)
+            }
         } finally { 
             setIsLoading(false)
         }  

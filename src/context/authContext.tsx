@@ -1,17 +1,29 @@
-import React, { useContext, createContext, useState, useEffect, useCallback } from 'react'
+import { useContext, createContext, useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { ROOT_URL } from '../config'
+import { User } from '../types'
 
-const AuthContext = createContext()
+const AuthContext = createContext({
+    isLoggedIn: false,
+    currentUser: null as User,
+    authLogin: (_: User) => {},
+    authLogout: () => {},
+})
 export const useAuthContext = () => useContext(AuthContext)
 
-export default function AuthContextProvider({ children }) {
-    const [user, setUser] = useState({
+type AuthContextProviderProps = {
+    children: React.ReactNode
+}
+export default function AuthContextProvider({ children }: AuthContextProviderProps) {
+    const [user, setUser] = useState<{
+        isLoggedIn: boolean
+        currentUser: User
+    }>({
         isLoggedIn: false,
-        currentUser: {},
+        currentUser: null,
     })
 
-    const authLogin = useCallback((currentUser) => {
+    const authLogin = useCallback((currentUser : User) => {
         setUser({
             isLoggedIn: true,
             currentUser,

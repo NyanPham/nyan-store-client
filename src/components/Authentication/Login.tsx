@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import  { FormEvent, useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import { useAuthContext } from '../../context/authContext'
@@ -13,14 +13,14 @@ function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const emailRef = useRef()
-    const passwordRef = useRef()
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passwordRef = useRef<HTMLInputElement>(null)
 
-    async function handleFormSubmit(e) {
+    async function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        const email = emailRef.current.value
-        const password = passwordRef.current.value
+        const email = emailRef.current?.value
+        const password = passwordRef.current?.value
 
         if (email == null || password == null) return alert('Please enter email and password!')
 
@@ -43,7 +43,7 @@ function Login() {
                 authLogin(res.data.currentUser)
                 setTimeout(() => navigate('/'), 1500)
             }
-        } catch (err) {
+        } catch (err: any) {
             dispatch(setError(err.response.data.message))
         } finally {
             dispatch(hideLoading())

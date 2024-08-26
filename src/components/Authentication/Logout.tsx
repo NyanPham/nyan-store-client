@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../context/authContext'
 import { ROOT_URL } from '../../config'
@@ -22,7 +22,7 @@ export default function Logout() {
                     authLogout()
                     setText(res.data.message)
                 }
-            } catch (err) {
+            } catch (err: any) {
                 setText(err.response.data.message)
             } finally {
                 setTimeout(() => {

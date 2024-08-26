@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { FormEvent, useRef, useState } from 'react'
 import nyanStore from '../../imgs/nyan-logo-white.png'
 import { Link } from 'react-router-dom'
 import backgroundImage from '../../imgs/ocean.jpg'
@@ -12,18 +12,17 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 import { useDispatch } from 'react-redux'
 import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
 
-
 export default function MyAccount() {
     const { currentUser, authLogin } = useAuthContext()
     const [currentPassword, setCurrentPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
     const [formShow, setFormShow] = useState('data')
-    const photoRef = useRef()
-    const profileFormRef = useRef()
-    const passwordFormRef = useRef()
-    const adminFormRef = useRef()
-
+    const photoRef = useRef<HTMLInputElement>(null)
+    const profileFormRef = useRef<HTMLFormElement>(null)
+    const passwordFormRef = useRef<HTMLFormElement>(null)
+    const adminFormRef = useRef<HTMLFormElement>(null)
+    
     const dispatch = useDispatch()
 
     const backgroundStyles = {
@@ -32,23 +31,26 @@ export default function MyAccount() {
         backgroundPosition: 'center',
     }
 
-    const handleUserUpdate = async (e) => {
+    const handleUserUpdate = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        const targetElement = e.target as HTMLElement;
+
         const url =
-            e.target.dataset.userUpdate === 'password'
+            targetElement.dataset.userUpdate === 'password'
                 ? `${ROOT_URL}/api/v1/users/updatePassword`
                 : `${ROOT_URL}/api/v1/users/updateMe`
 
-        const inputElemNames = [...e.target.querySelectorAll('input[name]')].map((input) => {
+        const inputElemNames = [...targetElement.querySelectorAll('input[name]')].map((input) => {
             return {
-                name: input.name,
-                value: input.value,
+                name: (input as HTMLInputElement).name,
+                value: (input as HTMLInputElement).value,
             }
         })
 
         const userUpdateForm = new FormData()
         inputElemNames.forEach((field) => {
-            if (field.name === 'photo' && photoRef.current.files[0] != null) {
+            if (field.name === 'photo' && photoRef.current?.files?.[0] != null) {
                 userUpdateForm.append('photo', photoRef.current.files[0])
             } else {
                 userUpdateForm.append(field.name, field.value)
@@ -70,15 +72,15 @@ export default function MyAccount() {
 
             if (res.data.status === 'success') {
                 authLogin(res.data.data.user)
-                dispatch(setMessage(`Your ${e.target.dataset.userUpdate} has been updated successfully!`))
+                dispatch(setMessage(`Your ${targetElement.dataset.userUpdate} has been updated successfully!`))
             }
-        } catch (err) {
+        } catch (err: any) {
             dispatch(setError(err.response.data.message))
         } finally {
             dispatch(hideLoading())
             dispatch(showAlert())
 
-            if (e.target.dataset.userUpdate === 'password') {
+            if (targetElement.dataset.userUpdate === 'password') {
                 setCurrentPassword('')
                 setPassword('')
                 setPasswordConfirm('')

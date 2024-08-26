@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { FormEvent, useRef } from 'react'
 import axios from 'axios'
 import loginBackground from '../../imgs/ocean.jpg'
 import nyanLogo from '../../imgs/nyan-logo-white.png'
@@ -11,15 +11,15 @@ import { hideLoading, setError, setMessage, showLoading, showAlert } from '../..
 
 // Need to move the image background render to the className later
 export default function ForgotPassword() {
-    const emailRef = useRef()
+    const emailRef = useRef<HTMLInputElement>(null)
     
-    const { loading } = useSelector(state => state.appStatus)
+    const { loading } = useSelector((state : any) => state.appStatus)
     const dispatch = useDispatch()
 
-    async function handleFormSubmit(e) {
+    async function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-
-        const email = emailRef.current.value
+            
+        const email = emailRef.current?.value
 
         if (email == null) return alert('Please enter email')
 
@@ -39,7 +39,7 @@ export default function ForgotPassword() {
             if (res.data.status === 'success') {
                 dispatch(setMessage('We have sent you an email to reset your password!'))
             }   
-        } catch (err) {
+        } catch (err: any) {
             dispatch(setError(err.response.data.message))
         } finally {
             dispatch(showAlert())
