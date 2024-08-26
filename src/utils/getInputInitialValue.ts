@@ -1,4 +1,7 @@
-export default function getInputInitialValue(type) {
+export type InputType = 'text' | 'number' | 'boolean' | 'date';
+export type OutputType = string | number | boolean | number
+
+export default function getInputInitialValue(type: InputType): OutputType  {
     switch (type) {
         case 'text':
             return ''
@@ -12,3 +15,4 @@ export default function getInputInitialValue(type) {
             return type
     }
 }
+

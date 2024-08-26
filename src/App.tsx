@@ -10,38 +10,38 @@ import Footer from './components/Footer'
 import Search from './components/Search/Search'
 import { SideCart } from './components/Cart'
 import { CartPage, WishlistPage, OrderPage, ProductPage } from './components/Pages/index'
-import axios from 'axios'
-import { configure } from 'axios-hooks'
 import LoadingWithAlert from './components/LoadingWithAlert'
 import useScrollToTop from './hooks/useScrollToTop'
 import SidebarNavigationDrawer from './components/SidebarNavigationDrawer'
 import { hideAlert } from './redux/actions/appStatusActions'
 
-const instance = axios.create({
-    withCredentials: true,
-    baseURL: 'https://enigmatic-harbor-26816.herokuapp.com',
-})
+import { Dispatch } from 'redux'
 
-configure({ instance })
+// const instance = axios.create({
+//     withCredentials: true,
+//     baseURL: 'https://enigmatic-harbor-26816.herokuapp.com',
+// })
+
+// configure({ instance })
 
 // ISSUES: useAuthContext in the app rerender the whole app for sections of products
 // though they don't need the authentication to fetch and show products 
 // TODO: Find a better place to call the useAuthContext hook
 function App() {
-    const { loading, message, error, toShowAlert } = useSelector(state => state.appStatus)
-    const dispatch = useDispatch()
+    const { loading, message, error, toShowAlert } = useSelector((state: any) => state.appStatus)
+    const dispatch : Dispatch = useDispatch()
     const { pathname } = useLocation()
     useScrollToTop(pathname)
-    
+
     const countRef = useRef(0)
     countRef.current++
     console.log("Render: ", countRef.current)
 
     useEffect(() => {
-        dispatch(fetchCollections())
-        dispatch(fetchCategories())
+        fetchCollections()(dispatch) 
+        fetchCategories()(dispatch)
     }, [dispatch])
-
+    
     const closeAlert = useCallback(() => {
         dispatch(hideAlert())
     }, [dispatch])

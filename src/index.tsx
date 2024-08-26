@@ -18,7 +18,7 @@ const stripePromise = loadStripe(
     'pk_test_51LTguVLOgzrFtjz5bzBl5Qhh7jRQKuf5EWrmETmUX3acHGVdUKHqJqtO6rxgSW0wBliySFQGWLXhxazacdDVodZF00GdJ29Mwc'
 )
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOM.createRoot(document.getElementById('root') ?? document.body)
 root.render(
     <React.StrictMode>
         <BrowserRouter>
