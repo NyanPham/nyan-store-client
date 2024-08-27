@@ -12,7 +12,7 @@ type ReviewsProps = {
 
 export default function Reviews({ reviews, closeReviews }: ReviewsProps) {
     const ref = useRef<HTMLDivElement>(null)
-
+    
     return (
         <Overlay closeModal={closeReviews} childRef={ref}>
             <div
@@ -27,7 +27,7 @@ export default function Reviews({ reviews, closeReviews }: ReviewsProps) {
                     {reviews.map((review, index) => (
                         <Review
                             key={`review_${index}`}
-                            userEmail={review.user?.email}
+                            userEmail={review.user?.email || "Anonymous"}
                             rating={review.rating}
                             reviewContent={review.review}
                             ratedAt={new Date(review.createdAt).toLocaleDateString('en-US', {

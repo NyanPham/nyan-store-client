@@ -1,6 +1,9 @@
-import React from 'react'
+type CurrentFacetsProps = {
+    selectedFacets: Record<string, string[]>
+    handleRemoveFilter: (key: string, option: string) => void
+}
 
-export default function CurrentFacets({ selectedFacets, handleRemoveFilter }) {
+export default function CurrentFacets({ selectedFacets, handleRemoveFilter } : CurrentFacetsProps) {
     const facets = Object.entries(selectedFacets).flatMap(([key, options]) =>
         options.map((option) => (
             <div

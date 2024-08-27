@@ -6,9 +6,22 @@ import FilterView from './FilterView'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
+import { Category, Product } from '../../types'
+
+type FilterDataType = {
+    status: "success" | "failure" | "loading"
+    results: number
+    data: {
+        docs: Product[]
+    }
+}
 
 export default function FilterContainer() {
-    const [data, setData] = useState({})
+    const [data, setData] = useState<FilterDataType>({ 
+        status: 'loading', 
+        results: 0, 
+        data: { docs: [] } 
+    })
     const [sortBy, setSortBy] = useState('oldest')
     const [viewBy, setViewBy] = useState('loose')
     const [page, setPage] = useState(1)
@@ -16,13 +29,13 @@ export default function FilterContainer() {
 
     const [openSidebar, setOpenSidebar] = useState(false)
     const { categoryName } = useParams()
-    const categories = useSelector((state) => state.categories)
-    const categoryId = categories.find((category) => category.name === categoryName)?._id
+    const categories = useSelector((state: any) => state.categories)
+    const categoryId = categories.find((category: Category) => category.name === categoryName)?._id
 
     const pageCount = Math.ceil(data?.results / limit)
     const pageNumbers = pageCount ? Array.from(Array(pageCount).keys()).map((count) => count + 1) : null
-
-    const onPaginationClick = (pageNum) => {
+    
+    const onPaginationClick = (pageNum: number) => {
         if (pageNum > pageCount) return setPage(pageCount)
         if (pageNum <= 0) return setPage(1)
 

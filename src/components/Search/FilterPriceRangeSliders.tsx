@@ -1,31 +1,37 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPriceRange }) {
+type FilterPriceRangeSlidersProps = {
+    maxPrice: number
+    minPrice: number
+    collectPriceRange: (data: { fromValue: number; toValue: number }) => void
+}
+
+export default function FilterPriceRangeSliders({ maxPrice, minPrice, collectPriceRange }: FilterPriceRangeSlidersProps) {
     const [fromValue, setFromValue] = useState(0)
     const [toValue, setToValue] = useState(0)
     const [openFacet, setOpenFacet] = useState(true)
-    const rangeSliderRef = useRef()
+    const rangeSliderRef = useRef<HTMLInputElement>(null)
 
     const fullRange = maxPrice - minPrice
 
-    const handleSliderChange = (e) => {
+    const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.dataset.type === 'from') {
-            if (parseInt(e.target.value) < parseInt(toValue)) setFromValue(parseInt(e.target.value))
+            if (Number(e.target.value) < Number(toValue)) setFromValue(Number(e.target.value))
         } else {
-            if (parseInt(e.target.value) > parseInt(fromValue)) setToValue(parseInt(e.target.value))
+            if (Number(e.target.value) > Number(fromValue)) setToValue(Number(e.target.value))
         }
-    }
+    }   
 
     const updateRangeColor = useCallback(() => {
         const currentRange = (toValue - fromValue) / fullRange
         const leftPosition = ((fromValue - minPrice) / fullRange) * 100
 
-        rangeSliderRef.current.style.setProperty('--left-position', leftPosition)
-        rangeSliderRef.current.style.setProperty('--current-range', currentRange)
+        rangeSliderRef.current?.style.setProperty('--left-position', leftPosition.toString())
+        rangeSliderRef.current?.style.setProperty('--current-range', currentRange.toString())
     }, [fromValue, toValue, fullRange, minPrice])
-
+    
     useEffect(() => {
         collectPriceRange({
             toValue,

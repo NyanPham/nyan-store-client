@@ -10,25 +10,31 @@ import useAsyncValidateState from '../../hooks/useAsyncValidateState'
 import Alert from '../Alert/Alert'
 import Overlay from '../Overlay'
 
-export default function AddReviewButton({ productName, productId }) {
+type AddReviewButtonProps = {
+    productName: string
+    productId: string
+}
+
+export default function AddReviewButton({ productName, productId } : AddReviewButtonProps) {
     const { isLoggedIn } = useAuthContext()
     const navigate = useNavigate()
     const [openAddReview, setOpenAddReview] = useState(false)
     const { isLoading, setIsLoading, message, setMessage, error, setError, showAlert, setShowAlert } =
         useAsyncValidateState()
-    const ref = useRef()
-    const reviewContentRef = useRef()
-    const ratingRef = useRef()
+    const ref = useRef<HTMLFormElement>(null)
+    const reviewContentRef = useRef<HTMLTextAreaElement>(null)
+    const ratingRef = useRef<HTMLInputElement>(null)
 
-    const handleSubmitReview = async (e) => {
+    const handleSubmitReview = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        const ratingValue = Number((ratingRef.current as HTMLInputElement)?.value)
 
-        if (ratingRef.current.value > 5 || ratingRef.current.value < 1) {
+        if (ratingValue > 5 || ratingValue < 1) {
             setError('Please provide your rating for this product on the scale from 1 to 5!')
             setShowAlert(true)
             return
         }
-
+        
         setIsLoading(true)
         setMessage('')
         setError('')
@@ -39,8 +45,8 @@ export default function AddReviewButton({ productName, productId }) {
                 url: `${ROOT_URL}/api/v1/reviews`,
                 data: {
                     product: productId,
-                    review: reviewContentRef.current.value,
-                    rating: ratingRef.current.value,
+                    review: reviewContentRef.current?.value,
+                    rating: ratingRef.current?.value,
                 },
                 withCredentials: true,
             })
@@ -53,7 +59,7 @@ export default function AddReviewButton({ productName, productId }) {
                     setOpenAddReview(false)
                 }, 2000)
             }
-        } catch (err) {
+        } catch (err: any) {
             setError(err.response.data.message)
             setShowAlert(true)
         } finally {
@@ -120,7 +126,7 @@ export default function AddReviewButton({ productName, productId }) {
                             </button>
                         </form>
                     </Overlay>,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
             {showAlert &&
                 ReactDOM.createPortal(
@@ -132,7 +138,7 @@ export default function AddReviewButton({ productName, productId }) {
                             closeCallback={() => setShowAlert(false)}
                         />
                     </Overlay>,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
         </>
     )

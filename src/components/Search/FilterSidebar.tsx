@@ -12,7 +12,45 @@ import FilterPriceRangeSliders from './FilterPriceRangeSliders'
 
 import { hideLoading, setError, setMessage, showLoading, showAlert } from '../../redux/actions/appStatusActions'
 
-export default function FilterSidebar(props) {
+type FilterQueryType = {
+    page: number;
+    limit: number;
+    sortByTerm: string;
+    categoryId: string | null;
+    searchTerm: string;
+    emptyCategory: boolean;
+    categoryName: string;
+    maxPrice?: number;
+    minPrice?: number;
+    size?: string[];
+    color?: string[];
+    material?: string[];
+    brand?: string[];
+};
+
+type AllAvailableOptionsType = {
+    allSize: string[];
+    allColor: string[];
+    allMaterial: string[];
+    allBrand: string[];
+}
+
+type FilterSidebarProps = {
+    setData: (data: any) => void
+    sortByTerm: string
+    categoryId: string
+    categoryName: string
+    pagination: {
+        page: number
+        limit: number
+        setPage: (page: number) => void
+    }
+}
+
+type AllAvailableOptionsKeys = 'allSize' | 'allColor' | 'allMaterial' | 'allBrand';
+
+
+export default function FilterSidebar(props: FilterSidebarProps) {
     const {
         setData,
         sortByTerm,
@@ -22,8 +60,8 @@ export default function FilterSidebar(props) {
     } = props
     const { page, limit, setPage } = pagination
 
-    const [facetOptions, setFacetOptions] = useState([])
-    const [filterQuery, setFilterQuery] = useState({
+    const [facetOptions, setFacetOptions] = useState<{ [key: string]: any }[]>([])
+    const [filterQuery, setFilterQuery] = useState<FilterQueryType>({
         page: page,
         limit: limit,
         sortByTerm,
@@ -35,25 +73,25 @@ export default function FilterSidebar(props) {
 
     const [selectedFacets, setSelectedFacets] = useState({})
     const [filterToRemove, setFilterToRemove] = useState({
-        optionType: null,
-        value: null,
+        optionType: "",
+        value: "",
     })
-    
+        
     const dispatch = useDispatch()
 
-    const search = useSelector((state) => state.search)
+    const search = useSelector((state: any ) => state.search)
     const { pathname } = useLocation()
-    const allAvailableOptions = {}
+    const allAvailableOptions: AllAvailableOptionsType = { allSize: [], allColor: [], allMaterial: [], allBrand: [] };
     facetOptions.forEach((facetOption) => {
         const key = Object.keys(facetOption)[0]
-        const values = facetOption[key]
+        const values: { value: string }[] = facetOption[key]
 
         if (key === 'maxPrice' || key === 'minPrice') return
 
-        allAvailableOptions[`all${key.charAt(0).toUpperCase() + key.slice(1)}`] = values.map((value) => value.value)
-    })
+        (allAvailableOptions as { [key: string]: any })[`all${key.charAt(0).toUpperCase() + key.slice(1)}`] = values.map((value) =>  value.value)
+    })  
 
-    const collectOptionsState = useCallback(({ optionType, optionStates }) => {
+    const collectOptionsState = useCallback(({ optionType, optionStates }: { optionType: string; optionStates: Record<string, boolean> }) => {
         const selectedOptions = Object.keys(optionStates).filter((key) => optionStates[key])
         setFilterQuery((prevFilterQuery) => {
             return {
@@ -70,7 +108,7 @@ export default function FilterSidebar(props) {
         })
     }, [])
 
-    const collectPriceRange = useCallback(({ toValue, fromValue }) => {
+    const collectPriceRange = useCallback(({ toValue, fromValue }: { toValue: number; fromValue: number }) => {
         setFilterQuery((prevFilterQuery) => {
             return {
                 ...prevFilterQuery,
@@ -80,14 +118,15 @@ export default function FilterSidebar(props) {
         })
     }, [])
 
-    const handleRemoveFilter = (optionType, value) => {
+    const handleRemoveFilter = (optionType: string, value: string) => {
         setFilterToRemove({
             optionType,
             value,
         })
-    }
-
-    const searchProducts = async (filterQuery, allAvailableOptions) => {
+    }   
+    
+    const searchProducts = async (filterQuery: FilterQueryType, allAvailableOptions: AllAvailableOptionsType) => {
+        
         dispatch(showLoading())
         dispatch(setMessage(''))
         dispatch(setError(''))
@@ -108,7 +147,7 @@ export default function FilterSidebar(props) {
             if (res.data.status === 'success') {
                 setData(res.data)
             }
-        } catch (err) {
+        } catch (err: any) {
             dispatch(setError(err.response.data.message))
             dispatch(showAlert())
         } finally {
@@ -142,8 +181,9 @@ export default function FilterSidebar(props) {
                         if (res.data.data.facets[0] == null) return []
 
                         return Object.entries(res.data.data.facets[0]).map(([key, value]) => {
+                            console.log(value)
                             return {
-                                [key]: value.filter((value) => value.value != null || typeof value === 'number'),
+                                [key]: (value as { value: string }[]).filter((value) => value.value != null || typeof value === 'number'),
                             }
                         })
                     })

@@ -63,6 +63,7 @@ export type Product = {
     vendor: string
     isAuctioned: boolean
     auctionExpiresIn?: Date
+    reviews?: ReviewData[]
 }
 
 export type User = {
@@ -121,5 +122,10 @@ export type VariantWithOrderNum = Variant & {
 }
 
 export type ReviewData = {
-
+    _id: string
+    user: User
+    rating: number
+    review: string
+    createdAt: string
+    product: string
 }

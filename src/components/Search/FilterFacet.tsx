@@ -1,17 +1,30 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useEffect } from 'react'
 
-export default function FilterFacet({ option, optionType, onFacetInput, filterToRemove, setFilterToRemove }) {
+type FilterFacetProps = {
+    option: {
+        value: string
+    }
+    optionType: string
+    onFacetInput: (data: { option: { value: string }; isChecked: boolean }) => void
+    filterToRemove: {
+        optionType: string
+        value: string
+    }   
+    setFilterToRemove: (data: { optionType: string | null; value: string | null }) => void
+}
+
+export default function FilterFacet({ option, optionType, onFacetInput, filterToRemove, setFilterToRemove } : FilterFacetProps) {
     const [isChecked, setIsChecked] = useState(false)
 
-    const handleOptionInput = (e) => {
+    const handleOptionInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsChecked(e.target.checked)
         onFacetInput({
             option,
             isChecked: e.target.checked,
         })
     }
-
+    
     const { optionType: filterTypeToRemove, value: filterValueToRemove } = filterToRemove
 
     useEffect(() => {
@@ -38,7 +51,7 @@ export default function FilterFacet({ option, optionType, onFacetInput, filterTo
         option.value,
         setFilterToRemove,
     ])
-
+    
     useEffect(() => {
         setIsChecked(false)
         onFacetInput({

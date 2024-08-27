@@ -20,7 +20,7 @@ import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
 import Overlay from '../Overlay'
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import { Product, Variant, VariantDataToSubmit } from '../../types'
+import { AddToCartItem, Product, Variant, VariantDataToSubmit } from '../../types'
 
 type VariantImage = {
     variantId: string;
@@ -66,10 +66,10 @@ function ProductInfo({ product, setProduct } : ProductInfoProps) {
     // const imgLenRef = useRef()
     // const imgZoomResultRef = useRef()
 
-    const imageZoomRef = useRef()
+    const imageZoomRef = useRef<HTMLDivElement>(null)
 
     // const createdTimeDelta = new Date(Date.now() - new Date(product?.createdAt)).getHours()
-    const createdTimeDelta = new Date(Date.now() - (product?.createdAt.getTime())).getHours()
+    const createdTimeDelta = new Date(Date.now() - (new Date(product?.createdAt).getTime())).getHours()
 
     const isNew = createdTimeDelta < 24 * 1 && createdTimeDelta > 0
 
@@ -133,7 +133,7 @@ function ProductInfo({ product, setProduct } : ProductInfoProps) {
             product: product._id,
             variant: data.variantId,
             quantity: data.quantity,
-        }
+        } as AddToCartItem
 
         addToCart(dataToSubmit)(dispatch)
     }

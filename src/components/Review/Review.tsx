@@ -1,7 +1,14 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+    
+type ReviewProps = {
+    reviewContent: string
+    rating: number
+    userEmail: string
+    ratedAt: string
+}
 
-export default function Review(props) {
+export default function Review(props: ReviewProps) {
     const { reviewContent, rating, userEmail, ratedAt } = props
     
     return (

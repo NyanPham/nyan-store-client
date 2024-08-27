@@ -40,7 +40,7 @@ export default function ProductCard(props: ProductCardProps) {
     const dispatch = useDispatch()
     
     // const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
-    const isNew = new Date(Date.now() - createdAt.getTime()).getHours() < 24 * 1
+    const isNew = new Date(Date.now() - new Date(createdAt).getTime()).getHours() < 24 * 1
     const firstVariant = variants[0]
 
     const handleAddToCart = (data: { variantId: string, quantity: number } | null) => {

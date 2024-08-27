@@ -1,9 +1,23 @@
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useCallback } from 'react'
 import { useEffect } from 'react'
 import FilterFacet from './FilterFacet'
+
+type FilterFacetGroupProps = {
+    optionType: string
+    options: {
+        value: string
+        label: string
+    }[]
+    collectOptionsState: (data: { optionType: string; optionStates: Record<string, boolean> }) => void
+    filterToRemove: {
+        optionType: string
+        value: string
+    }
+    setFilterToRemove: (data: { optionType: string | null; value: string | null }) => void
+}
 
 export default function FilterFacetGroup({
     optionType,
@@ -11,7 +25,7 @@ export default function FilterFacetGroup({
     collectOptionsState,
     filterToRemove,
     setFilterToRemove,
-}) {
+} : FilterFacetGroupProps) {
     const [openFacet, setOpenFacet] = useState(true)
     const [checkedOptions, setCheckedOptions] = useState(() =>
         options.reduce((state, option) => {
@@ -26,7 +40,7 @@ export default function FilterFacetGroup({
         setOpenFacet((prevOpen) => !prevOpen)
     }
 
-    const hanldeFacetInput = useCallback(({ option, isChecked }) => {
+    const hanldeFacetInput = useCallback(({ option, isChecked }: { option: { value: string }; isChecked: boolean }) => {
         setCheckedOptions((prevCheckedOptions) => {
             return {
                 ...prevCheckedOptions,

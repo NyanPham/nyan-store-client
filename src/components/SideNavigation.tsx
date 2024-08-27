@@ -48,6 +48,17 @@ const navObjArray = [
     },
 ]
 
+type SideNavigationProps = {
+    title: string
+    isDrawer?: boolean
+    nameColor?: string
+    borderColor?: string
+    itemBorderColor?: string
+    caretColor?: string
+    themeColor?: string
+    setOpenSidebar?: (toOpen: boolean) => void
+}
+
 function SideNavigation({
     title,
     isDrawer,
@@ -57,7 +68,7 @@ function SideNavigation({
     caretColor = 'text-slate-400',
     themeColor = 'text-cyan-400',
     setOpenSidebar = () => {},
-}) {
+}: SideNavigationProps) {
     return (
         <div
             className={`${
