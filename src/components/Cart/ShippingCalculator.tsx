@@ -1,18 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import useCountries from '../../hooks/useCountries'
 
 export default function ShippingCalculator() {
-    const [country, setCountry] = useState()
+    const [country, setCountry] = useState<string>("")
     // const [state, setState] = useState()
-    const { countries, states } = useCountries()
-
+    const { countries, states }: { countries: any, states: { [country: string]: any[] } } = useCountries()    
     const countryStates = useMemo(() => states[country], [country, states])
-
-    const handleCalcSubmit = (e) => {
+    
+    const handleCalcSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
 
-    const handleShippingChange = (e) => {
+    const handleShippingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.name === 'country') {
             setCountry(e.target.value)
         } else if (e.target.name === 'state') {
@@ -20,7 +19,9 @@ export default function ShippingCalculator() {
         }
     }
 
-    const handleZipInput = (e) => {}
+    const handleZipInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target)
+    }
 
     useEffect(() => {
         if (!country) return
@@ -39,11 +40,11 @@ export default function ShippingCalculator() {
                             <label className="form-label" htmlFor="country">
                                 Country:
                             </label>
-                            <select id="country" className="form-input" name="country" onInput={handleShippingChange}>
+                            <select id="country" className="form-input" name="country" onInput={handleShippingChange} multiple>
                                 {countries &&
                                     Object.entries(countries).map(([key, value]) => (
-                                        <option key={key} name="country" value={key}>
-                                            {value}
+                                        <option key={key} value={key}>
+                                            {value as ReactNode}
                                         </option>
                                     ))}
                             </select>
@@ -55,7 +56,7 @@ export default function ShippingCalculator() {
                             <select id="state" className="form-input" name="state" onInput={handleShippingChange}>
                                 {countryStates &&
                                     countryStates.map((state) => (
-                                        <option key={state.code} name="state" value={state.code}>
+                                        <option key={state.code} value={state.code}>
                                             {state.name}
                                         </option>
                                     ))}

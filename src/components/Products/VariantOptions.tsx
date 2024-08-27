@@ -1,6 +1,21 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import { COLOR_MAP } from '../../config'
+
+type VariantOptionsProps = {
+    options: string[]
+    currentOption: string
+    styles: any
+    textHidden: boolean
+    optionType: string
+    handleOptionChange: any
+    optionOrderNum: string
+}
+
+export type OptionChangeData = {
+    option: string
+    orderNum: string
+}
 
 function VariantOptions({
     options,
@@ -10,15 +25,21 @@ function VariantOptions({
     optionType,
     handleOptionChange,
     optionOrderNum,
-}) {
+} : VariantOptionsProps) {
     const [selectedOption, setSelectOption] = useState(() => {
         return currentOption != null ? currentOption : options[0]
-    })
+    })  
 
-    const handleOptionClick = (e) => {
-        setSelectOption(e.target.dataset.value)
+    const handleOptionClick = (e: React.MouseEvent<HTMLLabelElement>) => {
+        const target = e.target as HTMLLabelElement
+
+        if (target.dataset.value == null) {
+            throw new Error("The option is not set with value data")
+        }
+
+        setSelectOption(target.dataset.value)
         handleOptionChange({
-            option: e.target.dataset.value,
+            option: target.dataset.value,
             orderNum: optionOrderNum,
         })
     }
@@ -55,9 +76,17 @@ function VariantOptions({
     )
 }
 
-function Option({ option, configures, handleClick, isSelected, optionOrderNum }) {
+type OptionProps = {
+    option: string
+    configures: any
+    handleClick: (e: React.MouseEvent<HTMLLabelElement>) => void
+    isSelected: boolean
+    optionOrderNum: string
+}
+    
+function Option({ option, configures, handleClick, isSelected, optionOrderNum } : OptionProps) {
     const { styles, textHidden } = configures
-    const color = COLOR_MAP[option?.toLowerCase().split('-').join('')]
+    const color = COLOR_MAP[option?.toLowerCase().split('-').join('') as keyof typeof COLOR_MAP]
 
     return (
         <>

@@ -1,4 +1,11 @@
-export default function EmailTemplate({ subject, name, email, message }) {
+type EmailTemplateProps = {
+    subject: string
+    name: string
+    email: string
+    message: string
+}
+
+export default function EmailTemplate({ subject, name, email, message } : EmailTemplateProps) {
     return (
         <body>
             <section

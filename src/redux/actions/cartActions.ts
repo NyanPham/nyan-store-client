@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { ROOT_URL } from '../../config'
+import { Dispatch } from 'redux';
+import { AddToCartItem, RemoveFromCartItem, UpdateInCartItem, Variant } from '../../types';
 
 const ACTIONS = {
     START_CART_ACT: 'start-cart-act',
@@ -13,7 +15,43 @@ const ACTIONS = {
     RESET_MESSAGE_ERROR: 'reset-message-error',
 }
 
-export const addToCart = (data) => async (dispatch) => {
+export type Actions =
+    | {
+          type: typeof ACTIONS.START_CART_ACT
+      }
+    | {
+          type: typeof ACTIONS.CART_ACT_SUCCESS
+          payload: {
+              message: string
+              cart: Variant[]
+          }
+      }
+    | {
+          type: typeof ACTIONS.CART_ACT_FAIL
+          payload: {
+              error: string
+          }
+      }
+    | {
+          type: typeof ACTIONS.FETCH_CART
+          payload: {
+              cart: Variant[]
+          }
+      }
+    | {
+          type: typeof ACTIONS.EMPTY_CART
+      }
+    | {
+          type: typeof ACTIONS.ADD_TO_CART
+      }
+    | {
+          type: typeof ACTIONS.RESET_MESSAGE_ERROR
+      }
+    | {
+          type: typeof ACTIONS.REMOVE_FROM_CART
+      }
+
+export const addToCart = (data: AddToCartItem) => async (dispatch: Dispatch<Actions>) => {
     dispatch({
         type: ACTIONS.START_CART_ACT,
     })
@@ -32,7 +70,7 @@ export const addToCart = (data) => async (dispatch) => {
                 payload: { message: 'success', cart: res.data.data.cart },
             })
         }
-    } catch (err) {
+    } catch (err: any) {
         console.error(err)
         dispatch({
             type: ACTIONS.CART_ACT_FAIL,
@@ -43,7 +81,7 @@ export const addToCart = (data) => async (dispatch) => {
     }
 }
 
-export const getCart = () => async (dispatch) => {
+export const getCart = () => async (dispatch : Dispatch<Actions>) => {
     dispatch({
         type: ACTIONS.START_CART_ACT,
     })
@@ -63,7 +101,7 @@ export const getCart = () => async (dispatch) => {
                 },
             })
         }
-    } catch (err) {
+    } catch (err: any) {
         console.error(err)
         dispatch({
             type: ACTIONS.CART_ACT_FAIL,
@@ -74,7 +112,7 @@ export const getCart = () => async (dispatch) => {
     }
 }
 
-export const updateCart = (data) => async (dispatch) => {
+export const updateCart = (data: UpdateInCartItem) => async (dispatch : Dispatch<Actions>) => {
     dispatch({
         type: ACTIONS.START_CART_ACT,
     })
@@ -96,7 +134,7 @@ export const updateCart = (data) => async (dispatch) => {
                 },
             })
         }
-    } catch (err) {
+    } catch (err: any) {
         console.error(err)
         dispatch({
             type: ACTIONS.CART_ACT_FAIL,
@@ -107,11 +145,11 @@ export const updateCart = (data) => async (dispatch) => {
     }
 }
 
-export const removeCart = (data) => async (dispatch) => {
+export const removeCart = (data: RemoveFromCartItem) => async (dispatch : Dispatch<Actions>) => {
     dispatch({
         type: ACTIONS.START_CART_ACT,
     })
-
+    
     try {
         const res = await axios({
             method: 'PATCH',
@@ -121,9 +159,9 @@ export const removeCart = (data) => async (dispatch) => {
         })
 
         if (res.data.status === 'success') {
-            dispatch(getCart())
+            getCart()(dispatch)
         }
-    } catch (err) {
+    } catch (err : any) {
         console.error(err)
         dispatch({
             type: ACTIONS.CART_ACT_FAIL,

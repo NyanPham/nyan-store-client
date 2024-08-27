@@ -14,43 +14,54 @@ import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from './VariantsPickerWithImage'
 import { useRef } from 'react'
 import useOnScreen from '../../hooks/useOnScreen'
+import { AddToCartItem, Variant } from '../../types'
 
-export default function ProductCard(props) {
-    const cardRef = useRef()
+type ProductCardProps = {
+    id: string
+    name: string
+    slug: string
+    variants: any
+    createdAt: Date
+    inAuction?: boolean
+    currentBidData?: any
+}
+
+export default function ProductCard(props: ProductCardProps) {
+    const cardRef = useRef<HTMLDivElement>(null)
     const alreadyVisible = useRef(false)
     const isVisible = useOnScreen(cardRef, '0px', 0.3)
 
     const { id, name, slug, variants, createdAt, inAuction = false, currentBidData = {} } = props
+    
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const [selectedVariant, setSelectedVariant] = useState(variants[0])
-    const { loading, error, message } = useSelector((state) => state.cart)
+    const { loading, error, message } = useSelector((state: any) => state.cart)
     const dispatch = useDispatch()
-
-    const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
+    
+    // const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
+    const isNew = new Date(Date.now() - createdAt.getTime()).getHours() < 24 * 1
     const firstVariant = variants[0]
 
-    const handleAddToCart = (data) => {
-        let dataToSubmit = {}
-
-        if (data == null) {
-            dataToSubmit = {
-                variant: firstVariant._id,
-                product: id,
-                quantity: 1,
-            }
-        } else {
+    const handleAddToCart = (data: { variantId: string, quantity: number } | null) => {
+        let dataToSubmit = {
+            variant: firstVariant._id,
+            product: id,
+            quantity: 1,
+        }
+        
+        if (data != null) {
             dataToSubmit = {
                 variant: data.variantId,
                 product: id,
                 quantity: data.quantity,
             }
-        }
+        } 
 
-        dispatch(addToCart(dataToSubmit))
+        addToCart(dataToSubmit)(dispatch)
     }
 
-    const handleVariantChange = (variant) => {
+    const handleVariantChange = (variant: Variant) => {
         setSelectedVariant(variant)
     }
 
@@ -130,7 +141,6 @@ export default function ProductCard(props) {
                         handleVariantChange={handleVariantChange}
                         setOpenQuickView={setOpenQuickView}
                         buttonText="Own Now"
-                        data="hello"
                         nameStyles="text-2xl"
                         review={{
                             show: false,
@@ -139,7 +149,7 @@ export default function ProductCard(props) {
                         wishlist={false}
                         isEditing={false}
                     />,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
         </div>
     )

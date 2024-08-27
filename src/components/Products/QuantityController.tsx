@@ -1,13 +1,25 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import getMatchedButton from '../../utils/getMatchedButton'
 
+type QuantityControllerProps = {
+    productId: string
+    inventory: number
+    currentQuantity: number
+    onQuantityChange: (quantity: number) => void
+    isSoldOut: boolean
+    isUnavailable?: boolean
+    spacing?: string
+    showLabel?: boolean
+    quantityBtnSize?: string
+    quantityInputSize?: string
+}
+
 export default function QuantityController({
-    productId,
     inventory,
-    isSoldout,
+    isSoldOut,
     isUnavailable,
     currentQuantity = 1,
     onQuantityChange,
@@ -15,34 +27,34 @@ export default function QuantityController({
     showLabel = true,
     quantityBtnSize = 'w-7 h-7',
     quantityInputSize = 'h-7',
-}) {
-    const [quantity, setQuantity] = useState(currentQuantity)
-    const { loading } = useSelector((state) => state.cart)
+} : QuantityControllerProps) {
+    const [quantity, setQuantity] = useState<number>(currentQuantity)
+    const { loading } = useSelector((state: any) => state.cart)
 
-    const handleNumberInput = (e) => {
-        if (e.target.value > inventory || e.target.value < 1) return alert(`You can only add ${inventory} to your cart`)
+    const handleNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value)
+        if (value > inventory || value < 1) return alert(`You can only add ${inventory} to your cart`)
 
-        setQuantity(e.target.value)
+        setQuantity(value)
     }
 
-    const handleControlClick = (e) => {
+    const handleControlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, '[data-control]')
-
         if (!button) return
 
         if (button.dataset.control === 'plus') {
             setQuantity((prevQuantity) => {
-                if (parseInt(prevQuantity) + 1 > inventory) return parseInt(prevQuantity)
-                return parseInt(prevQuantity) + 1
+                if ((prevQuantity) + 1 > inventory) return (prevQuantity)
+                return (prevQuantity) + 1
             })
         } else {
             setQuantity((prevQuantity) => {
-                if (parseInt(prevQuantity) - 1 < 1) return parseInt(prevQuantity)
-                return parseInt(prevQuantity) - 1
+                if ((prevQuantity) - 1 < 1) return (prevQuantity)
+                return (prevQuantity) - 1
             })
         }
     }
-    
+
     useEffect(() => {
         onQuantityChange(quantity)
     }, [quantity, onQuantityChange])
@@ -66,7 +78,7 @@ export default function QuantityController({
                     type="button"
                     onClick={handleControlClick}
                     data-control="minus"
-                    disabled={isSoldout || isUnavailable || loading}
+                    disabled={isSoldOut || isUnavailable || loading}
                 >
                     <FontAwesomeIcon icon={faMinus} />
                 </button>
@@ -79,14 +91,14 @@ export default function QuantityController({
                     max={inventory}
                     min="1"
                     onInput={handleNumberInput}
-                    disabled={isSoldout || isUnavailable || loading}
+                    disabled={isSoldOut || isUnavailable || loading}
                 />
                 <button
                     className={`${quantityBtnSize} border border-gray-500/30 rounded-sm text-sm text-gray-700 transition duration-200 disabled:text-gray-300 disabled:border-gray-200`}
                     type="button"
                     onClick={handleControlClick}
                     data-control="plus"
-                    disabled={isSoldout || isUnavailable || loading}
+                    disabled={isSoldOut || isUnavailable || loading}
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>

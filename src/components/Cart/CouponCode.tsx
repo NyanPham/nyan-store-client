@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function CouponCode() {
     return (
         <div className="form-group">

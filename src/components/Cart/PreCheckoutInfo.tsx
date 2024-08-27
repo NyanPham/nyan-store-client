@@ -1,11 +1,11 @@
 import { faTruckFast } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import { useSelector } from 'react-redux'
 import CheckoutButton from '../Checkout/CheckoutButton'
 import { cart_configures } from '../../config'
+import { Cart, CartItem } from '../../types'
 
-const getInstruction = (fraction) => {
+const getInstruction = (fraction: number) => {
     let percent = fraction
     const instruction = {
         textColor: '',
@@ -41,9 +41,9 @@ const getInstruction = (fraction) => {
 
 export default function PreCheckoutInfo() {
     const { freeShippingThreshold } = cart_configures
-    const { cart } = useSelector((state) => state.cart)
-    const subtotal = cart.reduce((total, item) => total + item?.variant?.price * item?.quantity, 0)
-
+    const { cart } : { cart: Cart } = useSelector((state : any) => state.cart)
+    const subtotal = cart.reduce((total : number, item: CartItem) => total + item?.variant?.price * item?.quantity, 0)
+        
     const { instruction, percent } = getInstruction(subtotal / freeShippingThreshold)
 
     return (

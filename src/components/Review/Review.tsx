@@ -1,9 +1,9 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 
 export default function Review(props) {
     const { reviewContent, rating, userEmail, ratedAt } = props
+    
     return (
         <div className="border border-slate-600 p-3 rounded-lg">
             <div className="flex justify-between">

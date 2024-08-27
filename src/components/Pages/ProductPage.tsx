@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ProductRecommendation from '../Products/ProductRecommendation'
 import ProductInfo from '../Products/ProductInfo'
-import { useLocation } from 'react-router-dom'
+import { Location, useLocation } from 'react-router-dom'
 import Container from '../Container'
+import { Product } from '../../types'
 
 export default function ProductPage() {
-    const location = useLocation()
+    const location : Location = useLocation()
 
     const [product, setProduct] = useState(() => {
-        return location.state
+        return location.state as Product
     })
 
     return (
@@ -24,7 +25,6 @@ export default function ProductPage() {
                     <ProductRecommendation
                         showRecommendCard={false}
                         category={product?.category}
-                        collections={product?.collections}
                         type="category"
                     />
                 </div>

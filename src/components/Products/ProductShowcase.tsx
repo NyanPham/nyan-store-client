@@ -1,11 +1,15 @@
-import React from 'react'
 import Container from '../Container'
 import { Swiper } from 'swiper/react'
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-function ProductShowcase({ productCards, isSlider }) {
+type ProductShowcaseProps = {
+    productCards: React.ReactNode
+    isSlider: boolean
+}
+
+function ProductShowcase({ productCards, isSlider }: ProductShowcaseProps) {
     return (
         <Container>
             <div className={`${isSlider ? '' : 'pointer-events-none hide-navigation'}`}>

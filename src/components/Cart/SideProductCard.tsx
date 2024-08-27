@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
@@ -8,19 +8,27 @@ import CartEditor from './CartEditor'
 import CartRemover from './CartRemover'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { Variant } from '../../types'
 
-export default function SideProductCard({ currentVariant, currentQuantity, productId, isLast }) {
-    const [variant, setVariant] = useState(currentVariant)
-    const [quantity, setQuantity] = useState(currentQuantity)
+type SideProductCardProps = {
+    currentVariant: Variant
+    currentQuantity: number
+    productId: string
+    isLast: boolean
+}
+
+export default function SideProductCard({ currentVariant, currentQuantity, productId, isLast } : SideProductCardProps) {
+    const [variant, setVariant] = useState<Variant>(currentVariant)
+    const [quantity, setQuantity] = useState<number>(currentQuantity)
 
     const dispatch = useDispatch()
-    const firstRenderRef = useRef(true)
+    const firstRenderRef = useRef<boolean>(true)
 
-    const handleQuantityChange = (newQuantity) => {
+    const handleQuantityChange = (newQuantity: number) => {
         setQuantity(() => newQuantity)
     }   
 
-    const handleVariantChange = (newVariant) => {
+    const handleVariantChange = (newVariant: Variant) => {
         setVariant(() => newVariant)
     }
 
@@ -37,8 +45,9 @@ export default function SideProductCard({ currentVariant, currentQuantity, produ
                 currentVariant: currentVariant._id,
                 variant: variant._id,
                 product: productId,
-            }
-            dispatch(updateCart(data))
+            }   
+            
+            updateCart(data)(dispatch)
         },
         1000,
         [quantity, variant._id]

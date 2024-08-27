@@ -1,6 +1,6 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useDispatch } from 'react-redux'
 import { removeCart } from '../../redux/actions/cartActions'
@@ -8,11 +8,16 @@ import getMatchedButton from '../../utils/getMatchedButton'
 import AlertWithConfirm from '../Alert/AlertWithConfirm'
 import Overlay from '../Overlay'
 
-export default function CartRemover({ productId, variantId }) {
+type CartRemover = {
+    productId: string
+    variantId: string
+}
+    
+export default function CartRemover({ productId, variantId } : CartRemover) {
     const [openConfirm, setOpenConfirm] = useState(false)
     const dispatch = useDispatch()
 
-    const handleRemoveClick = (e) => {
+    const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, '[data-remove-btn]')
         if (!button) return
 
@@ -25,7 +30,7 @@ export default function CartRemover({ productId, variantId }) {
             variant: variantId,
         }
 
-        dispatch(removeCart(data))
+        removeCart(data)(dispatch)
         setOpenConfirm(false)
     }
 
@@ -56,7 +61,7 @@ export default function CartRemover({ productId, variantId }) {
                             closeCallback={onClose}
                         />
                     </Overlay>,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
         </>
     )

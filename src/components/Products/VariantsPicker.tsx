@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import VariantOptions from './VariantOptions'
+import VariantOptions, { OptionChangeData } from './VariantOptions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
 import useWishlist from '../../hooks/useWishlist'
@@ -13,11 +13,24 @@ import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import { useEffect } from 'react'
 import Reviews from '../Review/Reviews'
 import AddReviewButton from '../Review/AddReviewButton'
+import { Variant, VariantDataToSubmit, VariantWithOrderNum } from '../../types'
 
-const getTargetVariantFromProduct = (currentVariantId, variants) => {
+const getTargetVariantFromProduct = (currentVariantId : string, variants: Variant[]) : Variant | undefined => {
     return currentVariantId != null
         ? variants.find((variant) => variant?._id.toString() === currentVariantId)
         : variants[0]
+}
+
+type getButtonTextProps = {
+    buttonText: string
+    addedToCart: boolean
+    isEditing: boolean
+    isUnavailable: boolean
+    isSoldOut: boolean
+    loading: boolean
+    inAuction: boolean
+    currentVariantId: string
+    selectedVariantId?: string
 }
 
 const getButtonText = ({
@@ -30,7 +43,7 @@ const getButtonText = ({
     inAuction,
     currentVariantId,
     selectedVariantId,
-}) => {
+}: getButtonTextProps) => {
     let actionButtonText = buttonText
     if (addedToCart) actionButtonText = 'Added To Cart'
     if (isEditing) actionButtonText = 'Edit now'
@@ -43,7 +56,26 @@ const getButtonText = ({
     return actionButtonText
 }
 
-function VariantsPicker(props) {
+type VariantsPickerProps = {
+    productId: string
+    productName?: string
+    variants: Variant[]
+    currentVariantId: string
+    buttonText: string
+    formSubmitHandler: (data: VariantDataToSubmit) => void
+    currentBidData?: any
+    inAuction?: boolean
+    nameStyles?: string
+    priceStyles?: string
+    review?: any
+    quantityControl?: boolean
+    wishlist?: boolean
+    isEditing?: boolean
+    onVariantChange?: (variant: Variant) => void
+    currentQuantity?: number
+}
+
+function VariantsPicker(props : VariantsPickerProps) {
     const {
         productId,
         productName = '',
@@ -62,28 +94,28 @@ function VariantsPicker(props) {
         onVariantChange = () => {},
         currentQuantity = 1,
     } = props
-    
+
     const [selectedVariant, setSelectedVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
     const [desiredVariant, setDesiredVariant] = useState(getTargetVariantFromProduct(currentVariantId, variants))
 
     const [isUnavailable, setIsUnavailable] = useState(false)
     const [quantity, setQuantity] = useState(currentQuantity)
-    const [isSoldOut, setIsSoldOut] = useState(variants[0].inventory === 0)
+    const [isSoldOut, setIsSoldOut] = useState<boolean>(variants[0].inventory === 0)
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
     const { isLoggedIn } = useAuthContext()
-    const { loading, cart } = useSelector((state) => state.cart)
+    const { loading, cart } = useSelector((state: any) => state.cart)
     const addedToCart = useAddedToCart(cart, productId)
-    const { loading: biddingLoading } = useSelector((state) => state.biddingProducts)
+    const { loading: biddingLoading } = useSelector((state: any) => state.biddingProducts)
     const [showReviews, setShowReviews] = useState(false)
 
-    const priceRef = useRef()
+    const priceRef = useRef<HTMLInputElement>(null)
 
     const firstOptions = filterDuplicateOption(variants, 'option1')
     const secondOptions = filterDuplicateOption(variants, 'option2')
     const thirdOptions = filterDuplicateOption(variants, 'option3')
 
-    function handleOptionChange(data) {
-        const newDesiredVariant = { ...desiredVariant, [data.orderNum]: data.option }
+    function handleOptionChange(data: OptionChangeData) {
+        const newDesiredVariant = { ...desiredVariant, [data.orderNum]: data.option } as VariantWithOrderNum
 
         setDesiredVariant(newDesiredVariant)
 
@@ -103,17 +135,24 @@ function VariantsPicker(props) {
         }
     }
 
-    function handleSubmit(e) {
+
+    function handleSubmit(e : React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        const dataToSubmit = { variantId: selectedVariant._id }
-        if (inAuction) dataToSubmit['bidPrice'] = priceRef.current.value
+
+        if (selectedVariant == null) return;
+
+        const dataToSubmit: VariantDataToSubmit = {
+            variantId: selectedVariant._id,
+        }
+
+        if (inAuction) dataToSubmit['bidPrice'] = priceRef.current?.value
         if (quantityControl) dataToSubmit['quantity'] = quantity
-        
+
         formSubmitHandler(dataToSubmit)
     }
 
     useDeepCompareEffect(() => {
-        if (typeof onVariantChange !== 'function') return
+        if (typeof onVariantChange !== 'function' || selectedVariant == null) return
 
         onVariantChange(selectedVariant)
     }, [selectedVariant])
@@ -134,7 +173,7 @@ function VariantsPicker(props) {
         currentVariantId,
         selectedVariantId: selectedVariant?._id.toString(),
     })
-
+        
     useDeepCompareEffect(() => {
         if (currentVariantId == null || variants.length === 0) return
 
@@ -144,12 +183,12 @@ function VariantsPicker(props) {
 
     return (
         <div className="">
-            <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant.name}</h3>
+            <h3 className={`text-slate-700 font-semibold capitalize ${nameStyles}`}>{selectedVariant?.name}</h3>
             <div className={`flex gap-2 justify-start items-center mt-2 ${priceStyles}`}>
-                {selectedVariant.comparePrice && (
-                    <span className="product-card-compare-price text-base">${selectedVariant.comparePrice}</span>
+                {selectedVariant?.comparePrice && (
+                    <span className="product-card-compare-price text-base">${selectedVariant?.comparePrice}</span>
                 )}
-                <span className="product-card-price text-2xl">${selectedVariant.price}</span>
+                <span className="product-card-price text-2xl">${selectedVariant?.price}</span>
             </div>
             {review?.show && (
                 <div className="mt-2 lg:mt-4 w-full flex flex-col justify-between xl:flex-row">
@@ -178,7 +217,7 @@ function VariantsPicker(props) {
                 </div>
             )}
             <form className="form mt-1 w-full" onSubmit={handleSubmit}>
-                {secondOptions && (
+                {secondOptions && desiredVariant?.option2 && (
                     <VariantOptions
                         options={secondOptions}
                         currentOption={desiredVariant.option2}
@@ -191,7 +230,7 @@ function VariantsPicker(props) {
                         optionType="Color"
                     />
                 )}
-                {firstOptions && (
+                {firstOptions && desiredVariant?.option1 && (
                     <VariantOptions
                         options={firstOptions}
                         currentOption={desiredVariant.option1}
@@ -204,7 +243,7 @@ function VariantsPicker(props) {
                         optionType="Size"
                     />
                 )}
-                {thirdOptions && (
+                {thirdOptions && desiredVariant?.option3 && (
                     <VariantOptions
                         options={thirdOptions}
                         currentOption={desiredVariant.option3}
@@ -227,14 +266,14 @@ function VariantsPicker(props) {
                             type="number"
                             name="auction-price"
                             id="auction-price"
-                            min={currentBidData.price + 1}
+                            min={currentBidData?.price + 1}
                             step={1}
-                            defaultValue={currentBidData.price + 1}
+                            defaultValue={currentBidData?.price + 1}
                             ref={priceRef}
                         />
                     </div>
                 )}
-                {quantityControl && (
+                {quantityControl && selectedVariant?.inventory && (
                     <QuantityController
                         inventory={selectedVariant.inventory}
                         isSoldOut={isSoldOut}
@@ -242,6 +281,7 @@ function VariantsPicker(props) {
                         onQuantityChange={setQuantity}
                         spacing="mt-7"
                         productId={productId}
+                        currentQuantity={currentQuantity} // Add this prop
                     />
                 )}
                 <div className="w-full flex items-center mt-5 gap-2">
@@ -281,23 +321,23 @@ function VariantsPicker(props) {
             {showReviews &&
                 ReactDOM.createPortal(
                     <div className="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
-                        <Reviews reviews={review.reviews} closeReviews={() => setShowReviews(false)} />
+                        <Reviews reviews={review?.reviews} closeReviews={() => setShowReviews(false)} />
                     </div>,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
         </div>
     )
 }
-
-function filterDuplicateOption(variants, optionPosition) {
-    return variants.reduce((options, variant) => {
-        if (options.includes(variant[optionPosition])) return options
-        return [...options, variant[optionPosition]]
+    
+function filterDuplicateOption(variants : Variant[], optionPosition: string) {
+    return variants.reduce((options: string[], variant: Variant) => {
+        if (options.includes((variant as any)[optionPosition])) return options
+        return [...options, (variant as any)[optionPosition]]
     }, [])
 }
 
-export function compareStringValue(value1, value2) {
-    return value1?.toString().toLowerCase() === value2?.toString().toLowerCase()
+export function compareStringValue(value1: string, value2: string) {
+    return value1.toLowerCase() === value2.toLowerCase()
 }
 
 export default VariantsPicker
