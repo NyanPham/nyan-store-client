@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag } from '@fortawesome/free-solid-svg-icons'
 
 export default function SideCoupon() {
     const [openCoupon, setOpenCoupon] = useState(false)
-    const couponRef = useRef()
-
-    const handleCouponSubmit = (e) => {
+    const couponRef = useRef<HTMLInputElement>(null)
+    
+    const handleCouponSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
 

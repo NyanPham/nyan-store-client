@@ -1,4 +1,3 @@
-import React from 'react'
 import CartItems from '../Cart/CartItems'
 import { useSelector } from 'react-redux'
 import OrderNote from '../Cart/OrderNote'
@@ -8,8 +7,8 @@ import ShippingCalculator from '../Cart/ShippingCalculator'
 import { Link } from 'react-router-dom'
 
 export default function CartPage() {
-    const { cart } = useSelector((state) => state.cart)
-
+    const { cart } = useSelector((state: any) => state.cart)
+    
     return (
         <>
             <h2 className="text-center mt-12 text-slate-700 font-semibold text-2xl">Your Cart</h2>

@@ -1,16 +1,15 @@
-import React from 'react'
 import { useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { ROOT_URL } from '../../config'
 import { hideAlert, hideLoading, setError, setMessage, showAlert, showLoading } from '../../redux/actions/appStatusActions'
 
-export default function CheckoutButton({ styles }) {
-    const { cart } = useSelector((state) => state.cart)
+export default function CheckoutButton({ styles } : { styles: string }) {
+    const { cart } = useSelector((state : any) => state.cart)
     const dispatch = useDispatch()
     
     const stripe = useStripe()
-    const handleCheckout = async (e) => {
+    const handleCheckout = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
         dispatch(showLoading())
@@ -28,10 +27,10 @@ export default function CheckoutButton({ styles }) {
                 withCredentials: true,
             })
             if (res.data.status === 'success') {
-                stripe.redirectToCheckout({
+                stripe?.redirectToCheckout({
                     sessionId: res.data.session.id,
                 })
-            }
+            }   
         } catch (err) {
             dispatch(setError(
                 'Something went wrong when directing you to the checkout. Please wait for 10 minutes then try again later.'

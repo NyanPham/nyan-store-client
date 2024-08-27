@@ -1,9 +1,9 @@
-import React from 'react'
 import { COLOR_MAP, ROOT_URL } from '../../config'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { Order, OrderItem } from '../../types'
 
-export default function OrderCard({ order }) {
+export default function OrderCard({ order } : { order: Order }) {
     const { total, items, createdAt } = order
 
     return (
@@ -26,7 +26,7 @@ export default function OrderCard({ order }) {
             </div>
             <div className="mt-2">
                 <h3 className="text-slate-700 text-lg font-semibold">Items purchased:</h3>
-                {items.map((item, index) => (
+                {items.map((item : OrderItem, index) => (
                     <div
                         key={`order_item_variant_${index}`}
                         className="mt-3 flex flex-row justify-start items-center gap-5"
@@ -60,11 +60,11 @@ export default function OrderCard({ order }) {
                                     <h5 className="text-slate-600 text-base font-semibold">Color: </h5>
                                     <span
                                         className={`${
-                                            COLOR_MAP[item?.variant?.option2.toLowerCase().split('-').join('')]
+                                            COLOR_MAP[(item?.variant?.option2.toLowerCase().split('-').join('')) as keyof typeof COLOR_MAP]
                                         } w-6 h-6 rounded-full flex items-center justify-center gap-3 text-slate-700 text-sm font-bold`}
                                     ></span>
-                                </div>
-                            )}
+                                </div>  
+                            )}  
                             {item?.variant?.option3 && (
                                 <div className="flex justify-start items-center gap-2 mt-1">
                                     <h5 className="text-slate-600 text-base font-semibold">Material:</h5>

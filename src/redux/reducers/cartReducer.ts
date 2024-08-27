@@ -1,13 +1,13 @@
-import ACTIONS from '../actions/cartActions'
+import ACTIONS, { Actions } from '../actions/cartActions'
 
 const intitialState = {
     cart: [],
     loading: false,
     message: '',
     error: '',
-}
+}   
 
-export default function cartReducer(state = intitialState, { type, payload }) {
+export default function cartReducer(state = intitialState, { type, payload } : Actions) {
     switch (type) {
         case ACTIONS.START_CART_ACT:
             return {

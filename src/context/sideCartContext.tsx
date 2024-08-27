@@ -1,9 +1,21 @@
-import React, { useContext, createContext, useState } from 'react'
+import { useContext, createContext, useState } from 'react'
 
-const SideCartContext = createContext()
+type SideCartContextValue = {
+    openSideCart: boolean;
+    setOpenSideCart: (open: boolean) => void;
+}
+
+const SideCartContext = createContext<SideCartContextValue>({
+    openSideCart: false,
+    setOpenSideCart: () => {},
+})
 export const useSideCartContext = () => useContext(SideCartContext)
 
-export default function SideContextProvider({ children }) {
+type SideContextProviderProps = {
+    children: React.ReactNode
+}
+
+export default function SideContextProvider({ children } : SideContextProviderProps) {
     const [openSideCart, setOpenSideCart] = useState(false)
 
     return <SideCartContext.Provider value={{ openSideCart, setOpenSideCart }}>{children}</SideCartContext.Provider>

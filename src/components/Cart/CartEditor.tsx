@@ -6,14 +6,23 @@ import ReactDOM from 'react-dom'
 import getMatchedButton from '../../utils/getMatchedButton'
 import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from '../Products/VariantsPickerWithImage'
+import { Product, Variant, VariantDataToSubmit } from '../../types'
 
-const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVariantChange, onQuantityChange }) => {
-    const [product, setProduct] = useState({})
+type CartEditorProps = {
+    productId: string
+    variantId: string
+    currentQuantity: number
+    onVariantChange: (variant: Variant) => void 
+    onQuantityChange: (quantiy: number) => void
+}   
+
+const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVariantChange, onQuantityChange }: CartEditorProps) => {
+    const [product, setProduct] = useState<Product | null>(null)
     const [openEditor, setOpenEditor] = useState(false)
-    const [selectedVariant, setSelectedVariant] = useState({})
+    const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null)
 
     useEffect(() => {
-        const getProduct = async (productId) => {
+        const getProduct = async (productId: string) => {
             try {
                 const res = await axios({
                     method: 'GET',
@@ -23,9 +32,9 @@ const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVarian
 
                 if (res.data.status === 'success') {
                     setProduct(res.data.data.doc)
-                    setSelectedVariant(res.data.data.doc.variants.find((variant) => variant._id === variantId))
+                    setSelectedVariant(res.data.data.doc.variants.find((variant : Variant) => variant._id === variantId))
                 }
-            } catch (err) {
+            } catch (err: any) {
                 alert(err.response.data.message)
             }
         }
@@ -33,20 +42,20 @@ const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVarian
         getProduct(productId)
     }, [productId, variantId])
 
-    const handleEditClick = (e) => {
+    const handleEditClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, '[data-edit-btn]')
         if (!button) return
 
         setOpenEditor(true)
     }
-    
-    const formSubmitHandler = (data) => {
-        const variant = product.variants.find((variant) => variant._id.toString() === data.variantId)
-        onVariantChange(variant)
-        onQuantityChange(data.quantity)
+
+    const formSubmitHandler = (data : VariantDataToSubmit) => {
+        const variant = product?.variants.find((variant) => variant._id.toString() === data.variantId)
+        if (variant != null) onVariantChange(variant)
+        if (data.quantity != null) onQuantityChange(data.quantity)
     }
 
-    const handleVariantChange = (variant) => {
+    const handleVariantChange = (variant: Variant) => {
         setSelectedVariant(variant)
     }
 
@@ -72,7 +81,6 @@ const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVarian
                                 handleAddToCart={formSubmitHandler}
                                 setOpenQuickView={setOpenEditor}
                                 buttonText="Edit"
-                                data="hello"
                                 nameStyles="text-2xl"
                                 review={{
                                     show: false,
@@ -90,8 +98,8 @@ const CartEditor = React.memo(({ productId, variantId, currentQuantity, onVarian
                                 <FontAwesomeIcon icon={faClose} />
                             </button>
                         </div>
-                    </div>,
-                    document.getElementById('modal-container')
+                    </div>, 
+                    document.getElementById('modal-container')!
                 )}
         </>
     )

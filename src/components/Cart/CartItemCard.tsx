@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ROOT_URL } from '../../config'
 import useDebounce from '../../hooks/useDebounce'
@@ -9,21 +9,29 @@ import CartEditor from './CartEditor'
 import CartRemover from './CartRemover'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { Variant } from '../../types'
 
-export default function CartItemCard({ currentVariant, currentQuantity, productId, isLast }) {
-    const [quantity, setQuantity] = useState(currentQuantity)
-    const [variant, setVariant] = useState(currentVariant)
-    const [total, setTotal] = useState(() => {
+type CartItemCardProps = {
+    currentVariant: Variant
+    currentQuantity: number
+    productId: string
+    isLast?: boolean
+}
+
+export default function CartItemCard({ currentVariant, currentQuantity, productId, isLast } : CartItemCardProps) {
+    const [quantity, setQuantity] = useState<number>(currentQuantity)
+    const [variant, setVariant] = useState<Variant>(currentVariant)
+    const [total, setTotal] = useState<number>(() => {
         return currentVariant.price * currentQuantity
     })  
 
     const dispatch = useDispatch()
 
-    const handleQuantityChange = useCallback((quantity) => {
+    const handleQuantityChange = useCallback((quantity: number) => {
         setQuantity(quantity)
     }, [])
 
-    const handleVariantChange = useCallback((variant) => {
+    const handleVariantChange = useCallback((variant: Variant) => {
         setVariant(variant)
     }, [])
 
@@ -35,7 +43,7 @@ export default function CartItemCard({ currentVariant, currentQuantity, productI
                 variant: variant._id,
                 product: productId,
             }
-            dispatch(updateCart(data))
+            updateCart(data)(dispatch)
         },
         500,
         [quantity, variant._id]

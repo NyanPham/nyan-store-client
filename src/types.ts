@@ -71,3 +71,55 @@ export type User = {
     photo: string
     role: 'user' | 'admin'
 } | null
+
+export type VariantDataToSubmit = { 
+    variantId: string
+    bidPrice?: string
+    quantity?: number 
+}
+
+export type AddToCartItem = {
+    variant: string
+    product: string
+    quantity: number
+}
+
+export type UpdateInCartItem = {
+    product: string
+    currentVariant: string
+    variant: string
+    quantity: number
+}
+
+export type RemoveFromCartItem = {
+    product: string
+    variant: string
+}
+
+export type CartItem = {
+    product: string
+    variant: Variant
+    quantity: number 
+}
+
+export type Cart = CartItem[]
+
+export type OrderItem = {
+    variant: Variant
+    quantity: number
+    price: number
+}
+
+export type Order = {
+    total: number 
+    items: OrderItem[]
+    createdAt: Date
+}
+
+export type VariantWithOrderNum = Variant & {
+    [key in string]: string
+}
+
+export type ReviewData = {
+
+}

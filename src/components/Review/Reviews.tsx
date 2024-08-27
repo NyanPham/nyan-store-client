@@ -1,11 +1,17 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import Overlay from '../Overlay'
 import Review from './Review'
+import { ReviewData } from '../../types'
 
-export default function Reviews({ reviews, closeReviews }) {
-    const ref = useRef()
+type ReviewsProps = {
+    reviews: ReviewData[]
+    closeReviews: () => void
+}
+
+export default function Reviews({ reviews, closeReviews }: ReviewsProps) {
+    const ref = useRef<HTMLDivElement>(null)
 
     return (
         <Overlay closeModal={closeReviews} childRef={ref}>
@@ -21,7 +27,7 @@ export default function Reviews({ reviews, closeReviews }) {
                     {reviews.map((review, index) => (
                         <Review
                             key={`review_${index}`}
-                            userEmail={review.user.email}
+                            userEmail={review.user?.email}
                             rating={review.rating}
                             reviewContent={review.review}
                             ratedAt={new Date(review.createdAt).toLocaleDateString('en-US', {

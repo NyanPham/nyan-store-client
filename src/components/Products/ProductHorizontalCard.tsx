@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ProductCardAction from './ProductCardAction'
@@ -9,40 +9,52 @@ import { useSideCartContext } from '../../context/sideCartContext'
 import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from './VariantsPickerWithImage'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { Variant } from '../../types'
 
-function ProductHorizontalCard(props) {
+
+type ProductHorizontalCardProps = {
+    id: string
+    summary: string
+    name: string
+    slug: string
+    variants: any
+    createdAt: Date
+    inAuction?: boolean
+    currentBid?: boolean
+}
+
+function ProductHorizontalCard(props : ProductHorizontalCardProps) {
     const { id, summary, name, slug, variants, createdAt, inAuction = false, currentBid = false } = props
 
-    const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
+    // const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
+    const isNew = new Date(Date.now() - createdAt.getTime()).getHours() < 24 * 1
     const firstVariant = variants[0]
-    const { loading, error, message } = useSelector((state) => state.cart)
+    const { loading, error, message } = useSelector((state: any) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const [selectedVariant, setSelectedVariant] = useState(variants[0])
 
     const dispatch = useDispatch()
 
-    const handleAddToCart = (data) => {
-        let dataToSubmit = {}
-
-        if (data == null) {
-            dataToSubmit = {
-                variant: firstVariant._id,
-                product: id,
-                quantity: 1,
-            }
-        } else {
+    const handleAddToCart = (data: { variantId: string, quantity: number } | null) => {
+        let dataToSubmit = {
+            variant: firstVariant._id,
+            product: id,
+            quantity: 1,
+        }
+        
+        if (data != null) {
             dataToSubmit = {
                 variant: data.variantId,
                 product: id,
                 quantity: data.quantity,
             }
-        }
+        } 
 
-        dispatch(addToCart(dataToSubmit))
+        addToCart(dataToSubmit)(dispatch)
     }
 
-    const handleVariantChange = (variant) => {
+    const handleVariantChange = (variant: Variant) => {
         setSelectedVariant(variant)
     }
 
@@ -105,7 +117,6 @@ function ProductHorizontalCard(props) {
                         handleVariantChange={handleVariantChange}
                         setOpenQuickView={setOpenQuickView}
                         buttonText="Own Now"
-                        data="hello"
                         nameStyles="text-2xl"
                         review={{
                             show: false,
@@ -114,7 +125,7 @@ function ProductHorizontalCard(props) {
                         wishlist={false}
                         isEditing={false}
                     />,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
         </div>
     )

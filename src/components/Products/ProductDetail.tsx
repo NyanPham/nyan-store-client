@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function ProductDetail({ title, content }) {
+type ProductDetailProps = {
+    title: string
+    content: string
+}
+
+export default function ProductDetail({ title, content } : ProductDetailProps) {
     const [openDetail, setOpenDetail] = useState(false)
 
     return (

@@ -1,6 +1,5 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { useSideCartContext } from '../../context/sideCartContext'
@@ -10,10 +9,11 @@ import SideCoupon from './SideCoupon'
 import SideOrderNote from './SideOrderNote'
 import SideProductCard from './SideProductCard'
 import SideShippingCalculator from './SideShippingCalculator'
+import { Cart } from '../../types'
 
 export default function SideCart() {
     const { pathname } = useLocation()
-    const { cart } = useSelector((state) => state.cart)
+    const { cart }: { cart: Cart } = useSelector((state: any) => state.cart)
     const { openSideCart, setOpenSideCart } = useSideCartContext()
     const subtotal = cart.reduce((_, item) => item?.variant?.price * item?.quantity, 0)
 
@@ -21,7 +21,7 @@ export default function SideCart() {
         setOpenSideCart(false)
     }
 
-    const handleCloseClick = (e) => {
+    const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, '[data-close-side-cart]')
         if (!button) return
 
@@ -83,9 +83,8 @@ export default function SideCart() {
                             <div className="px-5 flex flex-col gap-3 justify-center items-center mt-4">
                                 <CheckoutButton styles="text-lg text-center text-white font-semibold tracking-wide bg-cyan-400 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-cyan-500 disabled:text-gray-300 disabled:border-gray-200" />
                                 <Link
-                                    to="/cart"
-                                    className="text-lg text-center text-slate-700 font-semibold tracking-wide bg-white border border-slate-700 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-slate-700 active:text-white disabled:text-gray-300 disabled:border-gray-200"
-                                    disabled={cart.length === 0}
+                                    to={cart.length === 0 ? '#disabled' : '/cart'}
+                                    className="text-lg text-center text-slate-700 font-semibold tracking-wide bg-white border border-slate-700 py-1 px-4 rounded-lg flex-grow flex-shrink-0 w-full transition transform duration-200 hover:-translate-y-1 active:-translate-y-1 active:bg-slate-700 active:text-white"
                                 >
                                     View Cart
                                 </Link>

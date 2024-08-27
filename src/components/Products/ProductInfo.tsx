@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
@@ -20,8 +20,15 @@ import ProductDetail from './ProductDetail'
 import { ROOT_URL } from '../../config'
 import Overlay from '../Overlay'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { Product, Variant, VariantDataToSubmit } from '../../types'
 
-const getImagesFromVariants = (variants) => {
+type VariantImage = {
+    variantId: string;
+    imgUrl: string;
+    variantName: string;
+}
+
+const getImagesFromVariants = (variants: Variant[]) : VariantImage[] => {
     return variants?.flatMap((variant) => {
         return variant.images.map((image) => {
             return {
@@ -33,11 +40,16 @@ const getImagesFromVariants = (variants) => {
     })
 }
 
-function ProductInfo({ product, setProduct }) {
-    const { isLoggedIn } = useAuthContext()
-    const { slug } = useParams()
+type ProductInfoProps = {
+    product: Product
+    setProduct: (product: Product) => void
+}
 
-    const { message } = useSelector((state) => state.cart)
+function ProductInfo({ product, setProduct } : ProductInfoProps) {
+    const { isLoggedIn } = useAuthContext()
+    const { slug } = useParams<string>()
+
+    const { message } = useSelector((state: any) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [mainImage, setMainImage] = useState(product?.variants[0].images[0])
     const [selectedVariantId, setSelectedVariantId] = useState(product?.variants[0]._id)
@@ -56,10 +68,12 @@ function ProductInfo({ product, setProduct }) {
 
     const imageZoomRef = useRef()
 
-    const createdTimeDelta = new Date(Date.now() - new Date(product?.createdAt)).getHours()
+    // const createdTimeDelta = new Date(Date.now() - new Date(product?.createdAt)).getHours()
+    const createdTimeDelta = new Date(Date.now() - (product?.createdAt.getTime())).getHours()
+
     const isNew = createdTimeDelta < 24 * 1 && createdTimeDelta > 0
 
-    const handleVariantChange = (variant) => {
+    const handleVariantChange = (variant: Variant) => {
         if (variant == null) return
 
         const selectedVariantImage = images.find((image) => image?.variantId === variant._id)
@@ -70,7 +84,7 @@ function ProductInfo({ product, setProduct }) {
     }
 
     const catchProduct = useCallback(
-        async (slug) => {
+        async (slug: string) => {
             try {
                 const res = await axios({
                     method: 'GET',
@@ -82,24 +96,24 @@ function ProductInfo({ product, setProduct }) {
                     setProduct(fetchedProduct)
                     setSelectedVariantId(fetchedProduct.variants[0]._id)
                 }
-            } catch (err) {
+            } catch (err: any) {
                 alert(err.response.data.message)
             }
         },
         [setProduct]
     )
 
-    const selectVariant = (variantId, imgUrl) => {
+    const selectVariant = (variantId: string, imgUrl: string) => {
         setSelectedVariantId(variantId)
         setMainImage(imgUrl)
     }
 
     useEffect(() => {
-        catchProduct(slug)
+        if (slug != null) catchProduct(slug)
     }, [slug, catchProduct])
 
     useEffect(() => {
-        if (product != null) return
+        if (product != null || slug == null) return
 
         catchProduct(slug)
     }, [slug, product, catchProduct])
@@ -110,10 +124,10 @@ function ProductInfo({ product, setProduct }) {
         dispatch(resetMessageError())
     }, [message, setOpenSideCart, dispatch])
 
-    const formSubmitHandler = async (data) => {
+    const formSubmitHandler = async (data: VariantDataToSubmit) => {
         if (!isLoggedIn) {
             alert('Please login to add product to cart')
-            return setTimeout(navigate('/login'), 2500)
+            return setTimeout(() => navigate('/login'), 2500)
         }
         const dataToSubmit = {
             product: product._id,
@@ -121,7 +135,7 @@ function ProductInfo({ product, setProduct }) {
             quantity: data.quantity,
         }
 
-        dispatch(addToCart(dataToSubmit))
+        addToCart(dataToSubmit)(dispatch)
     }
 
     // const getCursorPosition = (e) => {
@@ -281,7 +295,7 @@ function ProductInfo({ product, setProduct }) {
                             variants={product.variants}
                             buttonText={'Buy Now'}
                             formSubmitHandler={formSubmitHandler}
-                            currentBid={false}
+                            // currentBid={false}
                             nameStyles="text-4xl border-b border-gray-200 w-full pb-3"
                             priceStyles="border-b border-gray-200 w-full pb-3"
                             review={{

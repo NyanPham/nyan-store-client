@@ -1,11 +1,16 @@
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCartPlus, faEye } from '@fortawesome/free-solid-svg-icons'
 import { useAuthContext } from '../../context/authContext'
 import { Link } from 'react-router-dom'
 import useWishlist from '../../hooks/useWishlist'
 
-function ProductCardAction({ productId, handleAddToCart, setOpenQuickView }) {
+type ProductCardActionProps = {
+    productId: string
+    handleAddToCart: (data: { variantId: string, quantity: number } | null) => void
+    setOpenQuickView: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function ProductCardAction({ productId, handleAddToCart, setOpenQuickView } : ProductCardActionProps) {
     const { isLoggedIn } = useAuthContext()
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
 

@@ -1,14 +1,14 @@
 import React from 'react'
 
-function Cell({ children }) {
+function Cell({ children }: { children: React.ReactNode }) {
     return <td>{children}</td>
 }
 
-function Row({ children }) {
+function Row({ children }: { children: React.ReactNode }) {
     return (
         <tr>
             {React.Children.map(children, (el) => {
-                if (el.type === Cell) return el
+                if (React.isValidElement(el) && el.type === Cell) return el
 
                 return <td>{el}</td>
             })}
@@ -16,19 +16,19 @@ function Row({ children }) {
     )
 }
 
-export default function Grid({ children }) {
+export default function Grid({ children }: { children: React.ReactNode }) {
     return (
         <table>
             <tbody>
                 {React.Children.map(children, (el) => {
                     if (!el) return
 
-                    if (el.type === Row) return el
+                    if (React.isValidElement(el) && el.type === Row) return el
 
-                    if (el.type === Cell) {
+                    if (React.isValidElement(el) && el.type === Cell) {
                         return <tr>{el}</tr>
                     }
-
+                    
                     return (
                         <tr>
                             <td>{el}</td>

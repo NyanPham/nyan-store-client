@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux'
@@ -6,13 +6,15 @@ import { updateOrderNote } from '../../redux/actions/orderNoteActions'
 
 export default function SideOrderNote() {
     const [openOrderNote, setOpenOrderNote] = useState(false)
-    const orderNoteRef = useRef()
+    const orderNoteRef = useRef<HTMLInputElement>(null)
     const dispatch = useDispatch()
 
-    const handleNoteSubmit = (e) => {
-        e.preventDefault()
-
-        dispatch(updateOrderNote(orderNoteRef.current.value))
+    const handleNoteSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()  
+        
+        if (orderNoteRef.current?.value != null) {
+            updateOrderNote(orderNoteRef.current.value)(dispatch)
+        }
     }
 
     // useEffect(() => {

@@ -6,8 +6,26 @@ import { ROOT_URL } from '../../config'
 import Overlay from '../Overlay'
 import VariantsPicker from './VariantsPicker'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { Variant } from '../../types'
 
-export default function VariantsPickerWithImage(props) {
+type VariantsPickerWithImageProps = {
+    selectedVariant: Variant
+    id: string
+    variants: Variant[]
+    handleAddToCart?: any
+    handleVariantChange?: any
+    setOpenQuickView?: any
+    buttonText?: string
+    nameStyles?: string
+    review?: any
+    quantityControl?: boolean
+    wishlist?: boolean
+    isEditing?: boolean
+    currentBid?: boolean
+    currentQuantity?: number
+}
+
+export default function VariantsPickerWithImage(props : VariantsPickerWithImageProps) {
     const {
         selectedVariant,
         id,
@@ -15,18 +33,17 @@ export default function VariantsPickerWithImage(props) {
         handleAddToCart = () => {},
         handleVariantChange,
         setOpenQuickView,
+        currentQuantity = 1,
         buttonText = 'Own Now',
-        data = 'hello',
         nameStyles = 'text-2xl',
         review = {},
         quantityControl = true,
         wishlist = false,
         isEditing = false,
         currentBid = false,
-        currentQuantity = 1,
     } = props
 
-    const popupRef = useRef()
+    const popupRef = useRef<HTMLDivElement>(null)
 
     return (
         <Overlay closeModal={() => setOpenQuickView(false)} childRef={popupRef}>
@@ -45,7 +62,6 @@ export default function VariantsPickerWithImage(props) {
                     variants={variants}
                     currentVariantId={variants[0]?._id}
                     buttonText={buttonText}
-                    data={data}
                     formSubmitHandler={handleAddToCart}
                     inAuction={false}
                     nameStyles={nameStyles}
@@ -54,8 +70,8 @@ export default function VariantsPickerWithImage(props) {
                     wishlist={wishlist}
                     isEditing={isEditing}
                     onVariantChange={handleVariantChange}
-                    currentBid={currentBid}
                     currentQuantity={currentQuantity}
+                    // currentBid={currentBid}
                 />
                 <button className="absolute right-4 top-3" type="button" onClick={() => setOpenQuickView(false)}>
                     <FontAwesomeIcon icon={faClose} />

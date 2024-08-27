@@ -11,9 +11,16 @@ import SkeletonCard from '../SkeletonCard'
 import useOnScreen from '../../hooks/useOnScreen'
 
 // TODO: Do the cache as a state for the whole app to store the products
-function ProductRecommendation({ showRecommendCard = true, category, type = 'collections' }) {
-    const allCollections = useSelector((state) => state.collections)
-    const divRef = useRef()
+
+type ProductRecommendationProps = {
+    showRecommendCard?: boolean
+    category?: any
+    type?: string
+}
+
+function ProductRecommendation({ showRecommendCard = true, category, type = 'collections' } : ProductRecommendationProps) {
+    const allCollections = useSelector((state: any) => state.collections)
+    const divRef = useRef<HTMLDivElement>(null)
     const isVisible = useOnScreen(divRef, '-50px', 0)
 
     const { data: products, isLoading } = useFetchProductsWithVisibility(type, {

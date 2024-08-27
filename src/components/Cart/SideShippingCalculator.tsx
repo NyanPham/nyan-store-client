@@ -4,26 +4,28 @@ import { faTruckFast } from '@fortawesome/free-solid-svg-icons'
 import useCountries from '../../hooks/useCountries'
 
 export default function SideShippingCalculator() {
-    const [country, setCountry] = useState()
+    const [country, setCountry] = useState<string>("")
     // const [state, setState] = useState()
     const [openShippingCalculator, setOpenShippingCalculator] = useState(false)
-    const { countries, states } = useCountries()
-
+    const { countries, states }: { countries: any, states: { [country: string]: any[] } } = useCountries()    
     const countryStates = useMemo(() => states[country], [country, states])
-
-    const handleCalcSubmit = (e) => {
+    
+    const handleCalcSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
     }
 
-    const handleShippingChange = (e) => {
-        if (e.target.name === 'side-country') {
-            setCountry(e.target.value)
-        } else if (e.target.name === 'side-state') {
+    const handleShippingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const element = e.target
+        if (element.name === 'side-country') {
+            setCountry(element.value as string)
+        } else if (element.name === 'side-state') {
             // setState(e.target.value)
         }
     }
 
-    const handleZipInput = (e) => {}
+    const handleZipInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e)
+    }
 
     useEffect(() => {
         if (!country) return
@@ -55,10 +57,10 @@ export default function SideShippingCalculator() {
                     <select id="side-country" className="form-input" name="side-country" onInput={handleShippingChange}>
                         {countries &&
                             Object.entries(countries).map(([key, value]) => (
-                                <option key={key} name="side-country" value={key}>
-                                    {value}
+                                <option key={key}  value={key}>
+                                    {value as string}
                                 </option>
-                            ))}
+                            ))} 
                     </select>
                 </div>
                 <div className="form-group mt-2">
@@ -68,7 +70,7 @@ export default function SideShippingCalculator() {
                     <select id="side-state" className="form-input" name="side-state" onInput={handleShippingChange}>
                         {countryStates &&
                             countryStates.map((state) => (
-                                <option key={state.code} name="side-state" value={state.code}>
+                                <option key={state.code} value={state.code}>
                                     {state.name}
                                 </option>
                             ))}
