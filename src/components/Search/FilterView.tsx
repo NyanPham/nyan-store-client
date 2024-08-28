@@ -36,9 +36,9 @@ export default function FilterView(props: FilterViewProps) {
     const handlePaginationClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, '[data-pagination]')
         if (button == null) return
-
-        if (!isNaN(parseInt(button.dataset.pagination))) {
-            return onPaginationClick(parseInt(button.dataset.pagination))
+        
+        if (!isNaN(Number(button.dataset.pagination))) {
+            return onPaginationClick(Number(button.dataset.pagination))
         }
 
         if (button.dataset.pagination === 'prev') return onPaginationClick(page - 1)

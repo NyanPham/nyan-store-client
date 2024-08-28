@@ -27,12 +27,11 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
     const [sortBy, setSortBy] = useState<string>('oldest')
     const [openSort, setOpenSort] = useState(false)
     const search = useSelector((state: { search: string }) => state.search)
-    
+
     const hanldeViewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, 'button[data-type]')
-
-        if (!button) return
-
+        if (!button || button.dataset.type == null) return
+        
         setActiveView(button.dataset.type)
     }
 

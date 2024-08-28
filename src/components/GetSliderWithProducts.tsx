@@ -3,6 +3,7 @@ import { useFetchProductProps, useFetchProductsWithVisibility } from '../hooks/u
 import SliderWithProduct from './SliderWithProduct'
 import useOnScreen from '../hooks/useOnScreen'
 import { Tag } from '../types'
+import { SlideData } from './Slider'
     
 // TODO: Do the cache as a state for the whole app to store the products
 type GetSliderWithProductsProps = {
@@ -14,7 +15,7 @@ type GetSliderWithProductsProps = {
     borderColor: string
     itemBorderColor: string
     caretColor: string
-    slides: number
+    slides: SlideData[]
     sliderFirst?: boolean
     from?: 'category' | 'tags'
 }
@@ -62,7 +63,7 @@ function GetSliderWithProducts({
         <div ref={divRef}>
             <SliderWithProduct
                 slides={slides}
-                products={products}
+                products={products || []}
                 navTitle={navTitle}
                 sideNavBackground={sideNavBackground}
                 nameColor={nameColor}

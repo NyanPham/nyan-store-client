@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
+ // @ts-ignore
 import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -82,6 +83,7 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
             navigation
             pagination={{ clickable: true }}
             onSlideChangeTransitionStart={function () {
+                // @ts-ignore
                 setCurrentSlide(this.realIndex)
             }}
             loop={true}

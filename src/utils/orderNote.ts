@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ROOT_URL } from '../config'
 
-export async function getOrderNote(cb) {
+export async function getOrderNote(cb: (orderNote: string) => void) {
     try {
         const res = await axios({
             method: 'GET',
@@ -10,12 +10,12 @@ export async function getOrderNote(cb) {
         if (res.data.status('success')) {
             cb(res.data.data.orderNote)
         }
-    } catch (err) {
+    } catch (err: any) {
         console.error(err.response.data.message)
     }
 }
 
-export async function updateMyNote(orderNote) {
+export async function updateMyNote(orderNote: string) {
     try {
         const res = await axios({
             method: 'PATCH',
@@ -28,7 +28,7 @@ export async function updateMyNote(orderNote) {
         if (res.data.status('success')) {
             return res.data.data.orderNote
         }
-    } catch (err) {
+    } catch (err: any) {
         console.error(err.response.data.message)
         return null
     }

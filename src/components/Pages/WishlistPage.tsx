@@ -13,7 +13,7 @@ export default function WishlistPage() {
                 <h2 className="text-cyan-400 text-3xl font-semibold mt-10 text-center">Wishlist</h2>
                 {wishlist.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                        {wishlist.map((product: { item: Product }, index: string) => (
+                        {wishlist.map((product: { item: Product }, index: number) => (
                             <ProductCard key={`wishlist_item_${index}`} {...product.item} />
                         ))}
                     </div>

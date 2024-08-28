@@ -1,5 +1,6 @@
 import Container from '../Container'
 import { Swiper } from 'swiper/react'
+// @ts-ignore
 import { Navigation } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'

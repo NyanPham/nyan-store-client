@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
+// @ts-ignore
 import { Navigation } from 'swiper'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'swiper/css'

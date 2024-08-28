@@ -1,9 +1,12 @@
-export default function getMatchedButton(e, btnSelector) {
+export default function getMatchedButton(e: React.MouseEvent<HTMLButtonElement>, btnSelector: string) {
     let button
-    if (e.target.matches(btnSelector)) {
-        button = e.target
+    const element = e.target as HTMLElement
+    
+    if (element.matches(btnSelector)) {
+        button = element as HTMLButtonElement
+    } else if (element.closest(btnSelector) != null) {
+        button = element.closest(btnSelector)
     }
-    if (e.target.closest(btnSelector) != null) button = e.target.closest(btnSelector)
 
-    return button
+    return button as  HTMLButtonElement
 }
