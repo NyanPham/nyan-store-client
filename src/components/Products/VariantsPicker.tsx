@@ -13,7 +13,7 @@ import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import { useEffect } from 'react'
 import Reviews from '../Review/Reviews'
 import AddReviewButton from '../Review/AddReviewButton'
-import { Product, Variant, VariantDataToSubmit, VariantWithOrderNum } from '../../types'
+import { Variant, VariantDataToSubmit, VariantWithOrderNum } from '../../types'
 import { CartState } from '../../redux/reducers/cartReducer'
 import { BiddingState } from '../../redux/reducers/biddingReducer'
 

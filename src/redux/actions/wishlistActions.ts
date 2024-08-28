@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ROOT_URL } from '../../config'
-import { Action, Dispatch } from 'redux'
+import { Dispatch } from 'redux'
 import { VariantWithOrderNum } from '../../types'
 
 const ACTIONS = {
@@ -77,7 +77,7 @@ export const removeWishlist = (productId: string) => {
                 },
                 withCredentials: true,
             })  
-            
+
             if (res.data.status === 'success') {
                 dispatch({
                     type: ACTIONS.GET_WISHLIST,
