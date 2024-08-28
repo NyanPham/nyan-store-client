@@ -7,11 +7,16 @@ const ACTIONS = {
     SET_MESSAGE: 'SET_MESSAGE',
 }
 
+export type Actions = {
+    type: string
+    payload?: string
+}
+    
 export const showLoading = () => ({ type: ACTIONS.SHOW_LOADING });
 export const hideLoading = () => ({ type: ACTIONS.HIDE_LOADING });
 export const showAlert = () => ({ type: ACTIONS.SHOW_ALERT });
 export const hideAlert = () => ({ type: ACTIONS.HIDE_ALERT });
-export const setError = (payload) => ({ type: ACTIONS.SET_ERROR, payload });
-export const setMessage = (payload) => ({ type: ACTIONS.SET_MESSAGE, payload });
+export const setError = (payload: string) => ({ type: ACTIONS.SET_ERROR, payload });
+export const setMessage = (payload: string) => ({ type: ACTIONS.SET_MESSAGE, payload });
 
 export default ACTIONS

@@ -93,7 +93,7 @@ const getTagsUrlAndSuccessHandler = ({ tags, setProducts, limit, page } : getTag
     return { successHandler, url }
 }   
 
-type useFetchProductProps = {
+export type useFetchProductProps = {
     collections: Collection[],
     collectionName: string,
     categoryName?: string,

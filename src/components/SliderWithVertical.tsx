@@ -1,7 +1,16 @@
-import React from 'react'
 import Container from './Container'
 import SideNavigation from './SideNavigation'
-import Slider from './Slider'
+import Slider, { SlideData } from './Slider'
+
+type SliderWithVerticalProps = {
+    navTitle: string
+    slides: SlideData[]
+    sideNavBackground?: string
+    nameColor?: string
+    borderColor?: string
+    itemBorderColor?: string
+    caretColor?: string
+}
 
 function SliderWithVertical({
     slides,
@@ -11,7 +20,7 @@ function SliderWithVertical({
     borderColor,
     itemBorderColor,
     caretColor,
-}) {
+}: SliderWithVerticalProps) {
     return (
         <div>
             <Container>

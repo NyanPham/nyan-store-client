@@ -13,10 +13,13 @@ type FilterFacetGroupProps = {
     }[]
     collectOptionsState: (data: { optionType: string; optionStates: Record<string, boolean> }) => void
     filterToRemove: {
-        optionType: string
-        value: string
+        optionType: string | null
+        value: string | null
     }
-    setFilterToRemove: (data: { optionType: string | null; value: string | null }) => void
+    setFilterToRemove: React.Dispatch<React.SetStateAction<{
+        optionType: string | null;
+        value: string | null;
+    }>>
 }
 
 export default function FilterFacetGroup({

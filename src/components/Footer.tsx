@@ -13,9 +13,11 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
 const Footer = () => {
-    function onSubscribeHandler(e) {
+    function onSubscribeHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+        alert("In Development feature. Coming soon!")
     }
+
     return (
         <footer className="shadow-top mt-10">
             <div className="grid grid-cols-1 pb-4 pt-6 mx-1 gap-1 border-b border-gray-800/10 md:py-4 md:grid-cols-2 md:gap-4 md:mx-8 lg:gap-8 lg:py-8 lg:mx-16 lg:grid-cols-4 ">

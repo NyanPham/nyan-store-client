@@ -10,6 +10,7 @@ import { ROOT_URL } from '../../config'
 import VariantsPickerWithImage from './VariantsPickerWithImage'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { Variant } from '../../types'
+import { CartState } from '../../redux/reducers/cartReducer'
 
 
 type ProductHorizontalCardProps = {
@@ -29,7 +30,7 @@ function ProductHorizontalCard(props : ProductHorizontalCardProps) {
     // const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1
     const isNew = new Date(Date.now() - new Date(createdAt).getTime()).getHours() < 24 * 1
     const firstVariant = variants[0]
-    const { loading, error, message } = useSelector((state: any) => state.cart)
+    const { loading, error, message } = useSelector((state: { cart: CartState }) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const [selectedVariant, setSelectedVariant] = useState(variants[0])

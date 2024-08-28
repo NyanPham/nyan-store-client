@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { ROOT_URL } from '../../config'
+import { Action, Dispatch } from 'redux'
+import { VariantWithOrderNum } from '../../types'
 
 const ACTIONS = {
     GET_WISHLIST: 'get-wishlist',
@@ -9,8 +11,35 @@ const ACTIONS = {
     MAINTAIN_WISHLIST: 'maintain-wishlist',
 }
 
-export const addWishlist = (productId) => {
-    return async (dispatch) => {
+export type GetWishlistAction = {
+    type: typeof ACTIONS.GET_WISHLIST
+    payload: {
+        wishlist: VariantWithOrderNum[]
+    }
+}
+
+export type AddToWishlistAction = {
+    type: typeof ACTIONS.ADD_TO_WISHLIST
+        payload: {
+        wishlist: VariantWithOrderNum[]
+    }
+}
+
+export type RemoveFromWishlistAction = {
+    type: typeof ACTIONS.REMOVE_FROM_WISHLIST
+    payload: {
+        wishlist: VariantWithOrderNum[]
+    }
+}
+
+export type EmptyWishlistAction = {
+    type: typeof ACTIONS.EMPTY_WISHLIST
+}
+
+export type Actions = GetWishlistAction | AddToWishlistAction | RemoveFromWishlistAction | EmptyWishlistAction
+
+export const addWishlist = (productId: string) => {
+    return async (dispatch: Dispatch<Actions>) => {
         try {
             const res = await axios({
                 method: 'PATCH',
@@ -37,10 +66,8 @@ export const addWishlist = (productId) => {
     }
 }
 
-export const removeWishlist = (wishlist, productId) => {
-    console.log(productId)
-
-    return async (dispatch) => {
+export const removeWishlist = (wishlist: VariantWithOrderNum[], productId: string) => {
+    return async (dispatch: Dispatch<Actions>) => {
         try {
             const res = await axios({
                 method: 'PATCH',
@@ -66,9 +93,9 @@ export const removeWishlist = (wishlist, productId) => {
         }
     }
 }
-    
+        
 export const getWishlist = () => {
-    return async (dispatch) => {
+    return async (dispatch: Dispatch<Actions>) => {
         try {
             const res = await axios({
                 method: 'GET',

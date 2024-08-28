@@ -8,15 +8,19 @@ const ACTIONS = {
     FETCH_COLLECTIONS_FAIL: 'fetch-collections-fail',
 };
 
-export type Actions = {
+export type FetchCollectionsAction = {
     type: typeof ACTIONS.FETCH_COLLECTIONS;
     payload: {
         collections: Collection[];
     };
-} | {
+}
+
+export type FailCollectionsAction = {
     type: typeof ACTIONS.FETCH_COLLECTIONS_FAIL;
     payload: null
 };
+    
+export type Actions = FetchCollectionsAction | FailCollectionsAction
 
 export function fetchCollections() {
     return async function (dispatch: Dispatch<Actions>) {

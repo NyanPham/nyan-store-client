@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import useInterval from '../hooks/useInterval'
 
-function SlideCountdown({ dueDate }) {
+type SlideCountdownProps = {
+    dueDate: Date
+}
+
+function SlideCountdown({ dueDate }: SlideCountdownProps) {
     const [remainingTime, setRemaingTime] = useState('')
     useInterval(() => {
-        let delta = Math.abs(new Date(dueDate) - Date.now()) / 1000
+        let delta = Math.abs(new Date(dueDate).getTime() - Date.now()) / 1000
         const days = Math.floor(delta / 86400)
         delta -= days * 86400
         const hours = Math.floor(delta / 3600) % 24

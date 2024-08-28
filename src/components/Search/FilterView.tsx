@@ -1,12 +1,11 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 import getMatchedButton from '../../utils/getMatchedButton'
 import ProductHorizontalCard from '../Products/ProductHorizontalCard'
 import ProductCard from './../Products/ProductCard'
+import { Product } from '../../types'
 
-
-const getViewGrid = (viewTerm) => {
+const getViewGrid = (viewTerm: string) => {
     switch (viewTerm) {
         case 'loose':
             return 'grid grid-cols-2 lg:grid-cols-3 gap-5 p-5 auto-rows-min'
@@ -19,17 +18,27 @@ const getViewGrid = (viewTerm) => {
     }
 }
 
-export default function FilterView(props) {
+type FilterViewProps = {
+    viewBy: string
+    products: Product[]
+    pagination: {
+        page: number
+        pageNumbers: number[] 
+        onPaginationClick: (page: number) => void
+    }
+}
+
+export default function FilterView(props: FilterViewProps) {
     const { products, viewBy, pagination } = props
     const { page, pageNumbers, onPaginationClick } = pagination
     let viewGrid = getViewGrid(viewBy)
 
-    const handlePaginationClick = (e) => {
+    const handlePaginationClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, '[data-pagination]')
         if (button == null) return
-
-        if (!isNaN(parseInt(button.dataset.pagination))) {
-            return onPaginationClick(parseInt(button.dataset.pagination))
+        
+        if (!isNaN(Number(button.dataset.pagination))) {
+            return onPaginationClick(Number(button.dataset.pagination))
         }
 
         if (button.dataset.pagination === 'prev') return onPaginationClick(page - 1)
@@ -47,7 +56,7 @@ export default function FilterView(props) {
                             key={`search_product_${index}`}
                             {...product}
                             inAuction={false}
-                            currentBid={false}
+                            // currentBid={false}
                         />
                     ))}
                 {products &&

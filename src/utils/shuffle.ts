@@ -1,4 +1,4 @@
-export default function shuffle(array) {
+export default function shuffle(array: any[]) {
     const newArray = [...array]
     for (let i = array.length; i >= 0; i--) {
         const randomIndex = Math.floor(Math.random() * i)

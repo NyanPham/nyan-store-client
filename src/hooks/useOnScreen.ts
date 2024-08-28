@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const useOnScreen = (ref, rootMargin = '0px', threshold = 0.5) => {
+const useOnScreen = (ref: React.RefObject<HTMLElement>, rootMargin = '0px', threshold = 0.5) => {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {

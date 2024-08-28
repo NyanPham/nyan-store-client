@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import nyanLogo from '../imgs/nyan-logo.png'
 // import Container from './Container'
 import SearchForm from './SearchForm'
@@ -11,7 +11,7 @@ import {
     faCaretDown,
     faCaretUp,
     faUserCircle,
-    faRightFromBracket,
+    faRightFromBracket, 
 } from '@fortawesome/free-solid-svg-icons'
 import { Link, useLocation } from 'react-router-dom'
 import { useSideCartContext } from '../context/sideCartContext'
@@ -23,6 +23,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { emptyWishlist, getWishlist } from '../redux/actions/wishlistActions'
 import { emptyCart, getCart } from '../redux/actions/cartActions'
+import { CartState } from '../redux/reducers/cartReducer'
 
 const Header = () => {
     const { isLoggedIn, currentUser } = useAuthContext()
@@ -31,12 +32,12 @@ const Header = () => {
     const [openSearch, setOpenSearch] = useState(false)
     const { setOpenSideCart } = useSideCartContext()
     const { pathname } = useLocation()
-    const { cart } = useSelector((state) => state.cart)
-    const authRef = useRef()
+    const { cart } = useSelector((state: { cart: CartState }) => state.cart)
+    const authRef = useRef<HTMLButtonElement>(null)
     const dispatch = useDispatch()  
-    
-    const closeAuth = (e) => {
-        if (authRef.current.contains(e.target)) return
+
+    const closeAuth = (e: MouseEvent) => {
+        if (authRef.current?.contains(e.target as HTMLElement)) return
         setOpenAuth(false)
     }
 
@@ -72,12 +73,12 @@ const Header = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            dispatch(getWishlist())
-            dispatch(getCart())
+            getWishlist()(dispatch)
+            getCart()(dispatch)
         } else {
             dispatch(emptyWishlist())
             dispatch(emptyCart())
-        }
+        }           
     }, [isLoggedIn, dispatch])
 
     useEffect(() => {

@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import SideNavigation from './SideNavigation'
 
 function SidebarNavigationDrawer() {
     const [openSidebar, setOpenSidebar] = useState(false)
-    const drawerRef = useRef()
+    const drawerRef = useRef<HTMLDivElement>(null)
 
-    function handleLayerClick(e) {
+    function handleLayerClick() {
         setOpenSidebar(false)
     }
 

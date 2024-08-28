@@ -10,10 +10,11 @@ import SideOrderNote from './SideOrderNote'
 import SideProductCard from './SideProductCard'
 import SideShippingCalculator from './SideShippingCalculator'
 import { Cart } from '../../types'
-
+import { CartState } from '../../redux/reducers/cartReducer'
+    
 export default function SideCart() {
     const { pathname } = useLocation()
-    const { cart }: { cart: Cart } = useSelector((state: any) => state.cart)
+    const { cart }: { cart: Cart } = useSelector((state: { cart: CartState }) => state.cart)
     const { openSideCart, setOpenSideCart } = useSideCartContext()
     const subtotal = cart.reduce((_, item) => item?.variant?.price * item?.quantity, 0)
 

@@ -1,5 +1,5 @@
-import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+ // @ts-ignore
 import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -10,7 +10,70 @@ import SlideCountdown from './SlideCountdown'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
-export default function Slider({ slides, slidesPerView, direction = 'horizontal', setCurrentSlide = () => {} }) {
+export type SlideData = {
+    title: {
+        text: string
+        styles: string
+    }
+    subtitle: {
+        text: string
+        styles: string
+    }
+    text1: {
+        text: string
+        styles: string
+    }
+    text2: {
+        text: string
+        styles: string
+    }  
+    comparePrice?: {
+        text: string,
+        styles: string
+    }
+    price?: {
+        text: string,
+        styles: string
+    } 
+    expiresTime: {
+        label: {
+            text: string,
+            styles: string
+        },
+        timeLeft: {
+            date: Date
+            styles: string
+        }
+    }
+    button: {
+        text: string
+        link: string 
+        styles: string
+    }
+    image: string
+    link: string
+    imageStyles?: string
+    contentStyles?: string
+    currentBid?: {
+        label: {
+            text: string
+            styles: string
+        },
+        value: {
+            text: string
+            styles: string
+        }
+    }
+}
+
+type SliderProps = {
+    slides: SlideData[]
+    slidesPerView?: number
+    direction?: 'horizontal' | 'vertical'
+    setCurrentSlide?: (currentSlide: number) => void
+}
+
+export default function Slider({ slides, slidesPerView, direction = 'horizontal', setCurrentSlide = () => {} }: SliderProps) {
     return (
         <Swiper
             direction={direction}
@@ -20,6 +83,7 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
             navigation
             pagination={{ clickable: true }}
             onSlideChangeTransitionStart={function () {
+                // @ts-ignore
                 setCurrentSlide(this.realIndex)
             }}
             loop={true}
@@ -44,7 +108,7 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
                             <LazyLoadImage
                                 className={`${slide.imageStyles} w-full h-full object-cover object-center`}
                                 src={slide.image}
-                                alt={slide.title}
+                                alt={slide.title.text}
                                 loading="lazy"
                                 width={900}
                                 height={380}
@@ -75,7 +139,7 @@ export default function Slider({ slides, slidesPerView, direction = 'horizontal'
                                             <SlideCountdown dueDate={slide.expiresTime.timeLeft.date} />
                                         </span>
                                     </div>
-                                )}
+                                )}  
                                 {slide.currentBid && (
                                     <div className="flex items-center gap-3 mt-2">
                                         <span className={slide.currentBid.label.styles}>

@@ -13,7 +13,9 @@ import useDeepCompareEffect from '../../hooks/useDeepCompareEffect'
 import { useEffect } from 'react'
 import Reviews from '../Review/Reviews'
 import AddReviewButton from '../Review/AddReviewButton'
-import { Variant, VariantDataToSubmit, VariantWithOrderNum } from '../../types'
+import { Product, Variant, VariantDataToSubmit, VariantWithOrderNum } from '../../types'
+import { CartState } from '../../redux/reducers/cartReducer'
+import { BiddingState } from '../../redux/reducers/biddingReducer'
 
 const getTargetVariantFromProduct = (currentVariantId : string, variants: Variant[]) : Variant | undefined => {
     return currentVariantId != null
@@ -103,9 +105,9 @@ function VariantsPicker(props : VariantsPickerProps) {
     const [isSoldOut, setIsSoldOut] = useState<boolean>(variants[0].inventory === 0)
     const { alreadyAdded, handleWishlistClick } = useWishlist(productId)
     const { isLoggedIn } = useAuthContext()
-    const { loading, cart } = useSelector((state: any) => state.cart)
+    const { loading, cart } = useSelector((state: { cart: CartState }) => state.cart)
     const addedToCart = useAddedToCart(cart, productId)
-    const { loading: biddingLoading } = useSelector((state: any) => state.biddingProducts)
+    const { loading: biddingLoading } = useSelector((state: { biddingProducts: BiddingState }) => state.biddingProducts)
     const [showReviews, setShowReviews] = useState(false)
 
     const priceRef = useRef<HTMLInputElement>(null)

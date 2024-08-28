@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import useInterval from '../hooks/useInterval'
 
-export default function Countdown({ dueDate }) {
+type CountdownType = {
+    dueDate: Date | string
+}
+
+export default function Countdown({ dueDate }: CountdownType) {
     const [remainingTime, setRemaingTime] = useState({
         days: 0,
         hours: 0,
@@ -10,7 +14,7 @@ export default function Countdown({ dueDate }) {
     })
 
     const { stop } = useInterval(() => {
-        let delta = (new Date(dueDate) - Date.now()) / 1000
+        let delta = (new Date(dueDate).getTime() - Date.now()) / 1000
         if (delta <= 0) {
             stop()
             setRemaingTime({
@@ -45,7 +49,7 @@ export default function Countdown({ dueDate }) {
                     {Object.keys(remainingTime).map((key, index) => {
                         return (
                             <CountDownCard
-                                time={remainingTime[key]}
+                                time={remainingTime[key as keyof typeof remainingTime]}
                                 type={key}
                                 index={index}
                                 key={`countdown_${Math.random()}_${index}`}
@@ -58,7 +62,13 @@ export default function Countdown({ dueDate }) {
     )
 }
 
-function CountDownCard({ time, type, index }) {
+type CountDownCardProps = {
+    time: number
+    type: string
+    index: number
+}
+    
+function CountDownCard({ time, type, index }: CountDownCardProps) {
     let text
     if (type === 'days') {
         text = 'Days'

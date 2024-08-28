@@ -1,6 +1,11 @@
 import { createPortal } from 'react-dom'
 
-function ReactPortal({ children, containerId }) {
+type ReactPortalProps = {
+    children: React.ReactNode
+    containerId: string 
+}
+
+function ReactPortal({ children, containerId }: ReactPortalProps) {
     let container = document.getElementById(containerId)
     if (!container) {
         container = createWrapperAndAppendToBody(containerId)
@@ -9,11 +14,11 @@ function ReactPortal({ children, containerId }) {
     return createPortal(children, container)
 }
 
-function createWrapperAndAppendToBody(containerId) {
+function createWrapperAndAppendToBody(containerId: string) {
     const container = document.createElement('div')
     container.setAttribute('id', containerId)
     document.body.appendChild(container)
-
+    
     return container
 }
 
