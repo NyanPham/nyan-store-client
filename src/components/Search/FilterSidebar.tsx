@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { ROOT_URL } from '../../config'
@@ -46,8 +46,6 @@ type FilterSidebarProps = {
         setPage: (page: number) => void
     }
 }
-
-type AllAvailableOptionsKeys = 'allSize' | 'allColor' | 'allMaterial' | 'allBrand';
 
 export default function FilterSidebar(props: FilterSidebarProps) {
     const {
@@ -178,9 +176,8 @@ export default function FilterSidebar(props: FilterSidebarProps) {
                 if (res.data.status === 'success') {
                     setFacetOptions(() => {
                         if (res.data.data.facets[0] == null) return []
-
+                        
                         return Object.entries(res.data.data.facets[0]).map(([key, value]) => {
-                            console.log(value)
                             return {
                                 [key]: (value as { value: string }[]).filter((value) => value.value != null || typeof value === 'number'),
                             }

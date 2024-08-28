@@ -53,7 +53,7 @@ function Signup() {
                 navigate('/')
             }
         } catch (err: any) {
-            console.log(err)
+            console.error(err)
             dispatch((setError(err.response.data.message)))
         } finally {
             dispatch(hideLoading())

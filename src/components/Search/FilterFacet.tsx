@@ -31,7 +31,6 @@ export default function FilterFacet({ option, optionType, onFacetInput, filterTo
     const { optionType: filterTypeToRemove, value: filterValueToRemove } = filterToRemove
 
     useEffect(() => {
-        console.log(filterTypeToRemove, filterValueToRemove)
         if (filterTypeToRemove == null || filterValueToRemove == null) return
         if (filterTypeToRemove !== optionType || filterValueToRemove !== option.value) return
 

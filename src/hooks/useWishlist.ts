@@ -2,26 +2,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../context/authContext'
 import { addWishlist, removeWishlist } from '../redux/actions/wishlistActions'
+import { WishlistState } from '../redux/reducers/wishlistReducer';
 
-export default function useWishlist(productId) {
+export default function useWishlist(productId: string) {
     const { isLoggedIn } = useAuthContext();
-    const wishlist = useSelector(state => state.wishlist);
+    const wishlist = useSelector((state : { wishlist: WishlistState}) => state.wishlist);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const productIdSet = new Set(wishlist.map(item => item.item._id));
     const alreadyAdded = productIdSet.has(productId);
 
-    const handleWishlistClick = (e) => {
+    const handleWishlistClick = () => {
         if (!isLoggedIn) {
             navigate('/login');
             return;
-        }
+        }   
 
         if (alreadyAdded) {
-            dispatch(removeWishlist(productId));
+            removeWishlist(productId)(dispatch);
         } else {
-            dispatch(addWishlist(productId));
+            addWishlist(productId)(dispatch);
         }
     };
 

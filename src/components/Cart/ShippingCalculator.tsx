@@ -20,7 +20,7 @@ export default function ShippingCalculator() {
     }
 
     const handleZipInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target)
+        console.warn(e.target)
     }
 
     useEffect(() => {

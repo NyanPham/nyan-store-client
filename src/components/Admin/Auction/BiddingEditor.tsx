@@ -58,9 +58,7 @@ export default function BiddingEditor({ biddingId, biddings, isAddForm, closeMod
         })
 
         if (method !== 'DELETE') axiosConfig.data = data
-
-        console.log(axiosConfig)
-
+        
         let successText
         switch (method) {
             case 'POST':

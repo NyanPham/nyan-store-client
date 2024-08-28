@@ -66,7 +66,7 @@ export const addWishlist = (productId: string) => {
     }
 }
 
-export const removeWishlist = (wishlist: VariantWithOrderNum[], productId: string) => {
+export const removeWishlist = (productId: string) => {
     return async (dispatch: Dispatch<Actions>) => {
         try {
             const res = await axios({
@@ -76,8 +76,8 @@ export const removeWishlist = (wishlist: VariantWithOrderNum[], productId: strin
                     product: productId,
                 },
                 withCredentials: true,
-            })
-
+            })  
+            
             if (res.data.status === 'success') {
                 dispatch({
                     type: ACTIONS.GET_WISHLIST,

@@ -24,7 +24,7 @@ export default function SideShippingCalculator() {
     }
 
     const handleZipInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e)
+        console.warn(e)
     }
 
     useEffect(() => {
