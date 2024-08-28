@@ -1,9 +1,24 @@
-import React, { useMemo, useRef } from 'react'
-import { useFetchProductsWithVisibility } from '../hooks/useFetchProducts'
+import { useMemo, useRef } from 'react'
+import { useFetchProductProps, useFetchProductsWithVisibility } from '../hooks/useFetchProducts'
 import SliderWithProduct from './SliderWithProduct'
 import useOnScreen from '../hooks/useOnScreen'
+import { Tag } from '../types'
     
 // TODO: Do the cache as a state for the whole app to store the products
+type GetSliderWithProductsProps = {
+    tags: string[]
+    category: string
+    sideNavBackground: string
+    navTitle: string
+    nameColor: string
+    borderColor: string
+    itemBorderColor: string
+    caretColor: string
+    slides: number
+    sliderFirst?: boolean
+    from?: 'category' | 'tags'
+}
+
 function GetSliderWithProducts({
     tags,
     category,
@@ -16,16 +31,23 @@ function GetSliderWithProducts({
     slides,
     sliderFirst = true,
     from = 'category',
-}) {    
-    const divRef = useRef()
+}: GetSliderWithProductsProps) {    
+    const divRef = useRef<HTMLDivElement>(null)
     const isVisible = useOnScreen(divRef, '-50px', 0)
 
-    const options = useMemo(() => {
-        const opts = {
+    type OptionsType = {
+        page: number,
+        limit: number,
+        categoryName?: string
+        tags?: Tag[]
+    }
+
+    const options: OptionsType = useMemo(() => {
+        const opts: OptionsType = {
             page: 1,
             limit: 4,
         }
-
+        
         if (from === 'category') {
             opts.categoryName = category
         } else if (from === 'tags') {
@@ -34,7 +56,7 @@ function GetSliderWithProducts({
         return opts
     }, [from, category, tags])
 
-    const { data: products, isLoading } = useFetchProductsWithVisibility(from, options, isVisible)
+    const { data: products, isLoading } = useFetchProductsWithVisibility(from, options as useFetchProductProps, isVisible)
     
     return (
         <div ref={divRef}>

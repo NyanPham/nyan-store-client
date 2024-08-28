@@ -38,7 +38,7 @@ type AllAvailableOptionsType = {
 type FilterSidebarProps = {
     setData: (data: any) => void
     sortByTerm: string
-    categoryId: string
+    categoryId: string | null
     categoryName: string
     pagination: {
         page: number
@@ -48,7 +48,6 @@ type FilterSidebarProps = {
 }
 
 type AllAvailableOptionsKeys = 'allSize' | 'allColor' | 'allMaterial' | 'allBrand';
-
 
 export default function FilterSidebar(props: FilterSidebarProps) {
     const {
@@ -72,14 +71,14 @@ export default function FilterSidebar(props: FilterSidebarProps) {
     })
 
     const [selectedFacets, setSelectedFacets] = useState({})
-    const [filterToRemove, setFilterToRemove] = useState({
-        optionType: "",
-        value: "",
+    const [filterToRemove, setFilterToRemove] = useState<{ optionType: string | null, value: string | null }>({
+        optionType: null,
+        value: null,
     })
-        
+
     const dispatch = useDispatch()
 
-    const search = useSelector((state: any ) => state.search)
+    const search = useSelector((state: { search: string } ) => state.search)
     const { pathname } = useLocation()
     const allAvailableOptions: AllAvailableOptionsType = { allSize: [], allColor: [], allMaterial: [], allBrand: [] };
     facetOptions.forEach((facetOption) => {
@@ -249,7 +248,7 @@ export default function FilterSidebar(props: FilterSidebarProps) {
                 .map((facets, index) => {
                     const optionType = Object.keys(facets)[0]
                     const options = facets[optionType]
-                    return (
+                    return (    
                         <FilterFacetGroup
                             key={`${optionType}_${index}`}
                             optionType={optionType}

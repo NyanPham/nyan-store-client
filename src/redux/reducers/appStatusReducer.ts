@@ -1,4 +1,11 @@
-import ACTIONS from '../actions/appStatusActions'
+import ACTIONS, { Actions } from '../actions/appStatusActions'
+
+export type AppStatus = {
+  loading: boolean;
+  toShowAlert: boolean;
+  message: string;
+  error: any;
+}
 
 const initialState = {
     loading: false,
@@ -7,7 +14,7 @@ const initialState = {
     error: null,
 } 
 
-const statusReducer = (state = initialState, action) => {
+const statusReducer = (state: AppStatus = initialState, action: Actions) => {
     switch (action.type) {
         case ACTIONS.SHOW_LOADING:
             return { 

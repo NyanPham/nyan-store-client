@@ -5,10 +5,11 @@ import CouponCode from '../Cart/CouponCode'
 import PreCheckoutInfo from '../Cart/PreCheckoutInfo'
 import ShippingCalculator from '../Cart/ShippingCalculator'
 import { Link } from 'react-router-dom'
+import { CartState } from '../../redux/reducers/cartReducer'
 
 export default function CartPage() {
-    const { cart } = useSelector((state: any) => state.cart)
-    
+    const { cart } = useSelector((state: { cart: CartState }) => state.cart)
+        
     return (
         <>
             <h2 className="text-center mt-12 text-slate-700 font-semibold text-2xl">Your Cart</h2>

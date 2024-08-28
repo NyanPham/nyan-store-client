@@ -16,6 +16,7 @@ import SidebarNavigationDrawer from './components/SidebarNavigationDrawer'
 import { hideAlert } from './redux/actions/appStatusActions'
 
 import { Dispatch } from 'redux'
+import { AppStatus } from './redux/reducers/appStatusReducer'
 
 // const instance = axios.create({
 //     withCredentials: true,
@@ -28,7 +29,7 @@ import { Dispatch } from 'redux'
 // though they don't need the authentication to fetch and show products 
 // TODO: Find a better place to call the useAuthContext hook
 function App() {
-    const { loading, message, error, toShowAlert } = useSelector((state: any) => state.appStatus)
+    const { loading, message, error, toShowAlert } = useSelector((state: { appStatus: AppStatus }) => state.appStatus)
     const dispatch : Dispatch = useDispatch()
     const { pathname } = useLocation()
     useScrollToTop(pathname)

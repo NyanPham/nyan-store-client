@@ -1,11 +1,26 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { shuffle } from 'lodash'
 import Container from './Container'
 import ProductCard from './Products/ProductCard'
 import SideNavigation from './SideNavigation'
-import Slider from './Slider'
+import Slider, { SlideData } from './Slider'
 import SkeletonCard from './SkeletonCard'
+import { Product } from '../types'
 
+type SliderWithProductProps = {
+    navTitle: string
+    slides: SlideData[]
+    products: Product[]
+    sideNavBackground?: string
+    nameColor?: string
+    borderColor?: string
+    itemBorderColor?: string
+    caretColor?: string
+    isLoading?: boolean
+    sliderFirst?: boolean
+    showNumber?: number
+}
+    
 function SliderWithProduct({
     slides,
     products,
@@ -18,7 +33,7 @@ function SliderWithProduct({
     isLoading,
     sliderFirst = true,
     showNumber = 4,
-}) {
+}: SliderWithProductProps) {
     const productsToShow = useMemo(() => shuffle(products).slice(0, showNumber), [products, showNumber])
 
     const ProductCards = (

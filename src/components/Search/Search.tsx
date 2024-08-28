@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from '../Container'
 import { searchHeroSlides } from '../data'
 import Slider from '../Slider'

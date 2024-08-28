@@ -8,10 +8,13 @@ type FilterFacetProps = {
     optionType: string
     onFacetInput: (data: { option: { value: string }; isChecked: boolean }) => void
     filterToRemove: {
-        optionType: string
-        value: string
-    }   
-    setFilterToRemove: (data: { optionType: string | null; value: string | null }) => void
+        optionType: string | null
+        value: string | null 
+    }       
+    setFilterToRemove: React.Dispatch<React.SetStateAction<{
+        optionType: string | null;
+        value: string | null;
+    }>>
 }
 
 export default function FilterFacet({ option, optionType, onFacetInput, filterToRemove, setFilterToRemove } : FilterFacetProps) {

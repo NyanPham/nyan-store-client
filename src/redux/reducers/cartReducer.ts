@@ -1,14 +1,22 @@
-import ACTIONS, { Actions } from '../actions/cartActions'
+import { Cart } from '../../types'
+import ACTIONS, { Actions, CartActFailAction, CartActSuccessAction, FetchCartAction } from '../actions/cartActions'
 
-const intitialState = {
+const initialState = {
     cart: [],
     loading: false,
     message: '',
     error: '',
-}   
+}
 
-export default function cartReducer(state = intitialState, { type, payload } : Actions) {
-    switch (type) {
+export type CartState = {
+    cart: Cart,
+    loading: boolean,
+    message: string,
+    error: string,
+}
+
+export default function cartReducer(state: CartState = initialState, action: Actions) {
+    switch (action.type) {
         case ACTIONS.START_CART_ACT:
             return {
                 ...state,
@@ -20,20 +28,20 @@ export default function cartReducer(state = intitialState, { type, payload } : A
             return {
                 ...state,
                 loading: false,
-                message: payload?.message || 'success',
-                cart: payload.cart,
+                message: (action as CartActSuccessAction).payload.message,
+                cart: (action as CartActSuccessAction).payload.cart,
             }
         case ACTIONS.CART_ACT_FAIL:
             return {
                 ...state,
                 loading: false,
-                error: payload.error,
+                error: (action as CartActFailAction).payload.error,
             }
         case ACTIONS.FETCH_CART:
             return {
                 ...state,
                 loading: false,
-                cart: payload.cart,
+                cart: (action as FetchCartAction).payload.cart,
             }
         case ACTIONS.EMPTY_CART:
             return {
@@ -43,7 +51,7 @@ export default function cartReducer(state = intitialState, { type, payload } : A
         case ACTIONS.ADD_TO_CART:
             return {
                 ...state,
-            }
+            }   
         case ACTIONS.RESET_MESSAGE_ERROR:
             return {
                 ...state,

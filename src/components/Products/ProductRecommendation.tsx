@@ -9,6 +9,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import SkeletonCard from '../SkeletonCard'
 import useOnScreen from '../../hooks/useOnScreen'
+import { CollectionsState } from '../../redux/reducers/collectionsReducer'
 
 // TODO: Do the cache as a state for the whole app to store the products
 
@@ -19,7 +20,7 @@ type ProductRecommendationProps = {
 }
 
 function ProductRecommendation({ showRecommendCard = true, category, type = 'collections' } : ProductRecommendationProps) {
-    const allCollections = useSelector((state: any) => state.collections)
+    const allCollections = useSelector((state: { collections: CollectionsState }) => state.collections)
     const divRef = useRef<HTMLDivElement>(null)
     const isVisible = useOnScreen(divRef, '-50px', 0)
 

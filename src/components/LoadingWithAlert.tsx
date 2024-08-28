@@ -1,11 +1,19 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Alert from './Alert/Alert'
 import Overlay from './Overlay'
 
-export default function LoadingWithAlert({ loading, showAlert, message, error, closeAlert, inContainer = false }) {
+type LoadingWithAlertProps = {
+    loading: boolean
+    showAlert: boolean
+    message?: string
+    error?: string
+    closeAlert: () => void
+    inContainer?: boolean
+}
+
+export default function LoadingWithAlert({ loading, showAlert, message, error, closeAlert, inContainer = false }: LoadingWithAlertProps) {
     return (
         <>
             {loading && (
@@ -27,7 +35,7 @@ export default function LoadingWithAlert({ loading, showAlert, message, error, c
                             closeCallback={closeAlert}
                         />
                     </Overlay>,
-                    document.getElementById('modal-container')
+                    document.getElementById('modal-container')!
                 )}
         </>
     )

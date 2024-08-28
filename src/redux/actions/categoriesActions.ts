@@ -8,15 +8,18 @@ const ACTIONS = {
     FETCH_CATEGORIES_FAIL: 'fetch-categories-fail',
 }
 
-export type Actions = {
+export type FetchCategoriesAction = {
     type: typeof ACTIONS.FETCH_CATEGORIES;
     payload: {
         categories: Category[];
     };
-} | {
+}
+
+export type FailCategoriesAction = {
     type: typeof ACTIONS.FETCH_CATEGORIES_FAIL;
-    payload: null
 };
+    
+export type Actions = FetchCategoriesAction | FailCategoriesAction
 
 export function fetchCategories() {
     return async function (dispatch: Dispatch<Actions>) {

@@ -1,9 +1,12 @@
-import ACTIONS from '../actions/wishlistActions'
+import { VariantWithOrderNum } from '../../types'
+import ACTIONS, { Actions, GetWishlistAction } from '../actions/wishlistActions'
+    
+export type WishlistState = VariantWithOrderNum[]
 
-export default function wishlistReducer(state = [], { type, payload }) {
-    switch (type) {
+export default function wishlistReducer(state: WishlistState = [], action: Actions) {
+    switch (action.type) {
         case ACTIONS.GET_WISHLIST:
-            return payload.wishlist
+            return (action as GetWishlistAction).payload.wishlist
         case ACTIONS.EMPTY_WISHLIST:
             return []
         default:

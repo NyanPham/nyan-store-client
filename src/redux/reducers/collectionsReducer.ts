@@ -1,12 +1,14 @@
 import { Collection } from '../../types'
-import ACTIONS, { Actions } from '../actions/collectionsActions'
+import ACTIONS, { Actions, FetchCollectionsAction } from '../actions/collectionsActions'
     
-export default function collectionsReducer(state: Collection[] = [], { type, payload } : Actions) {
-    switch (type) { 
+export type CollectionsState = Collection[]
+
+export default function collectionsReducer(state: CollectionsState = [], action : Actions) {
+    switch (action.type) { 
         case ACTIONS.FETCH_COLLECTIONS:
-            return (payload as { collections: Collection[] }).collections
+            return (action as FetchCollectionsAction).payload.collections
         case ACTIONS.FETCH_COLLECTIONS_FAIL:
-            return state
+            return state    
         default:
             return state
     }

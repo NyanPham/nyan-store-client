@@ -1,4 +1,3 @@
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
@@ -8,14 +7,19 @@ import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
-function SearchForm({ openSearch, setOpenSearch }) {
+type SearchFormProps = {
+    openSearch: boolean
+    setOpenSearch: (openSearch: boolean) => void
+}
+
+function SearchForm({ openSearch, setOpenSearch }: SearchFormProps) {
     const { collectionName } = useParams()
     const { pathname } = useLocation()
     const [searchTerm, setSearchTerm] = useState(() => collectionName || '')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const handleSearch = (e) => {
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         navigate('/categories/all')
@@ -56,9 +60,9 @@ function SearchForm({ openSearch, setOpenSearch }) {
                 id="search"
                 type="text"
                 value={searchTerm}
-                onInput={(e) => setSearchTerm(e.target.value)}
+                onInput={(e) => setSearchTerm((e.target as HTMLInputElement).value)}
                 placeholder="What do you want to search?"
-            />
+            />  
 
             <button
                 type="submit"

@@ -1,5 +1,14 @@
-import React from 'react'
 import SliderWithVertical from './SliderWithVertical'
+    
+type GetSliderWithVerticalProps = {
+    sideNavBackground: string
+    navTitle: string
+    nameColor: string
+    borderColor: string
+    itemBorderColor: string
+    caretColor: string
+    slides: number
+}
 
 function GetSliderWithVertical({
     sideNavBackground,
@@ -9,7 +18,7 @@ function GetSliderWithVertical({
     itemBorderColor,
     caretColor,
     slides,
-}) {
+}: GetSliderWithVerticalProps) {
     return (
         <SliderWithVertical
             slides={slides}

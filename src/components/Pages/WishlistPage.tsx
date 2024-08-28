@@ -2,11 +2,12 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ProductCard from '../Products/ProductCard'
 import { Product } from '../../types'
+import { WishlistState } from '../../redux/reducers/wishlistReducer'
 
 export default function WishlistPage() {
-    const wishlist = useSelector((state: any) => state.wishlist)
+    const wishlist = useSelector((state: { wishlist: WishlistState }) => state.wishlist)
     
-    return (
+    return (    
         <section className="flex-grow pb-12">
             <div className="container mx-auto">
                 <h2 className="text-cyan-400 text-3xl font-semibold mt-10 text-center">Wishlist</h2>

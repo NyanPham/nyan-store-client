@@ -1,4 +1,3 @@
-import React from 'react'
 import SideNavigation from './SideNavigation'
 import Container from './Container'
 import Slider from './Slider'

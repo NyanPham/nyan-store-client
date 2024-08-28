@@ -21,6 +21,7 @@ import { ROOT_URL } from '../../config'
 import Overlay from '../Overlay'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { AddToCartItem, Product, Variant, VariantDataToSubmit } from '../../types'
+import { CartState } from '../../redux/reducers/cartReducer'
 
 type VariantImage = {
     variantId: string;
@@ -49,7 +50,7 @@ function ProductInfo({ product, setProduct } : ProductInfoProps) {
     const { isLoggedIn } = useAuthContext()
     const { slug } = useParams<string>()
 
-    const { message } = useSelector((state: any) => state.cart)
+    const { message } = useSelector((state: { cart: CartState }) => state.cart)
     const { setOpenSideCart } = useSideCartContext()
     const [mainImage, setMainImage] = useState(product?.variants[0].images[0])
     const [selectedVariantId, setSelectedVariantId] = useState(product?.variants[0]._id)

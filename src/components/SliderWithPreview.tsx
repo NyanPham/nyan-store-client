@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import Container from './Container'
-import React from 'react'
 import SideNavigation from './SideNavigation'
-import Slider from './Slider'
+import Slider, { SlideData } from './Slider'
 import { slidesWPreview } from './data'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
@@ -21,7 +20,7 @@ function SliderWithPreview() {
                 <div className="w-64 flex-shrink-0 hidden lg:flex">
                     <SideNavigation title="Best Deal Promo Category" isDrawer={false} />
                 </div>
-                <Slider slides={slidesWPreview} slidesPerView={1} setCurrentSlide={setCurrentSlide} />
+                <Slider slides={slidesWPreview as SlideData[] } slidesPerView={1} setCurrentSlide={setCurrentSlide} />
                 <div className="hidden w-1/4 flex-shrink-0 justify-self-stretch -ml-2 xl:-ml-5 relative lg:flex">
                     <div className="h-full w-full"></div>
                     {slidesWPreview.map((slide, index) => (
@@ -34,7 +33,7 @@ function SliderWithPreview() {
                             <LazyLoadImage
                                 className="h-full w-full object-cover object-center"
                                 src={slide.image}
-                                alt={slide.title}
+                                alt={slide.title.text}
                                 loading="lazy"
                             />
                         </div>

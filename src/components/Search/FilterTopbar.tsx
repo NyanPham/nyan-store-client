@@ -15,13 +15,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import getMatchedButton from '../../utils/getMatchedButton'
 import { useSelector } from 'react-redux'
 
-export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName }) {
-    const [activeView, setActiveView] = useState('loose')
-    const [sortBy, setSortBy] = useState('oldest')
-    const [openSort, setOpenSort] = useState(false)
-    const search = useSelector((state) => state.search)
+type FilterTopbarProps = {
+    results: number
+    onSortBy: (sortBy: string) => void
+    onViewBy: (viewBy: string) => void
+    categoryName: string
+}
 
-    const hanldeViewClick = (e) => {
+export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName }: FilterTopbarProps) {
+    const [activeView, setActiveView] = useState('loose')
+    const [sortBy, setSortBy] = useState<string>('oldest')
+    const [openSort, setOpenSort] = useState(false)
+    const search = useSelector((state: { search: string }) => state.search)
+    
+    const hanldeViewClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button = getMatchedButton(e, 'button[data-type]')
 
         if (!button) return
@@ -31,27 +38,29 @@ export default function FilterTopbar({ results, onSortBy, onViewBy, categoryName
 
     const toggleOpenSort = () => setOpenSort((prevOpenSort) => !prevOpenSort)
 
-    const handleCloseSortModal = useCallback((e) => {
-        if (e.target.closest('[data-sort-button]') != null) return
+    const handleCloseSortModal = useCallback((e: MouseEvent) => {
+        if ((e.target as HTMLElement).closest('[data-sort-button]') != null) return
 
         setOpenSort(false)
     }, [])
 
-    const handleSortByClick = (e) => {
+    const handleSortByClick = (e: React.MouseEvent<SVGSVGElement>) => {
         let sortIcon
+        
+        const target = e.target as HTMLElement
 
-        if (e.target.matches(['data-sort'])) {
-            sortIcon = e.target
-        }
-        if (e.target.closest('[data-sort]') != null) {
-            sortIcon = e.target.closest('[data-sort]')
-        }
-
+        if (target.matches('[data-sort]')) {
+            sortIcon = target
+        }       
+        if (target.closest('[data-sort]') != null) {
+            sortIcon = target.closest('[data-sort]')
+        }   
+        
         if (!sortIcon) return
 
-        setSortBy(sortIcon.dataset.sort)
+        setSortBy((sortIcon as HTMLElement).dataset.sort!)
     }
-
+    
     useEffect(() => {
         window.addEventListener('click', handleCloseSortModal)
 

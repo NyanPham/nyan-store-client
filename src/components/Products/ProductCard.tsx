@@ -15,6 +15,7 @@ import VariantsPickerWithImage from './VariantsPickerWithImage'
 import { useRef } from 'react'
 import useOnScreen from '../../hooks/useOnScreen'
 import { AddToCartItem, Variant } from '../../types'
+import { CartState } from '../../redux/reducers/cartReducer'
 
 type ProductCardProps = {
     id: string
@@ -36,7 +37,7 @@ export default function ProductCard(props: ProductCardProps) {
     const { setOpenSideCart } = useSideCartContext()
     const [openQuickView, setOpenQuickView] = useState(false)
     const [selectedVariant, setSelectedVariant] = useState(variants[0])
-    const { loading, error, message } = useSelector((state: any) => state.cart)
+    const { loading, error, message } = useSelector((state: { cart: CartState }) => state.cart)
     const dispatch = useDispatch()
     
     // const isNew = new Date(Date.now() - new Date(createdAt)).getHours() < 24 * 1

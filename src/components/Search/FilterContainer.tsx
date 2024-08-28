@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import { Category, Product } from '../../types'
+import { CategoriesState } from '../../redux/reducers/categoriesReducer'
 
 type FilterDataType = {
     status: "success" | "failure" | "loading"
@@ -29,9 +30,9 @@ export default function FilterContainer() {
 
     const [openSidebar, setOpenSidebar] = useState(false)
     const { categoryName } = useParams()
-    const categories = useSelector((state: any) => state.categories)
+    const categories = useSelector((state: { categories: CategoriesState }) => state.categories)
     const categoryId = categories.find((category: Category) => category.name === categoryName)?._id
-
+    
     const pageCount = Math.ceil(data?.results / limit)
     const pageNumbers = pageCount ? Array.from(Array(pageCount).keys()).map((count) => count + 1) : null
     
@@ -60,8 +61,8 @@ export default function FilterContainer() {
                 <FilterSidebar
                     setData={setData}
                     sortByTerm={sortBy}
-                    categoryId={categoryId ? categoryId : null}
-                    categoryName={categoryName}
+                    categoryId={categoryId || null}
+                    categoryName={categoryName || ""}
                     pagination={{ page, limit, setPage }}
                 />
             </div>
@@ -70,15 +71,19 @@ export default function FilterContainer() {
                     results={data.results}
                     onSortBy={setSortBy}
                     onViewBy={setViewBy}
-                    categoryName={categoryName}
+                    categoryName={categoryName || ""}
                 />
                 <FilterView
                     products={data.data?.docs}
                     viewBy={viewBy}
-                    pagination={{ page, pageNumbers, onPaginationClick }}
+                    pagination={{ 
+                        page, 
+                        pageNumbers: pageNumbers || [], 
+                        onPaginationClick
+                    }}
                 />
             </div>
-            <span
+            <span   
                 onClick={() => setOpenSidebar(false)}
                 className={`fixed top-0 left-0 w-full h-full transform transition duration-200 ${
                     openSidebar ? 'pointer-events-auto bg-slate-900/70' : 'pointer-events-none'
